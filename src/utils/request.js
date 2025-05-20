@@ -1,5 +1,5 @@
 /**
- * request.js - uni-app网络请求封装
+ * uni-app网络请求封装
  */
 
 // 基础配置
