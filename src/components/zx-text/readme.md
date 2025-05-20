@@ -26,7 +26,7 @@ import ZxText from '@/components/zx-text/zx-text.vue';
 | text | String/Number | - | 显示的文本内容 |
 | mode | String | text | 文本处理的匹配模式：text-普通文本，price-价格，name-姓名，date-日期，mobile-手机号码 |
 | fontFamily | String | - | 字体 |
-| symbol | String | - | 符号，常用于价格符号 |
+| symbol | String | ￥ | 符号，常用于价格符号 |
 | bold | Boolean | false | 是否粗体 |
 | lines | String/Number | - | 文本显示的行数，如果设置，超出此行数，将会显示省略号 |
 | color | String | - | 文本颜色 |
@@ -79,10 +79,14 @@ import ZxText from '@/components/zx-text/zx-text.vue';
 
 ```vue
 <zx-text text="99.99" mode="price" type="primary"></zx-text>
-<!-- 显示：99.99 -->
+<!-- 显示：￥ 99.99 -->
 
 <zx-text text="1234.56" mode="price" type="primary"></zx-text>
-<!-- 显示：1,234.56 -->
+<!-- 显示：￥ 1,234.56 -->
+
+<!-- 自定义符号 -->
+<zx-text text="1234.56" mode="price" symbol="$" type="primary"></zx-text>
+<!-- 显示：$ 1,234.56 -->
 ```
 
 #### 姓名脱敏
@@ -119,6 +123,14 @@ import ZxText from '@/components/zx-text/zx-text.vue';
 ```vue
 <zx-text text="2023-05-20" mode="date"></zx-text>
 <!-- 默认格式：yyyy-mm-dd -->
+
+<!-- 时间戳转日期 -->
+<zx-text :text="1684569600" mode="date"></zx-text>
+<!-- 显示：2023-05-20 -->
+
+<!-- 带时分秒的日期 -->
+<zx-text text="2023-05-20 08:30:00" mode="date"></zx-text>
+<!-- 显示：2023-05-20 -->
 ```
 
 ### 排版样式
@@ -150,6 +162,7 @@ import ZxText from '@/components/zx-text/zx-text.vue';
 
 ```vue
 <zx-text text="红色文本" color="#FF0000"></zx-text>
+<zx-text text="蓝色文本" color="#0000FF"></zx-text>
 ```
 
 ### 文本截断
@@ -180,6 +193,16 @@ import ZxText from '@/components/zx-text/zx-text.vue';
     <view class="icon">🔔</view>
   </template>
 </zx-text>
+
+<!-- 同时使用左右插槽 -->
+<zx-text text="左右两侧都有插槽">
+  <template #left>
+    <view class="icon">👈</view>
+  </template>
+  <template #right>
+    <view class="icon">👉</view>
+  </template>
+</zx-text>
 ```
 
 ### 组合使用
@@ -189,8 +212,24 @@ import ZxText from '@/components/zx-text/zx-text.vue';
 <zx-text text="199.99" mode="price" type="danger" bold size="40rpx"></zx-text>
 ```
 
+### 可选择文本
+
+```vue
+<zx-text text="这段文本可以被选择" selectable></zx-text>
+```
+
+### 文本间距
+
+```vue
+<zx-text text="这段文本使用了 emsp 空格" space="emsp"></zx-text>
+<zx-text text="这段文本使用了 ensp 空格" space="ensp"></zx-text>
+<zx-text text="这段文本使用了 nbsp 空格" space="nbsp"></zx-text>
+```
+
 ## 注意事项
 
 1. 当使用`mobile`模式配合`call`属性时，点击文本会触发电话拨打功能
 2. 设置`lines`属性时，文本超出指定行数会自动显示省略号
-3. 使用`block`属性可以控制文本是否为块级元素，默认为块级 
+3. 使用`block`属性可以控制文本是否为块级元素，默认为块级
+4. 日期格式化默认为`yyyy-mm-dd`格式，支持多种输入格式，包括时间戳
+5. 在nvue环境下，部分样式可能表现不同，组件内部已做兼容处理 

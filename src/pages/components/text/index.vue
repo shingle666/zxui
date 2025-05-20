@@ -1,11 +1,6 @@
 <template>
 	<view class="container">
 		<view class="title">ZX-Text 文本组件演示</view>
-		
-		<view class="doc-link">
-			<button class="doc-btn" @click="goToDoc">查看使用文档</button>
-		</view>
-		
 		<view class="demo-section">
 			<view class="section-title">基础用法</view>
 			<view class="demo-item">
@@ -41,20 +36,44 @@
 		<view class="demo-section">
 			<view class="section-title">文本处理模式</view>
 			<view class="demo-item">
-				<view class="item-label">价格模式：</view>
+				<view class="item-label">价格模式（默认符号）：</view>
 				<zx-text text="99.99" mode="price" type="primary"></zx-text>
 			</view>
 			<view class="demo-item">
-				<view class="item-label">姓名脱敏：</view>
+				<view class="item-label">价格模式（千分位）：</view>
+				<zx-text text="1234.56" mode="price" type="primary"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">价格模式（自定义符号）：</view>
+				<zx-text text="1234.56" mode="price" symbol="$" type="primary"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">姓名脱敏（两个字）：</view>
+				<zx-text text="张三" mode="name"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">姓名脱敏（多个字）：</view>
 				<zx-text text="张三李" mode="name"></zx-text>
 			</view>
 			<view class="demo-item">
 				<view class="item-label">手机号码脱敏：</view>
+				<zx-text text="13812345678" mode="mobile"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">可拨打电话的手机号：</view>
 				<zx-text text="13812345678" mode="mobile" call></zx-text>
 			</view>
 			<view class="demo-item">
-				<view class="item-label">日期格式化：</view>
+				<view class="item-label">日期格式化（普通日期）：</view>
 				<zx-text text="2023-05-20" mode="date"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">日期格式化（时间戳）：</view>
+				<zx-text :text="1684569600" mode="date"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">日期格式化（带时分秒）：</view>
+				<zx-text text="2023-05-20 08:30:00" mode="date"></zx-text>
 			</view>
 		</view>
 		
@@ -132,6 +151,38 @@
 		</view>
 		
 		<view class="demo-section">
+			<view class="section-title">可选择文本</view>
+			<view class="demo-item">
+				<view class="item-label">普通文本：</view>
+				<zx-text text="这段文本不可选择"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">可选择文本：</view>
+				<zx-text text="这段文本可以被选择（长按试试）" selectable></zx-text>
+			</view>
+		</view>
+		
+		<view class="demo-section">
+			<view class="section-title">文本间距</view>
+			<view class="demo-item">
+				<view class="item-label">普通间距：</view>
+				<zx-text text="普通间距文本 示例"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">ensp 空格：</view>
+				<zx-text text="ensp 空格文本 示例" space="ensp"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">emsp 空格：</view>
+				<zx-text text="emsp 空格文本 示例" space="emsp"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">nbsp 空格：</view>
+				<zx-text text="nbsp 空格文本 示例" space="nbsp"></zx-text>
+			</view>
+		</view>
+		
+		<view class="demo-section">
 			<view class="section-title">组合使用</view>
 			<view class="demo-item">
 				<zx-text text="组合样式展示" type="primary" bold size="36rpx"></zx-text>
@@ -160,12 +211,24 @@
 			<view class="demo-item">
 				<zx-text text="左右都有插槽">
 					<template #left>
-						<view class="slot-icon">📌</view>
+						<view class="slot-icon">👈</view>
 					</template>
 					<template #right>
 						<view class="slot-icon">👉</view>
 					</template>
 				</zx-text>
+			</view>
+		</view>
+		
+		<view class="demo-section">
+			<view class="section-title">事件响应</view>
+			<view class="demo-item">
+				<view class="item-label">点击事件：</view>
+				<zx-text text="点击我触发事件" @click="handleClick" type="primary" bold></zx-text>
+			</view>
+			<view class="demo-item" v-if="lastClickText">
+				<view class="item-label">上次点击的文本：</view>
+				<zx-text :text="lastClickText" type="success"></zx-text>
 			</view>
 		</view>
 	</view>
@@ -174,18 +237,24 @@
 <script setup>
 import { ref } from 'vue';
 
-// 查看文档
-function goToDoc() {
-	// 在新窗口打开文档
-	uni.navigateTo({
-		url: '/pages/components/zx-text-demo/doc'
+// 最后点击的文本
+const lastClickText = ref('');
+
+// 处理点击事件
+function handleClick(e) {
+	lastClickText.value = e.text;
+	uni.showToast({
+		title: '点击了：' + e.text,
+		icon: 'none'
 	});
 }
+
 </script>
 
 <style scoped>
 .container {
 	padding: 20rpx;
+	padding-bottom: 60rpx;
 }
 
 .title {
