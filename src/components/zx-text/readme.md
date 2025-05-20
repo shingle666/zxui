@@ -217,13 +217,13 @@ import ZxText from '@/components/zx-text/zx-text.vue';
 <zx-text text="跳转到首页" mode="link" href="/pages/index/index"></zx-text>
 
 <!-- 外部链接（当前窗口打开） -->
-<zx-text text="访问官网" mode="link" href="https://example.com"></zx-text>
+<zx-text text="访问官网" mode="link" href="https://zxui.org"></zx-text>
 
 <!-- 外部链接（新窗口打开） -->
-<zx-text text="访问文档" mode="link" href="https://example.com/docs" target="_blank"></zx-text>
+<zx-text text="访问文档" mode="link" href="https://zxui.org/components/intro.html" target="_blank"></zx-text>
 
 <!-- 自定义颜色的链接 -->
-<zx-text text="自定义颜色链接" mode="link" href="https://example.com" color="#ff7900"></zx-text>
+<zx-text text="自定义颜色链接" mode="link" href="https://zxui.org" color="#ff7900"></zx-text>
 ```
 
 ### 排版样式
