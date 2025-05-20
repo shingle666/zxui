@@ -4,6 +4,79 @@
 
 ZX-Text是一个功能丰富的文本处理组件，集成了文本类在项目中的常用功能，包括主题颜色、格式化日期、姓名脱敏等多种处理方式。通过简单的配置，可以实现各种文本展示效果。
 
+## 安装说明
+
+### NPM 安装
+
+```bash
+# 使用 npm 安装
+npm install @tanzhenxing/zx-text
+
+# 使用 yarn 安装
+yarn add @tanzhenxing/zx-text
+
+# 使用 pnpm 安装
+pnpm add @tanzhenxing/zx-text
+```
+
+### 在项目中使用
+
+#### 全局注册
+
+在 `main.js` 中注册组件：
+
+```js
+import { createSSRApp } from 'vue'
+import App from './App.vue'
+import ZxText from '@tanzhenxing/zx-text'
+
+export function createApp() {
+  const app = createSSRApp(App)
+  app.component('zx-text', ZxText)
+  return {
+    app
+  }
+}
+```
+
+#### 局部注册
+
+在需要使用的组件中单独引入：
+
+```vue
+<script setup>
+import ZxText from '@tanzhenxing/zx-text';
+</script>
+
+<template>
+  <zx-text text="基础文本"></zx-text>
+</template>
+```
+
+#### easycom 模式（推荐）
+
+在 `pages.json` 中配置 easycom 规则：
+
+```json
+// pages.json
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "zx-text": "@tanzhenxing/zx-text"
+    }
+  }
+}
+```
+
+配置完成后，可以在任意页面直接使用组件，无需额外引入：
+
+```vue
+<template>
+  <zx-text text="基础文本"></zx-text>
+</template>
+```
+
 ## 引入方式
 
 ```vue
