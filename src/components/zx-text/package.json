@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-text",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "ZX-Text是一个功能丰富的文本处理组件，集成了文本类在项目中的常用功能，包括主题颜色、格式化日期、姓名脱敏等多种处理方式。通过简单的配置，可以实现各种文本展示效果。",
   "main": "zx-text.vue",
   "module": "zx-text.vue",
