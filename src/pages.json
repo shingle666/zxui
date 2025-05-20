@@ -7,9 +7,15 @@
 			}
 		},
 		{
-			"path": "pages/components/zx-text-demo/index",
+			"path": "pages/components/text/index",
 			"style": {
-				"navigationBarTitleText": "ZX-Text 文本组件"
+				"navigationBarTitleText": "Text 文本组件"
+			}
+		},
+		{
+			"path": "pages/components/zx-icon-demo/index",
+			"style": {
+				"navigationBarTitleText": "ZX-Icon 图标组件"
 			}
 		}
 	],
