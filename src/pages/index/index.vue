@@ -5,28 +5,36 @@
       <text class="title">{{ title }}</text>
     </view>
     <view>
+      <zx-text
+        text="zx-text 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/text/index')"
+      ></zx-text>
 
-    <zx-text text="zx-text 组件使用示例" type="primary" @click="handleClick"></zx-text>
-
+      <zx-text
+        text="zx-icon 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/icon/index')"
+      ></zx-text>
     </view>
   </view>
 </template>
 
 <script setup>
-import {ref} from 'vue'
-import { onLoad } from '@dcloudio/uni-app'
+import { ref } from "vue";
+import { onLoad } from "@dcloudio/uni-app";
 
-const title = ref('Hello')
+const title = ref("Hello");
 
-onLoad((options)=>{
-  console.log(JSON.stringify(options))
-})
+onLoad((options) => {
+  console.log(JSON.stringify(options));
+});
 
-const handleClick = () => {
+const handleClick = (path) => {
   uni.navigateTo({
-    url: '/pages/components/text/index'
-  })
-}
+    url: path,
+  });
+};
 </script>
 
 <style>
