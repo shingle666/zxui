@@ -14,7 +14,7 @@
 			:space="space"
 			:decode="decode"
 		>
-			{{ symbol }}{{ getText }}
+			{{ mode === 'price' ? symbol : '' }} {{ getText }}
 		</text>
 		<slot name="right"></slot>
 	</view>
@@ -72,10 +72,10 @@ const props = defineProps({
 		type: String,
 		default: ''
 	},
-	// 符号
+	// 符号 默认是￥
 	symbol: {
 		type: String,
-		default: ''
+		default: '￥'
 	},
 	// 是否粗体，默认normal
 	bold: {
