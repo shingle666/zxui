@@ -13,9 +13,9 @@
 			}
 		},
 		{
-			"path": "pages/components/zx-icon-demo/index",
+			"path": "pages/components/icon/index",
 			"style": {
-				"navigationBarTitleText": "ZX-Icon 图标组件"
+				"navigationBarTitleText": "Icon 图标组件"
 			}
 		}
 	],

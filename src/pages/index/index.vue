@@ -24,7 +24,7 @@ onLoad((options)=>{
 
 const handleClick = () => {
   uni.navigateTo({
-    url: '/pages/components/zx-text-demo/index'
+    url: '/pages/components/text/index'
   })
 }
 </script>
