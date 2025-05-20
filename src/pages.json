@@ -17,6 +17,12 @@
 			"style": {
 				"navigationBarTitleText": "Icon 图标组件"
 			}
+		},
+		{
+			"path": "pages/components/avatar/index",
+			"style": {
+				"navigationBarTitleText": "Avatar 头像组件"
+			}
 		}
 	],
 	"globalStyle": {

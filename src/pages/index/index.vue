@@ -16,6 +16,12 @@
         type="primary"
         @click="handleClick('/pages/components/icon/index')"
       ></zx-text>
+      
+      <zx-text
+        text="zx-avatar 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/avatar/index')"
+      ></zx-text>
     </view>
   </view>
 </template>

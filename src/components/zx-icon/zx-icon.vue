@@ -32,9 +32,10 @@
  * @example
  * <zx-icon name="eye"></zx-icon>
  */
-import { computed, defineProps, defineEmits } from "vue";
+import { computed, ref, getCurrentInstance } from "vue";
 
 const emit = defineEmits(["onClick"]);
+const proxy = getCurrentInstance();
 
 const props = defineProps({
   // 图标类名
@@ -110,7 +111,7 @@ const imgStyle = computed(() => ({
 
 // 点击事件处理
 const onClick = (e) => {
-  emit("onClick", props.index);
+  proxy.$emit("click", e);
 };
 </script>
 
