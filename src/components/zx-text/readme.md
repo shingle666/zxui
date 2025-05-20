@@ -24,7 +24,7 @@ import ZxText from '@/components/zx-text/zx-text.vue';
 | --- | --- | --- | --- |
 | type | String | black | 主题颜色，可选值：primary, success, warning, danger, gray, black, white |
 | text | String/Number | - | 显示的文本内容 |
-| mode | String | text | 文本处理的匹配模式：text-普通文本，price-价格，name-姓名，date-日期，mobile-手机号码 |
+| mode | String | text | 文本处理的匹配模式：text-普通文本，price-价格，name-姓名，date-日期，mobile-手机号码，link-链接 |
 | fontFamily | String | - | 字体 |
 | symbol | String | ￥ | 符号，常用于价格符号 |
 | bold | Boolean | false | 是否粗体 |
@@ -41,6 +41,8 @@ import ZxText from '@/components/zx-text/zx-text.vue';
 | block | Boolean | true | 是否块级元素 |
 | space | String | - | 显示连续空格，可选值：ensp, emsp, nbsp |
 | call | Boolean | false | 是否可点击拨打电话（仅手机号码模式下有效） |
+| href | String | - | 链接地址（仅链接模式下有效） |
+| target | String | _self | 链接打开方式，可选值：_self, _blank（仅链接模式下有效） |
 
 ## 事件
 
@@ -131,6 +133,24 @@ import ZxText from '@/components/zx-text/zx-text.vue';
 <!-- 带时分秒的日期 -->
 <zx-text text="2023-05-20 08:30:00" mode="date"></zx-text>
 <!-- 显示：2023-05-20 -->
+```
+
+#### 链接模式
+
+显示可点击的链接文本：
+
+```vue
+<!-- 内部页面链接 -->
+<zx-text text="跳转到首页" mode="link" href="/pages/index/index"></zx-text>
+
+<!-- 外部链接（当前窗口打开） -->
+<zx-text text="访问官网" mode="link" href="https://example.com"></zx-text>
+
+<!-- 外部链接（新窗口打开） -->
+<zx-text text="访问文档" mode="link" href="https://example.com/docs" target="_blank"></zx-text>
+
+<!-- 自定义颜色的链接 -->
+<zx-text text="自定义颜色链接" mode="link" href="https://example.com" color="#ff7900"></zx-text>
 ```
 
 ### 排版样式
@@ -232,4 +252,5 @@ import ZxText from '@/components/zx-text/zx-text.vue';
 2. 设置`lines`属性时，文本超出指定行数会自动显示省略号
 3. 使用`block`属性可以控制文本是否为块级元素，默认为块级
 4. 日期格式化默认为`yyyy-mm-dd`格式，支持多种输入格式，包括时间戳
-5. 在nvue环境下，部分样式可能表现不同，组件内部已做兼容处理 
+5. 在nvue环境下，部分样式可能表现不同，组件内部已做兼容处理
+6. 链接模式下，文本会自动添加下划线，点击时会根据`href`和`target`属性进行跳转 

@@ -75,6 +75,22 @@
 				<view class="item-label">日期格式化（带时分秒）：</view>
 				<zx-text text="2023-05-20 08:30:00" mode="date"></zx-text>
 			</view>
+			<view class="demo-item">
+				<view class="item-label">链接模式（内部页面）：</view>
+				<zx-text text="跳转到首页" mode="link" href="/pages/index/index"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">链接模式（外部链接）：</view>
+				<zx-text text="访问示例网站" mode="link" href="https://uniapp.dcloud.io"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">链接模式（新窗口打开）：</view>
+				<zx-text text="在新窗口打开文档" mode="link" href="https://uniapp.dcloud.io/component/" target="_blank"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">链接模式（自定义颜色）：</view>
+				<zx-text text="自定义颜色链接" mode="link" href="https://uniapp.dcloud.io" color="#ff7900"></zx-text>
+			</view>
 		</view>
 		
 		<view class="demo-section">
@@ -190,6 +206,9 @@
 			<view class="demo-item">
 				<zx-text text="199.99" mode="price" type="danger" bold size="40rpx"></zx-text>
 			</view>
+			<view class="demo-item">
+				<zx-text text="带链接的粗体文本" mode="link" href="https://uniapp.dcloud.io" bold type="primary"></zx-text>
+			</view>
 		</view>
 		
 		<view class="demo-section">
@@ -215,6 +234,13 @@
 					</template>
 					<template #right>
 						<view class="slot-icon">👉</view>
+					</template>
+				</zx-text>
+			</view>
+			<view class="demo-item">
+				<zx-text text="链接带图标" mode="link" href="https://uniapp.dcloud.io">
+					<template #left>
+						<view class="slot-icon">🔗</view>
 					</template>
 				</zx-text>
 			</view>

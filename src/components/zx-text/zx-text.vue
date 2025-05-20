@@ -1,7 +1,7 @@
 <template>
 	<view
 		class="zx-text"
-		:class="block ? 'block' : 'inline'"
+		:class="[block ? 'block' : 'inline', mode === 'link' ? 'link-text' : '']"
 		:style="justifyStyle"
 		@tap="clickHandler"
 	>
@@ -27,7 +27,7 @@
  * @tutorial https://zxui.org/components/text
  * @property {Boolean} 					type		主题颜色 primary，success， warning，danger，gray，black，white
  * @property {String | Number}			text		显示的值
- * @property {String} 					mode		文本处理的匹配模式 text-普通文本，price-价格，name-姓名，date-日期，mobile-手机号码
+ * @property {String} 					mode		文本处理的匹配模式 text-普通文本，price-价格，name-姓名，date-日期，mobile-手机号码, link-链接
  * @property {String} 					fontFamily	字体
  * @property {String} 					symbol		符号
  * @property {Boolean} 					bold		是否粗体
@@ -44,6 +44,8 @@
  * @property {Boolean} 					block		是否块级
  * @property {String} 					space		显示连续空格 ensp \ emsp \ nbsp
  * @property {Boolean} 					call		是否拨打电话
+ * @property {String} 					href		链接地址，mode为link时有效
+ * @property {String} 					target		链接打开方式，可选值：_self, _blank，mode为link时有效
  * @event {Function}                    click       点击触发事件
  * @example <zx-text text="文字内容"></zx-text>
  */
@@ -62,7 +64,7 @@ const props = defineProps({
 		type: [String, Number],
 		default: ''
 	},
-	// 文本处理的匹配模式: text-普通文本，price-价格，name-姓名，date-日期，mobile
+	// 文本处理的匹配模式: text-普通文本，price-价格，name-姓名，date-日期，mobile-手机号码, link-链接
 	mode: {
 		type: String,
 		default: 'text'
@@ -146,6 +148,16 @@ const props = defineProps({
 	call: {
 		type: Boolean,
 		default: false
+	},
+	// 链接地址，mode为link时有效
+	href: {
+		type: String,
+		default: ''
+	},
+	// 链接打开方式，可选值：_self, _blank
+	target: {
+		type: String,
+		default: '_self'
 	}
 });
 
@@ -167,11 +179,11 @@ const valueStyle = computed(() => {
 	}
 
 	const style = {
-		textDecoration: props.decoration,
+		textDecoration: props.mode === 'link' ? 'underline' : props.decoration,
 		fontWeight: props.bold ? 'bold' : 'normal',
 		wordWrap: props.wordWrap,
 		fontSize: props.size,
-		color: color,
+		color: props.mode === 'link' ? (color || '#5677fc') : color,
 		lines: props.lines,
 		lineHeight: props.lineHeight,
 		textAlign: 'justify'
@@ -199,6 +211,9 @@ const getText = computed(() => {
 			break;
 		case 'mobile':
 			text = formatMobile(text);
+			break;
+		case 'link':
+			text = formatLink(text);
 			break;
 		default:
 			break;
@@ -244,6 +259,48 @@ const clickHandler = () => {
 			phoneNumber: props.text
 		});
 	}
+	
+	if (props.mode === 'link' && props.href) {
+		if (props.target === '_blank') {
+			// 打开外部链接
+			// #ifdef H5
+			window.open(props.href);
+			// #endif
+			
+			// #ifdef APP-PLUS
+			plus.runtime.openURL(props.href);
+			// #endif
+			
+			// #ifdef MP
+			uni.navigateTo({
+				url: `/pages/webview/index?url=${encodeURIComponent(props.href)}`
+			});
+			// #endif
+		} else {
+			// 打开内部链接
+			if (props.href.indexOf('http') === 0) {
+				// #ifdef H5
+				window.location.href = props.href;
+				// #endif
+				
+				// #ifdef APP-PLUS || MP
+				uni.navigateTo({
+					url: `/pages/webview/index?url=${encodeURIComponent(props.href)}`
+				});
+				// #endif
+			} else {
+				// 内部路由跳转
+				uni.navigateTo({
+					url: props.href,
+					fail: () => {
+						uni.switchTab({
+							url: props.href
+						});
+					}
+				});
+			}
+		}
+	}
 };
 
 /**
@@ -287,6 +344,13 @@ const formatName = (name) => {
  */
 const formatMobile = (num) => {
 	return num.length === 11 ? num.replace(/^(\d{3})\d{4}(\d{4})$/, '$1****$2') : num;
+};
+
+/**
+ * 链接格式化
+ */
+const formatLink = (text) => {
+	return text;
 };
 
 /**
@@ -364,6 +428,15 @@ const formatTime = (dateTime = null, formatStr = 'yyyy-mm-dd') => {
 		flex-wrap: wrap;
 		text-overflow: ellipsis;
 		align-items: center;
+	}
+	
+	&.link-text {
+		cursor: pointer;
+		/* #ifndef APP-NVUE */
+		&:hover {
+			opacity: 0.8;
+		}
+		/* #endif */
 	}
 }
 @for $i from 1 through 5 {
