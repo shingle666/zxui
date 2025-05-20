@@ -1,15 +1,10 @@
-<script>
-export default {
-  onLaunch: function () {
-    console.log('App Launch')
-  },
-  onShow: function () {
-    console.log('App Show')
-  },
-  onHide: function () {
-    console.log('App Hide')
-  },
-}
+<script setup>
+import { onLaunch } from "@dcloudio/uni-app";
+
+onLaunch((options)=>{
+  console.log('onLaunch:'+JSON.stringify(options))
+})
+
 </script>
 
 <style>

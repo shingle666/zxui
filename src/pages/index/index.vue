@@ -4,6 +4,11 @@
     <view class="text-area">
       <text class="title">{{ title }}</text>
     </view>
+    <view>
+
+    <zx-text text="zx-text 组件使用示例" type="primary" @click="handleClick"></zx-text>
+
+    </view>
   </view>
 </template>
 
@@ -16,6 +21,12 @@ const title = ref('Hello')
 onLoad((options)=>{
   console.log(JSON.stringify(options))
 })
+
+const handleClick = () => {
+  uni.navigateTo({
+    url: '/pages/components/zx-text-demo/index'
+  })
+}
 </script>
 
 <style>

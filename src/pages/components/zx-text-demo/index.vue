@@ -1,0 +1,249 @@
+<template>
+	<view class="container">
+		<view class="title">ZX-Text 文本组件演示</view>
+		
+		<view class="doc-link">
+			<button class="doc-btn" @click="goToDoc">查看使用文档</button>
+		</view>
+		
+		<view class="demo-section">
+			<view class="section-title">基础用法</view>
+			<view class="demo-item">
+				<zx-text text="基础文本"></zx-text>
+			</view>
+		</view>
+		
+		<view class="demo-section">
+			<view class="section-title">主题颜色</view>
+			<view class="demo-item">
+				<zx-text text="默认颜色" type="black"></zx-text>
+			</view>
+			<view class="demo-item">
+				<zx-text text="主要颜色" type="primary"></zx-text>
+			</view>
+			<view class="demo-item">
+				<zx-text text="成功颜色" type="success"></zx-text>
+			</view>
+			<view class="demo-item">
+				<zx-text text="警告颜色" type="warning"></zx-text>
+			</view>
+			<view class="demo-item">
+				<zx-text text="危险颜色" type="danger"></zx-text>
+			</view>
+			<view class="demo-item">
+				<zx-text text="灰色" type="gray"></zx-text>
+			</view>
+			<view class="demo-item" style="background-color: #333;">
+				<zx-text text="白色" type="white"></zx-text>
+			</view>
+		</view>
+		
+		<view class="demo-section">
+			<view class="section-title">文本处理模式</view>
+			<view class="demo-item">
+				<view class="item-label">价格模式：</view>
+				<zx-text text="99.99" mode="price" type="primary"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">姓名脱敏：</view>
+				<zx-text text="张三李" mode="name"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">手机号码脱敏：</view>
+				<zx-text text="13812345678" mode="mobile" call></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">日期格式化：</view>
+				<zx-text text="2023-05-20" mode="date"></zx-text>
+			</view>
+		</view>
+		
+		<view class="demo-section">
+			<view class="section-title">排版样式</view>
+			<view class="demo-item">
+				<view class="item-label">左对齐：</view>
+				<zx-text text="左对齐文本" align="left" block></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">居中对齐：</view>
+				<zx-text text="居中对齐文本" align="center" block></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">右对齐：</view>
+				<zx-text text="右对齐文本" align="right" block></zx-text>
+			</view>
+		</view>
+		
+		<view class="demo-section">
+			<view class="section-title">文本修饰</view>
+			<view class="demo-item">
+				<view class="item-label">加粗：</view>
+				<zx-text text="粗体文本" bold></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">下划线：</view>
+				<zx-text text="带下划线文本" decoration="underline"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">中划线：</view>
+				<zx-text text="带中划线文本" decoration="line-through"></zx-text>
+			</view>
+		</view>
+		
+		<view class="demo-section">
+			<view class="section-title">尺寸与行高</view>
+			<view class="demo-item">
+				<view class="item-label">默认大小：</view>
+				<zx-text text="默认大小文本"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">自定义大小：</view>
+				<zx-text text="36rpx大小文本" size="36rpx"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">自定义行高：</view>
+				<zx-text text="自定义行高文本，行高设置为60rpx" lineHeight="60rpx"></zx-text>
+			</view>
+		</view>
+		
+		<view class="demo-section">
+			<view class="section-title">自定义颜色</view>
+			<view class="demo-item">
+				<zx-text text="红色文本" color="#FF0000"></zx-text>
+			</view>
+			<view class="demo-item">
+				<zx-text text="蓝色文本" color="#0000FF"></zx-text>
+			</view>
+			<view class="demo-item">
+				<zx-text text="绿色文本" color="#00FF00"></zx-text>
+			</view>
+		</view>
+		
+		<view class="demo-section">
+			<view class="section-title">文本截断</view>
+			<view class="demo-item">
+				<view class="item-label">单行省略：</view>
+				<zx-text text="这是一段很长的文本，设置为单行显示，超出部分将会显示省略号，这是一段很长的文本，设置为单行显示，超出部分将会显示省略号。" lines="1"></zx-text>
+			</view>
+			<view class="demo-item">
+				<view class="item-label">两行省略：</view>
+				<zx-text text="这是一段很长的文本，设置为两行显示，超出部分将会显示省略号，这是一段很长的文本，设置为两行显示，超出部分将会显示省略号，这是一段很长的文本，设置为两行显示，超出部分将会显示省略号。" lines="2"></zx-text>
+			</view>
+		</view>
+		
+		<view class="demo-section">
+			<view class="section-title">组合使用</view>
+			<view class="demo-item">
+				<zx-text text="组合样式展示" type="primary" bold size="36rpx"></zx-text>
+			</view>
+			<view class="demo-item">
+				<zx-text text="199.99" mode="price" type="danger" bold size="40rpx"></zx-text>
+			</view>
+		</view>
+		
+		<view class="demo-section">
+			<view class="section-title">插槽使用</view>
+			<view class="demo-item">
+				<zx-text text="带左侧插槽">
+					<template #left>
+						<view class="slot-icon">🔍</view>
+					</template>
+				</zx-text>
+			</view>
+			<view class="demo-item">
+				<zx-text text="带右侧插槽">
+					<template #right>
+						<view class="slot-icon">🔔</view>
+					</template>
+				</zx-text>
+			</view>
+			<view class="demo-item">
+				<zx-text text="左右都有插槽">
+					<template #left>
+						<view class="slot-icon">📌</view>
+					</template>
+					<template #right>
+						<view class="slot-icon">👉</view>
+					</template>
+				</zx-text>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+
+// 查看文档
+function goToDoc() {
+	// 在新窗口打开文档
+	uni.navigateTo({
+		url: '/pages/components/zx-text-demo/doc'
+	});
+}
+</script>
+
+<style scoped>
+.container {
+	padding: 20rpx;
+}
+
+.title {
+	font-size: 36rpx;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 30rpx;
+}
+
+.demo-section {
+	margin-bottom: 40rpx;
+	background-color: #fff;
+	border-radius: 12rpx;
+	padding: 20rpx;
+	box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+	font-size: 32rpx;
+	font-weight: bold;
+	margin-bottom: 20rpx;
+	position: relative;
+	padding-left: 20rpx;
+	border-left: 8rpx solid #5677fc;
+}
+
+.demo-item {
+	padding: 16rpx 0;
+	border-bottom: 1px solid #f5f5f5;
+}
+
+.demo-item:last-child {
+	border-bottom: none;
+}
+
+.item-label {
+	font-size: 28rpx;
+	color: #999;
+	margin-bottom: 10rpx;
+}
+
+.slot-icon {
+	margin: 0 10rpx;
+	font-size: 36rpx;
+}
+
+.doc-link {
+	padding: 20rpx 0;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20rpx;
+}
+
+.doc-btn {
+	background-color: #5677fc;
+	color: #fff;
+	border-radius: 8rpx;
+	padding: 16rpx 30rpx;
+	font-size: 28rpx;
+}
+</style> 

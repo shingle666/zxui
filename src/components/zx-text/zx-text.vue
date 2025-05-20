@@ -1,9 +1,8 @@
 <template>
 	<view
-		v-if="show"
 		class="zx-text"
 		:class="block ? 'block' : 'inline'"
-		:style="{ justifyContent: align === 'left' ? 'flex-start' : align === 'center' ? 'center' : 'flex-end' }"
+		:style="justifyStyle"
 		@tap="clickHandler"
 	>
 		<slot name="left"></slot>
@@ -25,11 +24,12 @@
 /**
  * Text 文本
  * @description 集成了文本类在项目中的常用功能，包括状态，格式化日期，姓名脱敏。
- * @tutorial https://zxui.org/components/loading
- * @property {Boolean} 					show		是否显示
+ * @tutorial https://zxui.org/components/text
  * @property {Boolean} 					type		主题颜色 primary，success， warning，danger，gray，black，white
  * @property {String | Number}			text		显示的值
  * @property {String} 					mode		文本处理的匹配模式 text-普通文本，price-价格，name-姓名，date-日期，mobile-手机号码
+ * @property {String} 					fontFamily	字体
+ * @property {String} 					symbol		符号
  * @property {Boolean} 					bold		是否粗体
  * @property {String | Number} 			lines		文本显示的行数，如果设置，超出此行数，将会显示省略号
  * @property {String} 					color		文本颜色
@@ -38,18 +38,20 @@
  * @property {String | Number} 			lineHeight	文本行高
  * @property {String} 					align		文本对齐方式，可选值left|center|right
  * @property {String} 					wordWrap	文字换行，可选值break-word|normal|anywhere
+ * @property {Boolean} 					selectable	是否可选择
+ * @property {Boolean} 					userSelect	是否可选择
+ * @property {Boolean} 					decode		是否解码
+ * @property {Boolean} 					block		是否块级
+ * @property {String} 					space		显示连续空格 ensp \ emsp \ nbsp
+ * @property {Boolean} 					call		是否拨打电话
  * @event {Function}                    click       点击触发事件
  * @example <zx-text text="文字内容"></zx-text>
  */
 import { ref, getCurrentInstance, computed } from 'vue';
 
 const { proxy } = getCurrentInstance();
+
 const props = defineProps({
-	// 是否显示
-	show: {
-		type: Boolean,
-		default: true
-	},
 	// 样式
 	type: {
 		type: String,
@@ -60,16 +62,17 @@ const props = defineProps({
 		type: [String, Number],
 		default: ''
 	},
-	// 文本处理的匹配模式
-	// text-普通文本，price-价格，name-姓名，date-日期，mobile
+	// 文本处理的匹配模式: text-普通文本，price-价格，name-姓名，date-日期，mobile
 	mode: {
 		type: String,
 		default: 'text'
 	},
+	// 字体
 	fontFamily: {
 		type: String,
 		default: ''
 	},
+	// 符号
 	symbol: {
 		type: String,
 		default: ''
@@ -96,7 +99,7 @@ const props = defineProps({
 	},
 	// 文字装饰，下划线，中划线等，可选值 none|underline|line-through
 	decoration: {
-		tepe: String,
+		type: String,
 		default: 'none'
 	},
 	// 文本行高
@@ -114,19 +117,22 @@ const props = defineProps({
 		type: String,
 		default: 'normal'
 	},
-	//
+	// 是否可选择
 	selectable: {
 		type: Boolean,
 		default: false
 	},
+	// 是否可选择
 	userSelect: {
 		type: Boolean,
 		default: false
 	},
+	// 是否解码
 	decode: {
 		type: Boolean,
 		default: false
 	},
+	// 是否块级
 	block: {
 		type: Boolean,
 		default: true
@@ -143,6 +149,9 @@ const props = defineProps({
 	}
 });
 
+/**
+ * 文本样式
+ */
 const valueStyle = computed(() => {
 	let color = props.color || '';
 	if (!color && props.type) {
@@ -172,6 +181,10 @@ const valueStyle = computed(() => {
 	}
 	return style;
 });
+
+/**
+ * 获取文本内容
+ */
 const getText = computed(() => {
 	let text = props.text;
 	switch (props.mode) {
@@ -192,6 +205,19 @@ const getText = computed(() => {
 	}
 	return text;
 });
+
+/**
+ * 获取文本方向样式
+ */
+const justifyStyle = computed(() => {
+	return { 
+		justifyContent: props.align === 'left' ? 'flex-start' : props.align === 'center' ? 'center' : 'flex-end' 
+	};
+});
+
+/**
+ * 获取文本颜色
+ */
 const getColor=computed(() => {
 	let color = props.color || '';
 	if (!color && props.type) {
@@ -208,6 +234,9 @@ const getColor=computed(() => {
 	return color;
 });
 
+/**
+ * 点击事件
+ */
 const clickHandler = () => {
 	proxy.$emit('click', { text: props.text });
 	if (props.call && props.mode === 'mobile') {
@@ -216,7 +245,10 @@ const clickHandler = () => {
 		});
 	}
 };
-// 金额格式化
+
+/**
+ * 金额格式化
+ */
 const formatPrice = (price) => {
 	return parseFloat(price)
 		.toFixed(2)
@@ -230,7 +262,10 @@ const formatPrice = (price) => {
 		.reverse()
 		.join('');
 };
-// 姓名脱敏规则
+
+/**
+ * 姓名脱敏规则
+ */
 const formatName = (name) => {
 	let value = '';
 	if (name.length === 2) {
@@ -246,11 +281,17 @@ const formatName = (name) => {
 	}
 	return value;
 };
-// 手机号码脱敏规则
+
+/**
+ * 手机号码脱敏规则
+ */
 const formatMobile = (num) => {
 	return num.length === 11 ? num.replace(/^(\d{3})\d{4}(\d{4})$/, '$1****$2') : num;
 };
-// 时间格式化
+
+/**
+ * 时间格式化
+ */
 const formatTime = (dateTime = null, formatStr = 'yyyy-mm-dd') => {
 	let date;
 	// 若传入时间为假值，则取当前时间
@@ -313,9 +354,6 @@ const formatTime = (dateTime = null, formatStr = 'yyyy-mm-dd') => {
 	align-items: center;
 	flex-wrap: nowrap;
 	flex: 1;
-	/* #ifndef APP-NVUE */
-	//width: 100%;
-	/* #endif */
 
 	.price {
 	}
