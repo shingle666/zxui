@@ -8,24 +8,39 @@
 				:style="[imageStyle(index + 1, index1 + 1)]"
 				@tap="previewFullImage ? onPreviewTap(getSrc(item)) : ''"
 			>
+				<view v-if="loading" class="zx-album__row__wrapper__loading">
+					<view class="loading-circle"></view>
+				</view>
 				<image
 					:src="getSrc(item)"
 					:mode="urls.length === 1 ? (imageHeight > 0 ? singleMode : 'widthFix') : multipleMode"
 					:style="[{ width: imageWidth, height: imageHeight }]"
+					@error="onImageError(index, index1)"
+					@load="onImageLoad(index, index1)"
+					:lazy-load="lazyLoad"
 				></image>
+				<view v-if="showError && imageLoadStatus[`${index}-${index1}`] === 'error'" class="zx-album__row__wrapper__error">
+					<zx-text text="加载失败" color="#ffffff" size="24rpx" align="center" customStyle="justify-content: center"></zx-text>
+				</view>
 				<view
 					v-if="showMore && urls.length > rowCount * showUrls.length && index === showUrls.length - 1 && index1 === showUrls[showUrls.length - 1].length - 1"
 					class="zx-album__row__wrapper__text"
 				>
-					<zx-text :text="`+${urls.length - maxCount}`" color="#fffff" size="70rpx" align="center" customStyle="justify-content: center"></zx-text>
+					<zx-text :text="`+${urls.length - maxCount}`" color="#ffffff" size="70rpx" align="center" customStyle="justify-content: center"></zx-text>
+				</view>
+				<view v-if="deletable" class="zx-album__row__wrapper__delete" @tap.stop="onDeleteTap(index, index1)">
+					<text class="delete-icon">×</text>
 				</view>
 			</view>
+		</view>
+		<view v-if="urls.length === 0 && showEmpty" class="zx-album__empty">
+			<zx-text :text="emptyText" color="#999999" size="28rpx"></zx-text>
 		</view>
 	</view>
 </template>
 
 <script setup>
-import { ref, getCurrentInstance, watch, computed } from 'vue';
+import { ref, getCurrentInstance, watch, computed, reactive } from 'vue';
 
 const { proxy } = getCurrentInstance();
 
@@ -48,8 +63,16 @@ const dom = uni.requireNativePlugin('dom');
  * @property {Boolean}         previewFullImage 是否可以预览图片 （默认 true ）
  * @property {String | Number} rowCount         每行展示图片数量，如设置，singleSize和multipleSize将会无效	（默认 3 ）
  * @property {Boolean}         showMore         超出maxCount时是否显示查看更多的提示 （默认 true ）
+ * @property {Boolean}         deletable        是否可以删除图片 （默认 false ）
+ * @property {Boolean}         lazyLoad         是否开启图片懒加载 （默认 true ）
+ * @property {Boolean}         loading          是否显示加载状态 （默认 false ）
+ * @property {Boolean}         showError        是否显示加载失败的提示 （默认 true ）
+ * @property {Boolean}         showEmpty        是否显示空状态提示 （默认 true ）
+ * @property {String}          emptyText        空状态提示文字 （默认 '暂无图片' ）
  *
  * @event    {Function}        albumWidth       某些特殊的情况下，需要让文字与相册的宽度相等，这里事件的形式对外发送  （回调参数 width ）
+ * @event    {Function}        delete           删除图片时触发 （回调参数 index ）
+ * @event    {Function}        error            图片加载失败时触发 （回调参数 {rowIndex, colIndex, src} ）
  * @example <zx-album :urls="urls" @albumWidth="width => albumWidth = width" multipleSize="68" ></zx-album>
  */
 
@@ -110,8 +133,40 @@ const props = defineProps({
 	showMore: {
 		type: Boolean,
 		default: true
+	},
+	// 是否可以删除图片
+	deletable: {
+		type: Boolean,
+		default: false
+	},
+	// 是否开启图片懒加载
+	lazyLoad: {
+		type: Boolean,
+		default: true
+	},
+	// 是否显示加载状态
+	loading: {
+		type: Boolean,
+		default: false
+	},
+	// 是否显示加载失败的提示
+	showError: {
+		type: Boolean,
+		default: true
+	},
+	// 是否显示空状态提示
+	showEmpty: {
+		type: Boolean,
+		default: true
+	},
+	// 空状态提示文字
+	emptyText: {
+		type: String,
+		default: '暂无图片'
 	}
 });
+
+const emit = defineEmits(['albumWidth', 'delete', 'error']);
 
 // 单图的宽度
 const singleWidth = ref(0);
@@ -119,6 +174,8 @@ const singleWidth = ref(0);
 const singleHeight = ref(0);
 // 单图时，如果无法获取图片的尺寸信息，让图片宽度默认为容器的一定百分比
 const singlePercent = ref(0.6);
+// 图片加载状态
+const imageLoadStatus = reactive({});
 
 const imageStyle = computed(() => {
 	return (index1, index2) => {
@@ -139,6 +196,7 @@ const imageStyle = computed(() => {
 		return style;
 	};
 });
+
 // 将数组划分为二维数组
 const showUrls = computed(() => {
 	const arr = [];
@@ -156,33 +214,38 @@ const showUrls = computed(() => {
 	});
 	return arr;
 });
+
 const imageWidth = computed(() => {
 	return props.urls.length === 1 ? singleWidth.value : props.multipleSize;
 });
+
 const imageHeight = computed(() => {
 	return props.urls.length === 1 ? singleHeight.value : props.multipleSize;
 });
+
 // 此变量无实际用途，仅仅是为了利用computed特性，让其在urls长度等变化时，重新计算图片的宽度
 // 因为用户在某些特殊的情况下，需要让文字与相册的宽度相等，所以这里事件的形式对外发送
 const albumWidth = computed(() => {
 	let width = 0;
 	if (props.urls.length === 1) {
 		width = singleWidth.value;
-	} else {
-		width = showUrls.value[0].length * props.multipleSize + props.space * (showUrls.value[0].length - 1);
+	} else if (props.urls.length > 0) {
+		// 考虑可能没有完整一行的情况
+		const rowItemCount = showUrls.value[0]?.length || 0;
+		width = rowItemCount > 0 ? rowItemCount * props.multipleSize + props.space * (rowItemCount - 1) : 0;
 	}
-	proxy.$emit('albumWidth', width);
+	emit('albumWidth', width);
 	return width;
 });
 
 watch(
-	props.urls,
+	() => props.urls,
 	(newVal) => {
 		if (newVal.length === 1) {
 			getImageRect();
 		}
 	},
-	{ immediate: true }
+	{ immediate: true, deep: true }
 );
 
 // 预览图片
@@ -195,10 +258,31 @@ const onPreviewTap = (url) => {
 		urls
 	});
 };
+
+// 删除图片
+const onDeleteTap = (rowIndex, colIndex) => {
+	// 计算真实索引
+	const realIndex = rowIndex * Number(props.rowCount) + colIndex;
+	emit('delete', realIndex);
+};
+
+// 图片加载失败
+const onImageError = (rowIndex, colIndex) => {
+	imageLoadStatus[`${rowIndex}-${colIndex}`] = 'error';
+	const src = getSrc(props.urls[rowIndex * Number(props.rowCount) + colIndex]);
+	emit('error', { rowIndex, colIndex, src });
+};
+
+// 图片加载成功
+const onImageLoad = (rowIndex, colIndex) => {
+	imageLoadStatus[`${rowIndex}-${colIndex}`] = 'success';
+};
+
 // 获取图片的路径
 const getSrc = (item) => {
 	return testObject(item) ? (props.keyName && item[props.keyName]) || item.src : item;
 };
+
 // 单图时，获取图片的尺寸
 // 在小程序中，需要将网络图片的的域名添加到小程序的download域名才可能获取尺寸
 // 在没有添加的情况下，让单图宽度默认为盒子的一定宽度(singlePercent)
@@ -217,6 +301,7 @@ const getImageRect = () => {
 		}
 	});
 };
+
 // 获取组件的宽度
 const getComponentWidth = async () => {
 	// 延时一定时间，以获取dom尺寸
@@ -236,6 +321,7 @@ const getComponentWidth = async () => {
 		});
 	// #endif
 };
+
 const sleep = (value = 30) => {
 	return new Promise((resolve) => {
 		setTimeout(() => {
@@ -243,8 +329,27 @@ const sleep = (value = 30) => {
 		}, value);
 	});
 };
+
 const testObject = (value) => {
 	return Object.prototype.toString.call(value) === '[object Object]';
+};
+
+// uniapp 未提供获取元素尺寸的 hook，需要自己封装
+const $uGetRect = (selector, all) => {
+	return new Promise((resolve) => {
+		uni.createSelectorQuery()
+			.in(proxy)
+			[all ? 'selectAll' : 'select'](selector)
+			.boundingClientRect((rect) => {
+				if (all && Array.isArray(rect) && rect.length) {
+					resolve(rect);
+				}
+				if (!all && rect) {
+					resolve(rect);
+				}
+			})
+			.exec();
+	});
 };
 </script>
 
@@ -252,6 +357,7 @@ const testObject = (value) => {
 .zx-album {
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 
 	&__row {
 		display: flex;
@@ -260,6 +366,42 @@ const testObject = (value) => {
 
 		&__wrapper {
 			position: relative;
+			overflow: hidden;
+			
+			&__loading {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: rgba(0, 0, 0, 0.1);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				z-index: 1;
+				
+				.loading-circle {
+					width: 30rpx;
+					height: 30rpx;
+					border: 2rpx solid #f5f5f5;
+					border-top-color: #2979ff;
+					border-radius: 50%;
+					animation: loading-rotate 0.8s linear infinite;
+				}
+			}
+			
+			&__error {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: rgba(0, 0, 0, 0.2);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				z-index: 1;
+			}
 
 			&__text {
 				position: absolute;
@@ -272,8 +414,46 @@ const testObject = (value) => {
 				flex-direction: row;
 				justify-content: center;
 				align-items: center;
+				z-index: 1;
+			}
+			
+			&__delete {
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: 36rpx;
+				height: 36rpx;
+				background-color: rgba(0, 0, 0, 0.5);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				z-index: 2;
+				
+				.delete-icon {
+					color: #fff;
+					font-size: 24rpx;
+					font-weight: bold;
+					line-height: 1;
+				}
 			}
 		}
+	}
+	
+	&__empty {
+		width: 100%;
+		padding: 40rpx 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+@keyframes loading-rotate {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
 	}
 }
 </style>
