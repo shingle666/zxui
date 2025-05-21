@@ -1,0 +1,12 @@
+{
+  "name": "zx-button",
+  "version": "2.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["uniapp", "button", "component"],
+  "author": "",
+  "license": "ISC",
+  "description": "一个功能强大的 uni-app 按钮组件，提供了丰富的样式和功能选项"
+}

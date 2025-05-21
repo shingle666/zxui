@@ -3,7 +3,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "uni-app组件"
 			}
 		},
 		{
@@ -22,6 +22,12 @@
 			"path": "pages/components/avatar/index",
 			"style": {
 				"navigationBarTitleText": "Avatar 头像组件"
+			}
+		},
+		{
+			"path": "pages/components/button/index",
+			"style": {
+				"navigationBarTitleText": "Button 按钮组件"
 			}
 		}
 	],
