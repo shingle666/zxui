@@ -50,6 +50,7 @@
 			:certificate-url="certificateUrl"
 			:license-url="licenseUrl"
 			:preferred-peak-bit-rate="preferredPeakBitRate"
+			:codec="codec"
 			@bindplay="onPlay"
 			@bindpause="onPause"
 			@bindended="onEnded"
@@ -65,7 +66,7 @@
 			@bindseekcomplete="onSeekComplete"
 			@bindcastinguserselect="onCastingUserSelect"
 			@bindcastingstatechange="onCastingStateChange"
-			@bindcastinginterrupt="onCastingInterRupt"
+			@bindcastinginterrupt="onCastingInterrupt"
 			@play="onPlay"
 			@pause="onPause"
 			@ended="onEnded"
@@ -82,11 +83,24 @@
 			@controlstoggle="onControlsToggle"
 			@error="onError"
 		></video>
+		
+		<!-- 截图专用canvas，默认隐藏 -->
+		<canvas 
+			v-show="false"
+			:canvas-id="canvasId" 
+			:id="canvasId" 
+			:style="{ 
+				position: 'absolute', 
+				left: '-9999px', 
+				width: snapshotWidth + 'px', 
+				height: snapshotHeight + 'px'
+			}"
+		></canvas>
 	</view>
 </template>
 
 <script setup>
-import { ref, getCurrentInstance, computed, onMounted } from 'vue';
+import { ref, getCurrentInstance, onMounted, nextTick } from 'vue';
 const { proxy } = getCurrentInstance();
 
 const props = defineProps({
@@ -123,7 +137,7 @@ const props = defineProps({
 	// 是否自动播放
 	autoplay: {
 		type: Boolean,
-		default: true
+		default: false
 	},
 	// 是否循环播放
 	loop: {
@@ -207,7 +221,7 @@ const props = defineProps({
 		type: Boolean,
 		default: true
 	},
-	// 当视频大小与 video 容器大小不一致时，视频的表现形式, contain 包含,fill 	填充,cover 覆盖
+	// 当视频大小与 video 容器大小不一致时，视频的表现形式, contain 包含,fill 填充,cover 覆盖
 	objectFit: {
 		type: String,
 		default: 'contain'
@@ -289,12 +303,12 @@ const props = defineProps({
 		type: Boolean,
 		default: false
 	},
-	// 是否展示后台音频播放按钮
+	// 是否展示截屏按钮
 	showSnapshotButton: {
 		type: Boolean,
 		default: false
 	},
-	// 	是否展示后台音频播放按钮
+	// 是否展示后台音频播放按钮
 	showBackgroundPlaybackButton: {
 		type: Boolean,
 		default: false
@@ -338,61 +352,96 @@ const props = defineProps({
 	preferredPeakBitRate: {
 		type: Number,
 		default: 6000
+	},
+	// 解码器选择，hardware：硬解码（硬件解码），software：软解码（软件解码），auto：自动选择
+	codec: {
+		type: String,
+		default: 'auto'
 	}
 });
 
+const emits = defineEmits([
+	'onPlay',
+	'onPause',
+	'onEnded',
+	'onTimeUpdate',
+	'onFullScreenChange',
+	'onWaiting',
+	'onError',
+	'onProgress',
+	'onLoadedMetaData',
+	'onControlsToggle',
+	'onEnterPictureInPicture',
+	'onLeavePictureInPicture',
+	'onSeekComplete',
+	'onSeeked',
+	'onSeeking',
+	'onLoadStart',
+	'onLoadedData',
+	'onFullScreenClick'
+]);
+
 const videoContext = ref(null);
 
+// 截图相关
+const canvasId = ref(`${props.videoId}_canvas`);
+const snapshotWidth = ref(300);
+const snapshotHeight = ref(200);
+
 onMounted(() => {
-	videoContext.value = uni.createVideoContext(props.videoId);
+	nextTick(() => {
+		videoContext.value = uni.createVideoContext(props.videoId, proxy);
+	});
 });
-// 播放视频
+
 const play = () => {
-	videoContext.value.play();
+	videoContext.value && videoContext.value.play();
 };
-// 暂停视频
+
 const pause = () => {
-	videoContext.value.pause();
+	videoContext.value && videoContext.value.pause();
 };
-// 跳转到指定位置, 跳转到的位置，单位 s
+
 const seek = (number) => {
-	videoContext.value.seek(number);
+	videoContext.value && videoContext.value.seek(number);
 };
-// 停止视频
+
 const stop = () => {
-	videoContext.value.stop();
+	videoContext.value && videoContext.value.stop();
 };
-// 设置倍速播放
+
 const playbackRate = (rate) => {
-	videoContext.value.playbackRate(rate);
+	videoContext.value && videoContext.value.playbackRate(rate);
 };
-// 进入全屏。若有自定义内容需在全屏时展示，需将内容节点放置到 video 节点内。
+
 const requestFullScreen = (direction = 0) => {
-	videoContext.value.requestFullScreen({ direction: direction });
+	videoContext.value && videoContext.value.requestFullScreen({ direction: direction });
 };
-// 退出全屏
+
 const exitFullScreen = () => {
-	videoContext.value.exitFullScreen();
+	videoContext.value && videoContext.value.exitFullScreen();
 };
-// 显示状态栏，仅在iOS全屏下有效
+
 const showStatusBar = () => {
-	videoContext.value.showStatusBar();
+	videoContext.value && videoContext.value.showStatusBar();
 };
-// 隐藏状态栏，仅在iOS全屏下有效
+
 const hideStatusBar = () => {
-	videoContext.value.hideStatusBar();
+	videoContext.value && videoContext.value.hideStatusBar();
 };
-// 退出后台音频播放模式
+
 const exitBackgroundPlayback = () => {
-	videoContext.value.exitBackgroundPlayback();
+	videoContext.value && videoContext.value.exitBackgroundPlayback();
 };
-// 退出投屏。仅支持在 tap 事件回调内调用。
+
 const exitCasting = () => {
-	videoContext.value.exitCasting();
+	videoContext.value && videoContext.value.exitCasting();
 };
-// 退出小窗，该方法可在任意页面调用
+
 const exitPictureInPicture = async () => {
 	return new Promise((resolve, reject) => {
+		if (!videoContext.value) return reject(new Error('视频上下文未创建'));
+		
 		videoContext.value.exitPictureInPicture({
 			success: (res) => {
 				resolve(res);
@@ -403,126 +452,210 @@ const exitPictureInPicture = async () => {
 		});
 	});
 };
-// 重连投屏设备。仅支持在 tap 事件回调内调用。
+
 const reconnectCasting = () => {
-	videoContext.value.reconnectCasting();
+	videoContext.value && videoContext.value.reconnectCasting();
 };
-// 进入后台音频播放模式
+
 const requestBackgroundPlayback = () => {
-	videoContext.value.requestBackgroundPlayback();
+	videoContext.value && videoContext.value.requestBackgroundPlayback();
 };
-// 发送弹幕
+
 const sendDanmu = (text, color = '#ffffff') => {
-	videoContext.value.sendDanmu({ text: text, color: color });
+	videoContext.value && videoContext.value.sendDanmu({ text: text, color: color });
 };
-// 开始投屏, 拉起半屏搜索设备。仅支持在 tap 事件回调内调用。
+
 const startCasting = () => {
-	videoContext.value.startCasting();
+	videoContext.value && videoContext.value.startCasting();
 };
-// 切换投屏设备。仅支持在 tap 事件回调内调用。
+
 const switchCasting = () => {
-	videoContext.value.switchCasting();
+	videoContext.value && videoContext.value.switchCasting();
 };
-// 当开始/继续播放时触发play事件
+
+const snapshot = async () => {
+	return new Promise((resolve, reject) => {
+		try {
+			if (!videoContext.value) {
+				return reject(new Error('视频上下文未创建'));
+			}
+			
+			// 暂停视频以获取清晰的截图
+			const isPlaying = !videoContext.value.paused;
+			
+			if (isPlaying) {
+				videoContext.value.pause();
+			}
+			
+			// 延迟一点让视频完全暂停
+			setTimeout(() => {
+				// 获取视频信息以设置canvas大小
+				uni.getVideoInfo({
+					src: props.src,
+					success: (videoInfo) => {
+						// 更新canvas尺寸
+						if (videoInfo.width && videoInfo.height) {
+							snapshotWidth.value = videoInfo.width;
+							snapshotHeight.value = videoInfo.height;
+						}
+						
+						// 确保canvas尺寸已更新
+						nextTick(() => {
+							// 创建canvas上下文
+							const context = uni.createCanvasContext(canvasId.value, proxy);
+							
+							// 将视频当前帧绘制到canvas上
+							context.drawImage(props.videoId, 0, 0, snapshotWidth.value, snapshotHeight.value);
+							context.draw(false, () => {
+								// 导出图片
+								uni.canvasToTempFilePath({
+									canvasId: canvasId.value,
+									x: 0,
+									y: 0,
+									width: snapshotWidth.value,
+									height: snapshotHeight.value,
+									destWidth: snapshotWidth.value,
+									destHeight: snapshotHeight.value,
+									quality: 1,
+									success: (res) => {
+										// 如果之前是播放状态，则恢复播放
+										if (isPlaying) {
+											videoContext.value.play();
+										}
+										resolve(res.tempFilePath);
+									},
+									fail: (err) => {
+										// 如果之前是播放状态，则恢复播放
+										if (isPlaying) {
+											videoContext.value.play();
+										}
+										reject(err);
+									}
+								}, proxy);
+							});
+						});
+					},
+					fail: (err) => {
+						// 获取视频信息失败，使用默认尺寸
+						const context = uni.createCanvasContext(canvasId.value, proxy);
+						
+						context.drawImage(props.videoId, 0, 0, snapshotWidth.value, snapshotHeight.value);
+						context.draw(false, () => {
+							uni.canvasToTempFilePath({
+								canvasId: canvasId.value,
+								success: (res) => {
+									// 如果之前是播放状态，则恢复播放
+									if (isPlaying) {
+										videoContext.value.play();
+									}
+									resolve(res.tempFilePath);
+								},
+								fail: (error) => {
+									// 如果之前是播放状态，则恢复播放
+									if (isPlaying) {
+										videoContext.value.play();
+									}
+									reject(error);
+								}
+							}, proxy);
+						});
+					}
+				});
+			}, 100);
+		} catch (err) {
+			reject(err);
+		}
+	});
+};
+
 const onPlay = (e) => {
-	//console.log('onPlay:'+JSON.stringify(e))
-	proxy.$emit('onPlay');
+	emits('onPlay', e);
 };
-// 当暂停播放时触发 pause 事件
+
 const onPause = (e) => {
-	//console.log('onPause:'+JSON.stringify(e))
-	proxy.$emit('onPause');
+	emits('onPause', e);
 };
-// 当播放到末尾时触发 ended 事件
+
 const onEnded = (e) => {
-	//console.log('onEnded:'+JSON.stringify(e))
-	proxy.$emit('onEnded');
+	emits('onEnded', e);
 };
-// 播放进度变化时触发，event.detail = {currentTime, duration} 。触发频率 250ms 一次
+
 const onTimeUpdate = (e) => {
-	//console.log('onTimeUpdate:'+JSON.stringify(e))
-	proxy.$emit('onTimeUpdate', e.detail);
+	emits('onTimeUpdate', e.detail);
 };
-// 视频进入和退出全屏时触发，event.detail = {fullScreen, direction}，direction 有效值为 vertical 或 horizontal
+
 const onFullScreenChange = (e) => {
-	//console.log('onFullScreenChange:' + JSON.stringify(e));
+	emits('onFullScreenChange', e.detail);
 };
-// 视频出现缓冲时触发
+
 const onWaiting = (e) => {
-	//console.log('onWaiting:' + JSON.stringify(e));
-	proxy.$emit('onWaiting');
+	emits('onWaiting', e);
 };
-// 视频播放出错时触发
+
 const onError = (e) => {
-	//console.log('onError:' + JSON.stringify(e));
+	emits('onError', e);
 };
-// 加载进度变化时触发，只支持一段加载。event.detail = {buffered}，百分比
+
 const onProgress = (e) => {
-	//console.log('onProgress:'+JSON.stringify(e))
-	proxy.$emit('onProgress', e.detail.buffered);
+	emits('onProgress', e.detail ? e.detail.buffered : e);
 };
-// 视频元数据加载完成时触发。event.detail = {width, height, duration}
+
 const onLoadedMetaData = (e) => {
-	//console.log('onLoadedMetaData:'+JSON.stringify(e.detail))
-	proxy.$emit('onLoadedMetaData', e.detail);
+	emits('onLoadedMetaData', e.detail);
 };
-// 切换 controls 显示隐藏时触发。event.detail = {show}
+
 const onControlsToggle = (e) => {
-	//console.log('onControlsToggle:' + JSON.stringify(e));
+	emits('onControlsToggle', e.detail);
 };
-// 播放器进入小窗
+
 const onEnterPictureInPicture = (e) => {
-	console.log('onEnterPictureInPicture:' + JSON.stringify(e));
+	emits('onEnterPictureInPicture', e);
 };
-// 播放器退出小窗
+
 const onLeavePictureInPicture = (e) => {
-	console.log('onLeavePictureInPicture:' + JSON.stringify(e));
+	emits('onLeavePictureInPicture', e);
 };
-// seek 完成时触发 (position iOS 单位 s, Android 单位 ms)
+
 const onSeekComplete = (e) => {
-	console.log('onSeekComplete:' + JSON.stringify(e));
+	emits('onSeekComplete', e);
 };
-// 用户选择投屏设备时触发 detail = { state: "success"/"fail" }
+
 const onCastingUserSelect = (e) => {
-	//console.log('onCastingUserSelect:' + JSON.stringify(e));
+	emits('onCastingUserSelect', e);
 };
-// 投屏成功/失败时触发 detail = { type, state: "success"/"fail" }
+
 const onCastingStateChange = (e) => {
-	//console.log('onCastingStateChange:' + JSON.stringify(e));
-};
-// 投屏被中断时触发
-const onCastingInterRupt = (e) => {
-	//console.log('onCastingInterRupt:' + JSON.stringify(e));
+	emits('onCastingStateChange', e);
 };
 
-// 拖动进度条结束
+const onCastingInterrupt = (e) => {
+	emits('onCastingInterrupt', e);
+};
+
 const onSeeked = (e) => {
-	console.log('onSeeked:' + JSON.stringify(e));
+	emits('onSeeked', e);
 };
-// 正在拖动进度条
+
 const onSeeking = (e) => {
-	console.log('onSeeking:' + JSON.stringify(e));
+	emits('onSeeking', e);
 };
 
-// 开始加载数据
 const onLoadStart = (e) => {
-	console.log('onLoadStart:' + JSON.stringify(e));
+	emits('onLoadStart', e);
 };
-// 视频资源开始加载时触发
+
 const onLoadedData = (e) => {
-	console.log('onLoadedData:' + JSON.stringify(e));
+	emits('onLoadedData', e);
 };
 
-// 视频播放全屏播放时点击事件
 const onFullScreenClick = (e) => {
-	console.log('onFullScreenClick:' + JSON.stringify(e));
+	emits('onFullScreenClick', e);
 };
 
-// 获取视频详细信息
 const getVideoInfo = async (url) => {
 	return new Promise((resolve, reject) => {
 		uni.getVideoInfo({
-			src: url,
+			src: url || props.src,
 			success: (res) => {
 				resolve(res);
 			},
@@ -533,10 +666,40 @@ const getVideoInfo = async (url) => {
 	});
 };
 
-defineExpose({ getVideoInfo, play, pause, seek, stop, playbackRate, requestFullScreen, exitFullScreen, exitPictureInPicture });
+const volume = (value) => {
+	if (videoContext.value && typeof videoContext.value.volume === 'function') {
+		videoContext.value.volume(value);
+	}
+};
+
+defineExpose({
+	getVideoInfo,
+	play,
+	pause,
+	seek,
+	stop,
+	playbackRate,
+	requestFullScreen,
+	exitFullScreen,
+	exitPictureInPicture,
+	sendDanmu,
+	showStatusBar,
+	hideStatusBar,
+	startCasting,
+	switchCasting,
+	exitCasting,
+	reconnectCasting,
+	requestBackgroundPlayback,
+	exitBackgroundPlayback,
+	snapshot,
+	volume,
+	getVideoContext: () => videoContext.value
+});
 </script>
 
 <style scoped>
 .zx-video {
+	width: 100%;
+	position: relative;
 }
 </style>

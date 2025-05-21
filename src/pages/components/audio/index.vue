@@ -211,19 +211,19 @@ const loading = ref(false);
 // 音频曲目列表
 const trackList = [
 	{
-		title: '示例音频1',
-		artist: '艺术家1',
-		src: 'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-hello-uniapp/2cc220e0-c27a-11ea-9dfb-6da8e309e0d8.mp3'
+		title: '走进新时代',
+		artist: '群星',
+		src: 'https://red-education.wufu-app.com/upload/20211123/481d6b654e52961d43c454336a775145.mp3'
 	},
 	{
-		title: '示例音频2',
-		artist: '艺术家2',
-		src: 'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-hello-uniapp/2cc220e0-c27a-11ea-9dfb-6da8e309e0d8.mp3'
+		title: '游击队之歌',
+		artist: '群星',
+		src: 'https://red-education.wufu-app.com/upload/20211123/5abc7bc76fb3958e22e2906d206f7c3a.mp3'
 	},
 	{
-		title: '示例音频3',
-		artist: '艺术家3',
-		src: 'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-hello-uniapp/2cc220e0-c27a-11ea-9dfb-6da8e309e0d8.mp3'
+		title: '咱当兵的人',
+		artist: '群星',
+		src: 'https://red-education.wufu-app.com/upload/20211123/e32d0fcda506700a94e23ec9dff7fee9.mp3'
 	}
 ];
 
@@ -241,27 +241,27 @@ const bgProgress = ref(0);
 const bgCurrentTime = ref(0);
 const bgDuration = ref(0);
 const currentBgIndex = ref(0);
-const defaultCover = 'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/a876efc0-4f35-11eb-8a36-ebb87efcf8c0.jpg';
+const defaultCover = 'https://red-education.wufu-app.com/upload/20211123/da546a455fe35fd0c510a332f245e201.png';
 
 // 背景音频播放列表
 const bgPlaylist = [
 	{
-		title: '背景音乐1',
-		artist: '歌手1',
-		src: 'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-hello-uniapp/2cc220e0-c27a-11ea-9dfb-6da8e309e0d8.mp3',
-		coverImgUrl: 'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/a876efc0-4f35-11eb-8a36-ebb87efcf8c0.jpg'
+		title: '走进新时代',
+		artist: '群星',
+		src: 'https://red-education.wufu-app.com/upload/20211123/481d6b654e52961d43c454336a775145.mp3',
+		coverImgUrl: 'https://red-education.wufu-app.com/upload/20211123/da546a455fe35fd0c510a332f245e201.png'
 	},
 	{
-		title: '背景音乐2',
-		artist: '歌手2',
-		src: 'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-hello-uniapp/2cc220e0-c27a-11ea-9dfb-6da8e309e0d8.mp3',
-		coverImgUrl: 'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/7c301a20-4f35-11eb-8ff1-d5dcf8779628.jpg'
+		title: '游击队之歌',
+		artist: '群星',
+		src: 'https://red-education.wufu-app.com/upload/20211123/5abc7bc76fb3958e22e2906d206f7c3a.mp3',
+		coverImgUrl: 'https://red-education.wufu-app.com/upload/20211123/0cb8673254484ee7d90cd9598eadd2ac.png'
 	},
 	{
-		title: '背景音乐3',
-		artist: '歌手3',
-		src: 'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-hello-uniapp/2cc220e0-c27a-11ea-9dfb-6da8e309e0d8.mp3',
-		coverImgUrl: 'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/412b0030-4f35-11eb-8ff1-d5dcf8779628.jpg'
+		title: '咱当兵的人',
+		artist: '群星',
+		src: 'https://red-education.wufu-app.com/upload/20211123/e32d0fcda506700a94e23ec9dff7fee9.mp3',
+		coverImgUrl: 'https://red-education.wufu-app.com/upload/20211123/da546a455fe35fd0c510a332f245e201.png'
 	}
 ];
 

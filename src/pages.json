@@ -53,6 +53,12 @@
 			"style": {
 				"navigationBarTitleText": "Audio 音频组件"
 			}
+		},
+		{
+			"path": "pages/components/video/index",
+			"style": {
+				"navigationBarTitleText": "Video 视频组件"
+			}
 		}
 	],
 	"globalStyle": {

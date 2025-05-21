@@ -1,12 +1,20 @@
 {
   "name": "@tanzhenxing/zx-video",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "视频播放器",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "zx-video",
+    "视频播放器",
+    "视频组件",
+    "视频播放",
+    "视频",
+    "视频播放器组件",
+    "视频播放器组件"
+  ],
   "author": "tanzhenxing",
   "license": "ISC"
 }

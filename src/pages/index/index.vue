@@ -1,9 +1,5 @@
 <template>
   <view class="content">
-    <image class="logo" src="/static/logo.png"></image>
-    <view class="text-area">
-      <text class="title">{{ title }}</text>
-    </view>
     <view>
       <zx-text
         text="zx-text 组件使用示例"
@@ -51,6 +47,12 @@
         text="zx-audio 组件使用示例"
         type="primary"
         @click="handleClick('/pages/components/audio/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-video 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/video/index')"
       ></zx-text>
       
     </view>

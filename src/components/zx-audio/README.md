@@ -141,7 +141,7 @@ import { ref, reactive, onMounted } from 'vue';
 import ZxAudio from '@/components/zx-audio/zx-audio.vue';
 
 const audioRef = ref(null);
-const audioSrc = ref('https://example.com/sample.mp3');
+const audioSrc = ref('https://red-education.wufu-app.com/upload/20211123/481d6b654e52961d43c454336a775145.mp3');
 const isPaused = ref(true);
 const progress = ref(0);
 const currentTime = ref(0);
@@ -275,22 +275,22 @@ const currentIndex = ref(0);
 // 播放列表
 const playlist = [
   {
-    src: 'https://example.com/music1.mp3',
-    title: '歌曲1',
-    singer: '歌手1',
-    coverImgUrl: 'https://example.com/cover1.jpg'
+    src: 'https://red-education.wufu-app.com/upload/20211123/481d6b654e52961d43c454336a775145.mp3',
+    title: '走进新时代',
+    singer: '群星',
+    coverImgUrl: 'https://red-education.wufu-app.com/upload/20211123/da546a455fe35fd0c510a332f245e201.png'
   },
   {
-    src: 'https://example.com/music2.mp3',
-    title: '歌曲2',
-    singer: '歌手2',
-    coverImgUrl: 'https://example.com/cover2.jpg'
+    src: 'https://red-education.wufu-app.com/upload/20211123/5abc7bc76fb3958e22e2906d206f7c3a.mp3',
+    title: '游击队之歌',
+    singer: '群星',
+    coverImgUrl: 'https://red-education.wufu-app.com/upload/20211123/0cb8673254484ee7d90cd9598eadd2ac.png'
   },
   {
-    src: 'https://example.com/music3.mp3',
-    title: '歌曲3',
-    singer: '歌手3',
-    coverImgUrl: 'https://example.com/cover3.jpg'
+    src: 'https://red-education.wufu-app.com/upload/20211123/e32d0fcda506700a94e23ec9dff7fee9.mp3',
+    title: '咱当兵的人',
+    singer: '群星',
+    coverImgUrl: 'https://red-education.wufu-app.com/upload/20211123/da546a455fe35fd0c510a332f245e201.png'
   }
 ];
 
