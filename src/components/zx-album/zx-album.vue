@@ -238,15 +238,7 @@ const albumWidth = computed(() => {
 	return width;
 });
 
-watch(
-	() => props.urls,
-	(newVal) => {
-		if (newVal.length === 1) {
-			getImageRect();
-		}
-	},
-	{ immediate: true, deep: true }
-);
+
 
 // 预览图片
 const onPreviewTap = (url) => {
@@ -351,6 +343,17 @@ const $uGetRect = (selector, all) => {
 			.exec();
 	});
 };
+
+watch(
+	() => props.urls,
+	(newVal) => {
+		if (newVal.length === 1) {
+			getImageRect();
+		}
+	},
+	{ immediate: true, deep: true }
+);
+
 </script>
 
 <style lang="scss" scoped>

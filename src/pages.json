@@ -29,6 +29,18 @@
 			"style": {
 				"navigationBarTitleText": "Button 按钮组件"
 			}
+		},
+		{
+			"path": "pages/components/badge/index",
+			"style": {
+				"navigationBarTitleText": "Badge 徽标组件"
+			}
+		},
+		{
+			"path": "pages/components/album/index",
+			"style": {
+				"navigationBarTitleText": "Album 图片预览组件"
+			}
 		}
 	],
 	"globalStyle": {

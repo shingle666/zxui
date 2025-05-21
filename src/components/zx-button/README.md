@@ -132,6 +132,7 @@ export default {
 <zx-button type="warn">警告按钮</zx-button>
 <zx-button type="success">成功按钮</zx-button>
 <zx-button type="danger">危险按钮</zx-button>
+<zx-button type="info">信息按钮</zx-button>
 ```
 
 ### 镂空按钮
@@ -146,7 +147,8 @@ export default {
 ```vue
 <zx-button text>文本按钮</zx-button>
 <zx-button type="primary" text>主要文本按钮</zx-button>
-<zx-button type="primary" link>链接按钮</zx-button>
+<zx-button link>链接按钮</zx-button>
+<zx-button type="primary" link>主要链接按钮</zx-button>
 ```
 
 ### 禁用状态
@@ -154,6 +156,8 @@ export default {
 ```vue
 <zx-button disabled>禁用按钮</zx-button>
 <zx-button type="primary" disabled>禁用主要按钮</zx-button>
+<zx-button text disabled>禁用文本按钮</zx-button>
+<zx-button link disabled>禁用链接按钮</zx-button>
 ```
 
 ### 加载状态
@@ -161,6 +165,7 @@ export default {
 ```vue
 <zx-button loading>加载中</zx-button>
 <zx-button type="primary" loading>加载中</zx-button>
+<zx-button text loading>文本加载中</zx-button>
 ```
 
 ### 不同尺寸
@@ -185,16 +190,22 @@ export default {
 ```vue
 <zx-button type="primary" icon="search">搜索</zx-button>
 <zx-button type="success" icon="check">确认</zx-button>
+<zx-button type="danger" icon="delete" circle></zx-button>
 ```
 
-### 自定义样式
+### 文本按钮背景
 
 ```vue
-<zx-button 
-  color="#fff" 
-  backgroundColor="#8a2be2"
-  :style="{ boxShadow: '0 4rpx 8rpx rgba(0, 0, 0, 0.2)' }"
->自定义样式</zx-button>
+<zx-button text>普通文本按钮</zx-button>
+<zx-button text bg>带背景文本按钮</zx-button>
+<zx-button type="primary" text bg>带背景主要文本按钮</zx-button>
+```
+
+### 自定义颜色
+
+```vue
+<zx-button color="#8a2be2" backgroundColor="#f0f0f0">自定义颜色</zx-button>
+<zx-button text color="#8a2be2">自定义文本按钮颜色</zx-button>
 ```
 
 ### 使用插槽

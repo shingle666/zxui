@@ -29,6 +29,18 @@
         @click="handleClick('/pages/components/button/index')"
       ></zx-text>
       
+      <zx-text
+        text="zx-badge 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/badge/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-album 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/album/index')"
+      ></zx-text>
+      
     </view>
   </view>
 </template>

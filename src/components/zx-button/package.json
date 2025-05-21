@@ -1,6 +1,6 @@
 {
-  "name": "zx-button",
-  "version": "2.0.0",
+  "name": "@tanzhenxing/zx-button",
+  "version": "1.0.3",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
