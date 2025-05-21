@@ -1,0 +1,17 @@
+{
+  "name": "@tanzhenxing/zx-audio",
+  "version": "1.0.4",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-audio",
+    "zx-audio组件",
+    "zx-audio插件",
+    "zx-audio插件"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "zx-audio组件"
+}

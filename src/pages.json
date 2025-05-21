@@ -47,6 +47,12 @@
 			"style": {
 				"navigationBarTitleText": "Area Picker 区域选择器组件"
 			}
+		},
+		{
+			"path": "pages/components/audio/index",
+			"style": {
+				"navigationBarTitleText": "Audio 音频组件"
+			}
 		}
 	],
 	"globalStyle": {
