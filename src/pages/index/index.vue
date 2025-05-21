@@ -40,6 +40,12 @@
         type="primary"
         @click="handleClick('/pages/components/album/index')"
       ></zx-text>
+
+      <zx-text
+        text="zx-area-picker 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/area_picker/index')"
+      ></zx-text>
       
     </view>
   </view>

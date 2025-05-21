@@ -41,6 +41,12 @@
 			"style": {
 				"navigationBarTitleText": "Album 图片预览组件"
 			}
+		},
+		{
+			"path": "pages/components/area_picker/index",
+			"style": {
+				"navigationBarTitleText": "Area Picker 区域选择器组件"
+			}
 		}
 	],
 	"globalStyle": {
