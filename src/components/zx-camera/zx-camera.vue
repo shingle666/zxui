@@ -1,10 +1,9 @@
 <template>
-	<zx-popup :show="isShow" mode="center" bgColor="#ffffff" round="20rpx" :closeOnClickOverlay="false"
-		:closeable="true" :zIndex="1" @close="close">
-		<!-- 身份证取景框 -->
+	<!-- 取景框 -->
+	<view class="camera-container">
 		<view class="camera-box">
-			<camera device-position="back" flash="off" output-dimension="1080P" class="camera" @ready="cameraReady"
-				@initdone="cameraInitdone" @stop="cameraStop" @error="handleError">
+			<camera device-position="back" :flash="flashMode" output-dimension="1080P" class="camera" @ready="cameraReady"
+				@initdone="cameraInitdone" @stop="cameraStop" @error="handleError" ref="cameraRef">
 				<view class="camera-bg">
 					<view class="id-card-frame">
 						<!-- 添加辅助线和提示 -->
@@ -14,31 +13,33 @@
 							<view class="corner bottom-left"></view>
 							<view class="corner bottom-right"></view>
 						</view>
-						<text class="id-card-tip">请将身份证放入框内</text>
+						<text class="id-card-tip">请将证件放入框内</text>
 					</view>
 				</view>
-				<view v-if="idCardPhoto" class="preview-icon">
-					<uni-icons type="eye" size="22" color="#ffffff" @click="previewIdCard"></uni-icons>
+				<!-- 控制区域 -->
+				<view class="camera-controls">
+					<view class="control-icon" @click="switchFlash">
+						<zx-icon :name="flashIcons[flashMode]" size="22" color="#ffffff"></zx-icon>
+					</view>
+					<view class="control-icon" @click="switchCameraPosition">
+						<zx-icon name="loop" size="22" color="#ffffff"></zx-icon>
+					</view>
+					<view class="control-icon close-icon" @click="close">
+						<zx-icon name="closeempty" size="22" color="#ffffff"></zx-icon>
+					</view>
 				</view>
 			</camera>
 		</view>
-		<view>
-			{{idCardInfo}}
-		</view>
-		<slot name="footer">
-			<view class="photo-icon" @click="takePhoto">
-				<uni-icons :type="checkIcon" size="40" color="#ffffff"
-					:class="{ 'rotate-icon': checkIcon === 'spinner-cycle' }"></uni-icons>
-			</view>
-		</slot>
-	</zx-popup>
+	</view>
 </template>
 
 <script setup>
 	import {
 		getCurrentInstance,
 		ref,
-		watch
+		watch,
+		onMounted,
+		onBeforeUnmount
 	} from 'vue'
 
 	const {
@@ -46,43 +47,130 @@
 	} = getCurrentInstance()
 	
 	const props = defineProps({
-		show: {
-			type: Boolean,
-			default: false
+		// 模式
+		mode: {
+			type: String,
+			default: 'photo', // photo, video, scan
+			validator: (value) => ['photo', 'video', 'scan'].includes(value)
+		},
+		// 设备位置
+		devicePosition: {
+			type: String,
+			default: 'back' // back, front
+		},
+		// 输出尺寸
+		frameSize: {
+			type: String,
+			default: 'large' // small, medium, large
+		},
+		// 质量
+		quality: {
+			type: String,
+			default: 'high' // low, normal, high
 		}
 	})
 
-	const isShow = ref(false)
+	const emit = defineEmits(['close', 'error', 'photo', 'video', 'scan'])
 
-	const idCardInfo = ref(null);
-	const idCardImg = ref('');
-	const idCardPhoto = ref('');
-	const checkIcon = ref('camera');
+	// 状态变量
+	const cameraRef = ref(null)
+	const cameraContext = ref(null)
+	const idCardInfo = ref(null)
+	const idCardImg = ref('')
+	const idCardPhoto = ref('')
+	const checkIcon = ref('camera')
+	const maxZoom = ref(1)
+	const currentZoom = ref(1)
+	const flashMode = ref('off') // off, auto, on, torch
+	const devicePositionState = ref(props.devicePosition)
+	const flashIcons = {
+		'off': 'closeempty',
+		'on': 'fire',
+		'auto': 'fire-filled',
+		'torch': 'flashlightfilled'
+	}
+	const isRecording = ref(false)
 	
-	watch(()=>props.show,(val)=>{
-		isShow.value = val
-	},{
-		immediate:true
+	onMounted(() => {
+		// 组件挂载时初始化相机
+		setTimeout(() => {
+			initCamera()
+		}, 300)
 	})
 
-	// 关闭弹窗
+	// 初始化相机
+	const initCamera = () => {
+		if (!cameraContext.value) {
+			cameraContext.value = uni.createCameraContext()
+		}
+	}
+
+	// 切换闪光灯
+	const switchFlash = () => {
+		const modes = ['off', 'auto', 'on', 'torch']
+		const currentIndex = modes.indexOf(flashMode.value)
+		const nextIndex = (currentIndex + 1) % modes.length
+		flashMode.value = modes[nextIndex]
+		
+		uni.showToast({
+			title: `闪光灯模式: ${flashMode.value}`,
+			icon: 'none',
+			duration: 1000
+		})
+	}
+	
+	// 切换前后摄像头
+	const switchCameraPosition = () => {
+		devicePositionState.value = devicePositionState.value === 'back' ? 'front' : 'back'
+		
+		uni.showToast({
+			title: devicePositionState.value === 'back' ? '后置摄像头' : '前置摄像头',
+			icon: 'none',
+			duration: 1000
+		})
+	}
+
+	// 设置缩放
+	const setZoom = (zoom) => {
+		if (!cameraContext.value) return
+		
+		if (zoom > maxZoom.value) zoom = maxZoom.value
+		if (zoom < 1) zoom = 1
+		
+		cameraContext.value.setZoom({
+			zoom: zoom,
+			success: () => {
+				currentZoom.value = zoom
+			},
+			fail: (err) => {
+				console.error('设置缩放失败:', err)
+			}
+		})
+	}
+
+	// 关闭相机
 	const close = () => {
-		isShow.value = false
+		emit('close')
 	}
 
 	// 相机初始化成功时触发
 	const cameraReady = (e) => {
-		//console.error('cameraReady:', e)
+		console.log('相机准备就绪:', e)
+		initCamera()
 	}
 
 	// 摄像头在非正常终止时触发
 	const cameraStop = (e) => {
-		//console.error('cameraStop:', e)
+		console.error('相机停止:', e)
+		emit('error', e)
 	}
 
 	// 相机初始化完成时触发
 	const cameraInitdone = (e) => {
-		//console.error('cameraInitdone:', e)
+		console.log('相机初始化完成:', e)
+		if (e.detail && e.detail.maxZoom) {
+			maxZoom.value = e.detail.maxZoom
+		}
 	}
 
 	// 用户不允许使用摄像头时触发
@@ -92,101 +180,149 @@
 			icon: 'none'
 		})
 		console.error('相机错误:', e)
+		emit('error', e)
 	}
 
-	// 预览身份证图片
-	const previewIdCard = () => {
-		uni.previewImage({
-			urls: [idCardPhoto.value],
-			longPressActions: {
-				itemList: ['保存图片']
-			}
-		});
-	}
-
-	// 拍身份证照片，查询学员报名信息
+	// 拍照片
 	const takePhoto = async () => {
+		if (!cameraContext.value) {
+			initCamera()
+		}
+		
 		uni.showLoading({
-			title: '身份证识别中'
+			title: '识别中'
 		})
-		// 拍照上传
-		checkIcon.value = 'spinner-cycle';
-		cameraContext.value = uni.createCameraContext();
+		
+		checkIcon.value = 'spinner-cycle'
+		
 		cameraContext.value.takePhoto({
-			quality: 'high',
-			frameSize: 'large', // 使用大尺寸以获取更清晰的图像
+			quality: props.quality,
+			frameSize: props.frameSize,
 			success: async (res) => {
+				console.log('拍照成功:', res.tempImagePath)
+				idCardPhoto.value = res.tempImagePath
+				
+				// 保存照片到本地或者进行处理
 				try {
-					// 上传图片前进行预处理
-					idCardPhoto.value = res.tempImagePath;
-
-					// 上传图片到七牛云
-					let upRes = await Util.uploadFileToQiniu(idCardPhoto.value);
-
-					if (!upRes || !upRes.url) {
-						uni.showToast({
-							title: '图片上传失败',
-							icon: 'none',
-							duration: 2000
-						});
-						return;
-					}
-					idCardImg.value = upRes.key;
-					// 调用身份证OCR识别
-					let id_card_info = await Util.idCardOcr(upRes.url);
-
-					// 验证身份证号码是否正确
-					if (!id_card_info || !id_card_info.idNumber) {
-						uni.showToast({
-							title: '请将身份证头像面完整放入框内',
-							icon: 'none',
-							duration: 3000
-						});
-						return;
-					}
-					// 验证身份证号码是否正确
-					const idCardRegex =
-						/^[1-9]\d{5}(18|19|20)\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}[0-9Xx]$/;
-					if (!idCardRegex.test(id_card_info.idNumber)) {
-						uni.showToast({
-							title: '身份证号码不正确',
-							icon: 'none',
-							duration: 3000
-						});
-						return;
-					}
-
-					// 保存身份证信息
-					idCardInfo.value = id_card_info;
-
+					// 这里可以添加图像识别或处理逻辑
+					const result = await processImage(res.tempImagePath)
+					idCardInfo.value = result
+					emit('photo', {
+						path: res.tempImagePath,
+						info: result
+					})
 				} catch (error) {
-					console.error("身份证识别过程出错:", error);
-					uni.showToast({
-						title: '识别过程出错，请重试',
-						icon: 'none',
-						duration: 2000
-					});
+					console.error("处理图片失败:", error)
 				}
 			},
 			fail: (err) => {
-				console.error("拍照失败:", err);
+				console.error("拍照失败:", err)
 				uni.showToast({
 					title: '拍照失败，请重试',
 					icon: 'none',
 					duration: 2000
-				});
+				})
 			},
 			complete: () => {
 				setTimeout(() => {
-					uni.hideLoading();
-					checkIcon.value = 'camera';
-				}, 1000);
+					uni.hideLoading()
+					checkIcon.value = 'camera'
+				}, 1000)
 			}
-		});
+		})
 	}
+	
+	// 开始录制视频
+	const startRecord = () => {
+		if (!cameraContext.value) {
+			initCamera()
+		}
+		
+		isRecording.value = true
+		checkIcon.value = 'spinner-cycle'
+		
+		cameraContext.value.startRecord({
+			timeoutCallback: (res) => {
+				console.log('录制超时自动结束:', res)
+			},
+			success: () => {
+				uni.showToast({
+					title: '开始录制',
+					icon: 'none',
+					duration: 1000
+				})
+			},
+			fail: (err) => {
+				console.error('开始录制失败:', err)
+				isRecording.value = false
+				checkIcon.value = 'videocam'
+			}
+		})
+	}
+	
+	// 停止录制视频
+	const stopRecord = () => {
+		if (!cameraContext.value || !isRecording.value) return
+		
+		cameraContext.value.stopRecord({
+			success: (res) => {
+				console.log('录制成功:', res.tempVideoPath)
+				isRecording.value = false
+				checkIcon.value = 'videocam'
+				
+				emit('video', {
+					path: res.tempVideoPath,
+					thumbPath: res.tempThumbPath
+				})
+			},
+			fail: (err) => {
+				console.error('停止录制失败:', err)
+			},
+			complete: () => {
+				isRecording.value = false
+				checkIcon.value = 'videocam'
+			}
+		})
+	}
+	
+	// 处理图片（可以添加OCR识别等功能）
+	const processImage = async (imagePath) => {
+		// 此处可集成OCR识别等功能
+		// 模拟处理结果
+		return '图片已保存'
+	}
+	
+	// 暴露方法给父组件
+	defineExpose({
+		takePhoto,
+		startRecord,
+		stopRecord,
+		setZoom,
+		switchFlash,
+		switchCameraPosition
+	})
+	
+	// 组件卸载前清理
+	onBeforeUnmount(() => {
+		if (isRecording.value && cameraContext.value) {
+			cameraContext.value.stopRecord({
+				fail: () => {}
+			})
+		}
+		cameraContext.value = null
+	})
 </script>
 
 <style scoped>
+	/* 相机容器 */
+	.camera-container {
+		width: 100%;
+		background-color: #ffffff;
+		border-radius: 20rpx;
+		overflow: hidden;
+		position: relative;
+	}
+
 	/* 相机区域样式 */
 	.camera {
 		width: 750rpx;
@@ -285,46 +421,28 @@
 		border-radius: 20rpx;
 		white-space: nowrap;
 	}
-
-	.preview-icon {
+	
+	.camera-controls {
 		position: absolute;
-		bottom: 5rpx;
+		top: 10rpx;
 		right: 10rpx;
-	}
-
-	/* 提示信息样式 */
-	.tips {
-		height: 500rpx;
-		width: 100%;
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
-		align-items: center;
+		gap: 20rpx;
 	}
-
-	.tips-info {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		margin-top: 30rpx;
-		margin-bottom: 30rpx;
-	}
-
-	.tips-text {
-		font-size: 54rpx;
-		color: #c6c6c6;
-	}
-
-	.photo-icon {
-		background: linear-gradient(135deg, #67B26F 0%, #4ca2cd 100%);
-		width: 120rpx;
-		height: 120rpx;
+	
+	.control-icon {
+		width: 60rpx;
+		height: 60rpx;
 		border-radius: 50%;
+		background-color: rgba(0, 0, 0, 0.5);
 		display: flex;
-		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		margin-top: -80rpx;
+	}
+	
+	.close-icon {
+		background-color: rgba(255, 0, 0, 0.5);
 	}
 
 	/* 动画效果 */

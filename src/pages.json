@@ -59,6 +59,12 @@
 			"style": {
 				"navigationBarTitleText": "Video 视频组件"
 			}
+		},
+		{
+			"path": "pages/components/camera/index",
+			"style": {
+				"navigationBarTitleText": "Camera 相机组件"
+			}
 		}
 	],
 	"globalStyle": {
