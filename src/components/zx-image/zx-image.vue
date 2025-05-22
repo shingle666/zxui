@@ -7,9 +7,11 @@
 		<image
 			class="zx-lazyload__img"
 			:class="{ 'zx-img__hidden': !placeholder && fadeShow && !show, 'zx-img__appear': show && !placeholder && fadeShow }"
-			:style="[{ height: height === 'auto' ? false : height, borderRadius: radius }, customStyle]"
+			:style="{ height: height === 'auto' ? false : height, borderRadius: radius }"
 			:src="show ? src + srcParams : placeholder"
 			:mode="mode"
+			:lazy-load="nativeLazyLoad"
+			:fade-show="fadeShow"
 			:webp="webp"
 			:show-menu-by-longpress="showMenuByLongpress"
 			:draggable="draggable"
@@ -22,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, getCurrentInstance, watch, onMounted, onBeforeUnmount } from 'vue';
+import { ref, computed, getCurrentInstance, watch, onMounted, onBeforeUnmount } from 'vue';
 
 const { proxy } = getCurrentInstance();
 const instance = getCurrentInstance();
@@ -33,9 +35,10 @@ const props = defineProps({
 		type: String,
 		default: ''
 	},
+	//图片链接附加参数，如七牛云图片处理
 	srcParams: {
 		type: String,
-		default: '?imageMogr2/thumbnail/750x'
+		default: ''
 	},
 	//占位图路径
 	placeholder: {
@@ -102,25 +105,41 @@ const props = defineProps({
 		type: Number,
 		default: 0
 	},
+	//是否开启懒加载，自定义实现
 	lazyLoad: {
 		type: Boolean,
 		default: true
 	},
+	//是否使用原生的lazy-load属性（仅微信小程序、百度小程序、抖音小程序、飞书小程序支持）
+	nativeLazyLoad: {
+		type: Boolean,
+		default: false
+	},
+	//内边距
 	padding: {
 		type: String,
 		default: '0rpx'
 	},
-	customStyle: {
-		type: Object,
-		default: () => {
-			return {};
-		}
+	//加载失败时显示的图片
+	errorImage: {
+		type: String,
+		default: ''
 	}
 });
 
+// 定义事件
+const emits = defineEmits(['error', 'load', 'click']);
+
 const show = ref(false);
-const elId = ref(0);
+const elId = ref('');
 const observer = ref(null);
+const isError = ref(false);
+const imageSrc = computed(() => {
+	if (isError.value && props.errorImage) {
+		return props.errorImage;
+	}
+	return show.value ? props.src + props.srcParams : props.placeholder;
+});
 
 onMounted(() => {
 	elId.value = unique() + props.index;
@@ -156,76 +175,92 @@ onBeforeUnmount(() => {
 	removeObserver();
 });
 
+// 监听src变化，重置错误状态
+watch(() => props.src, () => {
+	isError.value = false;
+});
+
+// 监听disconnect属性变化
+watch(() => props.disconnect, (newVal) => {
+	if (newVal) {
+		removeObserver();
+		show.value = true;
+	} else if (!show.value) {
+		initObserver();
+	}
+});
+
 const unique = (n) => {
 	n = n || 6;
 	let rnd = '';
 	for (let i = 0; i < n; i++) rnd += Math.floor(Math.random() * 10);
-	return 'tui_' + new Date().getTime() + rnd;
+	return 'zx_img_' + new Date().getTime() + rnd;
 };
+
 const removeObserver = () => {
 	if (observer.value) {
-		observer.value.observer.disconnect();
-		observer.value.observer = null;
+		observer.value.disconnect();
+		observer.value = null;
 	}
 };
+
 const initObserver = () => {
-	if (observer.value || props.show) {
+	if (observer.value || show.value) {
 		return;
 	}
 
 	try {
 		let element = elId.value ? `#${elId.value}` : '.zx-lazyload__img';
-		const observer = uni.createIntersectionObserver(instance, {
+		observer.value = uni.createIntersectionObserver(instance, {
 			thresholds: [0],
 			observeAll: true,
 			nativeMode: true
 		});
-		observer.relativeToViewport({
-				bottom: Number(props.bottom) || 50
-			}).observe(element, (res) => {
-				if (res.intersectionRatio > 0 && !show.value) {
-					show.value = true;
-					removeObserver();
-				}
-			});
-		observer.value = observer;
+		
+		observer.value.relativeToViewport({
+			bottom: Number(props.bottom) || 50
+		}).observe(element, (res) => {
+			if (res.intersectionRatio > 0 && !show.value) {
+				show.value = true;
+				removeObserver();
+			}
+		});
 	} catch (e) {
-		//TODO handle the exception
+		console.error('创建IntersectionObserver失败', e);
 		show.value = true;
 		removeObserver();
 	}
 };
+
 const error = (e) => {
-	if (!show.value) {
-		return;
-	}
-	proxy.$emit('error', {
+	isError.value = true;
+	emits('error', {
 		detail: e.detail,
 		index: props.index
 	});
 };
+
 const load = (e) => {
-	if (!show.value) {
-		return;
-	}
-	proxy.$emit('load', {
+	emits('load', {
 		detail: e.detail,
 		index: props.index
 	});
 };
+
 const handleClick = (e) => {
-	proxy.$emit('click', {
+	emits('click', {
 		index: props.index
 	});
 };
-const getImageUrl = (imageUrl) => {
-	let url = '';
-	let isUrl = /(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/.test(imageUrl);
-	if (!isUrl) {
-		url = imageUrl;
+
+// 暴露方法供父组件调用
+defineExpose({
+	// 手动触发加载图片
+	loadImage: () => {
+		show.value = true;
+		removeObserver();
 	}
-	return url;
-};
+});
 </script>
 
 <style scoped>
@@ -233,6 +268,7 @@ const getImageUrl = (imageUrl) => {
 	display: inline-flex;
 	position: relative;
 	flex-shrink: 0;
+	overflow: hidden;
 }
 
 .zx-lazyload__img {

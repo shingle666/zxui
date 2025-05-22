@@ -1,5 +1,5 @@
 <template>
-	<view v-if="isShow" class="zx-back-top zx-fade-in" hover-class="zx-hover" :style="[contentStyle]" @click.stop="backToTop">
+	<view v-if="isShow" :class="['zx-back-top', showAnimation]" hover-class="zx-hover" :style="[contentStyle]" @click.stop="backToTop">
 		<slot>
 			<text class="back-top" :class="iconName" :style="{ fontSize: iconSize, color: iconColor }"></text>
 		</slot>
@@ -11,14 +11,22 @@
  * backTop 返回顶部
  * @description 返回顶部按钮，方便快速返回顶部的场景。
  * @tutorial https://zxui.org/components/backTop
- * @property {String}			mode  		返回顶部的形状，circle-圆形，square-方形
- * @property {String} 			iconName 	自定义图标
- * @property {String | Number}  duration	返回顶部滚动时间 （默认 100）
- * @property {String | Number}  scrollTop	滚动距离 （默认 0 ）
- * @property {String | Number}  top  		距离顶部多少距离显示，单位px （默认 400 ）
- * @property {String | Number}  bottom  	返回顶部按钮到底部的距离，单位px （默认 100 ）
- * @property {String | Number}  right  		返回顶部按钮到右边的距离，单位px （默认 20 ）
- * @property {String | Number}  zIndex 		层级   （默认 9999 ）
+ * @property {String}			mode  		返回顶部的形状，circle-圆形，square-方形 （默认 circle）
+ * @property {String} 			iconName 	自定义图标 （默认 arrow-up）
+ * @property {String | Number}  duration	返回顶部滚动时间 （默认 300）
+ * @property {String | Number}  scrollTop	滚动距离 （默认 0）
+ * @property {String | Number}  top  		距离顶部多少距离显示，单位px （默认 100）
+ * @property {String | Number}  bottom  	返回顶部按钮到底部的距离 （默认 100rpx）
+ * @property {String | Number}  right  		返回顶部按钮到右边的距离 （默认 50rpx）
+ * @property {String | Number}  left  		返回顶部按钮到左边的距离
+ * @property {String | Number}  zIndex 		层级 （默认 9999）
+ * @property {String}           position     位置，可选值为 right、left （默认 right）
+ * @property {String}           animation    动画效果，可选值为 fade、slide、scale （默认 fade）
+ * @property {Boolean}          isVibrate    点击时是否震动反馈 （默认 false）
+ * @property {String}           customClass  自定义类名
+ * @event {Function}            onClick      点击按钮时触发
+ * @event {Function}            onShow       按钮显示时触发
+ * @event {Function}            onHide       按钮隐藏时触发
  * @example <zx-back-top :scrollTop="scrollTop"></zx-back-top>
  */
 
@@ -71,6 +79,16 @@ const props = defineProps({
 		type: String,
 		default: '50rpx'
 	},
+	// 返回顶部按钮到左边的距离
+	left: {
+		type: String,
+		default: ''
+	},
+	// 位置，可选值为 right、left
+	position: {
+		type: String,
+		default: 'right'
+	},
 	// 图标名称
 	iconName: {
 		type: String,
@@ -85,18 +103,53 @@ const props = defineProps({
 	iconSize: {
 		type: String,
 		default: '50rpx'
+	},
+	// 动画效果，可选值为 fade、slide、scale
+	animation: {
+		type: String,
+		default: 'fade'
+	},
+	// 点击时是否震动反馈
+	isVibrate: {
+		type: Boolean,
+		default: false
+	},
+	// 自定义类名
+	customClass: {
+		type: String,
+		default: ''
 	}
 });
 
+const emit = defineEmits(['onClick', 'onShow', 'onHide']);
 const isShow = ref(false);
+const showAnimation = computed(() => {
+	const animations = {
+		fade: 'zx-fade-in',
+		slide: 'zx-slide-in',
+		scale: 'zx-scale-in'
+	};
+	
+	return [animations[props.animation] || 'zx-fade-in', props.customClass].filter(Boolean);
+});
 
+// 监听滚动并防抖处理
+let timer = null;
 watch(
 	() => props.scrollTop,
 	(val) => {
-		isShow.value = false;
-		if (val > props.top) {
-			isShow.value = true;
-		}
+		clearTimeout(timer);
+		timer = setTimeout(() => {
+			const oldShow = isShow.value;
+			isShow.value = val > props.top;
+			
+			// 触发显示/隐藏事件
+			if (!oldShow && isShow.value) {
+				emit('onShow');
+			} else if (oldShow && !isShow.value) {
+				emit('onHide');
+			}
+		}, 100);
 	},
 	{
 		immediate: true
@@ -108,12 +161,19 @@ const contentStyle = computed(() => {
 	let styles = {
 		position: 'fixed',
 		bottom: props.bottom,
-		right: props.right,
 		width: props.size,
 		height: props.size,
 		zIndex: props.zIndex,
 		backgroundColor: props.backgroundColor
 	};
+	
+	// 设置位置
+	if (props.position === 'left' || props.left) {
+		styles.left = props.left || '50rpx';
+	} else {
+		styles.right = props.right;
+	}
+	
 	let radius = 0;
 	// 是否圆形
 	if (props.mode === 'circle') {
@@ -121,19 +181,24 @@ const contentStyle = computed(() => {
 	} else {
 		radius = '10rpx';
 	}
-	styles.borderTopLeftRadius = radius;
-	styles.borderTopRightRadius = radius;
-	styles.borderBottomLeftRadius = radius;
-	styles.borderBottomRightRadius = radius;
+	styles.borderRadius = radius;
+	
 	return styles;
 });
+
 // 返回顶部
 const backToTop = () => {
+	// 震动反馈
+	if (props.isVibrate) {
+		uni.vibrateShort();
+	}
+	
 	uni.pageScrollTo({
 		scrollTop: 0,
 		duration: props.duration
 	});
-	proxy.$emit('onClick');
+	
+	emit('onClick');
 };
 </script>
 
@@ -171,15 +236,20 @@ const backToTop = () => {
 .zx-back-top {
 	flex: 1;
 	height: 100%;
-	box-shadow: 0px 0px 10px #bfbfbf;
+	box-shadow: 0px 0px 10px rgba(191, 191, 191, 0.8);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 }
+
 .zx-hover {
 	opacity: 0.88;
+	transform: translateY(-3px);
+	transition: all 0.2s ease;
 }
+
+/* 淡入动画 */
 .zx-fade-in {
 	animation: zx-fade-in 300ms ease-in forwards;
 }
@@ -189,6 +259,36 @@ const backToTop = () => {
 	}
 	100% {
 		opacity: 1;
+	}
+}
+
+/* 滑入动画 */
+.zx-slide-in {
+	animation: zx-slide-in 300ms ease-out forwards;
+}
+@keyframes zx-slide-in {
+	0% {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* 缩放动画 */
+.zx-scale-in {
+	animation: zx-scale-in 300ms ease-out forwards;
+}
+@keyframes zx-scale-in {
+	0% {
+		opacity: 0;
+		transform: scale(0.5);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
 	}
 }
 </style>

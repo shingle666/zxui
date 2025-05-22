@@ -1,12 +1,20 @@
 {
-  "name": "zx-popup",
+  "name": "@tanzhenxing/zx-popup",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "uni-app",
+    "popup",
+    "弹窗",
+    "弹窗组件",
+    "弹窗层",
+    "弹窗层组件",
+    "弹窗层组件"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
-  "description": ""
+  "description": "uni-app 弹窗组件"
 }

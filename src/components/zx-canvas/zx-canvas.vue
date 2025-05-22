@@ -1,12 +1,15 @@
 <template>
-	<view class="zs-canvas">
+	<view class="zx-canvas">
 		<!-- #ifdef H5 -->
-		<canvas class="canvas" canvas-id="zs1028" id="zs1028" @touchstart="_ontouchstart" @touchmove="_ontouchmove" @touchend="_ontouchend" @touchcancel="_ontouchcancel" @mousedown="_ontouchstart($event,true)" @mousemove="_ontouchmove($event,true)" @mouseup="_ontouchend(true)" :disable-scroll="disableScroll"></canvas>
+		<canvas class="canvas" canvas-id="zs1028" id="zs1028" @touchstart="_ontouchstart" @touchmove="_ontouchmove" @touchend="_ontouchend" @touchcancel="_ontouchcancel" @mousedown="_ontouchstart($event,true)" @mousemove="_ontouchmove($event,true)" @mouseup="_ontouchend(true)" :disable-scroll="disableScroll" :hidpi="hidpi"></canvas>
 		<!-- #endif -->
 		<!-- #ifdef MP-WEIXIN || MP-KUAISHOU || MP-JD -->
 		<canvas class="canvas" id="zs1028" type="2d" @touchstart="_ontouchstart" @touchmove="_ontouchmove" @touchend="_ontouchend" @touchcancel="_ontouchcancel" :disable-scroll="disableScroll"></canvas>
 		<!-- #endif -->
-		<!-- #ifndef H5 || MP-WEIXIN || MP-KUAISHOU || MP-JD -->
+		<!-- #ifdef MP-ALIPAY -->
+		<canvas class="canvas" id="zs1028" @touchstart="_ontouchstart" @touchmove="_ontouchmove" @touchend="_ontouchend" @touchcancel="_ontouchcancel" :disable-scroll="disableScroll"></canvas>
+		<!-- #endif -->
+		<!-- #ifndef H5 || MP-WEIXIN || MP-KUAISHOU || MP-JD || MP-ALIPAY -->
 		<canvas class="canvas" canvas-id="zs1028" id="zs1028" @touchstart="_ontouchstart" @touchmove="_ontouchmove" @touchend="_ontouchend" @touchcancel="_ontouchcancel" :disable-scroll="disableScroll"></canvas>
 		<!-- #endif -->
 	</view>
@@ -14,7 +17,7 @@
 
 <script setup>
 // 导入Vue3组合式API相关方法
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, getCurrentInstance } from 'vue';
 
 // 定义属性
 const props = defineProps({
@@ -25,11 +28,23 @@ const props = defineProps({
 	disableScroll: {
 		type: Boolean,
 		default: false
+	},
+	hidpi: {
+		type: Boolean,
+		default: true
+	},
+	width: {
+		type: [Number, String],
+		default: 300
+	},
+	height: {
+		type: [Number, String],
+		default: 225
 	}
 });
 
 // 定义事件
-const emits = defineEmits(['ready', 'touch_start', 'touch_move', 'touch_end', 'touch_cancel']);
+const emits = defineEmits(['ready', 'touch_start', 'touch_move', 'touch_end', 'touch_cancel', 'error']);
 
 // 定义响应式状态
 const isTouchMode = ref(true);
@@ -80,11 +95,29 @@ const _ontouchcancel = () => {
 	emits('touch_cancel');
 };
 
+// Canvas错误处理
+const handleCanvasError = (error) => {
+	console.error('Canvas error:', error);
+	emits('error', { errMsg: error?.message || 'Canvas operation failed' });
+};
+
 // Canvas相关API
 const canvasToTempFilePath = (config) => {
-	config.canvasId = _context.value.canvasId;
-	if (_context.value.canvas) config.canvas = _context.value.canvas;
-	uni.canvasToTempFilePath(config, getCurrentInstance());
+	try {
+		config.canvasId = _context.value.canvasId;
+		if (_context.value.canvas) config.canvas = _context.value.canvas;
+		
+		// 确保有基本的配置
+		if (!config.x) config.x = 0;
+		if (!config.y) config.y = 0;
+		if (!config.width) config.width = _context.value.width;
+		if (!config.height) config.height = _context.value.height;
+		
+		uni.canvasToTempFilePath(config, getCurrentInstance());
+	} catch (error) {
+		handleCanvasError(error);
+		config.fail?.(error);
+	}
 };
 
 const canvasGetImageData = (config) => {
@@ -97,15 +130,21 @@ const canvasGetImageData = (config) => {
 		let data = ctx.getImageData(x, y, width, height);
 		config.success?.(data);
 	} catch (e) {
+		handleCanvasError(e);
 		config.fail?.(e);
 	} finally {
 		config.complete?.();
 	}
 	// #endif
 	// #ifndef MP-WEIXIN || MP-KUAISHOU || MP-JD
-	config.canvasId = _context.value.canvasId;
-	if (_context.value.canvas) config.canvas = _context.value.canvas;
-	uni.canvasGetImageData(config, getCurrentInstance());
+	try {
+		config.canvasId = _context.value.canvasId;
+		if (_context.value.canvas) config.canvas = _context.value.canvas;
+		uni.canvasGetImageData(config, getCurrentInstance());
+	} catch (error) {
+		handleCanvasError(error);
+		config.fail?.(error);
+	}
 	// #endif
 };
 
@@ -120,21 +159,50 @@ const canvasPutImageData = (config) => {
 		else ctx.putImageData(config.data, x, y);
 		config.success?.();
 	} catch (e) {
+		handleCanvasError(e);
 		config.fail?.(e);
 	} finally {
 		config.complete?.();
 	}
 	// #endif
 	// #ifndef MP-WEIXIN || MP-KUAISHOU || MP-JD
-	if (config.data?.data) config.data = config.data.data;
-	config.canvasId = _context.value.canvasId;
-	if (_context.value.canvas) config.canvas = _context.value.canvas;
-	uni.canvasPutImageData(config, getCurrentInstance());
+	try {
+		if (config.data?.data) config.data = config.data.data;
+		config.canvasId = _context.value.canvasId;
+		if (_context.value.canvas) config.canvas = _context.value.canvas;
+		uni.canvasPutImageData(config, getCurrentInstance());
+	} catch (error) {
+		handleCanvasError(error);
+		config.fail?.(error);
+	}
 	// #endif
 };
 
-// 获取当前组件实例
-import { getCurrentInstance } from 'vue';
+// 创建渐变对象
+const createLinearGradient = (x0, y0, x1, y1) => {
+	try {
+		if (_context.value?.context) {
+			return _context.value.context.createLinearGradient(x0, y0, x1, y1);
+		}
+		return null;
+	} catch (error) {
+		handleCanvasError(error);
+		return null;
+	}
+};
+
+// 创建圆形渐变
+const createCircularGradient = (x, y, r) => {
+	try {
+		if (_context.value?.context) {
+			return _context.value.context.createCircularGradient(x, y, r);
+		}
+		return null;
+	} catch (error) {
+		handleCanvasError(error);
+		return null;
+	}
+};
 
 // 在组件挂载后初始化
 onMounted(() => {
@@ -146,20 +214,26 @@ onMounted(() => {
 			size: true,
 			node: true
 		}, res => {
+			// 应用用户设置的宽高
+			const width = typeof props.width === 'number' ? props.width : parseInt(props.width);
+			const height = typeof props.height === 'number' ? props.height : parseInt(props.height);
+			
 			const context = {
 				canvasId,
 				node,
-				width: res.width,
-				height: res.height,
+				width: width || res.width,
+				height: height || res.height,
 				canvas: res.node || {
 					canvasId,
-					width: res.width,
-					height: res.height
+					width: width || res.width,
+					height: height || res.height
 				},
 				zs: {
 					canvasToTempFilePath,
 					canvasGetImageData,
-					canvasPutImageData
+					canvasPutImageData,
+					createLinearGradient,
+					createCircularGradient
 				}
 			};
 			context.plugin = context.zs;
@@ -190,7 +264,7 @@ onMounted(() => {
 						x.beginPath();
 						if (!reserve) x.clearRect(0, 0, context.width, context.height)
 					})).catch(function(e) {
-						console.error(e)
+						handleCanvasError(e);
 					}).then(function(a) {
 						a?.();
 						q.length = 0;
@@ -209,10 +283,10 @@ onMounted(() => {
 					setShadow(offsetX, offsetY, blur, color) {
 						t(function() {
 							{
-								if (offsetX) x.shadowOffsetX = offsetX;
-								if (offsetY) x.shadowOffsetY = offsetY;
-								if (blur) x.shadowBlur = blur;
-								if (color) x.shadowColor = color;
+								if (offsetX !== undefined) x.shadowOffsetX = offsetX;
+								if (offsetY !== undefined) x.shadowOffsetY = offsetY;
+								if (blur !== undefined) x.shadowBlur = blur;
+								if (color !== undefined) x.shadowColor = color;
 							}
 						})
 					},
@@ -249,7 +323,13 @@ onMounted(() => {
 							}))
 						}
 					},
-					draw
+					draw,
+					createLinearGradient(x0, y0, x1, y1) {
+						return x.createLinearGradient(x0, y0, x1, y1);
+					},
+					createCircularGradient(x, y, r) {
+						return x.createRadialGradient(x, y, 0, x, y, r);
+					}
 				};
 				["font", "shadowOffsetX", "shadowOffsetY", "shadowBlur", "shadowColor", "fillStyle", "globalAlpha", "lineCap", "lineJoin", "lineWidth", "lineDashOffset", "miterLimit", "strokeStyle", "textAlign", "textBaseline"].forEach(function(n) {
 					Object.defineProperty(c, n, {
@@ -257,10 +337,10 @@ onMounted(() => {
 						set(a) {
 							t(function() { x[n] = a })
 						},
-						get() { x[n] }
+						get() { return x[n] }
 					})
 				});
-				["arc", "arcTo", "bezierCurveTo", "clip", "beginPath", "closePath", "clearRect", "createCircularGradient", "createLinearGradient", "createPattern", "fill", "fillRect", "fillText", "lineTo", "measureText", "moveTo", "quadraticCurveTo", "rect", "restore", "rotate", "save", "scale", "stroke", "strokeRect", "strokeText", "transform", "translate"].forEach(function(n) {
+				["arc", "arcTo", "bezierCurveTo", "clip", "beginPath", "closePath", "clearRect", "createPattern", "fill", "fillRect", "fillText", "lineTo", "measureText", "moveTo", "quadraticCurveTo", "rect", "restore", "rotate", "save", "scale", "stroke", "strokeRect", "strokeText", "transform", "translate"].forEach(function(n) {
 					c[n] = function(...a) {
 						t(function() { x[n](...a) })
 					}
@@ -296,17 +376,69 @@ onMounted(() => {
 					window.requestAnimationFrame(callback);
 					// #endif
 					// #ifndef H5
-					callback();
+					setTimeout(callback, 16);
 					// #endif
 				}
 			});
 			context.context = context.canvas.getContext();
+			
+			// 添加渐变创建方法
+			if (context.context && !context.context.createLinearGradient) {
+				context.context.createLinearGradient = function(x0, y0, x1, y1) {
+					// 部分平台不支持直接创建渐变，尝试使用替代方案
+					try {
+						// #ifdef APP-PLUS || H5
+						return context.context.createLinearGradient(x0, y0, x1, y1);
+						// #endif
+						// #ifndef APP-PLUS || H5
+						console.warn('Platform does not support createLinearGradient directly');
+						return {
+							addColorStop: function() {}
+						};
+						// #endif
+					} catch (e) {
+						handleCanvasError(e);
+						return {
+							addColorStop: function() {}
+						};
+					}
+				};
+			}
+			
+			if (context.context && !context.context.createCircularGradient) {
+				context.context.createCircularGradient = function(x, y, r) {
+					// 部分平台不支持直接创建渐变，尝试使用替代方案
+					try {
+						// #ifdef APP-PLUS || H5
+						return context.context.createRadialGradient(x, y, 0, x, y, r);
+						// #endif
+						// #ifndef APP-PLUS || H5
+						console.warn('Platform does not support createCircularGradient directly');
+						return {
+							addColorStop: function() {}
+						};
+						// #endif
+					} catch (e) {
+						handleCanvasError(e);
+						return {
+							addColorStop: function() {}
+						};
+					}
+				};
+			}
 			// #endif
 			
-			_context.value = { canvasId, node, canvas: context.canvas, width: context.width, height: context.height };
+			_context.value = { 
+				canvasId, 
+				node, 
+				canvas: context.canvas, 
+				width: context.width, 
+				height: context.height,
+				context: context.context
+			};
 			
 			if (props.isUse != true) {
-				const label = "欢迎使用 <zs-canvas> 点此展开";
+				const label = "欢迎使用 <zx-canvas> 点此展开";
 				console.groupCollapsed(label);
 				console.table({
 					"1": { "平台": "H5", "支持动画": "流畅" },
@@ -314,13 +446,13 @@ onMounted(() => {
 					"3": { "平台": "微信小程序", "支持动画": "流畅" },
 					"4": { "平台": "其它", "支持动画": "未确定" }
 				});
-				console.info("要关闭此提示和演示，请给组件<zs-canvas>设置属性:is-use=\"true\"");
-				console.info("%c 组件<zs-canvas>文档： https://ext.dcloud.net.cn/publisher?id=752845", "color:orange;");
+				console.info("要关闭此提示和演示，请给组件<zx-canvas>设置属性:is-use=\"true\"");
+				console.info("%c 组件<zx-canvas>文档： https://ext.dcloud.net.cn/publisher?id=752845", "color:orange;");
 				console.groupEnd(label);
 				context.context.save();
 				context.context.setTextAlign("center");
 				context.context.setTextBaseline("middle");
-				context.context.fillText("欢迎使用 <zs-canvas>", res.width / 2, res.height / 2);
+				context.context.fillText("欢迎使用 <zx-canvas>", context.width / 2, context.height / 2);
 				context.context.restore();
 				context.context.draw(false, () => emits('ready', context));
 			} else emits('ready', context);
@@ -332,24 +464,28 @@ onMounted(() => {
 defineExpose({
 	canvasToTempFilePath,
 	canvasGetImageData,
-	canvasPutImageData
+	canvasPutImageData,
+	createLinearGradient,
+	createCircularGradient
 });
 </script>
 
 <style lang="scss">
 	/* #ifdef MP-WEIXIN */
-	zs-canvas{
+	zx-canvas{
 		width: inherit;
 		height: inherit;
 	/* #endif */
 		
-		.zs-canvas{
+		.zx-canvas{
 			width: inherit;
 			height: inherit;
+			position: relative;
 			
 			.canvas{
 				width: inherit;
 				height: inherit;
+				display: block;
 			}
 		}
 		

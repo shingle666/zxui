@@ -1,51 +1,27 @@
 <template>
-	<view class="zx-calendar-item__weeks-box" :class="{
-		'zx-calendar-item--disable':weeks.disable,
-		'zx-calendar-item--isDay':calendar.fullDate === weeks.fullDate && weeks.isDay,
-		'zx-calendar-item--checked':(calendar.fullDate === weeks.fullDate && !weeks.isDay) ,
-		'zx-calendar-item--before-checked':weeks.beforeMultiple,
-		'zx-calendar-item--multiple': weeks.multiple,
-		'zx-calendar-item--after-checked':weeks.afterMultiple,
-		}"
-	 @click="choiceDate(weeks)">
+	<view class="zx-calendar-item__weeks-box" :class="classObject" @click="choiceDate(weeks)">
 		<view class="zx-calendar-item__weeks-box-item">
-			<text v-if="selected&&weeks.extraInfo" class="zx-calendar-item__weeks-box-circle"></text>
-			<text class="zx-calendar-item__weeks-box-text" :class="{
-				'zx-calendar-item--isDay-text': weeks.isDay,
-				'zx-calendar-item--isDay':calendar.fullDate === weeks.fullDate && weeks.isDay,
-				'zx-calendar-item--checked':calendar.fullDate === weeks.fullDate && !weeks.isDay,
-				'zx-calendar-item--before-checked':weeks.beforeMultiple,
-				'zx-calendar-item--multiple': weeks.multiple,
-				'zx-calendar-item--after-checked':weeks.afterMultiple,
-				'zx-calendar-item--disable':weeks.disable,
-				}">{{weeks.date}}</text>
-			<text v-if="!lunar&&!weeks.extraInfo && weeks.isDay" class="zx-calendar-item__weeks-lunar-text" :class="{
-				'zx-calendar-item--isDay-text':weeks.isDay,
-				'zx-calendar-item--isDay':calendar.fullDate === weeks.fullDate && weeks.isDay,
-				'zx-calendar-item--checked':calendar.fullDate === weeks.fullDate && !weeks.isDay,
-				'zx-calendar-item--before-checked':weeks.beforeMultiple,
-				'zx-calendar-item--multiple': weeks.multiple,
-				'zx-calendar-item--after-checked':weeks.afterMultiple,
-				}">{{todayText}}</text>
-			<text v-if="lunar&&!weeks.extraInfo" class="zx-calendar-item__weeks-lunar-text" :class="{
-				'zx-calendar-item--isDay-text':weeks.isDay,
-				'zx-calendar-item--isDay':calendar.fullDate === weeks.fullDate && weeks.isDay,
-				'zx-calendar-item--checked':calendar.fullDate === weeks.fullDate && !weeks.isDay,
-				'zx-calendar-item--before-checked':weeks.beforeMultiple,
-				'zx-calendar-item--multiple': weeks.multiple,
-				'zx-calendar-item--after-checked':weeks.afterMultiple,
-				'zx-calendar-item--disable':weeks.disable,
-				}">{{weeks.isDay ? todayText : (weeks.lunar.IDayCn === '初一'?weeks.lunar.IMonthCn:weeks.lunar.IDayCn)}}</text>
-			<text v-if="weeks.extraInfo&&weeks.extraInfo.info" class="zx-calendar-item__weeks-lunar-text" :class="{
-				'zx-calendar-item--extra':weeks.extraInfo.info,
-				'zx-calendar-item--isDay-text':weeks.isDay,
-				'zx-calendar-item--isDay':calendar.fullDate === weeks.fullDate && weeks.isDay,
-				'zx-calendar-item--checked':calendar.fullDate === weeks.fullDate && !weeks.isDay,
-				'zx-calendar-item--before-checked':weeks.beforeMultiple,
-				'zx-calendar-item--multiple': weeks.multiple,
-				'zx-calendar-item--after-checked':weeks.afterMultiple,
-				'zx-calendar-item--disable':weeks.disable,
-				}">{{weeks.extraInfo.info}}</text>
+			<text v-if="selected && weeks.extraInfo" class="zx-calendar-item__weeks-box-circle"></text>
+			<text class="zx-calendar-item__weeks-box-text" :class="classObject">{{weeks.date}}</text>
+			
+			<!-- 今日文本显示 -->
+			<text v-if="!lunar && !weeks.extraInfo && weeks.isDay" 
+				class="zx-calendar-item__weeks-lunar-text" 
+				:class="classObject">{{todayText}}</text>
+			
+			<!-- 农历显示 -->
+			<text v-if="lunar && !weeks.extraInfo" 
+				class="zx-calendar-item__weeks-lunar-text" 
+				:class="classObject">
+				{{weeks.isDay ? todayText : (weeks.lunar.IDayCn === '初一' ? weeks.lunar.IMonthCn : weeks.lunar.IDayCn)}}
+			</text>
+			
+			<!-- 额外信息显示 -->
+			<text v-if="weeks.extraInfo && weeks.extraInfo.info" 
+				class="zx-calendar-item__weeks-lunar-text" 
+				:class="{ ...classObject, 'zx-calendar-item--extra': weeks.extraInfo.info }">
+				{{weeks.extraInfo.info}}
+			</text>
 		</view>
 	</view>
 </template>
@@ -83,6 +59,21 @@ const props = defineProps({
 // 计算属性 - 今天文本
 const todayText = computed(() => t("zx-calender.today"));
 
+// 计算属性 - 样式类对象
+const classObject = computed(() => {
+	const isToday = props.calendar.fullDate === props.weeks.fullDate;
+	
+	return {
+		'zx-calendar-item--disable': props.weeks.disable,
+		'zx-calendar-item--isDay': isToday && props.weeks.isDay,
+		'zx-calendar-item--checked': isToday && !props.weeks.isDay,
+		'zx-calendar-item--before-checked': props.weeks.beforeMultiple,
+		'zx-calendar-item--multiple': props.weeks.multiple,
+		'zx-calendar-item--after-checked': props.weeks.afterMultiple,
+		'zx-calendar-item--isDay-text': props.weeks.isDay
+	};
+});
+
 // 方法 - 选择日期
 const choiceDate = (weeks) => {
 	emit('change', weeks);
@@ -90,13 +81,14 @@ const choiceDate = (weeks) => {
 </script>
 
 <style lang="scss" scoped>
-	$zx-font-size-base:14px;
-	$zx-text-color:#333;
-	$zx-font-size-sm:12px;
+	$zx-font-size-base: 14px;
+	$zx-text-color: #333;
+	$zx-font-size-sm: 12px;
 	$zx-color-error: #e43d33;
 	$zx-opacity-disabled: 0.3;
-	$zx-text-color-disable:#c0c0c0;
+	$zx-text-color-disable: #c0c0c0;
 	$zx-primary: #2979ff !default;
+	
 	.zx-calendar-item__weeks-box {
 		flex: 1;
 		/* #ifndef APP-NVUE */
@@ -137,7 +129,6 @@ const choiceDate = (weeks) => {
 		height: 8px;
 		border-radius: 8px;
 		background-color: $zx-color-error;
-
 	}
 
 	.zx-calendar-item--disable {
@@ -171,10 +162,12 @@ const choiceDate = (weeks) => {
 		color: #fff;
 		opacity: 0.8;
 	}
+	
 	.zx-calendar-item--before-checked {
 		background-color: #ff5a5f;
 		color: #fff;
 	}
+	
 	.zx-calendar-item--after-checked {
 		background-color: #ff5a5f;
 		color: #fff;

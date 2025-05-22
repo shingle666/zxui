@@ -3,11 +3,24 @@
 		class="zx-checkbox"
 		:style="[checkboxStyle]"
 		@tap.stop="wrapperClickHandler"
-		:class="[`zx-checkbox-label--${parentData.iconPlacement}`, parentData.borderBottom && parentData.placement === 'column' && 'zx-border-bottom']"
+		:class="[
+			`zx-checkbox-label--${parentData.iconPlacement}`, 
+			parentData.borderBottom && parentData.placement === 'column' && 'zx-border-bottom',
+			border && 'zx-checkbox--border'
+		]"
 	>
-		<view class="zx-checkbox__icon-wrap" @tap.stop="iconClickHandler" :class="iconClasses" :style="[iconWrapStyle]">
+		<view 
+			class="zx-checkbox__icon-wrap" 
+			@tap.stop="iconClickHandler" 
+			:class="[
+				iconClasses,
+				indeterminate ? 'zx-checkbox__icon-wrap--indeterminate' : '',
+				isChecked ? 'zx-checkbox__icon-wrap--checked' : ''
+			]" 
+			:style="[iconWrapStyle]"
+		>
 			<slot name="icon">
-				<zx-icon class="zx-checkbox__icon-wrap__icon" name="checkbox-mark" :size="elIconSize" :color="elIconColor"></zx-icon>
+				<zx-icon class="zx-checkbox__icon-wrap__icon" :name="indeterminate ? 'minus' : 'checkbox-mark'" :size="elIconSize" :color="elIconColor"></zx-icon>
 			</slot>
 		</view>
 		<text
@@ -17,8 +30,9 @@
 				fontSize: elLabelSize,
 				lineHeight: elLabelSize
 			}"
+			class="zx-checkbox__label"
 		>
-			{{ label }}
+			<slot>{{ label }}</slot>
 		</text>
 	</view>
 </template>
@@ -27,11 +41,14 @@
 /**
  * checkbox  复选框
  * @description 复选框组件一般用于需要多个选择的场景，该组件功能完整，使用方便
- * @tutorial https://uviewui.com/components/checkbox.html
+ * @tutorial https://uviewui.com/components/checkbox
  * @property {String | Number | Boolean}	name			checkbox组件的标示符
+ * @property {String | Number | Boolean}	value			checkbox组件的值，如果设置了true-value和false-value时，value将被忽略
+ * @property {String | Number | Boolean}	modelValue		v-model绑定的值
  * @property {String}						shape			形状，square为方形，circle为圆型
  * @property {String | Number}				size			整体的大小
  * @property {Boolean}						checked			是否默认选中
+ * @property {Boolean}						indeterminate	设置不确定状态，仅负责样式控制
  * @property {String | Boolean}				disabled		是否禁用
  * @property {String}						activeColor		选中状态下的颜色，如设置此值，将会覆盖parent的activeColor值
  * @property {String}						inactiveColor	未选中的颜色
@@ -41,12 +58,16 @@
  * @property {String}						labelColor 		label的颜色
  * @property {String | Number}				labelSize		label的字体大小，px单位
  * @property {String | Boolean}				labelDisabled	是否禁止点击提示语选中复选框
+ * @property {Boolean}						border			是否显示边框
+ * @property {String | Number | Boolean}	trueValue		选中时的值
+ * @property {String | Number | Boolean}	falseValue		未选中时的值
  * @property {Object}						customStyle		定义需要用到的外部样式
  *
  * @event {Function}	change	任一个checkbox状态发生变化时触发，回调为一个对象
+ * @event {Function}	update:modelValue	更新v-model绑定的值
  * @example <zx-checkbox v-model="checked" :disabled="false">天涯</zx-checkbox>
  */
-import { ref, getCurrentInstance, onMounted, computed } from 'vue';
+import { ref, getCurrentInstance, onMounted, computed, watch } from 'vue';
 const { proxy } = getCurrentInstance();
 const instance = getCurrentInstance();
 
@@ -55,6 +76,16 @@ const props = defineProps({
 	name: {
 		type: [String, Number, Boolean],
 		default: ''
+	},
+	// checkbox的值
+	value: {
+		type: [String, Number, Boolean],
+		default: ''
+	},
+	// v-model绑定的值
+	modelValue: {
+		type: [String, Number, Boolean, Array],
+		default: false
 	},
 	// 形状，square为方形，circle为圆型
 	shape: {
@@ -68,6 +99,11 @@ const props = defineProps({
 	},
 	// 是否默认选中
 	checked: {
+		type: Boolean,
+		default: false
+	},
+	// 是否不确定状态
+	indeterminate: {
 		type: Boolean,
 		default: false
 	},
@@ -115,8 +151,30 @@ const props = defineProps({
 	labelDisabled: {
 		type: [String, Boolean],
 		default: false
+	},
+	// 是否显示边框
+	border: {
+		type: Boolean,
+		default: false
+	},
+	// 选中时的值
+	trueValue: {
+		type: [String, Number, Boolean],
+		default: true
+	},
+	// 未选中时的值
+	falseValue: {
+		type: [String, Number, Boolean],
+		default: false
+	},
+	// 自定义样式
+	customStyle: {
+		type: Object,
+		default: () => ({})
 	}
 });
+
+const emit = defineEmits(['change', 'update:modelValue']);
 
 const isChecked = ref(false);
 // 父组件的默认值，因为头条小程序不支持在computed中使用parent.shape的形式
@@ -135,6 +193,17 @@ const parentData = ref({
 	borderBottom: false,
 	iconPlacement: 'left'
 });
+
+// 监听v-model值变化
+watch(() => props.modelValue, (newVal) => {
+	if (Array.isArray(newVal)) {
+		// 如果是数组，检查是否包含当前值
+		isChecked.value = newVal.includes(props.name || props.value);
+	} else {
+		// 单个值比较
+		isChecked.value = newVal === (props.trueValue);
+	}
+}, { immediate: true });
 
 // 是否禁用，如果父组件zx-raios-group禁用的话，将会忽略子组件的配置
 const elDisabled = computed(() => {
@@ -177,9 +246,9 @@ const elIconColor = computed(() => {
 	// 图标的颜色
 	if (elDisabled.value) {
 		// disabled状态下，已勾选的checkbox图标改为elInactiveColor
-		return isChecked.value ? elInactiveColor.value : 'transparent';
+		return isChecked.value || props.indeterminate ? elInactiveColor.value : 'transparent';
 	} else {
-		return isChecked.value ? iconColor : 'transparent';
+		return isChecked.value || props.indeterminate ? iconColor : 'transparent';
 	}
 });
 const iconClasses = computed(() => {
@@ -201,8 +270,13 @@ const iconClasses = computed(() => {
 const iconWrapStyle = computed(() => {
 	// checkbox的整体样式
 	const style = {};
-	style.backgroundColor = isChecked.value && !elDisabled.value ? elActiveColor.value : '#ffffff';
-	style.borderColor = isChecked.value && !elDisabled.value ? elActiveColor.value : elInactiveColor.value;
+	if (props.indeterminate) {
+		style.backgroundColor = !elDisabled.value ? elActiveColor.value : '#ffffff';
+		style.borderColor = !elDisabled.value ? elActiveColor.value : elInactiveColor.value;
+	} else {
+		style.backgroundColor = isChecked.value && !elDisabled.value ? elActiveColor.value : '#ffffff';
+		style.borderColor = isChecked.value && !elDisabled.value ? elActiveColor.value : elInactiveColor.value;
+	}
 	style.width = elSize.value;
 	style.height = elSize.value;
 	// 如果是图标在右边的话，移除它的右边距
@@ -230,21 +304,30 @@ onMounted(() => {
 const init = () => {
 	// 支付宝小程序不支持provide/inject，所以使用这个方法获取整个父组件，在created定义，避免循环引用
 	updateParentData();
-	if (!proxy.parent) {
-		console.log('zx-checkbox必须搭配zx-checkbox-group组件使用')
-	}
+	
 	// 设置初始化时，是否默认选中的状态，父组件zx-checkbox-group的value可能是array，所以额外判断
 	if (props.checked) {
 		isChecked.value = true;
+	} else if (Array.isArray(props.modelValue)) {
+		// 如果v-model是数组，检查是否包含当前值
+		isChecked.value = props.modelValue.includes(props.name || props.value);
+	} else if (props.modelValue !== undefined) {
+		// 非数组的v-model值比较
+		isChecked.value = props.modelValue === props.trueValue;
 	} else if (testArray(parentData.value.value)) {
 		// 查找数组是是否存在name元素值
 		isChecked.value = parentData.value.value.some((item) => {
-			return item === props.name;
+			return item === props.name || item === props.value;
 		});
 	}
 };
 const updateParentData = () => {
-	//instance.getParentData('zx-checkbox-group');
+	// 获取父组件的参数
+	const parent = $parent('zx-checkbox-group');
+	if (parent) {
+		proxy.parent = parent;
+		parentData.value = parent;
+	}
 };
 // 横向两端排列时，点击组件即可触发选中事件
 const wrapperClickHandler = (e) => {
@@ -255,7 +338,7 @@ const iconClickHandler = (e) => {
 	proxy.preventEvent(e);
 	// 如果整体被禁用，不允许被点击
 	if (!elDisabled.value) {
-		setRadioCheckedStatus();
+		setCheckboxCheckedStatus();
 	}
 };
 // 点击label
@@ -263,24 +346,43 @@ const labelClickHandler = (e) => {
 	proxy.preventEvent(e);
 	// 如果按钮整体被禁用或者label被禁用，则不允许点击文字修改状态
 	if (!elLabelDisabled.value && !elDisabled.value) {
-		setRadioCheckedStatus();
+		setCheckboxCheckedStatus();
 	}
 };
 const emitEvent = () => {
-	proxy.$emit('change', isChecked.value);
+	// 发送change事件
+	emit('change', isChecked.value ? props.trueValue : props.falseValue);
+	
+	// 发送update:modelValue事件更新v-model
+	if (Array.isArray(props.modelValue)) {
+		// 如果是数组，处理数组值
+		const newVal = [...props.modelValue];
+		const val = props.name || props.value;
+		const index = newVal.findIndex(item => item === val);
+		
+		if (isChecked.value && index === -1) {
+			newVal.push(val);
+		} else if (!isChecked.value && index > -1) {
+			newVal.splice(index, 1);
+		}
+		
+		emit('update:modelValue', newVal);
+	} else {
+		// 如果是单个值
+		emit('update:modelValue', isChecked.value ? props.trueValue : props.falseValue);
+	}
+	
 	// 尝试调用zx-form的验证方法，进行一定延迟，否则微信小程序更新可能会不及时
 	proxy.$nextTick(() => {
 		formValidate(instance, 'change');
 	});
 };
 // 改变组件选中状态
-// 这里的改变的依据是，更改本组件的checked值为true，同时通过父组件遍历所有zx-checkbox实例
-// 将本组件外的其他zx-checkbox的checked都设置为false(都被取消选中状态)，因而只剩下一个为选中状态
-const setRadioCheckedStatus = () => {
+const setCheckboxCheckedStatus = () => {
 	// 将本组件标记为与原来相反的状态
 	isChecked.value = !isChecked.value;
 	emitEvent();
-	typeof proxy.parent.unCheckedOther === 'function' && proxy.parent.unCheckedOther(instance);
+	typeof proxy.parent?.unCheckedOther === 'function' && proxy.parent.unCheckedOther(instance);
 };
 /**
  * @description 在zx-form的子组件内容发生变化，或者失去焦点时，尝试通知zx-form执行校验方法
@@ -332,7 +434,7 @@ $zx-checkbox-icon-wrap-icon-line-height: 0 !default;
 $zx-checkbox-icon-wrap-circle-border-radius: 100% !default;
 $zx-checkbox-icon-wrap-square-border-radius: 3px !default;
 $zx-checkbox-icon-wrap-checked-color: #fff !default;
-$zx-checkbox-icon-wrap-checked-background-color: red !default;
+$zx-checkbox-icon-wrap-checked-background-color: #2979ff !default;
 $zx-checkbox-icon-wrap-checked-border-color: #2979ff !default;
 $zx-checkbox-icon-wrap-disabled-background-color: #ebedf0 !default;
 $zx-checkbox-icon-wrap-disabled-checked-color: #c8c9cc !default;
@@ -360,6 +462,13 @@ $zx-checkbox-label-disabled-color: #c8c9cc !default;
 		justify-content: space-between;
 	}
 
+	&--border {
+		margin: 4px;
+		padding: 6px 15px;
+		border-radius: 4px;
+		border: 1px solid #dcdfe6;
+	}
+
 	&__icon-wrap {
 		/* #ifndef APP-NVUE */
 		box-sizing: border-box;
@@ -385,7 +494,6 @@ $zx-checkbox-label-disabled-color: #c8c9cc !default;
 		&__icon {
 			line-height: $zx-checkbox-icon-wrap-icon-line-height;
 		}
-
 		/* #endif */
 
 		&--circle {
@@ -397,6 +505,12 @@ $zx-checkbox-label-disabled-color: #c8c9cc !default;
 		}
 
 		&--checked {
+			color: $zx-checkbox-icon-wrap-checked-color;
+			background-color: $zx-checkbox-icon-wrap-checked-background-color;
+			border-color: $zx-checkbox-icon-wrap-checked-border-color;
+		}
+
+		&--indeterminate {
 			color: $zx-checkbox-icon-wrap-checked-color;
 			background-color: $zx-checkbox-icon-wrap-checked-background-color;
 			border-color: $zx-checkbox-icon-wrap-checked-border-color;

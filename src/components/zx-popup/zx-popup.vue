@@ -10,7 +10,14 @@
 			:zIndex="zIndex - 1"
 		></zx-overlay>
 		<zx-transition :show="show" :customStyle="transitionStyle" :mode="position" :duration="duration" @afterEnter="afterEnter" @click="clickHandler">
-			<view class="zx-popup__content" :style="[contentStyle,border?{border: '1rpx solid #ececec'}:'']" @tap.stop="noop">
+			<view 
+				class="zx-popup__content" 
+				:style="[contentStyle,border?{border: '1rpx solid #ececec'}:'']" 
+				@tap.stop="noop"
+				:role="role"
+				:aria-modal="true"
+				:aria-label="ariaLabel"
+			>
 				<zx-status-bar v-if="safeAreaInsetTop"></zx-status-bar>
 				<slot></slot>
 				<view
@@ -20,6 +27,8 @@
 					:class="['zx-popup__content__close--' + closeIconPos]"
 					hover-class="zx-popup__content__close--hover"
 					hover-stay-time="150"
+					role="button"
+					aria-label="关闭"
 				>
 					<zx-icon name="close" color="#909399" size="36rpx" :bold="true"></zx-icon>
 				</view>
@@ -50,11 +59,15 @@
  * @property {String | Number}	round				圆角值（默认 0）
  * @property {Boolean}			zoom				当mode=center时 是否开启缩放（默认 true ）
  * @property {Object}			customStyle			组件的样式，对象形式
+ * @property {Boolean}			closeOnEsc			是否支持ESC键关闭（默认 true ）
+ * @property {Boolean}			lockScroll			是否锁定背景滚动（默认 true ）
+ * @property {String}			role				ARIA角色属性（默认 'dialog' ）
+ * @property {String}			ariaLabel			ARIA标签（默认 '弹窗' ）
  * @event {Function}            open                弹出层打开
  * @event {Function}            close               弹出层收起
  * @example <zx-popup><text>窗口内容</text></zx-popup>
  */
-import { getCurrentInstance, ref, computed, onMounted, watch } from 'vue';
+import { getCurrentInstance, ref, computed, onMounted, watch, onBeforeUnmount } from 'vue';
 
 const { proxy } = getCurrentInstance();
 const props = defineProps({
@@ -145,13 +158,58 @@ const props = defineProps({
 		default: () => {
 			return {};
 		}
+	},
+	// 是否支持ESC键关闭
+	closeOnEsc: {
+		type: Boolean,
+		default: true
+	},
+	// 是否锁定背景滚动
+	lockScroll: {
+		type: Boolean,
+		default: true
+	},
+	// ARIA角色
+	role: {
+		type: String,
+		default: 'dialog'
+	},
+	// ARIA标签
+	ariaLabel: {
+		type: String,
+		default: '弹窗'
 	}
 });
 
 const overlayDuration = ref(0);
+let originalBodyOverflow = '';
+
+// 监听ESC键
+const handleKeydown = (event) => {
+	if (event.key === 'Escape' && props.show && props.closeOnEsc) {
+		close();
+	}
+};
 
 onMounted(() => {
-	overlayDuration.value = props.duration + 50;
+	overlayDuration.value = parseInt(props.duration) + 50;
+	
+	// 添加ESC键盘事件监听
+	// #ifdef H5
+	document.addEventListener('keydown', handleKeydown);
+	// #endif
+});
+
+onBeforeUnmount(() => {
+	// 移除ESC键盘事件监听
+	// #ifdef H5
+	document.removeEventListener('keydown', handleKeydown);
+	// #endif
+	
+	// 恢复滚动状态
+	if (props.lockScroll) {
+		enableScroll();
+	}
 });
 
 const transitionStyle = computed(() => {
@@ -187,11 +245,10 @@ const transitionStyle = computed(() => {
 		return style;
 	}
 });
+
 const contentStyle = computed(() => {
 	const style = {};
 	// 通过设备信息的safeAreaInsets值来判断是否需要预留顶部状态栏和底部安全局的位置
-	// 不使用css方案，是因为nvue不支持css的iPhoneX安全区查询属性
-	const { safeAreaInsets } = uni.getWindowInfo();
 	if (props.mode !== 'center') {
 		style.flex = 1;
 	}
@@ -213,6 +270,7 @@ const contentStyle = computed(() => {
 	}
 	return style;
 });
+
 const position = computed(() => {
 	if (props.mode === 'center') {
 		return props.zoom ? 'fade-zoom' : 'fade';
@@ -231,12 +289,41 @@ const position = computed(() => {
 	}
 });
 
-watch(overlayDuration,(newValue, oldValue) => {
-	if (newValue === true) {
+// 禁用滚动
+const disableScroll = () => {
+	// #ifdef H5
+	if (document && document.body) {
+		originalBodyOverflow = document.body.style.overflow;
+		document.body.style.overflow = 'hidden';
+	}
+	// #endif
+};
+
+// 启用滚动
+const enableScroll = () => {
+	// #ifdef H5
+	if (document && document.body) {
+		document.body.style.overflow = originalBodyOverflow;
+	}
+	// #endif
+};
+
+watch(() => props.show, (newValue) => {
+	if (newValue) {
+		// 弹窗显示时
+		if (props.lockScroll) {
+			disableScroll();
+		}
+		
 		// #ifdef MP-WEIXIN
 		const children = proxy.$children;
 		retryComputedComponentRect(children);
 		// #endif
+	} else {
+		// 弹窗关闭时
+		if (props.lockScroll) {
+			enableScroll();
+		}
 	}
 });
 
@@ -246,12 +333,15 @@ const overlayClick = () => {
 		proxy.$emit('close');
 	}
 };
+
 const close = (e) => {
 	proxy.$emit('close');
 };
+
 const afterEnter = () => {
 	proxy.$emit('open');
 };
+
 const clickHandler = () => {
 	// 由于中部弹出时，其zx-transition占据了整个页面相当于遮罩，此时需要发出遮罩点击事件，是否无法通过点击遮罩关闭弹窗
 	if (props.mode === 'center') {
@@ -259,7 +349,9 @@ const clickHandler = () => {
 	}
 	proxy.$emit('click');
 };
+
 const noop = () => {};
+
 // #ifdef MP-WEIXIN
 const retryComputedComponentRect = (children) => {
 	// 组件内部需要计算节点的组件
@@ -314,6 +406,9 @@ const retryComputedComponentRect = (children) => {
 	&__content {
 		background-color: #ffffff;
 		position: relative;
+		box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+		max-height: 100vh;
+		overflow: auto;
 
 		&--round-top {
 			border-top-left-radius: 0;
@@ -352,6 +447,7 @@ const retryComputedComponentRect = (children) => {
 
 		&__close {
 			position: absolute;
+			transition: opacity 0.2s;
 
 			&--hover {
 				opacity: 0.4;

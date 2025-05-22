@@ -90,6 +90,70 @@
 			</view>
 		</view>
 		
+		<view class="section-title">带徽标的头像</view>
+		<view class="section-content">
+			<view class="avatar-demo">
+				<zx-avatar :src="defaultAvatar" badge="99"></zx-avatar>
+				<view class="avatar-desc">数字徽标</view>
+			</view>
+			<view class="avatar-demo">
+				<zx-avatar :src="defaultAvatar" badge="1" badge-is-dot></zx-avatar>
+				<view class="avatar-desc">小红点</view>
+			</view>
+			<view class="avatar-demo">
+				<zx-avatar :src="defaultAvatar" badge="NEW" badge-color="#3c9cff"></zx-avatar>
+				<view class="avatar-desc">文字徽标</view>
+			</view>
+		</view>
+		
+		<view class="section-title">徽标位置</view>
+		<view class="section-content">
+			<view class="avatar-demo">
+				<zx-avatar :src="defaultAvatar" badge="1" badge-position="rightTop"></zx-avatar>
+				<view class="avatar-desc">右上</view>
+			</view>
+			<view class="avatar-demo">
+				<zx-avatar :src="defaultAvatar" badge="2" badge-position="rightBottom"></zx-avatar>
+				<view class="avatar-desc">右下</view>
+			</view>
+			<view class="avatar-demo">
+				<zx-avatar :src="defaultAvatar" badge="3" badge-position="leftBottom"></zx-avatar>
+				<view class="avatar-desc">左下</view>
+			</view>
+			<view class="avatar-demo">
+				<zx-avatar :src="defaultAvatar" badge="4" badge-position="leftTop"></zx-avatar>
+				<view class="avatar-desc">左上</view>
+			</view>
+		</view>
+
+		<view class="section-title">自定义样式</view>
+		<view class="section-content">
+			<view class="avatar-demo">
+				<zx-avatar :src="defaultAvatar" customClass="custom-avatar"></zx-avatar>
+				<view class="avatar-desc">自定义容器样式</view>
+			</view>
+			<view class="avatar-demo">
+				<zx-avatar :src="defaultAvatar" imgClass="custom-image"></zx-avatar>
+				<view class="avatar-desc">自定义图片样式</view>
+			</view>
+			<view class="avatar-demo">
+				<zx-avatar 
+					:src="defaultAvatar" 
+					badge="VIP" 
+					:badge-style="{ backgroundColor: '#ffaa00', fontWeight: 'bold' }"
+				></zx-avatar>
+				<view class="avatar-desc">自定义徽标样式</view>
+			</view>
+		</view>
+		
+		<view class="section-title">加载效果</view>
+		<view class="section-content">
+			<view class="avatar-demo">
+				<zx-avatar :src="defaultAvatar" loading-color="#ff6600"></zx-avatar>
+				<view class="avatar-desc">自定义加载颜色</view>
+			</view>
+		</view>
+		
 		<view class="section-title">点击预览</view>
 		<view class="section-content">
 			<view class="avatar-demo">
@@ -197,5 +261,19 @@ const changeAvatar = () => {
 	background-color: #2979ff;
 	color: #fff;
 	border-radius: 6rpx;
+}
+
+.custom-avatar {
+	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.15);
+	border: 2rpx solid #5ac725;
+}
+
+.custom-image {
+	filter: brightness(1.1);
+	transition: transform 0.3s;
+}
+
+.custom-image:active {
+	transform: scale(0.95);
 }
 </style> 

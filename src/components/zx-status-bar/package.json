@@ -1,0 +1,17 @@
+{
+  "name": "@tanzhenxing/zx-status-bar",
+  "version": "1.0.6",
+  "description": "状态栏组件",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-status-bar",
+    "状态栏组件",
+    "状态栏",
+    "状态栏组件"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC"
+}

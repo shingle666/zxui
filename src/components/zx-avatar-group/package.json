@@ -1,0 +1,19 @@
+{
+  "name": "@tanzhenxing/zx-avatar-group",
+  "version": "1.0.3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "uni-app",
+    "avatar",
+    "avatar-group",
+    "avatar-group-component",
+    "avatar-group-component-for-uni-app",
+    "avatar-group-component-for-uniapp"
+  ],
+  "author": "tanzhenxing",
+  "license": "MIT",
+  "description": "uni-app 头像组组件"
+}

@@ -34,8 +34,7 @@
  */
 import { computed, ref, getCurrentInstance } from "vue";
 
-const emit = defineEmits(["onClick"]);
-const proxy = getCurrentInstance();
+const {proxy} = getCurrentInstance();
 
 const props = defineProps({
   // 图标类名

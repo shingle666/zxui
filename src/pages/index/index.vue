@@ -40,7 +40,7 @@
       <zx-text
         text="zx-area-picker 组件使用示例"
         type="primary"
-        @click="handleClick('/pages/components/area_picker/index')"
+        @click="handleClick('/pages/components/area-picker/index')"
       ></zx-text>
 
       <zx-text
@@ -54,6 +54,79 @@
         type="primary"
         @click="handleClick('/pages/components/video/index')"
       ></zx-text>
+
+      <zx-text
+        text="zx-camera 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/camera/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-status-bar 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/status-bar/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-safe-bottom 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/safe-bottom/index')"
+      ></zx-text>
+      
+      <zx-text
+        text="zx-transition 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/transition/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-overlay 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/overlay/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-popup 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/popup/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-image 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/image/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-avatar-group 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/avatar/group')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-avatar 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/avatar/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-calendar 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/calendar/index')"
+      ></zx-text>
+      <zx-text
+        text="zx-canvas 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/canvas/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-card 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/card/index')"
+      ></zx-text>
+      
+      
       
     </view>
   </view>

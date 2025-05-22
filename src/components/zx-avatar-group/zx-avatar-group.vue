@@ -1,8 +1,23 @@
 <template>
 	<view class="zx-avatar-group">
-		<view class="zx-avatar-group__item" v-for="(item, index) in showUrl" :key="index" :style="{ marginLeft: index === 0 ? 0 : -size * gap }">
-			<zx-avatar :size="size + 'rpx'" :shape="shape" :mode="mode" :src="testObject(item) ? (keyName && item[keyName]) || item.url : item"></zx-avatar>
-			<view class="zx-avatar-group__item__show-more" v-if="showMore && index === showUrl.length - 1 && (urls.length > maxCount || extraValue > 0)" @tap="clickHandler">
+		<view 
+			class="zx-avatar-group__item" 
+			v-for="(item, index) in showUrl" 
+			:key="index" 
+			:style="{ marginLeft: index === 0 ? 0 : -size * gap + 'rpx' }"
+		>
+			<zx-avatar 
+				:size="size + 'rpx'" 
+				:shape="shape" 
+				:mode="mode" 
+				:src="testObject(item) ? (keyName && item[keyName]) || item.url : item"
+			></zx-avatar>
+			<view 
+				class="zx-avatar-group__item__show-more" 
+				v-if="showMore && index === showUrl.length - 1 && (urls.length > maxCount || extraValue > 0)" 
+				@tap="clickHandler"
+				:style="{ borderRadius: shape === 'circle' ? '100px' : '8rpx' }"
+			>
 				<zx-text
 					color="#ffffff"
 					:size="size * 0.4 + 'rpx'"
@@ -19,7 +34,7 @@
 /**
  * AvatarGroup  头像组
  * @description 本组件一般用于展示头像的地方，如个人中心，或者评论列表页的用户头像展示等场所。
- * @tutorial https://zxui.org/components/avatar
+ * @tutorial https://zxui.org/components/avatar-group
  * @property {Array}           urls     头像图片组 （默认 [] ）
  * @property {String | Number} maxCount 最多展示的头像数量 （ 默认 5 ）
  * @property {String}          shape    头像形状（ 'circle' (默认) | 'square' ）
@@ -39,9 +54,7 @@ const props = defineProps({
 	// 头像图片组
 	urls: {
 		type: Array,
-		default: () => {
-			return [];
-		}
+		default: () => []
 	},
 	// 最多展示的头像数量
 	maxCount: {
@@ -89,12 +102,13 @@ const props = defineProps({
 });
 
 const showUrl = computed(() => {
-	return this.urls.slice(0, this.maxCount);
+	return props.urls.slice(0, Number(props.maxCount));
 });
 
 const clickHandler = () => {
 	proxy.$emit('showMore');
 };
+
 const testObject = (value) => {
 	return Object.prototype.toString.call(value) === '[object Object]';
 };
@@ -104,14 +118,14 @@ const testObject = (value) => {
 .zx-avatar-group {
 	display: flex;
 	flex-direction: row;
+	flex-wrap: nowrap;
 
 	&__item {
-		margin-left: -10px;
 		position: relative;
-
-		&--no-indent {
-			// 如果你想质疑作者不会使用:first-child，说明你太年轻，因为nvue不支持
-			margin-left: 0;
+		z-index: 1;
+		
+		&:not(:first-child) {
+			z-index: 0;
 		}
 
 		&__show-more {
@@ -125,7 +139,6 @@ const testObject = (value) => {
 			flex-direction: row;
 			align-items: center;
 			justify-content: center;
-			border-radius: 100px;
 		}
 	}
 }

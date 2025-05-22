@@ -15,43 +15,24 @@
 					<view class="zx-calendar__header-btn zx-calendar--left"></view>
 				</view>
 				<picker mode="date" :value="date" fields="month" @change="bindDateChange">
-					<text class="zx-calendar__header-text">{{ (nowDate.year||'') +' / '+( nowDate.month||'')}}</text>
+					<text class="zx-calendar__header-text">{{ `${nowDate.year || ''} / ${nowDate.month || ''}` }}</text>
 				</picker>
 				<view class="zx-calendar__header-btn-box" @click.stop="next">
 					<view class="zx-calendar__header-btn zx-calendar--right"></view>
 				</view>
 				<text class="zx-calendar__backtoday" @click="backtoday">{{todayText}}</text>
-
 			</view>
 			<view class="zx-calendar__box">
 				<view v-if="showMonth" class="zx-calendar__box-bg">
 					<text class="zx-calendar__box-bg-text">{{nowDate.month}}</text>
 				</view>
 				<view class="zx-calendar__weeks">
-					<view class="zx-calendar__weeks-day">
-						<text class="zx-calendar__weeks-day-text">{{SUNText}}</text>
-					</view>
-					<view class="zx-calendar__weeks-day">
-						<text class="zx-calendar__weeks-day-text">{{monText}}</text>
-					</view>
-					<view class="zx-calendar__weeks-day">
-						<text class="zx-calendar__weeks-day-text">{{TUEText}}</text>
-					</view>
-					<view class="zx-calendar__weeks-day">
-						<text class="zx-calendar__weeks-day-text">{{WEDText}}</text>
-					</view>
-					<view class="zx-calendar__weeks-day">
-						<text class="zx-calendar__weeks-day-text">{{THUText}}</text>
-					</view>
-					<view class="zx-calendar__weeks-day">
-						<text class="zx-calendar__weeks-day-text">{{FRIText}}</text>
-					</view>
-					<view class="zx-calendar__weeks-day">
-						<text class="zx-calendar__weeks-day-text">{{SATText}}</text>
+					<view class="zx-calendar__weeks-day" v-for="(text, index) in weekTexts" :key="index">
+						<text class="zx-calendar__weeks-day-text">{{text}}</text>
 					</view>
 				</view>
-				<view class="zx-calendar__weeks" v-for="(item,weekIndex) in weeks" :key="weekIndex">
-					<view class="zx-calendar__weeks-item" v-for="(weeks,weeksIndex) in item" :key="weeksIndex">
+				<view class="zx-calendar__weeks" v-for="(item, weekIndex) in weeks" :key="weekIndex">
+					<view class="zx-calendar__weeks-item" v-for="(weeks, weeksIndex) in item" :key="weeksIndex">
 						<calendar-item class="zx-calendar-item--hook" :weeks="weeks" :calendar="calendar" :selected="selected" :lunar="lunar" @change="choiceDate"></calendar-item>
 					</view>
 				</view>
@@ -144,13 +125,15 @@ const useCalendarI18n = () => {
 		okText: computed(() => t("zx-calender.ok")),
 		cancelText: computed(() => t("zx-calender.cancel")),
 		todayText: computed(() => t("zx-calender.today")),
-		monText: computed(() => t("zx-calender.MON")),
-		TUEText: computed(() => t("zx-calender.TUE")),
-		WEDText: computed(() => t("zx-calender.WED")),
-		THUText: computed(() => t("zx-calender.THU")),
-		FRIText: computed(() => t("zx-calender.FRI")),
-		SATText: computed(() => t("zx-calender.SAT")),
-		SUNText: computed(() => t("zx-calender.SUN"))
+		weekTexts: computed(() => [
+			t("zx-calender.SUN"),
+			t("zx-calender.MON"),
+			t("zx-calender.TUE"), 
+			t("zx-calender.WED"), 
+			t("zx-calender.THU"), 
+			t("zx-calender.FRI"), 
+			t("zx-calender.SAT")
+		])
 	};
 };
 
@@ -159,13 +142,7 @@ const {
 	okText,
 	cancelText,
 	todayText,
-	monText,
-	TUEText,
-	WEDText,
-	THUText,
-	FRIText,
-	SATText,
-	SUNText
+	weekTexts
 } = useCalendarI18n();
 
 /**

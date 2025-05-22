@@ -1,0 +1,17 @@
+{
+  "name": "@tanzhenxing/zx-autocomplete",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-autocomplete",
+    "自动补全输入框",
+    "自动补全",
+    "输入框"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "自动补全输入框组件"
+}

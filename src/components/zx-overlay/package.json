@@ -1,0 +1,20 @@
+{
+  "name": "@tanzhenxing/zx-overlay",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "uni-app",
+    "overlay",
+    "遮罩",
+    "遮罩层",
+    "遮罩组件",
+    "遮罩层组件",
+    "遮罩层组件"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "uni-app 遮罩组件"
+}

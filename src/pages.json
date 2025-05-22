@@ -19,12 +19,6 @@
 			}
 		},
 		{
-			"path": "pages/components/avatar/index",
-			"style": {
-				"navigationBarTitleText": "Avatar 头像组件"
-			}
-		},
-		{
 			"path": "pages/components/button/index",
 			"style": {
 				"navigationBarTitleText": "Button 按钮组件"
@@ -43,7 +37,7 @@
 			}
 		},
 		{
-			"path": "pages/components/area_picker/index",
+			"path": "pages/components/area-picker/index",
 			"style": {
 				"navigationBarTitleText": "Area Picker 区域选择器组件"
 			}
@@ -64,6 +58,84 @@
 			"path": "pages/components/camera/index",
 			"style": {
 				"navigationBarTitleText": "Camera 相机组件"
+			}
+		},
+		{
+			"path": "pages/components/status-bar/index",
+			"style": {
+				"navigationBarTitleText": "Status Bar 状态栏组件"
+			}
+		},
+		{
+			"path": "pages/components/safe-bottom/index",
+			"style": {
+				"navigationBarTitleText": "Safe Bottom 安全底部组件"
+			}
+		},
+		{
+			"path": "pages/components/transition/index",
+			"style": {
+				"navigationBarTitleText": "Transition 过渡组件"
+			}
+		},
+		{
+			"path": "pages/components/overlay/index",
+			"style": {
+				"navigationBarTitleText": "Overlay 遮罩组件"
+			}
+		},
+		{
+			"path": "pages/components/popup/index",
+			"style": {
+				"navigationBarTitleText": "Popup 弹窗组件"
+			}
+		},
+		{
+			"path": "pages/components/image/index",
+			"style": {
+				"navigationBarTitleText": "Image 图片组件"
+			}
+		},
+		{
+			"path": "pages/components/avatar/index",
+			"style": {
+				"navigationBarTitleText": "Avatar Group 头像组件"
+			}
+		},
+		{
+			"path": "pages/components/avatar/group",
+			"style": {
+				"navigationBarTitleText": "Avatar Group 头像组"
+			}
+		},
+		{
+			"path": "pages/components/calendar/index",
+			"style": {
+				"navigationBarTitleText": "Calendar 日历组件"
+			}
+		},
+		{
+			"path": "pages/components/canvas/index",
+			"style": {
+				"navigationBarTitleText": "Canvas 画布组件"
+			}
+		},
+		{
+			"path": "pages/components/card/index",
+			"style": {
+				"navigationBarTitleText": "Card 卡片组件"
+			}
+		},
+		{
+			"path": "pages/components/autocomplete/index",
+			"style": {
+				"navigationBarTitleText": "autocomplete 自动补全输入框组件"
+			}
+		},
+		{
+			"path": "pages/components/checkbox/index",
+			"style": {
+				"navigationBarTitleText": "checkbox 多选框组件"
 			}
 		}
 	],
