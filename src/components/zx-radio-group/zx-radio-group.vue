@@ -1,7 +1,10 @@
 <template>
 	<view
-	    class="u-radio-group"
+	    class="zx-radio-group"
 	    :class="bemClass"
+	    :style="customStyle"
+		:role="'radiogroup'"
+		:aria-label="ariaLabel"
 	>
 		<slot></slot>
 	</view>
@@ -9,12 +12,11 @@
 
 <script setup>
 	import { computed, ref, watch, provide, onBeforeMount } from 'vue';
-	import props from './props.js';
 	
 	/**
 	 * radioRroup 单选框父组件
-	 * @description 单选框用于有一个选择，用户只能选择其中一个的场景。搭配u-radio使用
-	 * @tutorial https://zxui.org/components/radio
+	 * @description 单选框用于有一个选择，用户只能选择其中一个的场景。搭配zx-radio使用
+	 * @tutorial https://zxui.org/components/radio-group
 	 * @property {String | Number | Boolean}	modelValue 		绑定的值
 	 * @property {Boolean}						disabled		是否禁用所有radio（默认 false ）
 	 * @property {String}						shape			外观形状，shape-方形，circle-圆形(默认 circle )
@@ -32,8 +34,12 @@
 	 * @property {Boolean}						borderBottom	placement为row时，是否显示下边框 （默认 false ）
 	 * @property {String}						iconPlacement	图标与文字的对齐方式 （默认 'left' ）
      * @property {Object}						customStyle		组件的样式，对象形式
+	 * @property {Boolean}						validateEvent	输入时是否触发表单验证（默认 true）
+	 * @property {String}						ariaLabel		无障碍访问标签
+	 * @property {String}						textColor		按钮形式的Radio激活时的文本颜色
+	 * @property {String}						fill			按钮形式的Radio激活时的填充色和边框色
 	 * @event {Function} change 任一个radio状态发生变化时触发
-	 * @example <u-radio-group v-model="value"></u-radio-group>
+	 * @example <zx-radio-group v-model="value"></zx-radio-group>
 	 */
 	
 	// 使用defineProps定义属性，替代原来的props选项
@@ -41,87 +47,107 @@
 		// 绑定的值 (注意: Vue 3中v-model默认绑定到modelValue)
 		modelValue: {
 			type: [String, Number, Boolean],
-			default: uni.$u.props.radioGroup.value
+			default: ''
 		},
 		// 是否禁用全部radio
 		disabled: {
 			type: Boolean,
-			default: uni.$u.props.radioGroup.disabled
+			default: false
 		},
 		// 形状，circle-圆形，square-方形
 		shape: {
 			type: String,
-			default: uni.$u.props.radioGroup.shape
+			default: 'circle'
 		},
 		// 选中状态下的颜色，如设置此值，将会覆盖parent的activeColor值
 		activeColor: {
 			type: String,
-			default: uni.$u.props.radioGroup.activeColor
+			default: '#2979ff'
 		},
 		// 未选中的颜色
 		inactiveColor: {
 			type: String,
-			default: uni.$u.props.radioGroup.inactiveColor
+			default: '#c8c9cc'
 		},
 		// 标识符
 		name: {
 			type: String,
-			default: uni.$u.props.radioGroup.name
+			default: ''
 		},
 		// 整个组件的尺寸，默认px
 		size: {
 			type: [String, Number],
-			default: uni.$u.props.radioGroup.size
+			default: 18
 		},
 		// 布局方式，row-横向，column-纵向
 		placement: {
 			type: String,
-			default: uni.$u.props.radioGroup.placement
+			default: 'row'
 		},
 		// label的文本
 		label: {
 			type: [String],
-			default: uni.$u.props.radioGroup.label
+			default: ''
 		},
 		// label的颜色 （默认 '#303133' ）
 		labelColor: {
 			type: [String],
-			default: uni.$u.props.radioGroup.labelColor
+			default: '#303133'
 		},
 		// label的字体大小，px单位
 		labelSize: {
 			type: [String, Number],
-			default: uni.$u.props.radioGroup.labelSize
+			default: 14
 		},
 		// 是否禁止点击文本操作checkbox(默认 false )
 		labelDisabled: {
 			type: Boolean,
-			default: uni.$u.props.radioGroup.labelDisabled
+			default: false
 		},
 		// 图标颜色
 		iconColor: {
 			type: String,
-			default: uni.$u.props.radioGroup.iconColor
+			default: '#ffffff'
 		},
 		// 图标的大小，单位px
 		iconSize: {
 			type: [String, Number],
-			default: uni.$u.props.radioGroup.iconSize
+			default: 12
 		},
 		// 竖向配列时，是否显示下划线
 		borderBottom: {
 			type: Boolean,
-			default: uni.$u.props.radioGroup.borderBottom
+			default: false
 		},
 		// 图标与文字的对齐方式
 		iconPlacement: {
 			type: String,
-			default: uni.$u.props.radio.iconPlacement
+			default: 'left'
 		},
 		// 组件的样式，对象形式
 		customStyle: {
 			type: Object,
 			default: () => ({})
+		},
+		// 输入时是否触发表单的校验
+		validateEvent: {
+			type: Boolean,
+			default: true
+		},
+		// 无障碍标签
+		ariaLabel: {
+			type: String,
+			default: ''
+		},
+		// 按钮形式的Radio激活时的文本颜色
+		textColor: {
+			type: String,
+			default: '#ffffff'
+		},
+		// 按钮形式的Radio激活时的填充色和边框色
+		fill: {
+			type: String,
+			default: '#2979ff'
 		}
 	});
 	
@@ -133,18 +159,21 @@
 	
 	// 父组件数据，用于传递给子组件
 	const parentData = computed(() => {
-		return [
-			props.modelValue,
-			props.disabled,
-			props.inactiveColor,
-			props.activeColor,
-			props.size,
-			props.labelDisabled,
-			props.shape,
-			props.iconSize,
-			props.borderBottom,
-			props.placement
-		];
+		return {
+			modelValue: props.modelValue,
+			disabled: props.disabled,
+			inactiveColor: props.inactiveColor,
+			activeColor: props.activeColor,
+			size: props.size,
+			labelDisabled: props.labelDisabled,
+			shape: props.shape,
+			iconSize: props.iconSize,
+			borderBottom: props.borderBottom,
+			placement: props.placement,
+			iconColor: props.iconColor,
+			textColor: props.textColor,
+			fill: props.fill
+		};
 	});
 	
 	// 使用uni.$u.bem方法处理类名
@@ -177,6 +206,11 @@
 		emit('update:modelValue', name);
 		// 发出change事件
 		emit('change', name);
+		
+		// 触发表单验证
+		if (props.validateEvent) {
+			uni.$u.formValidate && uni.$u.formValidate(props.name);
+		}
 	};
 	
 	// 提供方法和数据给子组件
@@ -202,13 +236,12 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
-
-	.u-radio-group {
+	.zx-radio-group {
 		flex: 1;
 
 		&--row {
 			@include flex;
+			flex-wrap: wrap;
 		}
 
 		&--column {

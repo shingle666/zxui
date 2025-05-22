@@ -149,6 +149,36 @@
 			"style": {
 				"navigationBarTitleText": "empty 空状态组件"
 			}
+		},
+		{
+			"path": "pages/components/back-top/index",
+			"style": {
+				"navigationBarTitleText": "back-top 回到顶部组件"
+			}
+		},
+		{
+			"path": "pages/components/link/index",
+			"style": {
+				"navigationBarTitleText": "link 链接组件"
+			}
+		},
+		{
+			"path": "pages/components/map/index",
+			"style": {
+				"navigationBarTitleText": "map 地图组件"
+			}
+		},
+		{
+			"path": "pages/components/qrcode/index",
+			"style": {
+				"navigationBarTitleText": "qrcode 二维码组件"
+			}
+		},
+		{
+			"path": "pages/components/editor/index",
+			"style": {
+				"navigationBarTitleText": "editor 富文本编辑器组件"
+			}
 		}
 	],
 	"globalStyle": {

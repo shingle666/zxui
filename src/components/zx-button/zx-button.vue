@@ -77,9 +77,14 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, onMounted, ref, computed } from "vue";
+import { getCurrentInstance, onMounted, ref, computed, defineEmits, defineExpose } from "vue";
 
 const { proxy } = getCurrentInstance();
+
+// 设置组件名称
+proxy.$options = proxy.$options || {};
+proxy.$options.name = 'zx-button';
+
 const props = defineProps({
   // 按钮的大小
   size: {
@@ -271,7 +276,13 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  id: {
+    type: String,
+    default: ''
+  }
 });
+
+const emit = defineEmits(['click']);
 
 // 计算属性：处理尺寸转换
 const sizeToStandard = computed(() => {
@@ -370,6 +381,11 @@ const getStyle = ref({});
 
 onMounted(() => {
   updateStyle();
+  // 如果父组件是zx-label，则需要将自己注册到父组件中
+  const parent = getParent();
+  if (parent && parent.childrens) {
+    parent.childrens.value.push(proxy);
+  }
 });
 
 // 更新样式处理函数
@@ -428,26 +444,43 @@ const isStandardSize = () => {
 };
 
 // 事件处理简化为一个函数
-const emit = (eventName, e) => {
-  proxy.$emit(eventName, e);
+const emitEvent = (eventName, e) => {
+  emit(eventName, e);
 };
 
 // 事件处理函数
-const getPhoneNumber = (e) => emit("getPhoneNumber", e);
-const getUserInfo = (e) => emit("getUserInfo", e);
-const error = (e) => emit("error", e);
-const openSetting = (e) => emit("openSetting", e);
-const launchApp = (e) => emit("launchApp", e);
-const contact = (e) => emit("contact", e);
-const chooseAvatar = (e) => emit("chooseAvatar", e);
-const agreePrivacyAuthorization = (e) => emit("agreePrivacyAuthorization", e);
-const addGroupApp = (e) => emit("addGroupApp", e);
-const chooseAddress = (e) => emit("chooseAddress", e);
-const chooseInvoiceTitle = (e) => emit("chooseInvoiceTitle", e);
-const subscribe = (e) => emit("subscribe", e);
-const login = (e) => emit("login", e);
-const im = (e) => emit("im", e);
-const click = (e) => emit("click", e);
+const getPhoneNumber = (e) => emitEvent("getPhoneNumber", e);
+const getUserInfo = (e) => emitEvent("getUserInfo", e);
+const error = (e) => emitEvent("error", e);
+const openSetting = (e) => emitEvent("openSetting", e);
+const launchApp = (e) => emitEvent("launchApp", e);
+const contact = (e) => emitEvent("contact", e);
+const chooseAvatar = (e) => emitEvent("chooseAvatar", e);
+const agreePrivacyAuthorization = (e) => emitEvent("agreePrivacyAuthorization", e);
+const addGroupApp = (e) => emitEvent("addGroupApp", e);
+const chooseAddress = (e) => emitEvent("chooseAddress", e);
+const chooseInvoiceTitle = (e) => emitEvent("chooseInvoiceTitle", e);
+const subscribe = (e) => emitEvent("subscribe", e);
+const login = (e) => emitEvent("login", e);
+const im = (e) => emitEvent("im", e);
+const click = (e) => emitEvent("click", e);
+
+// 获取父组件
+const getParent = () => {
+  let parent = proxy.$parent;
+  while (parent) {
+    if (parent.$options && parent.$options.name === 'zx-label') {
+      return parent;
+    }
+    parent = parent.$parent;
+  }
+  return null;
+};
+
+// 暴露给父组件的方法
+defineExpose({
+  labelClick: click
+});
 </script>
 
 <style lang="scss" scoped>

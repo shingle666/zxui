@@ -1,0 +1,14 @@
+{
+  "name": "@tanzhenxing/zx-link",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-link"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "zx-link"
+}

@@ -27,7 +27,7 @@
  * @property {Object}						customStyle		定义需要用到的外部样式
  */
 
-import { ref, onMounted, computed, getCurrentInstance, watch } from 'vue';
+import { ref, onMounted, computed, getCurrentInstance, watch, defineExpose } from 'vue';
 
 const { proxy } = getCurrentInstance();
 
@@ -91,6 +91,10 @@ const props = defineProps({
 		default: () => {
 			return {};
 		}
+	},
+	id: {
+		type: String,
+		default: ''
 	}
 });
 
@@ -100,6 +104,12 @@ const bgColor = ref('#ffffff');
 
 onMounted(()=>{
 	switchStatus.value = props.value;
+	
+	// 如果父组件是zx-label，则需要将自己注册到父组件中
+	const parent = getParent();
+	if (parent && parent.childrens) {
+		parent.childrens.value.push(proxy);
+	}
 });
 
 watch(()=>props.value,(val)=>{
@@ -137,9 +147,32 @@ const getCircleStyle = ()=>{
 }
 
 const change = ()=>{
+	if (props.disabled) return;
 	switchStatus.value = !switchStatus.value;
 	proxy.$emit('change',switchStatus.value);
 }
+
+// 获取父组件
+const getParent = () => {
+	let parent = proxy.$parent;
+	while (parent) {
+		if (parent.$options && parent.$options.name === 'zx-label') {
+			return parent;
+		}
+		parent = parent.$parent;
+	}
+	return null;
+};
+
+// 提供给zx-label调用的方法
+const labelClick = () => {
+	change();
+};
+
+// 暴露给父组件的方法
+defineExpose({
+	labelClick
+});
 </script>
 
 <style scoped>

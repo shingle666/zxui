@@ -149,7 +149,37 @@
         type="primary"
         @click="handleClick('/pages/components/empty/index')"
       ></zx-text>
+
+      <zx-text
+        text="zx-back-top 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/back-top/index')"
+      ></zx-text>
       
+      <zx-text
+        text="zx-link 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/link/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-map 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/map/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-qrcode 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/qrcode/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-editor 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/editor/index')"
+      ></zx-text>
+
     </view>
   </view>
 </template>

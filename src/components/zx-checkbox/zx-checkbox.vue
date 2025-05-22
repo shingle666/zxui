@@ -304,6 +304,12 @@ const checkboxStyle = computed(() => {
 
 onMounted(() => {
 	init();
+	
+	// 如果父组件是zx-label，则需要将自己注册到父组件中
+	const parent = getParent();
+	if (parent && parent.childrens) {
+		parent.childrens.value.push(proxy);
+	}
 });
 
 const init = () => {
@@ -428,6 +434,30 @@ const testArray=(value)=> {
     }
     return Object.prototype.toString.call(value) === '[object Array]'
 }
+
+// 获取父组件
+const getParent = () => {
+	let parent = proxy.$parent;
+	while (parent) {
+		if (parent.$options && parent.$options.name === 'zx-label') {
+			return parent;
+		}
+		parent = parent.$parent;
+	}
+	return null;
+};
+
+// 提供给zx-label调用的方法
+const labelClick = () => {
+	if (!elLabelDisabled.value && !elDisabled.value) {
+		setCheckboxCheckedStatus();
+	}
+};
+
+// 暴露给父组件的方法
+defineExpose({
+	labelClick
+});
 </script>
 
 <style lang="scss" scoped>

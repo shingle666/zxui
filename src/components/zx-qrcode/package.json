@@ -1,0 +1,14 @@
+{
+  "name": "@tanzhenxing/zx-qrcode",
+  "version": "1.0.0",
+  "main": "qrcode.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-qrcode"
+  ],
+  "author": "tanzhenxing",
+  "license": "MIT",
+  "description": "zx-qrcode 二维码组件"
+}

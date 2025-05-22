@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>zx-web-view 通信测试页面</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      padding: 15px;
+      line-height: 1.5;
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #2979ff;
+      font-size: 24px;
+    }
+    .card {
+      background-color: #f8f8f8;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .btn {
+      background-color: #2979ff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    .btn:hover {
+      background-color: #2970cc;
+    }
+    .btn-group {
+      margin-bottom: 15px;
+    }
+    .logs {
+      height: 200px;
+      overflow-y: auto;
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 14px;
+      border-radius: 4px;
+    }
+    .log-item {
+      margin-bottom: 5px;
+      border-bottom: 1px solid #444;
+      padding-bottom: 5px;
+    }
+    .log-time {
+      color: #aaa;
+    }
+    .log-type {
+      display: inline-block;
+      padding: 2px 5px;
+      margin: 0 5px;
+      border-radius: 3px;
+      color: #fff;
+    }
+    .log-type-receive {
+      background-color: #67c23a;
+    }
+    .log-type-send {
+      background-color: #e6a23c;
+    }
+    .input-group {
+      margin-bottom: 15px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    textarea {
+      height: 80px;
+    }
+  </style>
+</head>
+<body>
+  <h1>zx-web-view 通信测试页面</h1>
+  
+  <div class="card">
+    <h2>环境信息</h2>
+    <div id="env-info">正在检测环境...</div>
+  </div>
+  
+  <div class="card">
+    <h2>发送消息</h2>
+    <div class="input-group">
+      <div>消息内容：</div>
+      <textarea id="msg-content">{
+  "type": "customMessage",
+  "content": "这是来自网页的消息",
+  "timestamp": 1619789282259
+}</textarea>
+    </div>
+    <div class="btn-group">
+      <button onclick="sendMessage()" class="btn">发送消息</button>
+      <button onclick="sendCustomEvent()" class="btn">发送自定义事件</button>
+    </div>
+  </div>
+  
+  <div class="card">
+    <h2>页面操作</h2>
+    <div class="btn-group">
+      <button onclick="window.history.back()" class="btn">返回</button>
+      <button onclick="window.history.forward()" class="btn">前进</button>
+      <button onclick="openNewPage()" class="btn">打开新页面</button>
+      <button onclick="simulateError()" class="btn">模拟错误</button>
+    </div>
+  </div>
+  
+  <div class="card">
+    <h2>日志信息</h2>
+    <div class="logs" id="log-container"></div>
+  </div>
+  
+  <!-- 引入 uni SDK -->
+  <script type="text/javascript" src="https://gitcode.net/dcloud/uni-app/-/raw/dev/dist/uni.webview.1.5.6.js"></script>
+  <script>
+    const logs = [];
+    
+    // 添加日志
+    function addLog(type, message) {
+      const now = new Date();
+      const time = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+      
+      logs.unshift({
+        time,
+        type,
+        message: typeof message === 'object' ? JSON.stringify(message) : message
+      });
+      
+      // 最多保留50条日志
+      if (logs.length > 50) {
+        logs.pop();
+      }
+      
+      updateLogs();
+    }
+    
+    // 更新日志显示
+    function updateLogs() {
+      const container = document.getElementById('log-container');
+      if (!container) return;
+      
+      container.innerHTML = logs.map(log => {
+        return `<div class="log-item">
+          <span class="log-time">[${log.time}]</span>
+          <span class="log-type log-type-${log.type}">${log.type}</span>
+          <span class="log-content">${log.message}</span>
+        </div>`;
+      }).join('');
+    }
+    
+    // 打开新页面
+    function openNewPage() {
+      addLog('send', '打开新页面');
+      window.location.href = 'https://uniapp.dcloud.io/';
+    }
+    
+    // 模拟错误
+    function simulateError() {
+      addLog('send', '模拟错误');
+      setTimeout(() => {
+        try {
+          // 故意制造错误
+          const obj = null;
+          obj.method();
+        } catch (e) {
+          addLog('receive', `捕获到错误: ${e.message}`);
+        }
+      }, 500);
+    }
+    
+    // 使用 uni SDK 发送消息
+    function sendMessage() {
+      try {
+        const content = document.getElementById('msg-content').value;
+        const data = JSON.parse(content);
+        
+        if (window.uni && window.uni.webView && window.uni.webView.postMessage) {
+          uni.webView.postMessage({
+            data: data
+          });
+          addLog('send', `通过uni SDK发送消息: ${content}`);
+        } else {
+          addLog('receive', '当前环境不支持uni.webView.postMessage');
+        }
+      } catch (e) {
+        addLog('receive', `发送消息出错: ${e.message}`);
+      }
+    }
+    
+    // 使用自定义事件发送消息
+    function sendCustomEvent() {
+      try {
+        const content = document.getElementById('msg-content').value;
+        const data = JSON.parse(content);
+        
+        const event = new CustomEvent('message', {
+          detail: data
+        });
+        
+        document.dispatchEvent(event);
+        addLog('send', `通过自定义事件发送消息: ${content}`);
+      } catch (e) {
+        addLog('receive', `发送消息出错: ${e.message}`);
+      }
+    }
+    
+    // 监听来自应用的消息
+    function listenForAppMessages() {
+      // 通过 uniPostMessage 事件接收消息
+      document.addEventListener('uniPostMessage', function(e) {
+        addLog('receive', `通过 uniPostMessage 接收到消息: ${JSON.stringify(e.detail)}`);
+      });
+      
+      // 在 DOMContentLoaded 事件中注册 uni SDK 准备就绪的监听
+      document.addEventListener('UniAppJSBridgeReady', function() {
+        addLog('receive', 'UniAppJSBridge 已准备就绪');
+        
+        // 获取当前环境
+        if (window.uni && window.uni.webView && window.uni.webView.getEnv) {
+          uni.webView.getEnv(function(res) {
+            document.getElementById('env-info').innerText = `当前环境：${JSON.stringify(res)}`;
+            addLog('receive', `环境信息: ${JSON.stringify(res)}`);
+          });
+        } else {
+          document.getElementById('env-info').innerText = '当前环境：普通浏览器环境（未检测到uni环境）';
+        }
+      });
+    }
+    
+    // 页面加载完成
+    document.addEventListener('DOMContentLoaded', function() {
+      addLog('receive', '页面已加载完成');
+      listenForAppMessages();
+      
+      // 如果5秒后还没有收到 UniAppJSBridgeReady 事件，则认为不在uni环境中
+      setTimeout(function() {
+        if (document.getElementById('env-info').innerText.includes('正在检测环境')) {
+          document.getElementById('env-info').innerText = '当前环境：普通浏览器环境（未检测到uni环境）';
+        }
+      }, 5000);
+    });
+  </script>
+</body>
+</html> 

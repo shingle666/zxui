@@ -1,5 +1,5 @@
 <template>
-	<view class="zx-line" :style="[lineStyle, customStyle]"></view>
+	<view class="zx-line" :style="lineStyle"></view>
 </template>
 
 <script setup>
@@ -13,8 +13,14 @@
  * @property {Boolean}			hairline	是否显示细线条 (默认 true )
  * @property {String | Number}	margin		线条与上下左右元素的间距，字符串形式，如"30px"  (默认 0 )
  * @property {Boolean}			dashed		是否虚线，true-虚线，false-实线 (默认 false )
- * @property {Object}			customStyle	定义需要用到的外部样式
+ * @property {String | Number}	width		线条的粗细，带单位的值，如"2px" (默认 '1px')
+ * @property {String | Number}	radius		线条的圆角，带单位的值，如"3px" (默认 0 )
+ * @property {String}			borderStyle	线条的样式，可选值为 solid、dashed、dotted (默认 'solid')
+ * @property {Boolean}			animation	是否有过渡动画效果 (默认 false)
  * @example <zx-line color="red"></zx-line>
+ * @example <zx-line direction="col" length="100px" color="#2979ff"></zx-line>
+ * @example <zx-line dashed width="2px" radius="3px"></zx-line>
+ * @example <zx-line color="linear-gradient(to right, #ff3366, #ff6633)" animation></zx-line>
  */
 
 import { ref, computed } from 'vue';
@@ -49,32 +55,83 @@ const props = defineProps({
 		type: Boolean,
 		default: false
 	},
-	customStyle: {
-		type: Object,
-		default: function () {
-			return {};
-		}
+	// 线条粗细
+	width: {
+		type: [String, Number],
+		default: '1px'
+	},
+	// 线条圆角
+	radius: {
+		type: [String, Number],
+		default: 0
+	},
+	// 线条样式
+	borderStyle: {
+		type: String,
+		default: 'solid'
+	},
+	// 是否有过渡动画效果
+	animation: {
+		type: Boolean,
+		default: false
 	}
 });
 
 const lineStyle = computed(() => {
 	const style = {};
 	style.margin = props.margin;
-	// 如果是水平线条，边框高度为1px，再通过transform缩小一半，就是0.5px了
-	if (props.direction === 'row') {
-		// 此处采用兼容分开写，兼容nvue的写法
-		style.borderBottomWidth = '1px';
-		style.borderBottomStyle = props.dashed ? 'dashed' : 'solid';
-		style.width = props.length;
-		if (props.hairline) style.transform = 'scaleY(0.5)';
-	} else {
-		// 如果是竖向线条，边框宽度为1px，再通过transform缩小一半，就是0.5px了
-		style.borderLeftWidth = '1px';
-		style.borderLeftStyle = props.dashed ? 'dashed' : 'solid';
-		style.height = props.length;
-		if (props.hairline) style.transform = 'scaleX(0.5)';
+	
+	// 设置线条宽度，转换为带单位的值
+	const width = typeof props.width === 'number' ? `${props.width}px` : props.width;
+	
+	// 处理圆角
+	if (props.radius) {
+		style.borderRadius = typeof props.radius === 'number' ? `${props.radius}px` : props.radius;
 	}
-	style.borderColor = props.color;
+	
+	// 过渡动画
+	if (props.animation) {
+		style.transition = 'all 0.3s ease';
+	}
+	
+	// 使用borderStyle替代dashed属性，但保持向后兼容
+	const borderStyle = props.dashed ? 'dashed' : props.borderStyle;
+	
+	// 如果是水平线条
+	if (props.direction === 'row') {
+		style.width = props.length;
+		if (props.hairline) {
+			style.height = '1px';
+			style.transform = 'scaleY(0.5)';
+			style.transformOrigin = '50% 100%';
+		} else {
+			style.height = width;
+		}
+		style.borderBottomWidth = props.hairline ? '1px' : 0;
+		style.borderBottomStyle = borderStyle;
+		style.backgroundColor = props.hairline ? 'transparent' : props.color;
+	} else {
+		// 如果是竖向线条
+		style.height = props.length;
+		if (props.hairline) {
+			style.width = '1px';
+			style.transform = 'scaleX(0.5)';
+			style.transformOrigin = '100% 50%';
+		} else {
+			style.width = width;
+		}
+		style.borderLeftWidth = props.hairline ? '1px' : 0;
+		style.borderLeftStyle = borderStyle;
+		style.backgroundColor = props.hairline ? 'transparent' : props.color;
+	}
+	
+	// 设置颜色
+	if (props.hairline) {
+		style.borderColor = props.color;
+	} else {
+		style.backgroundColor = props.color;
+	}
+	
 	return style;
 });
 </script>
@@ -83,6 +140,8 @@ const lineStyle = computed(() => {
 .zx-line {
 	/* #ifndef APP-NVUE */
 	vertical-align: middle;
+	display: inline-block;
+	box-sizing: border-box;
 	/* #endif */
 }
 </style>
