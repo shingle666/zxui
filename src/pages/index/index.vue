@@ -126,7 +126,29 @@
         @click="handleClick('/pages/components/card/index')"
       ></zx-text>
       
+      <zx-text
+        text="zx-autocomplete 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/autocomplete/index')"
+      ></zx-text>
       
+      <zx-text
+        text="zx-checkbox 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/checkbox/index')"
+      ></zx-text>
+      
+      <zx-text
+        text="zx-checkbox-group 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/checkbox/group')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-empty 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/empty/index')"
+      ></zx-text>
       
     </view>
   </view>

@@ -61,7 +61,6 @@
  * @property {Boolean}						border			是否显示边框
  * @property {String | Number | Boolean}	trueValue		选中时的值
  * @property {String | Number | Boolean}	falseValue		未选中时的值
- * @property {Object}						customStyle		定义需要用到的外部样式
  *
  * @event {Function}	change	任一个checkbox状态发生变化时触发，回调为一个对象
  * @event {Function}	update:modelValue	更新v-model绑定的值
@@ -70,6 +69,16 @@
 import { ref, getCurrentInstance, onMounted, computed, watch } from 'vue';
 const { proxy } = getCurrentInstance();
 const instance = getCurrentInstance();
+
+// 添加 preventEvent 方法
+proxy.preventEvent = (e) => {
+    if (e && e.stopPropagation) {
+        e.stopPropagation();
+    }
+    if (e && e.preventDefault) {
+        e.preventDefault();
+    }
+};
 
 const props = defineProps({
 	// checkbox的名称
@@ -167,11 +176,7 @@ const props = defineProps({
 		type: [String, Number, Boolean],
 		default: false
 	},
-	// 自定义样式
-	customStyle: {
-		type: Object,
-		default: () => ({})
-	}
+	
 });
 
 const emit = defineEmits(['change', 'update:modelValue']);
@@ -294,7 +299,7 @@ const checkboxStyle = computed(() => {
 	if (parentData.value.borderBottom && parentData.value.placement === 'column') {
 		style.paddingBottom = '8px';
 	}
-	return proxy.$util.deepMerge(style, props.customStyle);
+	return style;
 });
 
 onMounted(() => {

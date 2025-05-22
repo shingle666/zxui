@@ -137,6 +137,18 @@
 			"style": {
 				"navigationBarTitleText": "checkbox 多选框组件"
 			}
+		},
+		{
+			"path": "pages/components/checkbox/group",
+			"style": {
+				"navigationBarTitleText": "checkbox-group 多选框组组件"
+			}
+		},
+		{
+			"path": "pages/components/empty/index",
+			"style": {
+				"navigationBarTitleText": "empty 空状态组件"
+			}
 		}
 	],
 	"globalStyle": {

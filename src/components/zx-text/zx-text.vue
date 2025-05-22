@@ -96,7 +96,7 @@ const props = defineProps({
 	},
 	// 字体大小
 	size: {
-		type: String,
+		type: [String, Number],
 		default: '32rpx'
 	},
 	// 文字装饰，下划线，中划线等，可选值 none|underline|line-through
@@ -182,7 +182,7 @@ const valueStyle = computed(() => {
 		textDecoration: props.mode === 'link' ? 'underline' : props.decoration,
 		fontWeight: props.bold ? 'bold' : 'normal',
 		wordWrap: props.wordWrap,
-		fontSize: props.size,
+		fontSize: typeof props.size === 'number' ? props.size + 'rpx' : props.size,
 		color: props.mode === 'link' ? (color || '#5677fc') : color,
 		lines: props.lines,
 		lineHeight: props.lineHeight,
