@@ -1,0 +1,17 @@
+{
+  "name": "@tanzhenxing/zx-descriptions",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "descriptions",
+    "描述列表",
+    "描述",
+    "列表"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "zx-descriptions 描述列表组件，用于展示一组描述信息"
+}

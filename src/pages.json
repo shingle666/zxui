@@ -32,6 +32,12 @@
 			}
 		},
 		{
+			"path": "pages/components/alert/index",
+			"style": {
+				"navigationBarTitleText": "Alert 提示组件"
+			}
+		},
+		{
 			"path": "pages/components/album/index",
 			"style": {
 				"navigationBarTitleText": "Album 图片预览组件"
@@ -152,9 +158,9 @@
 			}
 		},
 		{
-			"path": "pages/components/back-top/index",
+			"path": "pages/components/backtop/index",
 			"style": {
-				"navigationBarTitleText": "back-top 回到顶部组件"
+				"navigationBarTitleText": "backtop 回到顶部组件"
 			}
 		},
 		{
@@ -246,11 +252,72 @@
 			"style": {
 				"navigationBarTitleText": "zx-textarea 文本框组件"
 			}
+		},
+		{
+			"path": "pages/components/tag/index",
+			"style": {
+				"navigationBarTitleText": "zx-tag 标签组件"
+			}
+		},
+		{
+			"path": "pages/components/descriptions/index",
+			"style": {
+				"navigationBarTitleText": "zx-descriptions 描述列表组件"
+			}
+		},
+		{
+			"path": "pages/components/mention/index",
+			"style": {
+				"navigationBarTitleText": "zx-mention 提及组件"
+			}
+		},
+		{
+			"path": "pages/components/movable/index",
+			"style": {
+				"navigationBarTitleText": "zx-movable 可拖拽组件"
+			}
+		},
+		{
+			"path": "pages/components/pagination/index",
+			"style": {
+				"navigationBarTitleText": "zx-pagination 分页组件"
+			}
+		},
+		{
+			"path": "pages/components/skeleton/index",
+			"style": {
+				"navigationBarTitleText": "zx-skeleton 骨架屏组件"
+			}
+		},
+		{
+			"path": "pages/components/result/index",
+			"style": {
+				"navigationBarTitleText": "zx-result 结果组件"
+			}
+		},
+		{
+			"path": "pages/components/affix/index",
+			"style": {
+				"navigationBarTitleText": "zx-affix 结果组件"
+			}
+		},
+		{
+			"path": "pages/components/watermark/index",
+			"style": {
+				"navigationBarTitleText": "zx-watermark 水印组件"
+			}
+		},
+		{
+			"path": "pages/components/watermark/test",
+			"style": {
+				"navigationBarTitleText": "zx-watermark 测试页面"
+			}
 		}
+		
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "zxui",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},

@@ -1,12 +1,17 @@
 {
-  "name": "zx-rate",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-rate",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "rate",
+    "评分",
+    "评分组件",
+    "评分功能"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
-  "description": ""
+  "description": "zx-rate 评分组件，用于展示评分信息"
 }

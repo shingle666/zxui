@@ -77,9 +77,11 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, onMounted, ref, computed, defineEmits, defineExpose } from "vue";
+import { getCurrentInstance, onMounted, ref, computed } from "vue";
 
 const { proxy } = getCurrentInstance();
+
+const emit = defineEmits(['click']);
 
 // 设置组件名称
 proxy.$options = proxy.$options || {};
@@ -281,8 +283,6 @@ const props = defineProps({
     default: ''
   }
 });
-
-const emit = defineEmits(['click']);
 
 // 计算属性：处理尺寸转换
 const sizeToStandard = computed(() => {

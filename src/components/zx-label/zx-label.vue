@@ -7,7 +7,7 @@
 
 <script setup>
 
-	import { ref, defineProps, defineExpose, provide, inject, onMounted, nextTick, getCurrentInstance } from 'vue';
+	import { ref, provide, inject, onMounted, nextTick, getCurrentInstance } from 'vue';
 
 	// 获取组件实例
 	const { proxy } = getCurrentInstance();

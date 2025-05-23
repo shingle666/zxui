@@ -1,12 +1,34 @@
 import { defineConfig } from 'vite'
 import uni from '@dcloudio/vite-plugin-uni'
 import sassConfig from './sass.config.js'
+import autoprefixer from 'autoprefixer'
+import postcssPresetEnv from 'postcss-preset-env'
 
 export default defineConfig({
   plugins: [
     uni(),
   ],
   css: {
+    postcss: {
+      plugins: [
+        autoprefixer({
+          overrideBrowserslist: [
+            'Android >= 4.4',
+            'iOS >= 9',
+            'Chrome >= 80',
+            'Safari >= 9',
+            '> 1%',
+            'last 2 versions'
+          ]
+        }),
+        postcssPresetEnv({
+          stage: 3,
+          features: {
+            'nesting-rules': true
+          }
+        })
+      ]
+    },
     preprocessorOptions: {
       scss: {
         // 应用Sass配置
@@ -22,10 +44,6 @@ export default defineConfig({
           // 全局Sass配置
           $primary-color: #007bff;
           $border-radius: 4px;
-          
-          // 静默警告
-          @use "sass:color" as *;
-          @use "sass:meta" as *;
         `
       }
     }
@@ -37,6 +55,6 @@ export default defineConfig({
   // 优化配置
   build: {
     cssCodeSplit: true,
-    cssTarget: 'chrome80'
+    cssTarget: ['chrome80', 'safari13']
   }
 })

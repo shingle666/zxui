@@ -1,12 +1,17 @@
 {
-  "name": "zx-scroll",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-scroll",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "scroll",
+    "滚动",
+    "滚动组件",
+    "滚动功能"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
-  "description": ""
+  "description": "zx-scroll 滚动组件，用于实现滚动功能"
 }

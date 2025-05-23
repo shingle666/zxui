@@ -1,19 +1,22 @@
 {
   "name": "@tanzhenxing/zx-watermark",
   "version": "1.0.1",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "在页面上添加文本或图片等水印信息",
+  "main": "zx-watermark.vue",
   "keywords": [
     "watermark",
     "水印",
-    "水印组件",
-    "水印插件",
-    "水印库"
+    "vue3",
+    "composition-api",
+    "uniapp",
+    "uni-app",
+    "component"
   ],
   "author": "tanzhenxing",
-  "license": "ISC",
-  "description": "水印组件",
-  "homepage": "https://zxui.org/components/watermark"
+  "license": "MIT",
+  "homepage": "https://zxui.org/components/watermark",
+  "files": [
+    "zx-watermark.vue",
+    "README.md"
+  ]
 }

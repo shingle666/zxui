@@ -1,0 +1,21 @@
+{
+  "name": "@tanzhenxing/zx-backtop",
+  "version": "1.0.7",
+  "description": "uni-app 回到顶部组件，参考 Element Plus Backtop 组件优化",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "uni-app",
+    "backtop",
+    "back-to-top",
+    "backtop-component",
+    "backtop-component-for-uni-app",
+    "backtop-component-for-uniapp",
+    "element-plus",
+    "vue3"
+  ],
+  "author": "tanzhenxing",
+  "license": "MIT"
+}

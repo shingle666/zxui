@@ -744,7 +744,6 @@ const customSizeCode = ref(`<zx-upload
   }
 
   &:active {
-    transform: scale(0.98);
     opacity: 0.9;
   }
 }

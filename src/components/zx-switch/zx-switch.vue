@@ -52,7 +52,7 @@
  * @event {Function} update:modelValue - v-model 更新事件
  */
 
-import { ref, computed, getCurrentInstance, watch, defineExpose } from 'vue';
+import { ref, computed, getCurrentInstance, watch } from 'vue';
 
 const { proxy } = getCurrentInstance();
 

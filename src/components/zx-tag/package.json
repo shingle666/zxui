@@ -1,12 +1,24 @@
 {
-  "name": "zx-tag",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-tag",
+  "version": "1.0.3",
   "main": "index.js",
+  "description": "一个功能丰富的标签组件，支持多种类型、主题、尺寸，参考 Element Plus Tag 组件设计",
+  "keywords": [
+    "vue",
+    "uniapp",
+    "tag",
+    "label",
+    "component",
+    "element-plus"
+  ],
+  "author": "tanzhenxing",
+  "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "files": [
+    "*.vue",
+    "*.js",
+    "README.md"
+  ]
 }

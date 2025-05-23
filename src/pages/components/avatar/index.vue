@@ -271,9 +271,6 @@ const changeAvatar = () => {
 .custom-image {
 	filter: brightness(1.1);
 	transition: transform 0.3s;
-}
-
-.custom-image:active {
-	transform: scale(0.95);
+	
 }
 </style> 

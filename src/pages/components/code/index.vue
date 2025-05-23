@@ -679,7 +679,7 @@ const copyCurrentCode = () => {
 	}
 	
 	&:active {
-		transform: scale(0.98);
+	
 		opacity: 0.9;
 	}
 }

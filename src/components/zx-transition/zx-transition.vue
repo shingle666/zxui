@@ -251,6 +251,9 @@
 </script>
 
 <style lang="scss" scoped>
+// 使用现代Sass语法导入兼容性工具
+@use '@/styles/compatibility.scss' as compat;
+
 /**
  * vue版本动画内置的动画模式有如下：
  * fade：淡入
@@ -280,7 +283,7 @@
 
 .zx-fade-zoom-enter,
 .zx-fade-zoom-leave-to {
-	transform: scale(0.95);
+	@include compat.uni-scale(0.95);
 	opacity: 0;
 }
 
@@ -302,25 +305,25 @@
 
 .zx-fade-up-enter,
 .zx-fade-up-leave-to {
-	transform: translate3d(0, 100%, 0);
+	@include compat.uni-transform(translate3d(0, 100%, 0));
 	opacity: 0
 }
 
 .zx-fade-down-enter,
 .zx-fade-down-leave-to {
-	transform: translate3d(0, -100%, 0);
+	@include compat.uni-transform(translate3d(0, -100%, 0));
 	opacity: 0
 }
 
 .zx-fade-left-enter,
 .zx-fade-left-leave-to {
-	transform: translate3d(-100%, 0, 0);
+	@include compat.uni-transform(translate3d(-100%, 0, 0));
 	opacity: 0
 }
 
 .zx-fade-right-enter,
 .zx-fade-right-leave-to {
-	transform: translate3d(100%, 0, 0);
+	@include compat.uni-transform(translate3d(100%, 0, 0));
 	opacity: 0
 }
 
@@ -337,22 +340,22 @@
 
 .zx-slide-up-enter,
 .zx-slide-up-leave-to {
-	transform: translate3d(0, 100%, 0)
+	@include compat.uni-transform(translate3d(0, 100%, 0))
 }
 
 .zx-slide-down-enter,
 .zx-slide-down-leave-to {
-	transform: translate3d(0, -100%, 0)
+	@include compat.uni-transform(translate3d(0, -100%, 0))
 }
 
 .zx-slide-left-enter,
 .zx-slide-left-leave-to {
-	transform: translate3d(-100%, 0, 0)
+	@include compat.uni-transform(translate3d(-100%, 0, 0))
 }
 
 .zx-slide-right-enter,
 .zx-slide-right-leave-to {
-	transform: translate3d(100%, 0, 0)
+	@include compat.uni-transform(translate3d(100%, 0, 0))
 }
 
 .zx-zoom-enter-active,
@@ -362,7 +365,7 @@
 
 .zx-zoom-enter,
 .zx-zoom-leave-to {
-	transform: scale(0.95)
+	@include compat.uni-scale(0.95)
 }
 
 /* 添加旋转动画相关样式 */
@@ -373,7 +376,7 @@
 
 .zx-rotate-enter,
 .zx-rotate-leave-to {
-	transform: rotate(-90deg);
+	@include compat.uni-transform(rotate(-90deg));
 }
 
 /* 添加旋转缩放动画相关样式 */
@@ -384,7 +387,7 @@
 
 .zx-rotate-zoom-enter,
 .zx-rotate-zoom-leave-to {
-	transform: rotate(-90deg) scale(0.95);
+	@include compat.uni-transform(rotate(-90deg) scale(0.95));
 	opacity: 0;
 }
 

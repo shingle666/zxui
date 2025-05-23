@@ -1,0 +1,97 @@
+// CSS兼容性工具类
+// 用于解决uni-app多平台transform兼容性问题
+
+// 使用现代Sass语法
+@use "sass:string";
+
+// Transform混合器
+@mixin transform($value) {
+  -webkit-transform: #{$value};
+  -moz-transform: #{$value};
+  -ms-transform: #{$value};
+  -o-transform: #{$value};
+  transform: #{$value};
+}
+
+// Scale混合器 - 使用字符串拼接避免函数冲突
+@mixin css-scale($value) {
+  @include transform(string.unquote("scale(#{$value})"));
+}
+
+// Scale过渡动画
+@mixin scale-transition($duration: 0.3s, $timing: ease) {
+  -webkit-transition: -webkit-transform #{$duration} #{$timing};
+  -moz-transition: -moz-transform #{$duration} #{$timing};
+  -ms-transition: -ms-transform #{$duration} #{$timing};
+  -o-transition: -o-transform #{$duration} #{$timing};
+  transition: transform #{$duration} #{$timing};
+}
+
+// 常用的scale工具类
+.scale-95 {
+  @include css-scale(0.95);
+}
+
+.scale-90 {
+  @include css-scale(0.9);
+}
+
+.scale-105 {
+  @include css-scale(1.05);
+}
+
+.scale-110 {
+  @include css-scale(1.1);
+}
+
+// 带过渡的scale类
+.scale-hover {
+  @include scale-transition();
+  
+  &:hover,
+  &:active {
+    @include css-scale(0.95);
+  }
+}
+
+// 适用于按钮的scale效果
+.btn-scale {
+  @include scale-transition(0.2s);
+  
+  &:active {
+    @include css-scale(0.95);
+  }
+}
+
+// 适用于卡片的scale效果
+.card-scale {
+  @include scale-transition();
+  
+  &:hover {
+    @include css-scale(1.02);
+  }
+}
+
+// 针对uni-app小程序优化的transform
+@mixin uni-transform($value) {
+  /* #ifdef MP */
+  transform: #{$value};
+  /* #endif */
+  
+  /* #ifdef H5 */
+  -webkit-transform: #{$value};
+  -moz-transform: #{$value};
+  -ms-transform: #{$value};
+  -o-transform: #{$value};
+  transform: #{$value};
+  /* #endif */
+  
+  /* #ifdef APP-PLUS */
+  transform: #{$value};
+  /* #endif */
+}
+
+// uni-app专用scale混合器
+@mixin uni-scale($value) {
+  @include uni-transform(string.unquote("scale(#{$value})"));
+} 

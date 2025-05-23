@@ -1,0 +1,23 @@
+{
+  "name": "@tanzhenxing/zx-cascader",
+  "version": "1.0.0",
+  "description": "级联选择器组件，支持单选、多选、严格模式等多种功能",
+  "main": "zx-cascader.vue",
+  "keywords": [
+    "cascader",
+    "picker",
+    "select",
+    "cascade",
+    "uniapp",
+    "vue3",
+    "级联选择器"
+  ],
+  "author": "tanzhenxing",
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^3.0.0"
+  },
+  "engines": {
+    "uniapp": ">=3.0.0"
+  }
+}

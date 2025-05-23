@@ -151,9 +151,9 @@
       ></zx-text>
 
       <zx-text
-        text="zx-back-top 组件使用示例"
+        text="zx-backtop 组件使用示例"
         type="primary"
-        @click="handleClick('/pages/components/back-top/index')"
+        @click="handleClick('/pages/components/backtop/index')"
       ></zx-text>
       
       <zx-text
@@ -240,6 +240,66 @@
         @click="handleClick('/pages/components/textarea/index')"
       ></zx-text>
 
+      <zx-text
+        text="zx-tag 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/tag/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-mention 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/mention/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-movable 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/movable/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-descriptions 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/descriptions/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-pagination 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/pagination/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-result 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/result/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-skeleton 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/skeleton/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-alert 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/alert/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-affix 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/affix/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-watermark 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/watermark/index')"
+      ></zx-text>
+      
     </view>
   </view>
 </template>

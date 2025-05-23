@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, computed, defineProps, defineEmits, defineExpose, getCurrentInstance, inject, onUnmounted } from 'vue';
+import { ref, watch, onMounted, computed, getCurrentInstance, inject, onUnmounted } from 'vue';
 
 // 定义组件名称
 const componentName = 'zx-radio';
@@ -27,6 +27,8 @@ const { proxy } = getCurrentInstance();
 
 // 从 radio-group 注入数据
 const radioGroup = inject('radioGroup', null);
+
+const emit = defineEmits(['change']);
 
 const props = defineProps({
 	// radio 标识，当 radio 选中时，radio-group 的 change 事件会携带 radio 的 value
@@ -85,8 +87,6 @@ const props = defineProps({
 		default: ''
 	}
 });
-
-const emit = defineEmits(['change']);
 
 // 内部选中状态
 const innerChecked = ref(false);
