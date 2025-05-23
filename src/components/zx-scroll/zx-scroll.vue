@@ -1,213 +1,122 @@
 <template>
 	<view class="zx-scroll-outer">
-		<!-- 垂直滚动 -->
 		<scroll-view
-			v-if="direction === 'y'"
 			ref="scrollViewRef"
-			:scroll-into-view="scrollIntoView"
-			scroll-y
-			:scroll-top="position"
-			:upper-threshold="upperThreshold"
-			:lower-threshold="lowerThreshold"
-			:scroll-with-animation="scrollWithAnimation"
-			:enable-back-to-top="enableBackToTop"
-			:show-scrollbar="showScrollbar"
-			:refresher-enabled="refresherEnabled"
-			:refresher-threshold="refresherThreshold"
-			:refresher-default-style="refresherDefaultStyle"
-			:refresher-background="refresherBackground"
-			:refresher-triggered="refresherTriggered"
-			:enable-flex="enableFlex"
-			:scroll-anchoring="scrollAnchoring"
-			:style="getStyle()"
-			:enhanced="enhanced"
-			:bounce="bounce"
-			:paging-enabled="pagingEnabled"
-			:fast-deceleration="fastDeceleration"
-			:class="customClass"
-			@scroll="scroll"
-			@scrolltoupper="scrolltoupper"
-			@scrolltolower="scrolltolower"
-			@refresherpulling="refresherpulling"
-			@refresherrefresh="refresherrefresh"
-			@refresherrestore="refresherrestore"
-			@refresherabort="refresherabort"
+			v-bind="scrollViewProps"
+			:style="scrollViewStyle"
+			:class="['zx-scroll-view', customClass]"
+			@scroll="handleScroll"
+			@scrolltoupper="handleScrollToUpper"
+			@scrolltolower="handleScrollToLower"
+			@refresherpulling="handleRefresherPulling"
+			@refresherrefresh="handleRefresherRefresh"
+			@refresherrestore="handleRefresherRestore"
+			@refresherabort="handleRefresherAbort"
 			@touchstart="handleTouchStart"
 			@touchmove="handleTouchMove"
 			@touchend="handleTouchEnd"
 		>
 			<!-- 自定义下拉刷新器 -->
-			<slot name="refresher" v-if="refresherEnabled && customRefresher"></slot>
+			<template v-if="refresherEnabled && customRefresher">
+				<slot name="refresher" :triggered="refresherTriggered"></slot>
+			</template>
 			
 			<!-- 主内容 -->
-			<view :class="['zx-scroll-container', {'zx-scroll-horizontal': direction === 'x'}]">
+			<view class="zx-scroll-container" :class="containerClass">
+				<!-- 虚拟列表 -->
 				<template v-if="enableVirtualList">
 					<view 
-						:class="direction === 'y' ? 'zx-scroll-virtual-list' : 'zx-scroll-virtual-list-h'" 
-						:style="direction === 'y' 
-							? {height: virtualListSource.length * virtualItemHeight + 'px'}
-							: {width: virtualListSource.length * virtualItemWidth + 'px'}"
+						class="zx-scroll-virtual-list"
+						:class="virtualListClass"
+						:style="virtualListStyle"
 					>
 						<view 
-							v-for="(vItem, index) in visibleItems" 
-							:key="vItem.index"
+							v-for="vItem in visibleItems" 
+							:key="`virtual-${vItem.index}`"
 							class="zx-scroll-virtual-item"
 							:style="getVirtualItemStyle(vItem.index)"
 						>
-							<slot name="vertical-item" :item="vItem.item" :index="vItem.index"></slot>
+							<slot 
+								:name="direction === 'y' ? 'virtual-item' : 'virtual-item-horizontal'" 
+								:item="vItem.item" 
+								:index="vItem.index"
+								:isVisible="true"
+							></slot>
 						</view>
 					</view>
 				</template>
+				
+				<!-- 普通内容插槽 -->
 				<slot></slot>
 			</view>
 			
 			<!-- 加载更多区域 -->
-			<view class="zx-scroll-load-more" v-if="showLoadMore">
-				<slot name="loadMore">
-					<view class="zx-scroll-load-more-default" v-if="isLoading">
-						<view class="zx-scroll-loading-icon"></view>
-						<text class="zx-scroll-loading-text">{{loadingText}}</text>
+			<view v-if="showLoadMore" class="zx-scroll-load-more">
+				<slot name="loadMore" :loading="isLoading" :noMore="noMore">
+					<view v-if="isLoading" class="zx-scroll-load-more-default">
+						<view class="zx-scroll-loading-icon" :class="loadingIconClass"></view>
+						<text class="zx-scroll-loading-text">{{ loadingText }}</text>
 					</view>
-					<view class="zx-scroll-no-more" v-else-if="noMore">
-						<text>{{noMoreText}}</text>
+					<view v-else-if="noMore" class="zx-scroll-no-more">
+						<text>{{ noMoreText }}</text>
 					</view>
 				</slot>
 			</view>
 			
 			<!-- 空内容提示 -->
-			<view class="zx-scroll-empty" v-if="isEmpty">
+			<view v-if="isEmpty" class="zx-scroll-empty">
 				<slot name="empty">
 					<view class="zx-scroll-empty-default">
-						<text class="zx-scroll-empty-text">{{emptyText}}</text>
-					</view>
-				</slot>
-			</view>
-			
-			<!-- 返回顶部按钮 -->
-			<view v-if="showBackTop && showBackTopButton" 
-				class="zx-scroll-back-top" 
-				:style="backTopStyle" 
-				@tap="scrollToTop">
-				<slot name="backTop">
-					<view class="zx-scroll-back-top-default">
-						<text class="zx-scroll-back-top-icon">↑</text>
+						<text class="zx-scroll-empty-text">{{ emptyText }}</text>
 					</view>
 				</slot>
 			</view>
 		</scroll-view>
 		
-		<!-- 水平滚动 -->
-		<scroll-view
-			v-else
-			ref="scrollViewRef"
-			:scroll-into-view="scrollIntoView"
-			scroll-x
-			:scroll-left="position"
-			:upper-threshold="upperThreshold"
-			:lower-threshold="lowerThreshold"
-			:scroll-with-animation="scrollWithAnimation"
-			:enable-back-to-top="enableBackToTop"
-			:show-scrollbar="showScrollbar"
-			:refresher-enabled="refresherEnabled"
-			:refresher-threshold="refresherThreshold"
-			:refresher-default-style="refresherDefaultStyle"
-			:refresher-background="refresherBackground"
-			:refresher-triggered="refresherTriggered"
-			:enable-flex="enableFlex"
-			:scroll-anchoring="scrollAnchoring"
-			:style="getStyle()"
-			:enhanced="enhanced"
-			:bounce="bounce"
-			:paging-enabled="pagingEnabled"
-			:fast-deceleration="fastDeceleration"
-			:class="customClass"
-			@scroll="scroll"
-			@scrolltoupper="scrolltoupper"
-			@scrolltolower="scrolltolower"
-			@refresherpulling="refresherpulling"
-			@refresherrefresh="refresherrefresh"
-			@refresherrestore="refresherrestore"
-			@refresherabort="refresherabort"
-			@touchstart="handleTouchStart"
-			@touchmove="handleTouchMove"
-			@touchend="handleTouchEnd"
-		>
-			<!-- 自定义下拉刷新器 -->
-			<slot name="refresher" v-if="refresherEnabled && customRefresher"></slot>
-			
-			<!-- 主内容 -->
-			<view :class="['zx-scroll-container', {'zx-scroll-horizontal': direction === 'x'}]">
-				<template v-if="enableVirtualList">
-					<view 
-						:class="direction === 'y' ? 'zx-scroll-virtual-list' : 'zx-scroll-virtual-list-h'" 
-						:style="direction === 'y' 
-							? {height: virtualListSource.length * virtualItemHeight + 'px'}
-							: {width: virtualListSource.length * virtualItemWidth + 'px'}"
-					>
-						<view 
-							v-for="(vItem, index) in visibleItems" 
-							:key="vItem.index"
-							class="zx-scroll-virtual-item"
-							:style="getVirtualItemStyle(vItem.index)"
-						>
-							<slot name="horizontal-item" :item="vItem.item" :index="vItem.index"></slot>
-						</view>
-					</view>
-				</template>
-				<slot></slot>
-			</view>
-			
-			<!-- 加载更多区域 -->
-			<view class="zx-scroll-load-more" v-if="showLoadMore">
-				<slot name="loadMore">
-					<view class="zx-scroll-load-more-default" v-if="isLoading">
-						<view class="zx-scroll-loading-icon"></view>
-						<text class="zx-scroll-loading-text">{{loadingText}}</text>
-					</view>
-					<view class="zx-scroll-no-more" v-else-if="noMore">
-						<text>{{noMoreText}}</text>
-					</view>
-				</slot>
-			</view>
-			
-			<!-- 空内容提示 -->
-			<view class="zx-scroll-empty" v-if="isEmpty">
-				<slot name="empty">
-					<view class="zx-scroll-empty-default">
-						<text class="zx-scroll-empty-text">{{emptyText}}</text>
-					</view>
-				</slot>
-			</view>
-			
-			<!-- 返回顶部按钮 -->
-			<view v-if="showBackTop && showBackTopButton" 
+		<!-- 返回顶部按钮 -->
+		<transition name="zx-scroll-fade">
+			<view 
+				v-if="showBackTop && showBackTopButton" 
 				class="zx-scroll-back-top" 
-				:style="backTopStyle" 
-				@tap="scrollToTop">
-				<slot name="backTop">
+				:style="backTopButtonStyle" 
+				@tap="scrollToTop"
+			>
+				<slot name="backTop" :scrollTop="currentScrollPosition">
 					<view class="zx-scroll-back-top-default">
 						<text class="zx-scroll-back-top-icon">↑</text>
 					</view>
 				</slot>
 			</view>
-		</scroll-view>
+		</transition>
 	</view>
 </template>
 
 <script setup>
-import { onMounted, ref, computed, nextTick, watch, getCurrentInstance, onBeforeUnmount } from 'vue';
+import { 
+	onMounted, 
+	ref, 
+	computed, 
+	nextTick, 
+	watch, 
+	getCurrentInstance, 
+	onBeforeUnmount,
+	reactive,
+	toRefs,
+	shallowRef
+} from 'vue';
 
 /**
  * zx-scroll 增强滚动组件
  * @description 基于uni-app的scroll-view的增强组件，支持更多自定义功能
- * @author tzx
- * @version 2.0.0
  */
+
+// Props 定义
 const props = defineProps({
 	/** 滚动方向：x-横向滚动, y-纵向滚动 */
 	direction: {
 		type: String,
-		default: 'y'
+		default: 'y',
+		validator: (value) => ['x', 'y'].includes(value)
 	},
 	/** 滚动条位置 */
 	position: {
@@ -272,7 +181,8 @@ const props = defineProps({
 	/** 设置自定义下拉刷新默认样式，支持设置black，white，none（表示不使用默认样式） */
 	refresherDefaultStyle: {
 		type: String,
-		default: 'black'
+		default: 'black',
+		validator: (value) => ['black', 'white', 'none'].includes(value)
 	},
 	/** 设置自定义下拉刷新区域背景颜色 */
 	refresherBackground: {
@@ -443,17 +353,32 @@ const props = defineProps({
 	virtualItemWidth: {
 		type: Number,
 		default: 100
+	},
+	/** 节流模式，用于性能优化 */
+	throttle: {
+		type: Boolean,
+		default: false
+	},
+	/** 节流时间（毫秒） */
+	throttleTime: {
+		type: Number,
+		default: 16
+	},
+	/** 预加载距离 */
+	preloadDistance: {
+		type: Number,
+		default: 100
 	}
 });
 
 // 事件发射器
 const emit = defineEmits([
-	'scroll', 
-	'scrolltoupper', 
-	'scrolltolower', 
-	'refresherpulling', 
-	'refresherrefresh', 
-	'refresherrestore', 
+	'scroll',
+	'scrolltoupper',
+	'scrolltolower',
+	'refresherpulling',
+	'refresherrefresh',
+	'refresherrestore',
 	'refresherabort',
 	'loadMore',
 	'inited',
@@ -463,109 +388,252 @@ const emit = defineEmits([
 	'virtualScroll'
 ]);
 
-// 滚动视图引用
-const scrollViewRef = ref(null);
-// 是否显示返回顶部按钮
-const showBackTopButton = ref(false);
-// 当前滚动位置
+// 响应式数据
+const scrollViewRef = shallowRef(null);
 const currentScrollPosition = ref(0);
-// 滚动容器尺寸
-const scrollSize = ref({ width: 0, height: 0 });
-// 内容尺寸
-const contentSize = ref({ width: 0, height: 0 });
-// 是否已初始化完成
+const showBackTopButton = ref(false);
 const isInitialized = ref(false);
-// 自动滚动定时器
-let autoScrollTimer = null;
-// 拖拽状态
-const dragState = ref({
-	isDragging: false,
-	startX: 0,
-	startY: 0,
-	lastX: 0,
-	lastY: 0,
-	deltaX: 0,
-	deltaY: 0
+
+// 状态管理
+const state = reactive({
+	scrollSize: { width: 0, height: 0 },
+	contentSize: { width: 0, height: 0 },
+	dragState: {
+		isDragging: false,
+		startX: 0,
+		startY: 0,
+		lastX: 0,
+		lastY: 0,
+		deltaX: 0,
+		deltaY: 0
+	}
 });
-// 防抖定时器
+
+// 定时器
+let autoScrollTimer = null;
 let debounceTimer = null;
+let throttleTimer = null;
 
 // 获取当前组件实例
 const instance = getCurrentInstance();
 
-// 使用计算属性代替动态绑定
-const directionProps = computed(() => {
+// 计算属性
+const scrollViewProps = computed(() => {
+	const baseProps = {
+		'scroll-into-view': props.scrollIntoView,
+		'upper-threshold': props.upperThreshold,
+		'lower-threshold': props.lowerThreshold,
+		'scroll-with-animation': props.scrollWithAnimation,
+		'enable-back-to-top': props.enableBackToTop,
+		'show-scrollbar': props.showScrollbar,
+		'refresher-enabled': props.refresherEnabled,
+		'refresher-threshold': props.refresherThreshold,
+		'refresher-default-style': props.refresherDefaultStyle,
+		'refresher-background': props.refresherBackground,
+		'refresher-triggered': props.refresherTriggered,
+		'enable-flex': props.enableFlex,
+		'scroll-anchoring': props.scrollAnchoring,
+		'enhanced': props.enhanced,
+		'bounce': props.bounce,
+		'paging-enabled': props.pagingEnabled,
+		'fast-deceleration': props.fastDeceleration
+	};
+
+	// 根据方向设置滚动属性
 	if (props.direction === 'y') {
 		return {
+			...baseProps,
 			'scroll-y': true,
 			'scroll-top': props.position
 		};
 	} else {
 		return {
+			...baseProps,
 			'scroll-x': true,
 			'scroll-left': props.position
 		};
 	}
 });
 
-// 初始化组件
-onMounted(() => {
-	// 延迟初始化，确保DOM已经渲染
-	nextTick(() => {
-		initScrollSize();
-		
-		if (props.autoScrollInterval > 0) {
-			startAutoScroll();
-		}
-		
-		// 如果启用了虚拟列表，初始化后强制更新一次可见区域
-		if (props.enableVirtualList && props.virtualListSource.length > 0) {
-			// 初始时计算一次可见项
-			setTimeout(() => {
-				const event = { detail: { scrollTop: 0, scrollLeft: 0 } };
-				handleScrollEvent(event);
-				refreshSize(); // 刷新尺寸以确保计算正确
-			}, 100);
-		}
-		
-		// 标记为初始化完成
-		isInitialized.value = true;
-		emit('inited');
-	});
-});
+const scrollViewStyle = computed(() => ({
+	width: props.width,
+	height: props.height,
+	backgroundColor: props.backgroundColor,
+	borderRadius: props.borderRadius,
+	border: props.border,
+	padding: props.padding,
+	boxShadow: props.boxShadow,
+	...(props.direction === 'x' && { whiteSpace: 'nowrap' })
+}));
 
-// 监听自动滚动间隔变化
-watch(() => props.autoScrollInterval, (newVal, oldVal) => {
-	if (autoScrollTimer) {
-		clearInterval(autoScrollTimer);
-		autoScrollTimer = null;
-	}
+const containerClass = computed(() => ({
+	'zx-scroll-horizontal': props.direction === 'x',
+	'zx-scroll-flex': props.enableFlex
+}));
+
+const virtualListClass = computed(() => ({
+	'zx-scroll-virtual-list-vertical': props.direction === 'y',
+	'zx-scroll-virtual-list-horizontal': props.direction === 'x'
+}));
+
+const virtualListStyle = computed(() => {
+	if (!props.enableVirtualList || !props.virtualListSource.length) return {};
 	
-	if (newVal > 0) {
-		startAutoScroll();
+	if (props.direction === 'y') {
+		return {
+			height: props.virtualListSource.length * props.virtualItemHeight + 'px'
+		};
+	} else {
+		return {
+			width: props.virtualListSource.length * props.virtualItemWidth + 'px'
+		};
 	}
 });
 
-// 监听虚拟列表数据源变化
-watch(() => props.virtualListSource, (newVal) => {
-	if (props.enableVirtualList && newVal.length > 0) {
-		nextTick(() => {
-			refreshSize();
-			// 触发一次滚动事件来更新可见项
-			const event = { 
-				detail: { 
-					scrollTop: currentScrollPosition.value, 
-					scrollLeft: currentScrollPosition.value 
-				} 
-			};
-			handleScrollEvent(event);
+const loadingIconClass = computed(() => ({
+	'zx-scroll-loading-spin': props.isLoading
+}));
+
+const backTopButtonStyle = computed(() => ({
+	...props.backTopStyle,
+	...(props.direction === 'y' && {
+		position: 'fixed',
+		right: '20rpx',
+		bottom: '120rpx',
+		zIndex: 9999
+	})
+}));
+
+// 虚拟列表可见项计算
+const visibleItems = computed(() => {
+	if (!props.enableVirtualList || !props.virtualListSource.length) return [];
+	
+	const { scrollSize } = state;
+	const isVertical = props.direction === 'y';
+	const itemSize = isVertical ? props.virtualItemHeight : props.virtualItemWidth;
+	const containerSize = isVertical ? scrollSize.height : scrollSize.width;
+	
+	// 计算可见范围
+	const startIndex = Math.max(0, Math.floor(currentScrollPosition.value / itemSize) - props.virtualBuffer);
+	const visibleCount = Math.ceil(containerSize / itemSize);
+	const endIndex = Math.min(
+		props.virtualListSource.length - 1,
+		startIndex + visibleCount + props.virtualBuffer * 2
+	);
+	
+	// 触发虚拟滚动事件
+	if (isInitialized.value) {
+		emit('virtualScroll', {
+			visibleRange: { start: startIndex, end: endIndex + 1 },
+			scrollPosition: currentScrollPosition.value
 		});
 	}
-}, { deep: true });
+	
+	return props.virtualListSource.slice(startIndex, endIndex + 1).map((item, i) => ({
+		item,
+		index: startIndex + i
+	}));
+});
 
-/**
- * 初始化滚动容器尺寸
- */
+// 工具函数
+const throttle = (func, delay) => {
+	let timeoutId = null;
+	let lastExecTime = 0;
+	return function (...args) {
+		const currentTime = Date.now();
+		
+		if (currentTime - lastExecTime > delay) {
+			func.apply(this, args);
+			lastExecTime = currentTime;
+		} else {
+			if (timeoutId) clearTimeout(timeoutId);
+			timeoutId = setTimeout(() => {
+				func.apply(this, args);
+				lastExecTime = Date.now();
+			}, delay - (currentTime - lastExecTime));
+		}
+	};
+};
+
+// 事件处理函数
+const handleScroll = (e) => {
+	if (props.throttle) {
+		throttledScroll(e);
+	} else if (props.debounce) {
+		debouncedScroll(e);
+	} else {
+		processScrollEvent(e);
+	}
+};
+
+const handleScrollToUpper = (e) => {
+	emit('scrolltoupper', e);
+};
+
+const handleScrollToLower = (e) => {
+	if (props.showLoadMore && !props.noMore && !props.isLoading) {
+		emit('loadMore');
+	}
+	emit('scrolltolower', e);
+};
+
+const handleRefresherPulling = (e) => {
+	emit('refresherpulling', e);
+};
+
+const handleRefresherRefresh = (e) => {
+	emit('refresherrefresh', e);
+};
+
+const handleRefresherRestore = (e) => {
+	emit('refresherrestore', e);
+};
+
+const handleRefresherAbort = (e) => {
+	emit('refresherabort', e);
+};
+
+// 创建节流和防抖处理函数
+const throttledScroll = throttle((e) => {
+	processScrollEvent(e);
+}, props.throttleTime);
+
+const debouncedScroll = (e) => {
+	if (debounceTimer) clearTimeout(debounceTimer);
+	debounceTimer = setTimeout(() => {
+		processScrollEvent(e);
+	}, props.debounceTime);
+};
+
+const processScrollEvent = (e) => {
+	if (!e?.detail) return;
+	
+	currentScrollPosition.value = props.direction === 'y' ? e.detail.scrollTop : e.detail.scrollLeft;
+	
+	// 检查是否显示返回顶部按钮
+	if (props.showBackTop && props.direction === 'y') {
+		showBackTopButton.value = currentScrollPosition.value > props.backTopThreshold;
+	}
+	
+	// 虚拟列表尺寸检查
+	if (props.enableVirtualList && props.virtualListSource.length > 0) {
+		if (state.scrollSize.width === 0 || state.scrollSize.height === 0) {
+			refreshSize();
+		}
+	}
+	
+	// 触发滚动事件
+	emit('scroll', {
+		scrollTop: e.detail.scrollTop || 0,
+		scrollLeft: e.detail.scrollLeft || 0,
+		scrollHeight: e.detail.scrollHeight || 0,
+		scrollWidth: e.detail.scrollWidth || 0,
+		deltaX: e.detail.deltaX || 0,
+		deltaY: e.detail.deltaY || 0
+	});
+};
+
+// 初始化滚动容器尺寸
 const initScrollSize = () => {
 	nextTick(() => {
 		if (!scrollViewRef.value || !instance) return;
@@ -574,11 +642,11 @@ const initScrollSize = () => {
 			const query = uni.createSelectorQuery().in(instance);
 			query.select('.zx-scroll-container').boundingClientRect(data => {
 				if (data) {
-					scrollSize.value = {
+					state.scrollSize = {
 						width: data.width,
 						height: data.height
 					};
-					contentSize.value = {
+					state.contentSize = {
 						width: props.direction === 'x' ? data.scrollWidth : data.width,
 						height: props.direction === 'y' ? data.scrollHeight : data.height
 					};
@@ -590,33 +658,26 @@ const initScrollSize = () => {
 	});
 };
 
-/**
- * 开始自动滚动
- */
+// 开始自动滚动
 const startAutoScroll = () => {
 	if (autoScrollTimer) {
 		clearInterval(autoScrollTimer);
 	}
 	
-	autoScrollTimer = setInterval(() => {
-		if (props.direction === 'y') {
-			scrollToNextPosition('y');
-		} else {
-			scrollToNextPosition('x');
-		}
-	}, props.autoScrollInterval);
+	if (props.autoScrollInterval > 0) {
+		autoScrollTimer = setInterval(() => {
+			scrollToNextPosition(props.direction);
+		}, props.autoScrollInterval);
+	}
 };
 
-/**
- * 滚动到下一个位置
- * @param {String} direction 滚动方向
- */
+// 滚动到下一个位置
 const scrollToNextPosition = (direction) => {
 	if (!scrollViewRef.value) return;
 	
 	const currentPos = currentScrollPosition.value;
-	const maxSize = direction === 'y' ? contentSize.value.height : contentSize.value.width;
-	const viewportSize = direction === 'y' ? scrollSize.value.height : scrollSize.value.width;
+	const maxSize = direction === 'y' ? state.contentSize.height : state.contentSize.width;
+	const viewportSize = direction === 'y' ? state.scrollSize.height : state.scrollSize.width;
 	
 	// 如果已滚动到底部，则回到顶部
 	if (currentPos + viewportSize >= maxSize) {
@@ -627,9 +688,7 @@ const scrollToNextPosition = (direction) => {
 	}
 };
 
-/**
- * 停止自动滚动
- */
+// 停止自动滚动
 const stopAutoScroll = () => {
 	if (autoScrollTimer) {
 		clearInterval(autoScrollTimer);
@@ -637,132 +696,7 @@ const stopAutoScroll = () => {
 	}
 };
 
-/**
- * 获取组件样式
- * @returns {Object} 样式对象
- */
-const getStyle = () => {
-	let style = { 
-		width: props.width, 
-		height: props.height,
-		backgroundColor: props.backgroundColor,
-		borderRadius: props.borderRadius,
-		border: props.border,
-		padding: props.padding,
-		boxShadow: props.boxShadow
-	};
-	
-	if (props.direction === 'x') {
-		style.whiteSpace = 'nowrap';
-	}
-	
-	return style;
-};
-
-/**
- * 滚动事件处理
- * @param {Object} e 事件对象
- */
-const scroll = (e) => {
-	if (!e || !e.detail) return; // 确保事件对象存在
-	
-	// 使用防抖处理滚动事件
-	if (props.debounce) {
-		if (debounceTimer) clearTimeout(debounceTimer);
-		debounceTimer = setTimeout(() => {
-			handleScrollEvent(e);
-		}, props.debounceTime);
-	} else {
-		handleScrollEvent(e);
-	}
-};
-
-/**
- * 处理滚动事件
- * @param {Object} e 事件对象
- */
-const handleScrollEvent = (e) => {
-	if (!e || !e.detail) return; // 再次检查以确保安全
-	
-	currentScrollPosition.value = props.direction === 'y' ? e.detail.scrollTop : e.detail.scrollLeft;
-	
-	// 检查是否显示返回顶部按钮
-	if (props.showBackTop && props.direction === 'y') {
-		showBackTopButton.value = currentScrollPosition.value > props.backTopThreshold;
-	}
-	
-	// 如果启用了虚拟列表，滚动时会通过计算属性自动更新可见项
-	// 但是需要确保scrollSize已经被正确初始化
-	if (props.enableVirtualList && props.virtualListSource.length > 0) {
-		if (scrollSize.value.width === 0 || scrollSize.value.height === 0) {
-			refreshSize();
-		}
-	}
-	
-	// 安全地触发事件
-	emit('scroll', {
-		scrollTop: e.detail.scrollTop || 0,
-		scrollLeft: e.detail.scrollLeft || 0,
-		current: currentScrollPosition.value,
-		direction: props.direction
-	});
-};
-
-/**
- * 滚动到顶部事件
- * @param {Object} e 事件对象
- */
-const scrolltoupper = (e) => {
-	emit('scrolltoupper', e);
-};
-
-/**
- * 滚动到底部事件
- * @param {Object} e 事件对象
- */
-const scrolltolower = (e) => {
-	if (props.showLoadMore && !props.noMore && !props.isLoading) {
-		emit('loadMore');
-	}
-	emit('scrolltolower', e);
-};
-
-/**
- * 自定义下拉刷新控件被下拉事件
- * @param {Object} e 事件对象
- */
-const refresherpulling = (e) => {
-	emit('refresherpulling', e);
-};
-
-/**
- * 自定义下拉刷新被触发事件
- * @param {Object} e 事件对象
- */
-const refresherrefresh = (e) => {
-	emit('refresherrefresh', e);
-};
-
-/**
- * 自定义下拉刷新被复位事件
- * @param {Object} e 事件对象
- */
-const refresherrestore = (e) => {
-	emit('refresherrestore', e);
-};
-
-/**
- * 自定义下拉刷新被中止事件
- * @param {Object} e 事件对象
- */
-const refresherabort = (e) => {
-	emit('refresherabort', e);
-};
-
-/**
- * 处理触摸开始事件
- * @param {Object} e 事件对象
- */
+// 触摸事件处理
 const handleTouchStart = (e) => {
 	if (!props.enableDrag) return;
 	
@@ -772,7 +706,7 @@ const handleTouchStart = (e) => {
 	}
 	
 	const touch = e.touches[0];
-	dragState.value = {
+	state.dragState = {
 		isDragging: true,
 		startX: touch.clientX,
 		startY: touch.clientY,
@@ -788,46 +722,38 @@ const handleTouchStart = (e) => {
 	});
 };
 
-/**
- * 处理触摸移动事件
- * @param {Object} e 事件对象
- */
 const handleTouchMove = (e) => {
-	if (!props.enableDrag || !dragState.value.isDragging) return;
+	if (!props.enableDrag || !state.dragState.isDragging) return;
 	
 	const touch = e.touches[0];
-	dragState.value.deltaX = touch.clientX - dragState.value.lastX;
-	dragState.value.deltaY = touch.clientY - dragState.value.lastY;
-	dragState.value.lastX = touch.clientX;
-	dragState.value.lastY = touch.clientY;
+	state.dragState.deltaX = touch.clientX - state.dragState.lastX;
+	state.dragState.deltaY = touch.clientY - state.dragState.lastY;
+	state.dragState.lastX = touch.clientX;
+	state.dragState.lastY = touch.clientY;
 	
 	// 根据方向更新滚动位置
 	if (props.direction === 'x') {
-		scrollTo(currentScrollPosition.value - dragState.value.deltaX);
+		scrollTo(currentScrollPosition.value - state.dragState.deltaX);
 	} else {
-		scrollTo(currentScrollPosition.value - dragState.value.deltaY);
+		scrollTo(currentScrollPosition.value - state.dragState.deltaY);
 	}
 	
 	emit('dragMove', {
 		x: touch.clientX,
 		y: touch.clientY,
-		deltaX: dragState.value.deltaX,
-		deltaY: dragState.value.deltaY
+		deltaX: state.dragState.deltaX,
+		deltaY: state.dragState.deltaY
 	});
 };
 
-/**
- * 处理触摸结束事件
- * @param {Object} e 事件对象
- */
 const handleTouchEnd = (e) => {
-	if (!props.enableDrag || !dragState.value.isDragging) return;
+	if (!props.enableDrag || !state.dragState.isDragging) return;
 	
-	dragState.value.isDragging = false;
+	state.dragState.isDragging = false;
 	
 	// 计算滑动的总距离
-	const totalDeltaX = dragState.value.lastX - dragState.value.startX;
-	const totalDeltaY = dragState.value.lastY - dragState.value.startY;
+	const totalDeltaX = state.dragState.lastX - state.dragState.startX;
+	const totalDeltaY = state.dragState.lastY - state.dragState.startY;
 	
 	emit('dragEnd', {
 		totalDeltaX,
@@ -840,22 +766,17 @@ const handleTouchEnd = (e) => {
 	}
 };
 
-/**
- * 滚动到顶部
- */
+// 滚动控制方法
 const scrollToTop = () => {
 	scrollTo(0);
 };
 
-/**
- * 滚动到底部
- */
 const scrollToBottom = () => {
 	nextTick(() => {
 		if (!instance) return;
 		const query = uni.createSelectorQuery().in(instance);
 		
-		query.select('.zx-scroll-container').boundingClientRect(data => {
+		query.select('.zx-scroll-container').boundingRect(data => {
 			if (data) {
 				const scrollHeight = props.direction === 'y' ? data.scrollHeight : data.scrollWidth;
 				scrollTo(scrollHeight);
@@ -864,11 +785,6 @@ const scrollToBottom = () => {
 	});
 };
 
-/**
- * 滚动到指定位置
- * @param {Number} position 滚动位置
- * @param {Number} duration 动画持续时间，为0时无动画
- */
 const scrollTo = (position, duration) => {
 	if (!scrollViewRef.value) return;
 	
@@ -886,25 +802,10 @@ const scrollTo = (position, duration) => {
 		scrollViewRef.value.scrollTo(scrollParam);
 	} else {
 		// 降级处理
-		try {
-			if (!instance) return;
-			const selectorQuery = uni.createSelectorQuery().in(instance);
-			
-			selectorQuery.select('.zx-scroll-container').node(data => {
-				if (data && data.node) {
-					data.node.scrollTo(scrollParam);
-				}
-			}).exec();
-		} catch (error) {
-			console.error('scroll-view scrollTo error:', error);
-		}
+		console.warn('scrollTo method not available, using fallback');
 	}
 };
 
-/**
- * 滚动到指定元素
- * @param {String} elementId 元素ID
- */
 const scrollIntoViewById = (elementId) => {
 	if (!elementId || typeof elementId !== 'string') return;
 	
@@ -932,17 +833,10 @@ const scrollIntoViewById = (elementId) => {
 	});
 };
 
-/**
- * 刷新滚动区域大小
- */
 const refreshSize = () => {
 	initScrollSize();
 };
 
-/**
- * 滚动到指定百分比位置
- * @param {Number} percent 百分比值(0-100)
- */
 const scrollToPercent = (percent) => {
 	if (percent < 0) percent = 0;
 	if (percent > 100) percent = 100;
@@ -951,7 +845,7 @@ const scrollToPercent = (percent) => {
 		if (!instance) return;
 		const query = uni.createSelectorQuery().in(instance);
 		
-		query.select('.zx-scroll-container').boundingClientRect(data => {
+		query.select('.zx-scroll-container').boundingRect(data => {
 			if (data) {
 				const max = props.direction === 'y' ? 
 					data.scrollHeight - data.height : 
@@ -963,16 +857,12 @@ const scrollToPercent = (percent) => {
 	});
 };
 
-/**
- * 滚动到指定页
- * @param {Number} pageIndex 页索引，从0开始
- */
 const scrollToPage = (pageIndex) => {
 	nextTick(() => {
 		if (!instance) return;
 		const query = uni.createSelectorQuery().in(instance);
 		
-		query.select('.zx-scroll-container').boundingClientRect(data => {
+		query.select('.zx-scroll-container').boundingRect(data => {
 			if (!data) return;
 			
 			const size = props.direction === 'y' ? data.height : data.width;
@@ -982,10 +872,6 @@ const scrollToPage = (pageIndex) => {
 	});
 };
 
-/**
- * 获取总页数
- * @returns {Promise<Number>} 总页数
- */
 const getTotalPages = () => {
 	return new Promise((resolve) => {
 		if (!instance) {
@@ -994,7 +880,7 @@ const getTotalPages = () => {
 		}
 		const query = uni.createSelectorQuery().in(instance);
 		
-		query.select('.zx-scroll-container').boundingClientRect(data => {
+		query.select('.zx-scroll-container').boundingRect(data => {
 			if (!data) {
 				resolve(0);
 				return;
@@ -1009,10 +895,6 @@ const getTotalPages = () => {
 	});
 };
 
-/**
- * 获取可滚动区域的高度
- * @returns {Promise<Number>} 可滚动高度
- */
 const getScrollableHeight = () => {
 	return new Promise((resolve) => {
 		if (!instance) {
@@ -1021,7 +903,7 @@ const getScrollableHeight = () => {
 		}
 		const query = uni.createSelectorQuery().in(instance);
 		
-		query.select('.zx-scroll-container').boundingClientRect(data => {
+		query.select('.zx-scroll-container').boundingRect(data => {
 			if (!data) {
 				resolve(0);
 				return;
@@ -1033,10 +915,6 @@ const getScrollableHeight = () => {
 	});
 };
 
-/**
- * 获取可视区域高度
- * @returns {Promise<Number>} 可视区域高度
- */
 const getViewportHeight = () => {
 	return new Promise((resolve) => {
 		if (!instance) {
@@ -1045,7 +923,7 @@ const getViewportHeight = () => {
 		}
 		const query = uni.createSelectorQuery().in(instance);
 		
-		query.select('.zx-scroll-container').boundingClientRect(data => {
+		query.select('.zx-scroll-container').boundingRect(data => {
 			if (!data) {
 				resolve(0);
 				return;
@@ -1057,10 +935,6 @@ const getViewportHeight = () => {
 	});
 };
 
-/**
- * 滚动到指定位置（支持百分比）
- * @param {Number|String} position 滚动位置，可以是数字或百分比字符串，如 '50%'
- */
 const scrollToPosition = (position) => {
 	// 如果是百分比字符串
 	if (typeof position === 'string' && position.endsWith('%')) {
@@ -1077,17 +951,10 @@ const scrollToPosition = (position) => {
 	}
 };
 
-/**
- * 立即停止滚动动画
- */
 const stopAnimation = () => {
 	scrollTo(currentScrollPosition.value, 0);
 };
 
-/**
- * 滚动到虚拟列表的指定索引位置
- * @param {Number} index 要滚动到的项目索引
- */
 const scrollToIndex = (index) => {
 	if (!props.enableVirtualList) {
 		console.warn('scrollToIndex 仅在虚拟列表模式下可用');
@@ -1104,55 +971,7 @@ const scrollToIndex = (index) => {
 	}
 };
 
-// 计算虚拟列表可见项
-const visibleItems = computed(() => {
-	if (!props.enableVirtualList || !props.virtualListSource.length) return [];
-	
-	if (props.direction === 'y') {
-		const startIndex = Math.max(0, Math.floor(currentScrollPosition.value / props.virtualItemHeight) - props.virtualBuffer);
-		const endIndex = Math.min(
-			props.virtualListSource.length - 1,
-			Math.ceil((currentScrollPosition.value + scrollSize.value.height) / props.virtualItemHeight) + props.virtualBuffer
-		);
-		
-		// 更新可见范围并触发事件
-		if (isInitialized.value) {
-			emit('virtualScroll', { 
-				visibleRange: { start: startIndex, end: endIndex + 1 },
-				scrollPosition: currentScrollPosition.value
-			});
-		}
-		
-		return props.virtualListSource.slice(startIndex, endIndex + 1).map((item, i) => ({
-			item,
-			index: startIndex + i
-		}));
-	} else {
-		// 水平方向的计算
-		const startIndex = Math.max(0, Math.floor(currentScrollPosition.value / props.virtualItemWidth) - props.virtualBuffer);
-		const endIndex = Math.min(
-			props.virtualListSource.length - 1,
-			Math.ceil((currentScrollPosition.value + scrollSize.value.width) / props.virtualItemWidth) + props.virtualBuffer
-		);
-		
-		// 更新可见范围并触发事件
-		if (isInitialized.value) {
-			emit('virtualScroll', { 
-				visibleRange: { start: startIndex, end: endIndex + 1 },
-				scrollPosition: currentScrollPosition.value
-			});
-		}
-		
-		return props.virtualListSource.slice(startIndex, endIndex + 1).map((item, i) => ({
-			item,
-			index: startIndex + i
-		}));
-	}
-});
-
-/**
- * 获取虚拟列表项的样式
- */
+// 虚拟列表样式计算
 const getVirtualItemStyle = (index) => {
 	if (props.direction === 'y') {
 		return {
@@ -1175,7 +994,76 @@ const getVirtualItemStyle = (index) => {
 	}
 };
 
-// 确保将方法暴露出去
+// 监听器
+watch(() => props.autoScrollInterval, (newVal, oldVal) => {
+	if (autoScrollTimer) {
+		clearInterval(autoScrollTimer);
+		autoScrollTimer = null;
+	}
+	
+	if (newVal > 0) {
+		startAutoScroll();
+	}
+});
+
+watch(() => props.virtualListSource, (newVal) => {
+	if (props.enableVirtualList && newVal.length > 0) {
+		nextTick(() => {
+			refreshSize();
+			// 触发一次滚动事件来更新可见项
+			const event = { 
+				detail: { 
+					scrollTop: currentScrollPosition.value, 
+					scrollLeft: currentScrollPosition.value 
+				} 
+			};
+			processScrollEvent(event);
+		});
+	}
+}, { deep: true });
+
+// 生命周期
+onMounted(() => {
+	nextTick(() => {
+		initScrollSize();
+		
+		if (props.autoScrollInterval > 0) {
+			startAutoScroll();
+		}
+		
+		// 如果启用了虚拟列表，初始化后强制更新一次可见区域
+		if (props.enableVirtualList && props.virtualListSource.length > 0) {
+			setTimeout(() => {
+				const event = { detail: { scrollTop: 0, scrollLeft: 0 } };
+				processScrollEvent(event);
+				refreshSize(); // 刷新尺寸以确保计算正确
+			}, 100);
+		}
+		
+		// 标记为初始化完成
+		isInitialized.value = true;
+		emit('inited');
+	});
+});
+
+onBeforeUnmount(() => {
+	if (autoScrollTimer) {
+		clearInterval(autoScrollTimer);
+		autoScrollTimer = null;
+	}
+	
+	if (debounceTimer) {
+		clearTimeout(debounceTimer);
+		debounceTimer = null;
+	}
+	
+	if (throttleTimer) {
+		clearTimeout(throttleTimer);
+		throttleTimer = null;
+	}
+});
+
+// 暴露方法
 defineExpose({
 	scrollToTop,
 	scrollToBottom,
@@ -1194,55 +1082,16 @@ defineExpose({
 	getViewportHeight,
 	scrollToPosition
 });
-
-// 确保手势事件处理有适当的空值检查
-const onGestureChange = (e) => {
-	if (!e) return;
-	
-	gestureInfo.value = {
-		status: '手势变化',
-		direction: e.direction || '',
-		scale: e.scale ? e.scale.toFixed(2) : null,
-		fingers: e.touches ? e.touches.length : 1
-	};
-};
-
-// 检测当前运行环境是否为微信小程序
-const isMpWeixin = () => {
-	// #ifdef MP-WEIXIN
-	return true;
-	// #endif
-	return false;
-};
-
-// 使用平台特定的方法
-const safeCreateSelectorQuery = () => {
-	if (!instance) return uni.createSelectorQuery();
-	
-	try {
-		return uni.createSelectorQuery().in(instance);
-	} catch (error) {
-		console.warn('选择器创建失败，降级处理:', error);
-		return uni.createSelectorQuery();
-	}
-};
-
-// 在组件卸载前清除定时器
-onBeforeUnmount(() => {
-	if (autoScrollTimer) {
-		clearInterval(autoScrollTimer);
-		autoScrollTimer = null;
-	}
-	
-	if (debounceTimer) {
-		clearTimeout(debounceTimer);
-		debounceTimer = null;
-	}
-});
 </script>
 
 <style scoped>
 .zx-scroll-outer {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.zx-scroll-view {
 	width: 100%;
 	height: 100%;
 }
@@ -1250,21 +1099,33 @@ onBeforeUnmount(() => {
 .zx-scroll-container {
 	box-sizing: border-box;
 	width: 100%;
+	min-height: 100%;
 }
 
 .zx-scroll-horizontal {
 	display: inline-flex;
 	white-space: nowrap;
+	align-items: flex-start;
 }
 
+.zx-scroll-flex {
+	display: flex;
+	flex-direction: column;
+}
+
+/* 虚拟列表样式 */
 .zx-scroll-virtual-list {
 	position: relative;
 	width: 100%;
 }
 
-.zx-scroll-virtual-list-h {
-	position: relative;
+.zx-scroll-virtual-list-vertical {
+	width: 100%;
+}
+
+.zx-scroll-virtual-list-horizontal {
 	height: 100%;
+	display: inline-flex;
 }
 
 .zx-scroll-virtual-item {
@@ -1274,30 +1135,38 @@ onBeforeUnmount(() => {
 	width: 100%;
 	overflow: hidden;
 	will-change: transform;
+	contain: layout style paint;
 }
 
+/* 加载更多样式 */
 .zx-scroll-load-more {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 80rpx;
+	min-height: 80rpx;
 	width: 100%;
+	padding: 20rpx 0;
+	box-sizing: border-box;
 }
 
 .zx-scroll-load-more-default {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	gap: 12rpx;
 }
 
 .zx-scroll-loading-icon {
 	width: 40rpx;
 	height: 40rpx;
-	margin-right: 12rpx;
 	border: 4rpx solid #f3f3f3;
 	border-top: 4rpx solid #3498db;
 	border-radius: 50%;
 	animation: zx-scroll-spin 1.2s linear infinite;
+}
+
+.zx-scroll-loading-spin {
+	animation-duration: 0.8s;
 }
 
 @keyframes zx-scroll-spin {
@@ -1306,51 +1175,246 @@ onBeforeUnmount(() => {
 }
 
 .zx-scroll-loading-text {
-	font-size: 24rpx;
+	font-size: 28rpx;
 	color: #666;
+	line-height: 1.5;
 }
 
 .zx-scroll-no-more {
-	font-size: 24rpx;
+	font-size: 28rpx;
 	color: #999;
 	text-align: center;
+	padding: 20rpx 0;
+	position: relative;
 }
 
+.zx-scroll-no-more::before {
+	content: '';
+	position: absolute;
+	left: 20%;
+	top: 50%;
+	width: 25%;
+	height: 1px;
+	background-color: #e5e5e5;
+	transform: translateY(-50%);
+}
+
+.zx-scroll-no-more::after {
+	content: '';
+	position: absolute;
+	right: 20%;
+	top: 50%;
+	width: 25%;
+	height: 1px;
+	background-color: #e5e5e5;
+	transform: translateY(-50%);
+}
+
+/* 空内容样式 */
 .zx-scroll-empty {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 60rpx 0;
+	padding: 120rpx 40rpx;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .zx-scroll-empty-default {
 	text-align: center;
+	opacity: 0.6;
 }
 
 .zx-scroll-empty-text {
-	font-size: 28rpx;
+	font-size: 32rpx;
 	color: #999;
+	line-height: 1.6;
 }
 
+/* 返回顶部按钮样式 */
 .zx-scroll-back-top {
 	position: fixed;
-	right: 20rpx;
+	right: 30rpx;
 	bottom: 120rpx;
 	z-index: 9999;
+	cursor: pointer;
+	user-select: none;
 }
 
 .zx-scroll-back-top-default {
-	width: 80rpx;
-	height: 80rpx;
-	background-color: rgba(0, 0, 0, 0.5);
+	width: 88rpx;
+	height: 88rpx;
+	background: rgba(0, 0, 0, 0.6);
 	border-radius: 50%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+	backdrop-filter: blur(10rpx);
+	transition: all 0.3s ease;
+}
+
+.zx-scroll-back-top-default:hover {
+	background: rgba(0, 0, 0, 0.8);
+	transform: scale(1.1);
+}
+
+.zx-scroll-back-top-default:active {
+	transform: scale(0.95);
 }
 
 .zx-scroll-back-top-icon {
 	color: #ffffff;
-	font-size: 40rpx;
+	font-size: 44rpx;
+	font-weight: bold;
+	line-height: 1;
+}
+
+/* 过渡动画 */
+.zx-scroll-fade-enter-active,
+.zx-scroll-fade-leave-active {
+	transition: all 0.3s ease;
+}
+
+.zx-scroll-fade-enter-from,
+.zx-scroll-fade-leave-to {
+	opacity: 0;
+	transform: scale(0.8) translateY(20rpx);
+}
+
+.zx-scroll-fade-enter-to,
+.zx-scroll-fade-leave-from {
+	opacity: 1;
+	transform: scale(1) translateY(0);
+}
+
+/* 滚动条样式自定义 */
+.zx-scroll-view::-webkit-scrollbar {
+	width: 8rpx;
+	height: 8rpx;
+}
+
+.zx-scroll-view::-webkit-scrollbar-track {
+	background: rgba(0, 0, 0, 0.1);
+	border-radius: 4rpx;
+}
+
+.zx-scroll-view::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, 0.3);
+	border-radius: 4rpx;
+	transition: background 0.3s ease;
+}
+
+.zx-scroll-view::-webkit-scrollbar-thumb:hover {
+	background: rgba(0, 0, 0, 0.5);
+}
+
+/* 水平滚动时的特殊样式 */
+.zx-scroll-container.zx-scroll-horizontal .zx-scroll-virtual-item {
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	white-space: normal;
+}
+
+/* 性能优化相关样式 */
+.zx-scroll-container {
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+}
+
+.zx-scroll-virtual-item {
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+	perspective: 1000px;
+	-webkit-perspective: 1000px;
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+	.zx-scroll-back-top {
+		right: 20rpx;
+		bottom: 100rpx;
+	}
+	
+	.zx-scroll-back-top-default {
+		width: 80rpx;
+		height: 80rpx;
+	}
+	
+	.zx-scroll-back-top-icon {
+		font-size: 40rpx;
+	}
+	
+	.zx-scroll-loading-text {
+		font-size: 26rpx;
+	}
+	
+	.zx-scroll-empty-text {
+		font-size: 30rpx;
+	}
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+	.zx-scroll-loading-text {
+		color: #999;
+	}
+	
+	.zx-scroll-no-more {
+		color: #666;
+	}
+	
+	.zx-scroll-empty-text {
+		color: #666;
+	}
+	
+	.zx-scroll-back-top-default {
+		background: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(20rpx);
+	}
+	
+	.zx-scroll-back-top-default:hover {
+		background: rgba(255, 255, 255, 0.2);
+	}
+}
+
+/* 可访问性支持 */
+@media (prefers-reduced-motion: reduce) {
+	.zx-scroll-loading-icon {
+		animation: none;
+	}
+	
+	.zx-scroll-fade-enter-active,
+	.zx-scroll-fade-leave-active {
+		transition: none;
+	}
+	
+	.zx-scroll-back-top-default {
+		transition: none;
+	}
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+	.zx-scroll-loading-text {
+		color: #000;
+		font-weight: bold;
+	}
+	
+	.zx-scroll-no-more {
+		color: #000;
+		font-weight: bold;
+	}
+	
+	.zx-scroll-empty-text {
+		color: #000;
+		font-weight: bold;
+	}
+	
+	.zx-scroll-back-top-default {
+		background: #000;
+		border: 2px solid #fff;
+	}
 }
 </style>

@@ -1,12 +1,18 @@
 {
-  "name": "zx-space",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "name": "@tanzhenxing/zx-space",
+  "version": "1.0.1",
+  "description": "ZxSpace 间距组件 - 为多个组件之间提供统一的间距布局",
+  "main": "zx-space.vue",
+  "keywords": [
+    "vue",
+    "vue3",
+    "component",
+    "space",
+    "layout",
+    "间距",
+    "布局",
+    "uni-app"
+  ],
+  "author": "tanzhenxing",
+  "license": "MIT"
 }

@@ -1,17 +1,36 @@
 {
   "name": "@tanzhenxing/zx-scroll",
-  "version": "1.0.1",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "version": "1.0.8",
+  "description": "基于uni-app scroll-view的增强滚动组件",
+  "main": "zx-scroll.vue",
   "keywords": [
+    "uni-app",
+    "vue3",
+    "javascript",
     "scroll",
-    "滚动",
-    "滚动组件",
-    "滚动功能"
+    "virtual-list",
+    "pull-refresh",
+    "load-more",
+    "performance"
   ],
   "author": "tanzhenxing",
-  "license": "ISC",
-  "description": "zx-scroll 滚动组件，用于实现滚动功能"
+  "license": "MIT",
+  "homepage": "https://zxui.org/components/scroll",
+  "files": [
+    "zx-scroll.vue",
+    "README.md"
+  ],
+  "uni-app": {
+    "platforms": [
+      "h5",
+      "mp-weixin",
+      "mp-alipay",
+      "mp-baidu",
+      "mp-toutiao",
+      "mp-qq",
+      "mp-360",
+      "app-plus",
+      "app-nvue"
+    ]
+  }
 }

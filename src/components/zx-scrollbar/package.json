@@ -1,12 +1,16 @@
 {
-  "name": "zx-scrollbar",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "name": "@tanzhenxing/zx-scrollbar",
+  "version": "1.0.1",
+  "description": "zx-scrollbar 滚动条组件，支持垂直和水平滚动，自定义滚动条样式",
+  "main": "zx-scrollbar.vue",
+  "keywords": [
+    "scrollbar",
+    "scroll",
+    "vue3",
+    "uni-app",
+    "component"
+  ],
+  "author": "tanzhenxing",
+  "license": "MIT",
+  "homepage": "https://zxui.org/components/scrollbar"
 }

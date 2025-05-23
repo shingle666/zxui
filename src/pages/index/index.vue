@@ -299,6 +299,18 @@
         type="primary"
         @click="handleClick('/pages/components/watermark/index')"
       ></zx-text>
+
+      <zx-text
+        text="zx-scrollbar 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/scrollbar/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-space 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/space/index')"
+      ></zx-text>
       
     </view>
   </view>

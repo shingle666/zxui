@@ -312,6 +312,18 @@
 			"style": {
 				"navigationBarTitleText": "zx-watermark 测试页面"
 			}
+		},
+		{
+			"path": "pages/components/scrollbar/index",
+			"style": {
+				"navigationBarTitleText": "zx-scrollbar 滚动条组件"
+			}
+		},
+		{
+			"path": "pages/components/space/index",
+			"style": {
+				"navigationBarTitleText": "zx-space 间距组件"
+			}
 		}
 		
 	],
