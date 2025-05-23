@@ -234,6 +234,12 @@
 			"style": {
 				"navigationBarTitleText": "zx-code 源代码展示组件"
 			}
+		},
+		{
+			"path": "pages/components/switch/index",
+			"style": {
+				"navigationBarTitleText": "zx-switch 开关组件"
+			}
 		}
 	],
 	"globalStyle": {

@@ -1,12 +1,12 @@
 {
-  "name": "zx-switch",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-switch",
+  "version": "1.0.4",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["uniapp", "switch", "开关", "组件"],
+  "author": "tanzhenxing",
   "license": "ISC",
-  "description": ""
+  "description": "一个基于uniapp的开关组件"
 }

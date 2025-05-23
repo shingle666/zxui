@@ -228,6 +228,12 @@
         @click="handleClick('/pages/components/code/index')"
       ></zx-text>
 
+      <zx-text
+        text="zx-switch 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/switch/index')"
+      ></zx-text>
+
     </view>
   </view>
 </template>
