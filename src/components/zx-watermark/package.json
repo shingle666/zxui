@@ -1,0 +1,19 @@
+{
+  "name": "@tanzhenxing/zx-watermark",
+  "version": "1.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "watermark",
+    "水印",
+    "水印组件",
+    "水印插件",
+    "水印库"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "水印组件",
+  "homepage": "https://zxui.org/components/watermark"
+}

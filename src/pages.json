@@ -1,10 +1,4 @@
 {
-	"easycom": {
-		"autoscan": true,
-		"custom": {
-			"^zx-(.*)": "@/components/zx-$1/zx-$1.vue"
-		}
-	},
 	"pages": [
 		{
 			"path": "pages/index/index",
@@ -221,6 +215,24 @@
 			"path": "pages/components/upload/index",
 			"style": {
 				"navigationBarTitleText": "zx-upload 上传组件"
+			}
+		},
+		{
+			"path": "pages/components/upload/test",
+			"style": {
+				"navigationBarTitleText": "Upload 测试页面"
+			}
+		},
+		{
+			"path": "pages/components/navbar/index",
+			"style": {
+				"navigationBarTitleText": "zx-navbar 导航栏组件"
+			}
+		},
+		{
+			"path": "pages/components/code/index",
+			"style": {
+				"navigationBarTitleText": "zx-code 源代码展示组件"
 			}
 		}
 	],

@@ -216,6 +216,18 @@
         @click="handleClick('/pages/components/upload/index')"
       ></zx-text>
 
+      <zx-text
+        text="zx-navbar 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/navbar/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-code 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/code/index')"
+      ></zx-text>
+
     </view>
   </view>
 </template>

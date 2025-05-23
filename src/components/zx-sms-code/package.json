@@ -1,0 +1,16 @@
+{
+  "name": "@tanzhenxing/zx-sms-code",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "验证码",
+    "倒计时",
+    "组件"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "验证码倒计时组件"
+}

@@ -1,0 +1,41 @@
+{
+  "name": "@tanzhenxing/zx-navbar",
+  "version": "1.0.1",
+  "description": "一个功能强大、高度可定制的 uni-app 导航栏组件，支持透明背景、沉浸式模式、主题切换等高级功能",
+  "main": "zx-navbar.vue",
+  "keywords": [
+    "navbar",
+    "navigation",
+    "uni-app",
+    "vue3",
+    "composition-api",
+    "dark-mode",
+    "immersive",
+    "transparent"
+  ],
+  "author": "tanzhenxing",
+  "license": "MIT",
+  "homepage": "https://zxui.org/components/navbar",
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "files": [
+    "zx-navbar.vue",
+    "README.md"
+  ],
+  "changelog": {
+    "2.0.0": [
+      "全面重构，使用 Composition API",
+      "新增副标题支持",
+      "新增透明背景和沉浸式模式",
+      "新增主题模式支持",
+      "改进样式系统和用户体验",
+      "增强无障碍支持",
+      "优化性能和代码质量"
+    ],
+    "1.0.0": [
+      "初始版本发布",
+      "基础导航栏功能"
+    ]
+  }
+}
