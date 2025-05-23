@@ -180,6 +180,42 @@
         @click="handleClick('/pages/components/editor/index')"
       ></zx-text>
 
+      <zx-text
+        text="zx-tabs 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/tabs/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-title 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/title/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-swiper 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/swiper/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-html 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/html/index')"
+      ></zx-text>
+      
+      <zx-text
+        text="zx-slider 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/slider/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-upload 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/upload/index')"
+      ></zx-text>
+
     </view>
   </view>
 </template>

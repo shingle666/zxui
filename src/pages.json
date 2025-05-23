@@ -1,9 +1,16 @@
 {
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"^zx-(.*)": "@/components/zx-$1/zx-$1.vue"
+		}
+	},
 	"pages": [
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app组件"
+				"navigationBarTitleText": "首页",
+				"enablePullDownRefresh": false
 			}
 		},
 		{
@@ -179,12 +186,49 @@
 			"style": {
 				"navigationBarTitleText": "editor 富文本编辑器组件"
 			}
+		},
+		{
+			"path": "pages/components/tabs/index",
+			"style": {
+				"navigationBarTitleText": "tabs 标签页组件"
+			}
+		},
+		{
+			"path": "pages/components/title/index",
+			"style": {
+				"navigationBarTitleText": "title 标题组件"
+			}
+		},
+		{
+			"path": "pages/components/swiper/index",
+			"style": {
+				"navigationBarTitleText": "swiper 轮播图组件"
+			}
+		},
+		{
+			"path": "pages/components/html/index",
+			"style": {
+				"navigationBarTitleText": "zx-html 富文本解析组件"
+			}
+		},
+		{
+			"path": "pages/components/slider/index",
+			"style": {
+				"navigationBarTitleText": "zx-slider 滑动选择器组件"
+			}
+		},
+		{
+			"path": "pages/components/upload/index",
+			"style": {
+				"navigationBarTitleText": "zx-upload 上传组件"
+			}
 		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app组件",
+		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
-	}
+	},
+	"uniIdRouter": {}
 }

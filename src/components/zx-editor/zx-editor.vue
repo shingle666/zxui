@@ -273,7 +273,7 @@
 			@tap="graceEditorAddItem">&#xe61b;</text>
 		</view>
 		<view>
-			<zx-iphone-bottom></zx-iphone-bottom>
+			<zx-safe-bottom></zx-safe-bottom>
 		</view>
 	</view>
 	

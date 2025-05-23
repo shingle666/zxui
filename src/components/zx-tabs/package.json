@@ -1,11 +1,18 @@
 {
   "name": "@tanzhenxing/zx-tabs",
-  "version": "1.0.2",
-  "description": "",
+  "version": "1.0.8",
+  "description": "zx-tabs 标签页组件",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "tanzhenxing",
-  "license": "ISC"
+  "license": "ISC",
+  "keywords": [
+    "zx-tabs",
+    "uni-app",
+    "标签页",
+    "标签页组件",
+    "标签页功能"
+  ]
 }

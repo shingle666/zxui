@@ -1,12 +1,18 @@
 {
-  "name": "zx-image",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-image",
+  "version": "1.0.3",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "zx-image",
+    "uni-app",
+    "图片",
+    "图片组件",
+    "图片功能"
+  ],
+  "author": "zhengxing",
   "license": "ISC",
-  "description": ""
+  "description": "zx-image 图片组件"
 }

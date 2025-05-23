@@ -1,12 +1,18 @@
 {
-  "name": "zx-form-item",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-form-item",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "zx-form-item",
+    "uni-app",
+    "表单项",
+    "表单项组件",
+    "表单项功能"
+  ],
+  "author": "zhengxing",
   "license": "ISC",
-  "description": ""
+  "description": "zx-form-item 表单项组件"
 }

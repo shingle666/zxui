@@ -91,15 +91,11 @@
 
 <style scoped>
 	.zx-label__box {
-		/* #ifndef APP-NVUE */
 		box-sizing: border-box;
-		/* #endif */
 	}
 
 	.zx-label__full {
 		flex: 1;
-		/* #ifndef APP-NVUE */
 		width: 100%;
-		/* #endif */
 	}
 </style>

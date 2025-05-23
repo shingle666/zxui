@@ -1,0 +1,31 @@
+{
+  "name": "@tanzhenxing/zx-html",
+  "version": "1.0.5",
+  "description": "基于 mp-html 封装的 Vue 3 富文本解析组件，支持全端渲染",
+  "main": "zx-html.vue",
+  "keywords": [
+    "vue3",
+    "html",
+    "富文本",
+    "解析",
+    "组件",
+    "mp-html",
+    "uni-app",
+    "小程序",
+    "H5",
+    "App"
+  ],
+  "author": {
+    "name": "tanzhenxing",
+    "email": "tanzhenxing@outlook.com"
+  },
+  "license": "MIT",
+  "homepage": "https://zxui.org/components/html",
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "files": [
+    "zx-html.vue",
+    "README.md"
+  ]
+}

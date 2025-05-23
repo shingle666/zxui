@@ -1,0 +1,18 @@
+{
+  "name": "@tanzhenxing/zx-live-pusher",
+  "version": "1.0.0",
+  "description": "`zx-live-pusher` 是基于 uni-app 官方 `live-pusher` 组件封装的增强版直播推流组件，提供了更简单的接口和更丰富的功能。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-live-pusher",
+    "uni-app",
+    "直播推流",
+    "直播推流组件",
+    "直播推流功能"
+  ],
+  "author": "zhengxing",
+  "license": "ISC"
+}

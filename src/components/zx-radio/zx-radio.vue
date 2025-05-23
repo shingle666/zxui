@@ -1,103 +1,83 @@
 <template>
 	<view 
-		class="zx-flex zx-row zx-nowrap zx-align-items-center" 
-		@tap.stop="changeStatus"
-		:class="{'zx-radio--disabled': disabled}"
+		class="zx-radio-container"
+		@tap.stop="onRadioTap"
+		:class="{ 'zx-radio--disabled': disabled }"
 	>
-		<zx-icon 
-			v-if="status" 
-			name="checkbox-mark" 
-			:class="checkedClass" 
-			:style="checkedIconStyle"
-		></zx-icon>
-		<zx-icon
-			v-else 
-			name="circle"
-			:class="defaultClass" 
-			:style="uncheckedIconStyle"
-		></zx-icon>
-		<view class="zx-radio-label zx-flex1">
+		<!-- 单选框图标 -->
+		<view class="zx-radio-icon" :style="radioIconStyle">
+			<view v-if="isChecked" class="zx-radio-dot" :style="radioDotStyle"></view>
+		</view>
+		
+		<!-- 标签内容 -->
+		<view class="zx-radio-label" v-if="$slots.default">
 			<slot></slot>
 		</view>
 	</view>
 </template>
 
 <script setup>
-import { ref, watch, onMounted, computed, defineProps, defineEmits, defineExpose, getCurrentInstance } from 'vue';
+import { ref, watch, onMounted, computed, defineProps, defineEmits, defineExpose, getCurrentInstance, inject, onUnmounted } from 'vue';
+
+// 定义组件名称
+const componentName = 'zx-radio';
 
 // 获取组件实例
 const { proxy } = getCurrentInstance();
 
+// 从 radio-group 注入数据
+const radioGroup = inject('radioGroup', null);
+
 const props = defineProps({
-	// 单选框的值，当使用radio-group时必须
+	// radio 标识，当 radio 选中时，radio-group 的 change 事件会携带 radio 的 value
 	value: {
 		type: [String, Number, Boolean],
 		default: ''
 	},
-	// 单选框的标签，如果没有提供value，则label作为value使用
-	label: {
-		type: [String, Number, Boolean],
-		default: ''
-	},
-	// 组件大小
-	size: {
-		type: Number,
-		default: 38
-	},
-	// 未选中状态的样式类
-	defaultClass: {
-		type: Array,
-		default: () => ['zx-color-gray']
-	},
-	// 是否选中
+	// 当前是否选中
 	checked: {
 		type: Boolean,
 		default: false
-	},
-	// 选中状态的样式类
-	checkedClass: {
-		type: Array,
-		default: () => ['zx-bg-primary', 'zx-color-white']
-	},
-	// 传递给事件的额外参数
-	parameter: {
-		type: Array,
-		default: () => []
-	},
-	// 组件id，用于zx-label组件的for属性
-	id: {
-		type: String,
-		default: ''
 	},
 	// 是否禁用
 	disabled: {
 		type: Boolean,
 		default: false
 	},
-	// 选中状态下的背景颜色
-	activeBackgroundColor: {
+	// radio 的颜色，同 css 的 color
+	color: {
 		type: String,
-		default: ''
+		default: '#007AFF'
 	},
-	// 未选中状态下的背景颜色
+	// radio 默认的背景颜色
 	backgroundColor: {
 		type: String,
 		default: '#ffffff'
 	},
-	// 未选中状态下的边框颜色
+	// radio 默认的边框颜色
 	borderColor: {
 		type: String,
 		default: '#d1d1d1'
 	},
-	// 选中状态下的边框颜色
+	// radio 选中时的背景颜色，优先级大于 color 属性
+	activeBackgroundColor: {
+		type: String,
+		default: ''
+	},
+	// radio 选中时的边框颜色
 	activeBorderColor: {
 		type: String,
 		default: ''
 	},
-	// 图标颜色
+	// radio 的图标颜色
 	iconColor: {
 		type: String,
 		default: '#ffffff'
+	},
+	// 组件大小
+	size: {
+		type: [String, Number],
+		default: 20
 	},
 	// 组件名称，用于表单验证
 	name: {
@@ -106,155 +86,147 @@ const props = defineProps({
 	}
 });
 
-const emit = defineEmits(['change', 'update:checked']);
-const status = ref(false);
+const emit = defineEmits(['change']);
 
-// 计算自定义背景色
-const customBgColor = computed(() => {
-	return props.activeBackgroundColor || '';
+// 内部选中状态
+const innerChecked = ref(false);
+
+// 计算是否选中
+const isChecked = computed(() => {
+	if (radioGroup) {
+		// 在 radio-group 中，通过比较 value 来判断是否选中
+		return radioGroup.modelValue === getValue();
+	}
+	return innerChecked.value;
 });
 
-// 选中状态的图标样式
-const checkedIconStyle = computed(() => {
+// 获取当前 radio 的值
+const getValue = () => {
+	return props.value !== '' ? props.value : '';
+};
+
+// 计算单选框图标样式
+const radioIconStyle = computed(() => {
+	const size = typeof props.size === 'number' ? props.size + 'px' : props.size;
+	const bgColor = isChecked.value 
+		? (props.activeBackgroundColor || props.color)
+		: props.backgroundColor;
+	const borderColor = isChecked.value 
+		? (props.activeBorderColor || props.color)
+		: props.borderColor;
+	
 	return {
-		width: props.size + 'rpx',
-		height: props.size + 'rpx',
-		lineHeight: props.size + 'rpx',
-		fontSize: (props.size - 15) + 'rpx',
-		borderRadius: props.size + 'rpx',
-		backgroundColor: customBgColor.value,
-		color: props.iconColor,
-		borderColor: props.activeBorderColor,
-		textAlign: 'center'
+		width: size,
+		height: size,
+		backgroundColor: bgColor,
+		borderColor: borderColor,
+		borderWidth: '1px',
+		borderStyle: 'solid',
+		borderRadius: '50%',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		position: 'relative',
+		boxSizing: 'border-box'
 	};
 });
 
-// 未选中状态的图标样式
-const uncheckedIconStyle = computed(() => {
+// 计算选中点的样式
+const radioDotStyle = computed(() => {
+	const size = typeof props.size === 'number' ? props.size : parseInt(props.size);
+	const dotSize = Math.max(4, size * 0.4) + 'px';
+	
 	return {
-		width: props.size + 'rpx',
-		height: props.size + 'rpx',
-		lineHeight: (props.size + 2) + 'rpx',
-		fontSize: (props.size - 8) + 'rpx',
-		backgroundColor: props.backgroundColor,
-		borderColor: props.borderColor,
-		textAlign: 'center'
+		width: dotSize,
+		height: dotSize,
+		backgroundColor: props.iconColor,
+		borderRadius: '50%'
 	};
 });
 
-// 监听checked属性的变化
+// 监听 checked 属性变化
 watch(() => props.checked, (newVal) => {
-	status.value = newVal;
-});
-
-// 相当于created生命周期
-onMounted(() => {
-	status.value = props.checked;
-	
-	// 如果父组件是zx-label，则需要将自己注册到父组件中
-	const parent = getParent('zx-label');
-	if (parent && parent.childrens) {
-		parent.childrens.value.push(proxy);
+	if (!radioGroup) {
+		innerChecked.value = newVal;
 	}
-	
-	// 如果父组件是zx-radio-group，则需要将自己注册到父组件中
-	const radioGroup = getParent('zx-radio-group');
-	if (radioGroup && radioGroup.registerChild) {
-		radioGroup.registerChild(proxy);
-	}
-});
+}, { immediate: true });
 
-// 改变状态方法
-const changeStatus = () => {
+// 点击处理
+const onRadioTap = () => {
 	if (props.disabled) return;
 	
-	status.value = !status.value;
-	
-	// 如果是在radio-group中，需要通知radio-group更新选中项
-	const radioGroup = getParent('zx-radio-group');
-	if (radioGroup && radioGroup.unCheckedOther) {
-		radioGroup.unCheckedOther(proxy);
-	} else {
-		// 单独使用时，直接触发change事件
-		emit('change', [status.value, props.parameter, getValue()]);
-		emit('update:checked', status.value);
-	}
-};
-
-// 获取值，优先使用value，其次使用label
-const getValue = () => {
-	return props.value !== '' ? props.value : props.label;
-};
-
-// 获取父组件
-const getParent = (name) => {
-	let parent = proxy.$parent;
-	while (parent) {
-		if (parent.$options && parent.$options.name === name) {
-			return parent;
+	if (radioGroup) {
+		// 在 radio-group 中，只能选中，不能取消选中
+		if (!isChecked.value) {
+			radioGroup.changeValue(getValue());
 		}
-		parent = parent.$parent;
+	} else {
+		// 单独使用时，允许切换
+		innerChecked.value = !innerChecked.value;
+		emit('change', { value: getValue(), checked: innerChecked.value });
 	}
-	return null;
 };
 
-// 提供给zx-label调用的方法
-const labelClick = () => {
-	changeStatus();
-};
+// 组件挂载时注册到 radio-group
+onMounted(() => {
+	if (radioGroup && radioGroup.addChild) {
+		radioGroup.addChild(proxy);
+	}
+});
+
+// 组件卸载时从 radio-group 中移除
+onUnmounted(() => {
+	if (radioGroup && radioGroup.removeChild) {
+		radioGroup.removeChild(proxy);
+	}
+});
 
 // 暴露给父组件的方法和属性
 defineExpose({
-	labelClick,
 	name: props.name,
-	checked: status,
-	value: getValue()
+	value: getValue(),
+	checked: isChecked,
+	// 提供给 radio-group 调用的方法
+	updateChecked: (checked) => {
+		if (!radioGroup) {
+			innerChecked.value = checked;
+		}
+	}
 });
 </script>
 
 <style scoped>
-/* 基础布局样式 */
-.zx-flex {
+.zx-radio-container {
 	display: flex;
-}
-
-.zx-row {
-	flex-direction: row;
-}
-
-.zx-nowrap {
-	flex-wrap: nowrap;
-}
-
-.zx-align-items-center {
 	align-items: center;
+	cursor: pointer;
+	user-select: none;
 }
 
-.zx-flex1 {
-	flex: 1;
-}
-
-/* 颜色相关样式 */
-.zx-color-gray {
-	color: #909399;
-}
-
-.zx-bg-primary {
-	background-color: #2979ff;
-}
-
-.zx-color-white {
-	color: #ffffff;
-}
-
-/* 组件特定样式 */
-.zx-radio-label {
-	margin-left: 15rpx;
-	flex: 1;
-}
-
-.zx-radio--disabled {
+.zx-radio-container.zx-radio--disabled {
 	opacity: 0.6;
 	cursor: not-allowed;
+}
+
+.zx-radio-icon {
+	flex-shrink: 0;
+	transition: all 0.2s ease;
+}
+
+.zx-radio-label {
+	margin-left: 8px;
+	flex: 1;
+	font-size: 14px;
+	line-height: 1.4;
+}
+
+.zx-radio-dot {
+	transition: all 0.2s ease;
+}
+
+/* 禁用状态下的指针事件 */
+.zx-radio--disabled .zx-radio-icon,
+.zx-radio--disabled .zx-radio-label {
+	pointer-events: none;
 }
 </style>

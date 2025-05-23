@@ -1,6 +1,5 @@
 # zx-label 组件
 
-> 该组件主要用于zx-radio、zx-checkbox、zx-switch、zx-button组件外层，实现类似uni-app的label功能。
 
 ## 介绍
 
@@ -9,7 +8,6 @@
 **注意事项：**
 - `for` 属性优先级高于内部控件
 - 内部有多个控件时默认触发第一个控件
-- 目前可以绑定的控件有：`zx-button`、`zx-checkbox`、`zx-radio`、`zx-switch`
 
 ## 属性说明
 

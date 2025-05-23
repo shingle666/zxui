@@ -1,0 +1,16 @@
+{
+  "name": "@tanzhenxing/zx-richtext",
+  "version": "1.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vue3",
+    "富文本",
+    "解析",
+    "组件"],
+  "author": "tanzhenxing",
+  "license": "MIT",
+  "description": "富文本解析组件，支持全端渲染"
+}

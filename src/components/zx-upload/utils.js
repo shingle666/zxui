@@ -117,7 +117,6 @@ export function chooseFile({
             })
             // #endif
             // #ifdef H5
-            // 需要hx2.9.9以上才支持uni.chooseFile
             uni.chooseFile({
                 count: multiple ? maxCount : 1,
                 type: accept,
@@ -138,7 +137,6 @@ export function chooseFile({
 			})
 			// #endif
 			// #ifdef H5
-			// 需要hx2.9.9以上才支持uni.chooseFile
 			uni.chooseFile({
 				count: multiple ? maxCount : 1,
 				type: 'all',

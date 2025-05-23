@@ -17,14 +17,13 @@ zx-loadmore 组件主要用于列表滚动到底部时，标识加载状态的�
 ### 引入组件
 
 ```vue
-<script>
+<script setup>
 import zxLoadmore from '@/components/zx-loadmore/zx-loadmore.vue'
-export default {
-  components: {
-    zxLoadmore
-  }
-}
 </script>
+
+<template>
+  <zx-loadmore :status="loadStatus" @loadmore="loadMore"></zx-loadmore>
+</template>
 ```
 
 ### 基本用法
@@ -41,26 +40,21 @@ export default {
   </view>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      loadStatus: 'loadmore' // 可选值：loadmore-加载前状态，loading-加载中状态，nomore-没有更多状态，failed-加载失败状态
-    }
-  },
-  methods: {
-    loadMore() {
-      this.loadStatus = 'loading'
-      
-      // 模拟加载数据
-      setTimeout(() => {
-        // 根据加载结果设置状态
-        // this.loadStatus = 'nomore' // 没有更多了
-        this.loadStatus = 'loadmore' // 还有更多
-        // this.loadStatus = 'failed' // 加载失败
-      }, 2000)
-    }
-  }
+<script setup>
+import { ref } from 'vue'
+
+const loadStatus = ref('loadmore') // 可选值：loadmore-加载前状态，loading-加载中状态，nomore-没有更多状态，failed-加载失败状态
+
+function loadMore() {
+  loadStatus.value = 'loading'
+  
+  // 模拟加载数据
+  setTimeout(() => {
+    // 根据加载结果设置状态
+    // loadStatus.value = 'nomore' // 没有更多了
+    loadStatus.value = 'loadmore' // 还有更多
+    // loadStatus.value = 'failed' // 加载失败
+  }, 2000)
 }
 </script>
 ```
@@ -93,6 +87,9 @@ export default {
 <!-- 显示虚线 -->
 <zx-loadmore status="nomore" line dashed></zx-loadmore>
 
+<!-- 自定义线条颜色 -->
+<zx-loadmore status="nomore" line lineColor="#ff9900"></zx-loadmore>
+
 <!-- 使用粗点 -->
 <zx-loadmore status="nomore" isDot></zx-loadmore>
 
@@ -123,11 +120,12 @@ export default {
 | failedText | String | 加载失败，点击重试 | 加载失败的提示语 |
 | isDot | Boolean | false | 在"没有更多"状态下，是否显示粗点 |
 | iconColor | String | #b7b7b7 | 加载中图标的颜色 |
+| lineColor | String | #E6E8EB | 线条颜色，line为true时生效 |
 | marginTop | String/Number | 10rpx | 上边距 |
 | marginBottom | String/Number | 10rpx | 下边距 |
 | height | String/Number | auto | 高度，单位px |
 | line | Boolean | false | 是否显示左边分割线 |
-| dashed | Boolean | false | 是否虚线，true-虚线，false-实线 |
+| dashed | Boolean | false | 是否虚线，true-虚线，false-实线，line为true时生效 |
 | clickable | Boolean | true | 是否可点击 |
 | errorColor | String | #ff6767 | 失败状态文字颜色 |
 | customStyle | Object | {} | 自定义样式，对象形式 |
@@ -144,3 +142,4 @@ export default {
 2. 组件适配了暗黑模式，在暗黑模式下会自动调整颜色
 3. 加载失败状态下，可以点击文字重新触发加载事件
 4. 通过 customStyle 属性可以传入更多自定义样式，实现更灵活的定制
+5. 组件使用了组合式API (Composition API)，示例代码也已更新为组合式API风格
