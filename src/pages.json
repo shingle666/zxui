@@ -240,6 +240,12 @@
 			"style": {
 				"navigationBarTitleText": "zx-switch 开关组件"
 			}
+		},
+		{
+			"path": "pages/components/textarea/index",
+			"style": {
+				"navigationBarTitleText": "zx-textarea 文本框组件"
+			}
 		}
 	],
 	"globalStyle": {
