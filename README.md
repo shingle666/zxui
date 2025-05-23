@@ -1,1 +1,297 @@
-#uni-vite
+# zxUI
+
+<p align="center">
+  <img src="https://zxui.org/img/zxui-logo.png" width="160" alt="zxUI Logo">
+</p>
+
+<p align="center">
+  <strong>多平台快速开发的UI框架</strong>
+</p>
+
+<p align="center">
+  <a href="https://zxui.org">官方网站</a> |
+  <a href="https://github.com/tanzhenxing/zxui">GitHub</a> |
+  <a href="https://zxui.org/components/intro.html">组件文档</a>
+</p>
+
+## 📖 项目介绍
+
+zxUI是一套基于Vue.js 3.0和TypeScript开发的uni-app跨平台UI框架，提供了丰富的组件、布局及界面库。它能够显著提升您的前端开发效率，实现一套代码多端发布。
+
+### 🎯 项目愿景
+
+zxUI的取名来源于开发者姓名拼音"zhen xing"的首字母缩写 + UI，寓意着为开发者提供真正实用的UI解决方案。
+
+## ✨ 主要特性
+
+- 🌍 **跨平台支持** - 支持iOS、Android、H5、微信小程序等14个平台
+- 🚀 **高性能** - 基于Vue 3.0和TypeScript，性能优异
+- 📱 **响应式设计** - 适配各种屏幕尺寸
+- 🎨 **丰富组件** - 提供100+精美UI组件
+- 📚 **详细文档** - 完善的使用文档和示例
+- 🔧 **易于使用** - 支持按需引入，开箱即用
+- 🎯 **主题定制** - 支持自定义主题和样式
+
+## 🚀 支持平台
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://zxui.org/static/img/android.png" width="40"><br>
+      <strong>Android</strong>
+    </td>
+    <td align="center">
+      <img src="https://zxui.org/static/img/ios.png" width="40"><br>
+      <strong>iOS</strong>
+    </td>
+    <td align="center">
+      <img src="https://zxui.org/static/img/h5.png" width="40"><br>
+      <strong>H5</strong>
+    </td>
+    <td align="center">
+      <img src="https://zxui.org/static/img/wechat.png" width="40"><br>
+      <strong>微信小程序</strong>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://zxui.org/static/img/qq.png" width="40"><br>
+      <strong>QQ小程序</strong>
+    </td>
+    <td align="center">
+      <img src="https://zxui.org/static/img/baidu.png" width="40"><br>
+      <strong>百度小程序</strong>
+    </td>
+    <td align="center">
+      <img src="https://zxui.org/static/img/alipay.png" width="40"><br>
+      <strong>支付宝小程序</strong>
+    </td>
+    <td align="center">
+      <img src="https://zxui.org/static/img/toutiao.png" width="40"><br>
+      <strong>头条小程序</strong>
+    </td>
+  </tr>
+</table>
+
+## 📦 安装
+
+### npm 安装
+```bash
+npm install @tanzhenxing/zxui
+```
+
+### yarn 安装
+```bash
+yarn add @tanzhenxing/zxui
+```
+
+## 🔧 快速开始
+
+### 1. 自动导入（推荐）
+
+在 `pages.json` 中增加 easycom 自动加载配置：
+
+```json
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^zx-(.*)": "@tanzhenxing/zxui/components/zx-$1/zx-$1.vue"
+    }
+  }
+}
+```
+
+### 2. 手动导入
+
+```vue
+<template>
+  <view>
+    <zx-button type="primary">确认</zx-button>
+  </view>
+</template>
+
+<script>
+import ZxButton from '@tanzhenxing/zxui/components/zx-button/zx-button.vue'
+
+export default {
+  components: {
+    ZxButton
+  }
+}
+</script>
+```
+
+### 3. 全局样式
+
+在 `main.js` 中引入样式：
+
+```javascript
+import 'zxui/theme.scss'
+```
+
+## 🎨 组件库
+
+### 基础组件
+- **Button 按钮** - 支持多种类型、大小、形状的按钮
+- **Icon 图标** - 丰富的图标库
+- **Text 文本** - 文本显示组件
+- **Image 图片** - 图片展示组件
+- **Line 分割线** - 分割线组件
+
+### 布局组件
+- **Layout 布局** - 栅格布局系统
+- **Grid 宫格** - 宫格布局
+- **Cell 单元格** - 列表单元格
+- **Sticky 吸顶** - 吸顶布局
+- **Safe Bottom 安全底部** - 底部安全区域
+
+### 表单组件
+- **Form 表单** - 表单容器
+- **Input 输入框** - 文本输入
+- **Textarea 文本域** - 多行文本输入
+- **Radio 单选框** - 单选组件
+- **Checkbox 复选框** - 多选组件
+- **Switch 开关** - 开关选择器
+- **Slider 滑动选择器** - 滑动选择
+- **Picker 选择器** - 各种选择器
+- **Upload 上传** - 文件上传
+
+### 数据展示
+- **Table 表格** - 数据表格
+- **Tree 树形控件** - 树形数据展示
+- **Progress 进度条** - 进度显示
+- **Rate 评分** - 星级评分
+- **Tag 标签** - 标签组件
+- **Badge 徽标** - 徽标数字
+- **Avatar 头像** - 用户头像
+- **Card 卡片** - 卡片容器
+
+### 反馈组件
+- **Alert 警告** - 警告提示
+- **Dialog 对话框** - 对话框
+- **Toast 轻提示** - 消息提示
+- **Loading 加载** - 加载状态
+- **Skeleton 骨架屏** - 骨架屏加载
+- **Empty 空状态** - 空数据状态
+
+### 导航组件
+- **Navbar 导航栏** - 顶部导航
+- **Tabs 标签页** - 标签页切换
+- **Tabbar 底部导航** - 底部导航栏
+- **Menu 菜单** - 导航菜单
+- **Breadcrumb 面包屑** - 面包屑导航
+- **Steps 步骤条** - 步骤指示器
+
+### 高级组件
+- **Calendar 日历** - 日历组件
+- **Date Picker 日期选择器** - 日期时间选择
+- **Color Picker 颜色选择器** - 颜色选择
+- **Swiper 轮播图** - 图片轮播
+- **Watermark 水印** - 水印组件
+- **Qrcode 二维码** - 二维码生成
+
+## 🛠️ 工具库
+
+zxUI还提供了丰富的JavaScript工具函数，所有方法均挂载在 `$zx` 对象下：
+
+```javascript
+// 在JS中使用
+uni.$zx.trim(' hello world ') // 去除空格
+
+// 在模板中使用
+{{ $zx.trim(str, 'all') }}
+```
+
+### 常用工具
+- **trim** - 去除空格
+- **random** - 随机数生成
+- **test** - 规则校验
+- **route** - 路由跳转
+- **time** - 时间格式化
+- **color** - 颜色转换
+- **getRect** - 节点信息获取
+
+## 📱 平台兼容性
+
+| 组件 | H5 | 微信小程序 | 支付宝小程序 | 百度小程序 | 头条小程序 | QQ小程序 | App |
+|------|----|---------|-----------|---------|---------|---------|----|
+| 基础组件 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| 表单组件 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| 反馈组件 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| 导航组件 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| 高级组件 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+
+## 💻 开发
+
+### 本地开发
+
+```bash
+# 克隆项目
+git clone https://github.com/tanzhenxing/zxui.git
+
+# 安装依赖
+npm install
+
+# 启动H5开发服务器
+npm run dev:h5
+
+# 启动微信小程序开发
+npm run dev:mp-weixin
+
+# 构建生产版本
+npm run build:h5
+```
+
+### 目录结构
+
+```
+uni-vite/
+├── src/                    # 源代码目录
+│   ├── components/         # UI组件库
+│   │   ├── zx-button/     # 按钮组件
+│   │   ├── zx-input/      # 输入框组件
+│   │   └── ...            # 其他组件
+│   ├── pages/             # 演示页面
+│   ├── utils/             # 工具函数
+│   ├── styles/            # 样式文件
+│   └── main.js            # 入口文件
+├── dist/                  # 构建输出目录
+├── package.json           # 项目配置
+└── README.md             # 项目说明
+```
+
+## 📚 文档
+
+- [官方文档](https://zxui.org)
+- [组件文档](https://zxui.org/components/intro.html)
+- [快速上手](https://zxui.org/components/quickstart.html)
+- [更新日志](https://zxui.org/components/changelog.html)
+
+## 🤝 贡献
+
+我们欢迎所有的贡献，请阅读 [贡献指南](https://github.com/tanzhenxing/zxui/blob/main/CONTRIBUTING.md) 来了解如何参与项目开发。
+
+### 贡献者
+
+感谢所有为zxUI做出贡献的开发者们！
+
+## 📄 版权信息
+
+本项目基于 [MIT](https://github.com/tanzhenxing/zxui/blob/main/LICENSE) 协议发布。
+
+**注意：** 请勿将zxUI应用到非法领域，如涉及赌博、暴力等方面。如因此产生纠纷或法律问题，zxUI不承担任何责任。
+
+## 🌟 Star 历史
+
+[![Star History Chart](https://api.star-history.com/svg?repos=tanzhenxing/zxui&type=Date)](https://star-history.com/#tanzhenxing/zxui&Date)
+
+## 📞 联系我们
+
+- 官方网站：[https://zxui.org](https://zxui.org)
+- GitHub：[https://github.com/tanzhenxing/zxui](https://github.com/tanzhenxing/zxui)
+- 邮箱：support@zxui.org
+
+---
+
+Copyright © 2022 - 2025 zxui.org All Rights Reserved.
