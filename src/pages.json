@@ -8,6 +8,12 @@
 			}
 		},
 		{
+			"path": "pages/components/statistic/index",
+			"style": {
+				"navigationBarTitleText": "Statistic 统计数值组件"
+			}
+		},
+		{
 			"path": "pages/components/text/index",
 			"style": {
 				"navigationBarTitleText": "Text 文本组件"
@@ -260,6 +266,12 @@
 			}
 		},
 		{
+			"path": "pages/components/tag/check",
+			"style": {
+				"navigationBarTitleText": "check标签组件"
+			}
+		},
+		{
 			"path": "pages/components/descriptions/index",
 			"style": {
 				"navigationBarTitleText": "zx-descriptions 描述列表组件"
@@ -302,6 +314,18 @@
 			}
 		},
 		{
+			"path": "pages/components/affix/test",
+			"style": {
+				"navigationBarTitleText": "zx-affix 测试页面"
+			}
+		},
+		{
+			"path": "pages/components/affix/example",
+			"style": {
+				"navigationBarTitleText": "zx-affix 示例页面"
+			}
+		},
+		{
 			"path": "pages/components/watermark/index",
 			"style": {
 				"navigationBarTitleText": "zx-watermark 水印组件"
@@ -320,18 +344,178 @@
 			}
 		},
 		{
+			"path": "pages/components/rate/index",
+			"style": {
+				"navigationBarTitleText": "zx-rate 评分组件"
+			}
+		},
+		{
+			"path": "pages/components/scroll/index",
+			"style": {
+				"navigationBarTitleText": "zx-scroll 滚动组件"
+			}
+		},
+		{
 			"path": "pages/components/space/index",
 			"style": {
 				"navigationBarTitleText": "zx-space 间距组件"
 			}
+		},
+		{
+			"path": "pages/components/sticky/index",
+			"style": {
+				"navigationBarTitleText": "zx-sticky 吸顶组件"
+			}
+		},
+		{
+			"path": "pages/components/sticky/demo",
+			"style": {
+				"navigationBarTitleText": "zx-sticky 吸顶组件"
+			}
+		},
+		{
+			"path": "pages/components/breadcrumb/index",
+			"style": {
+				"navigationBarTitleText": "zx-breadcrumb 组件"
+			}
+		},
+		{
+			"path": "pages/components/combox/index",
+			"style": {
+				"navigationBarTitleText": "zx-combox 组合框组件"
+			}
+		},
+		{
+			"path": "pages/components/countdown/index",
+			"style": {
+				"navigationBarTitleText": "zx-countdown 组件"
+			}
+		},
+		{
+			"path": "pages/components/fab/index",
+			"style": {
+				"navigationBarTitleText": "zx-fab 组件"
+			}
+		},
+		{
+			"path": "pages/components/fav/index",
+			"style": {
+				"navigationBarTitleText": "zx-fav 组件"
+			}
+		},
+		{
+			"path": "pages/components/anchor/index",
+			"style": {
+				"navigationBarTitleText": "zx-anchor 组件"
+			}
+		},
+		{
+			"path": "pages/components/color-picker/index",
+			"style": {
+				"navigationBarTitleText": "zx-color-picker 组件"
+			}
+		},
+		{
+			"path": "pages/components/collapse/index",
+			"style": {
+				"navigationBarTitleText": "zx-collapse 组件"
+			}
+		},
+		{
+			"path": "pages/components/date-picker/index",
+			"style": {
+				"navigationBarTitleText": "zx-date-picker 组件"
+			}
+		},
+		{
+			"path": "pages/components/dialog/index",
+			"style": {
+				"navigationBarTitleText": "zx-dialog 组件"
+			}
+		},
+		{
+			"path": "pages/components/drawer/index",
+			"style": {
+				"navigationBarTitleText": "zx-drawer 组件"
+			}
+		},
+		{
+			"path": "pages/components/dropdown/index",
+			"style": {
+				"navigationBarTitleText": "zx-dropdown 下拉菜单组件"
+			}
+		},
+		{
+			"path": "pages/components/menu/index",
+			"style": {
+				"navigationBarTitleText": "zx-menu 菜单组件"
+			}
+		},
+		{
+			"path": "pages/components/popconfirm/index",
+			"style": {
+				"navigationBarTitleText": "zx-popconfirm 气泡确认框组件"
+			}
+		},
+		{
+			"path": "pages/components/popover/index",
+			"style": {
+				"navigationBarTitleText": "Popover 弹出框组件"
+			}
+		},
+		{
+			"path": "pages/components/file/index",
+			"style": {
+				"navigationBarTitleText": "zx-file 文件操作组件"
+			}
+		},
+		{
+			"path": "pages/components/file/demo",
+			"style": {
+				"navigationBarTitleText": "zx-file 文件上传案例"
+			}
+		},
+		{
+			"path": "pages/components/section/index",
+			"style": {
+				"navigationBarTitleText": "zx-section 标题栏组件"
+			}
+		},
+		{
+			"path": "pages/components/segmented/index",
+			"style": {
+				"navigationBarTitleText": "zx-segmented 分段控制器"
+			}
+		},
+		{
+			"path": "pages/components/select/index",
+			"style": {
+				"navigationBarTitleText": "zx-select 选择器"
+			}
+		},
+		{
+			"path": "pages/components/select-v2/index",
+			"style": {
+				"navigationBarTitleText": "zx-select-v2 虚拟化选择器"
+			}
+		},
+		{
+			"path": "pages/components/steps/index",
+			"style": {
+				"navigationBarTitleText": "zx-steps 步骤条组件"
+			}
+		},
+		{
+			"path": "pages/components/zx-swipe-action/index",
+			"style": {
+				"navigationBarTitleText": "ZxSwipeAction 滑动操作组件"
+			}
 		}
-		
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "zxui",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
-	},
-	"uniIdRouter": {}
+	}
 }

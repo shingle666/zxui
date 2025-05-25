@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-backtop",
-  "version": "1.0.7",
+  "version": "1.0.1",
   "description": "uni-app 回到顶部组件，参考 Element Plus Backtop 组件优化",
   "main": "index.js",
   "scripts": {

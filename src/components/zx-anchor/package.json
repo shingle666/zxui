@@ -1,0 +1,17 @@
+{
+  "name": "@tanzhenxing/zx-anchor",
+  "version": "1.0.2",
+  "description": "锚点组件，用于快速定位页面内容",
+  "main": "index.js",
+  "keywords": [
+    "anchor",
+    "navigation",
+    "vue",
+    "component"
+  ],
+  "author": "tanzhenxing",
+  "license": "MIT",
+  "dependencies": {
+    "@tanzhenxing/zx-anchor-link": "^1.0.2"
+  }
+}

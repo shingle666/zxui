@@ -120,7 +120,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import ZxDatePicker from './zx-date-picker.vue';
 
 // 基础日期
 const basicDate = ref('');

@@ -93,7 +93,7 @@
 			<text>结尾内容 {{ i }} - 测试底部固钉</text>
 		</view>
 
-		<!-- 测试日志 */
+		<!-- 测试日志 -->
 		<view class="log-panel">
 			<text class="log-title">测试日志</text>
 			<view class="log-content">

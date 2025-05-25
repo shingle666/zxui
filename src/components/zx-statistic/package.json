@@ -1,0 +1,15 @@
+{
+  "name": "@tanzhenxing/zx-statistic",
+  "version": "1.0.0",
+  "description": "统计数值组件",
+  "main": "zx-statistic.vue",
+  "author": "tanzhenxing",
+  "license": "MIT",
+  "keywords": [
+    "zx-statistic",
+    "统计数值组件",
+    "统计数值",
+    "统计数值组件"
+  ]
+  
+} 

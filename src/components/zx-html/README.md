@@ -1,6 +1,6 @@
 # zx-html 富文本解析组件
 
-基于 [mp-html](https://github.com/jin-yufeng/mp-html) 封装的 Vue 3 富文本解析组件，支持全端渲染（H5、小程序、App），功能强大且轻量化。
+uniapp 富文本解析组件，支持全端渲染（H5、小程序、App），功能强大且轻量化。
 
 ## 特性
 
@@ -14,10 +14,10 @@
 
 ## 安装
 
-组件基于 mp-html v2.5.1，需要先安装依赖：
+组件基于 zx-node，需要先安装依赖：
 
 ```bash
-npm install mp-html@^2.5.1
+npm install zx-node
 ```
 
 ## 基本使用
@@ -247,7 +247,6 @@ const loadMore = () => {
 ## 更新日志
 
 ### v1.0.3
-- 基于 mp-html v2.5.1
 - 增加完整的属性和事件支持
 - 优化组件结构和样式
 - 完善文档和示例
@@ -255,9 +254,3 @@ const loadMore = () => {
 ## 协议
 
 MIT License
-
-## 相关链接
-
-- [mp-html 官方文档](https://jin-yufeng.github.io/mp-html/)
-- [mp-html GitHub](https://github.com/jin-yufeng/mp-html)
-- [插件市场](https://ext.dcloud.net.cn/plugin?id=805) 

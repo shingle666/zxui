@@ -1,9 +1,9 @@
 <template>
-  <div class="zx-color-picker" :class="colorPickerClass">
-    <div
+  <view class="zx-color-picker" :class="colorPickerClass">
+    <view
       class="zx-color-picker__trigger"
       :class="{ 'is-disabled': disabled }"
-      @click="handleTriggerClick"
+      @tap="handleTriggerClick"
       :tabindex="disabled ? -1 : tabindex"
       @keydown.enter="handleTriggerClick"
       @focus="handleFocus"
@@ -11,246 +11,166 @@
       :aria-label="ariaLabel"
       :id="id"
     >
-      <div class="zx-color-picker__color" v-if="modelValue">
-        <div
+      <view class="zx-color-picker__color" v-if="modelValue">
+        <view
           class="zx-color-picker__color-inner"
           :style="{ backgroundColor: displayedColor }"
-        ></div>
-      </div>
-      <div class="zx-color-picker__empty" v-else>
+        ></view>
+      </view>
+      <view class="zx-color-picker__empty" v-else>
         <svg class="zx-color-picker__icon" viewBox="0 0 1024 1024">
           <path d="M981.184 160.096C837.568 139.456 678.848 128 512 128S186.432 139.456 42.816 160.096C15.296 267.808 0 386.848 0 512s15.296 244.192 42.816 351.904C186.432 884.544 345.152 896 512 896s325.568-11.456 469.184-32.096C1008.704 756.192 1024 637.152 1024 512s-15.296-244.192-42.816-351.904zM384 672l-128-128 128-128 45.248 45.248L364.512 512l64.736 50.752L384 672z m256 0l-45.248-109.248L659.488 512l-64.736-50.752L640 352l128 128-128 192z"></path>
         </svg>
-      </div>
-      <div class="zx-color-picker__icon">
+      </view>
+      <view class="zx-color-picker__icon">
         <svg viewBox="0 0 1024 1024">
           <path d="M831.872 340.864L512 652.672 192.128 340.864a30.592 30.592 0 000 42.752L481.664 771.136a42.496 42.496 0 0060.672 0L831.872 383.616a30.592 30.592 0 000-42.752z"></path>
         </svg>
-      </div>
-    </div>
+      </view>
+    </view>
     
     <!-- 弹出框 -->
-    <teleport to="body" v-if="teleported">
-      <transition name="zx-color-picker-fade">
-        <div
-          v-if="showPanel"
-          class="zx-color-picker__panel"
-          :class="popperClass"
-          :style="panelStyle"
-          @click.stop
-        >
-          <div class="zx-color-picker__panel-inner">
-            <!-- 颜色选择区域 -->
-            <div class="zx-color-picker__saturation-panel">
-              <div
-                class="zx-color-picker__saturation"
-                :style="{ backgroundColor: hueColor }"
-                @mousedown="handleSaturationMouseDown"
-                ref="saturationRef"
-              >
-                <div class="zx-color-picker__white"></div>
-                <div class="zx-color-picker__black"></div>
-                <div
-                  class="zx-color-picker__cursor"
-                  :style="saturationCursorStyle"
-                >
-                  <div></div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- 色相滑块 -->
-            <div class="zx-color-picker__controls">
-              <div
-                class="zx-color-picker__hue-slider"
-                @mousedown="handleHueMouseDown"
-                ref="hueRef"
-              >
-                <div
-                  class="zx-color-picker__hue-cursor"
-                  :style="hueCursorStyle"
-                ></div>
-              </div>
-              
-              <!-- 透明度滑块 -->
-              <div
-                v-if="showAlpha"
-                class="zx-color-picker__alpha-slider"
-                @mousedown="handleAlphaMouseDown"
-                ref="alphaRef"
-              >
-                <div class="zx-color-picker__alpha-bar" :style="alphaBarStyle">
-                  <div
-                    class="zx-color-picker__alpha-cursor"
-                    :style="alphaCursorStyle"
-                  ></div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- 预定义颜色 -->
-            <div v-if="predefine && predefine.length" class="zx-color-picker__predefine">
-              <div class="zx-color-picker__predefine-color-list">
-                <div
-                  v-for="(color, index) in predefine"
-                  :key="index"
-                  class="zx-color-picker__predefine-color"
-                  @click="handlePredefineClick(color)"
-                >
-                  <div
-                    class="zx-color-picker__predefine-color-inner"
-                    :style="{ backgroundColor: color }"
-                  ></div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- 输入框区域 -->
-            <div class="zx-color-picker__input">
-              <input
-                v-model="inputValue"
-                @blur="handleInputBlur"
-                @keyup.enter="handleInputEnter"
-                class="zx-color-picker__input-inner"
-              />
-            </div>
-            
-            <!-- 按钮区域 -->
-            <div class="zx-color-picker__btns">
-              <button
-                class="zx-color-picker__btn zx-color-picker__btn--clear"
-                @click="handleClear"
-              >
-                清空
-              </button>
-              <button
-                class="zx-color-picker__btn zx-color-picker__btn--confirm"
-                @click="handleConfirm"
-              >
-                确定
-              </button>
-            </div>
-          </div>
-        </div>
-      </transition>
-    </teleport>
-    
-    <!-- 非传送模式下的弹出框 -->
-    <transition name="zx-color-picker-fade" v-else>
-      <div
-        v-if="showPanel"
+    <view v-if="showPanel" class="zx-color-picker__panel-container" @tap="handleClickOutside">
+      <view
         class="zx-color-picker__panel"
         :class="popperClass"
-        @click.stop
+        :style="panelStyle"
+        @tap.stop
       >
-        <!-- 与上面相同的内容 -->
-        <div class="zx-color-picker__panel-inner">
+        <view class="zx-color-picker__panel-inner">
           <!-- 颜色选择区域 -->
-          <div class="zx-color-picker__saturation-panel">
-            <div
+          <view class="zx-color-picker__saturation-panel">
+            <view
               class="zx-color-picker__saturation"
               :style="{ backgroundColor: hueColor }"
-              @mousedown="handleSaturationMouseDown"
-              ref="saturationRef"
+              @touchstart.stop.prevent="handleSaturationTouch"
+              @touchmove.stop.prevent="handleSaturationTouch"
             >
-              <div class="zx-color-picker__white"></div>
-              <div class="zx-color-picker__black"></div>
-              <div
+              <view class="zx-color-picker__white"></view>
+              <view class="zx-color-picker__black"></view>
+              <view
                 class="zx-color-picker__cursor"
                 :style="saturationCursorStyle"
               >
-                <div></div>
-              </div>
-            </div>
-          </div>
+                <view></view>
+              </view>
+            </view>
+          </view>
           
           <!-- 色相滑块 -->
-          <div class="zx-color-picker__controls">
-            <div
+          <view class="zx-color-picker__controls">
+            <view
               class="zx-color-picker__hue-slider"
-              @mousedown="handleHueMouseDown"
-              ref="hueRef"
+              @touchstart.stop.prevent="handleHueTouch"
+              @touchmove.stop.prevent="handleHueTouch"
             >
-              <div
+              <view
                 class="zx-color-picker__hue-cursor"
                 :style="hueCursorStyle"
-              ></div>
-            </div>
+              ></view>
+            </view>
             
             <!-- 透明度滑块 -->
-            <div
+            <view
               v-if="showAlpha"
               class="zx-color-picker__alpha-slider"
-              @mousedown="handleAlphaMouseDown"
-              ref="alphaRef"
+              @touchstart.stop.prevent="handleAlphaTouch"
+              @touchmove.stop.prevent="handleAlphaTouch"
             >
-              <div class="zx-color-picker__alpha-bar" :style="alphaBarStyle">
-                <div
+              <view class="zx-color-picker__alpha-bar" :style="alphaBarStyle">
+                <view
                   class="zx-color-picker__alpha-cursor"
                   :style="alphaCursorStyle"
-                ></div>
-              </div>
-            </div>
-          </div>
+                ></view>
+              </view>
+            </view>
+          </view>
           
           <!-- 预定义颜色 -->
-          <div v-if="predefine && predefine.length" class="zx-color-picker__predefine">
-            <div class="zx-color-picker__predefine-color-list">
-              <div
+          <view v-if="predefine && predefine.length" class="zx-color-picker__predefine">
+            <view class="zx-color-picker__predefine-color-list">
+              <view
                 v-for="(color, index) in predefine"
                 :key="index"
                 class="zx-color-picker__predefine-color"
-                @click="handlePredefineClick(color)"
+                @tap="handlePredefineClick(color)"
               >
-                <div
+                <view
                   class="zx-color-picker__predefine-color-inner"
                   :style="{ backgroundColor: color }"
-                ></div>
-              </div>
-            </div>
-          </div>
+                ></view>
+              </view>
+            </view>
+          </view>
           
           <!-- 输入框区域 -->
-          <div class="zx-color-picker__input">
+          <view class="zx-color-picker__input">
             <input
               v-model="inputValue"
               @blur="handleInputBlur"
-              @keyup.enter="handleInputEnter"
+              @confirm="handleInputEnter"
               class="zx-color-picker__input-inner"
+              type="text"
             />
-          </div>
+          </view>
           
           <!-- 按钮区域 -->
-          <div class="zx-color-picker__btns">
+          <view class="zx-color-picker__btns">
             <button
               class="zx-color-picker__btn zx-color-picker__btn--clear"
-              @click="handleClear"
+              @tap="handleClear"
             >
               清空
             </button>
             <button
               class="zx-color-picker__btn zx-color-picker__btn--confirm"
-              @click="handleConfirm"
+              @tap="handleConfirm"
             >
               确定
             </button>
-          </div>
-        </div>
-      </div>
-    </transition>
-  </div>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
 </template>
 
 <script setup>
-import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, nextTick } from 'vue'
 
-const props = withDefaults(defineProps(), {
-  disabled: false,
-  size: 'default',
-  showAlpha: false,
-  validateEvent: true,
-  tabindex: 0,
-  teleported: true
+const props = defineProps({
+  modelValue: String,
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  size: {
+    type: String,
+    default: 'default'
+  },
+  showAlpha: {
+    type: Boolean,
+    default: false
+  },
+  validateEvent: {
+    type: Boolean,
+    default: true
+  },
+  tabindex: {
+    type: Number,
+    default: 0
+  },
+  colorFormat: {
+    type: String,
+    default: ''
+  },
+  predefine: {
+    type: Array,
+    default: () => []
+  },
+  popperClass: String,
+  ariaLabel: String,
+  id: String
 })
 
 // Emits 定义
@@ -267,11 +187,6 @@ const showPanel = ref(false)
 const currentColor = ref({ hue: 0, saturation: 0, value: 0, alpha: 1 })
 const inputValue = ref('')
 const panelStyle = ref({})
-
-// DOM 引用
-const saturationRef = ref()
-const hueRef = ref()
-const alphaRef = ref()
 
 // 计算属性
 const colorPickerClass = computed(() => {
@@ -334,7 +249,7 @@ const parseColor = (color) => {
     const match = color.match(/rgba?\(([^)]+)\)/)
     if (match) {
       const values = match[1].split(',').map(v => parseFloat(v.trim()))
-      const [r, g, b, a = 1] = values.map(v => v / 255)
+      const [r, g, b, a = 1] = values.map((v, i) => i < 3 ? v / 255 : v)
       
       const max = Math.max(r, g, b)
       const min = Math.min(r, g, b)
@@ -454,66 +369,115 @@ const handleBlur = (event) => {
   emit('blur', event)
 }
 
-const handleSaturationMouseDown = (event) => {
+// 纯计算的触摸事件处理 - 不使用DOM
+const handleSaturationTouch = (event) => {
   if (props.disabled) return
   
-  const rect = saturationRef.value.getBoundingClientRect()
-  const handleMouseMove = (e) => {
-    const saturation = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100))
-    const value = Math.max(0, Math.min(100, 100 - ((e.clientY - rect.top) / rect.height) * 100))
-    
-    currentColor.value = { ...currentColor.value, saturation, value }
-    updateActiveColor()
+  // 确保event对象有效
+  if (!event || !event.touches || !event.touches[0]) return
+  
+  const touch = event.touches[0]
+  const touchTarget = event.currentTarget || event.target
+  
+  // 计算相对位置（0-1范围）
+  // 由于不同平台差异，我们直接使用事件对象中的相对定位属性
+  // 如果没有，则使用估算值
+  let saturationPercent = 0
+  let valuePercent = 0
+  
+  if (touch.offsetX !== undefined && touchTarget.offsetWidth) {
+    saturationPercent = touch.offsetX / touchTarget.offsetWidth
+    valuePercent = 1 - (touch.offsetY / touchTarget.offsetHeight)
+  } else if (touch.pageX !== undefined && touchTarget.clientWidth) {
+    // 基于事件对象的属性计算相对位置
+    // 这里我们使用简单的比例计算，没有使用getBoundingClientRect
+    const boxWidth = touchTarget.clientWidth || 100
+    const boxHeight = touchTarget.clientHeight || 100
+    saturationPercent = Math.min(Math.max(0, touch.pageX / boxWidth), 1)
+    valuePercent = Math.min(Math.max(0, 1 - (touch.pageY / boxHeight)), 1)
+  } else {
+    // 最简单的情况，直接用触摸点在屏幕上的位置除以100作为百分比
+    // 这个方法不够精确，但确保在任何平台都能工作
+    saturationPercent = Math.min(Math.max(0, touch.clientX / 300), 1)
+    valuePercent = Math.min(Math.max(0, 1 - (touch.clientY / 300)), 1)
   }
   
-  const handleMouseUp = () => {
-    document.removeEventListener('mousemove', handleMouseMove)
-    document.removeEventListener('mouseup', handleMouseUp)
+  // 限制在0-1范围内并转换为百分比
+  saturationPercent = Math.max(0, Math.min(1, saturationPercent))
+  valuePercent = Math.max(0, Math.min(1, valuePercent))
+  
+  // 更新颜色
+  currentColor.value = { 
+    ...currentColor.value, 
+    saturation: Math.round(saturationPercent * 100),
+    value: Math.round(valuePercent * 100)
   }
   
-  document.addEventListener('mousemove', handleMouseMove)
-  document.addEventListener('mouseup', handleMouseUp)
-  handleMouseMove(event)
+  updateActiveColor()
 }
 
-const handleHueMouseDown = (event) => {
+const handleHueTouch = (event) => {
   if (props.disabled) return
   
-  const rect = hueRef.value.getBoundingClientRect()
-  const handleMouseMove = (e) => {
-    const hue = Math.max(0, Math.min(360, ((e.clientX - rect.left) / rect.width) * 360))
-    currentColor.value = { ...currentColor.value, hue }
-    updateActiveColor()
+  if (!event || !event.touches || !event.touches[0]) return
+  
+  const touch = event.touches[0]
+  const touchTarget = event.currentTarget || event.target
+  
+  // 计算相对位置（0-1范围）
+  let huePercent = 0
+  
+  if (touch.offsetX !== undefined && touchTarget.offsetWidth) {
+    huePercent = touch.offsetX / touchTarget.offsetWidth
+  } else if (touch.pageX !== undefined && touchTarget.clientWidth) {
+    const boxWidth = touchTarget.clientWidth || 100
+    huePercent = Math.min(Math.max(0, touch.pageX / boxWidth), 1)
+  } else {
+    huePercent = Math.min(Math.max(0, touch.clientX / 300), 1)
   }
   
-  const handleMouseUp = () => {
-    document.removeEventListener('mousemove', handleMouseMove)
-    document.removeEventListener('mouseup', handleMouseUp)
+  // 限制在0-1范围内并转换为色相值(0-360)
+  huePercent = Math.max(0, Math.min(1, huePercent))
+  
+  // 更新颜色
+  currentColor.value = { 
+    ...currentColor.value, 
+    hue: Math.round(huePercent * 360)
   }
   
-  document.addEventListener('mousemove', handleMouseMove)
-  document.addEventListener('mouseup', handleMouseUp)
-  handleMouseMove(event)
+  updateActiveColor()
 }
 
-const handleAlphaMouseDown = (event) => {
+const handleAlphaTouch = (event) => {
   if (props.disabled || !props.showAlpha) return
   
-  const rect = alphaRef.value.getBoundingClientRect()
-  const handleMouseMove = (e) => {
-    const alpha = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
-    currentColor.value = { ...currentColor.value, alpha }
-    updateActiveColor()
+  if (!event || !event.touches || !event.touches[0]) return
+  
+  const touch = event.touches[0]
+  const touchTarget = event.currentTarget || event.target
+  
+  // 计算相对位置（0-1范围）
+  let alphaPercent = 0
+  
+  if (touch.offsetX !== undefined && touchTarget.offsetWidth) {
+    alphaPercent = touch.offsetX / touchTarget.offsetWidth
+  } else if (touch.pageX !== undefined && touchTarget.clientWidth) {
+    const boxWidth = touchTarget.clientWidth || 100
+    alphaPercent = Math.min(Math.max(0, touch.pageX / boxWidth), 1)
+  } else {
+    alphaPercent = Math.min(Math.max(0, touch.clientX / 300), 1)
   }
   
-  const handleMouseUp = () => {
-    document.removeEventListener('mousemove', handleMouseMove)
-    document.removeEventListener('mouseup', handleMouseUp)
+  // 限制在0-1范围内
+  alphaPercent = Math.max(0, Math.min(1, alphaPercent))
+  
+  // 更新颜色
+  currentColor.value = { 
+    ...currentColor.value, 
+    alpha: alphaPercent
   }
   
-  document.addEventListener('mousemove', handleMouseMove)
-  document.addEventListener('mouseup', handleMouseUp)
-  handleMouseMove(event)
+  updateActiveColor()
 }
 
 const handlePredefineClick = (color) => {
@@ -594,18 +558,10 @@ watch(() => props.modelValue, (newVal) => {
 
 // 点击外部关闭面板
 const handleClickOutside = (event) => {
-  if (showPanel.value && !event.target?.closest('.zx-color-picker')) {
+  if (showPanel.value) {
     showPanel.value = false
   }
 }
-
-onMounted(() => {
-  document.addEventListener('click', handleClickOutside)
-})
-
-onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside)
-})
 
 // 暴露方法和属性
 defineExpose({
@@ -624,15 +580,15 @@ defineExpose({
   
   &--large {
     .zx-color-picker__trigger {
-      width: 44px;
-      height: 44px;
+      width: 88rpx;
+      height: 88rpx;
     }
   }
   
   &--small {
     .zx-color-picker__trigger {
-      width: 24px;
-      height: 24px;
+      width: 48rpx;
+      height: 48rpx;
     }
   }
   
@@ -646,49 +602,42 @@ defineExpose({
 
 .zx-color-picker__trigger {
   position: relative;
-  width: 32px;
-  height: 32px;
-  border: 1px solid #dcdfe6;
-  border-radius: 4px;
-  cursor: pointer;
+  width: 64rpx;
+  height: 64rpx;
+  border: 1rpx solid #dcdfe6;
+  border-radius: 8rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: border-color 0.3s;
   
-  &:hover {
+  &:active {
     border-color: #409eff;
-  }
-  
-  &:focus {
-    outline: none;
-    border-color: #409eff;
-    box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.2);
   }
 }
 
 .zx-color-picker__color {
-  width: 20px;
-  height: 20px;
-  border-radius: 2px;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 4rpx;
   position: relative;
 }
 
 .zx-color-picker__color-inner {
   width: 100%;
   height: 100%;
-  border-radius: 2px;
+  border-radius: 4rpx;
   background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), 
                    linear-gradient(-45deg, #ccc 25%, transparent 25%), 
                    linear-gradient(45deg, transparent 75%, #ccc 75%), 
                    linear-gradient(-45deg, transparent 75%, #ccc 75%);
-  background-size: 8px 8px;
-  background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+  background-size: 16rpx 16rpx;
+  background-position: 0 0, 0 8rpx, 8rpx -8rpx, -8rpx 0px;
 }
 
 .zx-color-picker__empty {
-  width: 20px;
-  height: 20px;
+  width: 40rpx;
+  height: 40rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -696,45 +645,53 @@ defineExpose({
 
 .zx-color-picker__icon {
   position: absolute;
-  right: 4px;
+  right: 8rpx;
   top: 50%;
   transform: translateY(-50%);
-  width: 12px;
-  height: 12px;
+  width: 24rpx;
+  height: 24rpx;
   fill: #a8abb2;
 }
 
-.zx-color-picker__panel {
-  position: absolute;
-  top: 100%;
+.zx-color-picker__panel-container {
+  position: fixed;
+  top: 0;
   left: 0;
-  z-index: 2000;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.zx-color-picker__panel {
   background: #fff;
-  border: 1px solid #e4e7ed;
-  border-radius: 4px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  padding: 16px;
-  margin-top: 8px;
-  width: 280px;
+  border: 1rpx solid #e4e7ed;
+  border-radius: 8rpx;
+  box-shadow: 0 4rpx 24rpx 0 rgba(0, 0, 0, 0.1);
+  padding: 32rpx;
+  width: 560rpx;
+  max-width: 90%;
 }
 
 .zx-color-picker__panel-inner {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 24rpx;
 }
 
 .zx-color-picker__saturation-panel {
   width: 100%;
-  height: 180px;
+  height: 360rpx;
 }
 
 .zx-color-picker__saturation {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 4px;
-  cursor: crosshair;
+  border-radius: 8rpx;
 }
 
 .zx-color-picker__white {
@@ -744,7 +701,7 @@ defineExpose({
   right: 0;
   bottom: 0;
   background: linear-gradient(to right, #fff, transparent);
-  border-radius: 4px;
+  border-radius: 8rpx;
 }
 
 .zx-color-picker__black {
@@ -754,20 +711,19 @@ defineExpose({
   right: 0;
   bottom: 0;
   background: linear-gradient(to bottom, transparent, #000);
-  border-radius: 4px;
+  border-radius: 8rpx;
 }
 
 .zx-color-picker__cursor {
   position: absolute;
-  width: 8px;
-  height: 8px;
-  margin: -4px;
+  width: 16rpx;
+  height: 16rpx;
+  margin: -8rpx;
   border-radius: 50%;
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
+  border: 4rpx solid #fff;
+  box-shadow: 0 0 0 2rpx rgba(0, 0, 0, 0.3);
   
-  > div {
+  > view {
     width: 100%;
     height: 100%;
     border-radius: 50%;
@@ -777,45 +733,42 @@ defineExpose({
 .zx-color-picker__controls {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 16rpx;
 }
 
 .zx-color-picker__hue-slider {
   position: relative;
   width: 100%;
-  height: 12px;
+  height: 24rpx;
   background: linear-gradient(to right, 
     #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, 
     #00f 67%, #f0f 83%, #f00 100%);
-  border-radius: 6px;
-  cursor: pointer;
+  border-radius: 12rpx;
 }
 
 .zx-color-picker__hue-cursor {
   position: absolute;
-  top: -2px;
-  width: 16px;
-  height: 16px;
-  margin-left: -8px;
+  top: -4rpx;
+  width: 32rpx;
+  height: 32rpx;
+  margin-left: -16rpx;
   background: #fff;
-  border: 2px solid #fff;
+  border: 4rpx solid #fff;
   border-radius: 50%;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
+  box-shadow: 0 0 0 2rpx rgba(0, 0, 0, 0.3);
 }
 
 .zx-color-picker__alpha-slider {
   position: relative;
   width: 100%;
-  height: 12px;
-  border-radius: 6px;
-  cursor: pointer;
+  height: 24rpx;
+  border-radius: 12rpx;
   background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), 
                    linear-gradient(-45deg, #ccc 25%, transparent 25%), 
                    linear-gradient(45deg, transparent 75%, #ccc 75%), 
                    linear-gradient(-45deg, transparent 75%, #ccc 75%);
-  background-size: 8px 8px;
-  background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+  background-size: 16rpx 16rpx;
+  background-position: 0 0, 0 8rpx, 8rpx -8rpx, -8rpx 0px;
 }
 
 .zx-color-picker__alpha-bar {
@@ -824,20 +777,19 @@ defineExpose({
   left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 6px;
+  border-radius: 12rpx;
 }
 
 .zx-color-picker__alpha-cursor {
   position: absolute;
-  top: -2px;
-  width: 16px;
-  height: 16px;
-  margin-left: -8px;
+  top: -4rpx;
+  width: 32rpx;
+  height: 32rpx;
+  margin-left: -16rpx;
   background: #fff;
-  border: 2px solid #fff;
+  border: 4rpx solid #fff;
   border-radius: 50%;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
+  box-shadow: 0 0 0 2rpx rgba(0, 0, 0, 0.3);
 }
 
 .zx-color-picker__predefine {
@@ -847,24 +799,23 @@ defineExpose({
 .zx-color-picker__predefine-color-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 16rpx;
 }
 
 .zx-color-picker__predefine-color {
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
-  cursor: pointer;
-  border: 1px solid #e4e7ed;
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid #e4e7ed;
   transition: transform 0.2s;
   background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), 
                    linear-gradient(-45deg, #ccc 25%, transparent 25%), 
                    linear-gradient(45deg, transparent 75%, #ccc 75%), 
                    linear-gradient(-45deg, transparent 75%, #ccc 75%);
-  background-size: 8px 8px;
-  background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+  background-size: 16rpx 16rpx;
+  background-position: 0 0, 0 8rpx, 8rpx -8rpx, -8rpx 0px;
   
-  &:hover {
+  &:active {
     transform: scale(1.1);
   }
 }
@@ -872,7 +823,7 @@ defineExpose({
 .zx-color-picker__predefine-color-inner {
   width: 100%;
   height: 100%;
-  border-radius: 4px;
+  border-radius: 8rpx;
 }
 
 .zx-color-picker__input {
@@ -881,35 +832,30 @@ defineExpose({
 
 .zx-color-picker__input-inner {
   width: 100%;
-  height: 32px;
-  padding: 0 8px;
-  border: 1px solid #dcdfe6;
-  border-radius: 4px;
-  font-size: 14px;
+  height: 64rpx;
+  padding: 0 16rpx;
+  border: 1rpx solid #dcdfe6;
+  border-radius: 8rpx;
+  font-size: 28rpx;
   transition: border-color 0.3s;
-  
-  &:focus {
-    outline: none;
-    border-color: #409eff;
-  }
+  box-sizing: border-box;
 }
 
 .zx-color-picker__btns {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
+  gap: 16rpx;
 }
 
 .zx-color-picker__btn {
-  padding: 6px 12px;
-  border: 1px solid #dcdfe6;
-  border-radius: 4px;
+  padding: 12rpx 24rpx;
+  border: 1rpx solid #dcdfe6;
+  border-radius: 8rpx;
   background: #fff;
-  cursor: pointer;
-  font-size: 12px;
+  font-size: 24rpx;
   transition: all 0.3s;
   
-  &:hover {
+  &:active {
     border-color: #409eff;
     color: #409eff;
   }
@@ -919,21 +865,10 @@ defineExpose({
     border-color: #409eff;
     color: #fff;
     
-    &:hover {
+    &:active {
       background: #66b1ff;
       border-color: #66b1ff;
     }
   }
-}
-
-// 过渡动画
-.zx-color-picker-fade-enter-active,
-.zx-color-picker-fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.zx-color-picker-fade-enter-from,
-.zx-color-picker-fade-leave-to {
-  opacity: 0;
 }
 </style>

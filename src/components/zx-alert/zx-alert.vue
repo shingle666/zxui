@@ -1,7 +1,6 @@
 <template>
-  <transition name="zx-alert-fade">
+  <zx-transition :show="visible" name="fade">
     <view 
-      v-show="visible"
       :class="[
         'zx-alert',
         `zx-alert--${type}`,
@@ -53,7 +52,7 @@
         </template>
       </view>
     </view>
-  </transition>
+  </zx-transition>
 </template>
 
 <script setup>
@@ -73,11 +72,11 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  // 类型: success, warning, info, error
+  // 类型: primary, success, warning, info, error
   type: {
     type: String,
     default: 'info',
-    validator: (value) => ['success', 'warning', 'info', 'error'].includes(value)
+    validator: (value) => ['primary', 'success', 'warning', 'info', 'error'].includes(value)
   },
   // 描述性文本
   description: {
@@ -122,6 +121,7 @@ const visible = ref(true);
 
 // 类型对应的图标
 const typeIconMap = {
+  primary: 'checkmark-circle-fill',
   success: 'checkmark-circle-fill',
   warning: 'warning-fill',
   info: 'information-circle-fill',
@@ -153,6 +153,7 @@ const iconColor = computed(() => {
   }
   
   const colorMap = {
+    primary: '#409eff',
     success: '#67c23a',
     warning: '#e6a23c',
     info: '#909399',
@@ -197,10 +198,21 @@ defineExpose({
   opacity: 1;
   display: flex;
   align-items: flex-start;
+  justify-content: center;
   transition: opacity 0.2s;
 
+  &--primary {
+    background-color: #ecf5ff;
+    border-left: 6rpx solid #409eff;
+
+    &.zx-alert--dark {
+      background-color: #409eff;
+      border-left: none;
+    }
+  }
+
   &--success {
-    background-color: #f0f9ff;
+    background-color: #f0f9eb;
     border-left: 6rpx solid #67c23a;
 
     &.zx-alert--dark {
@@ -241,14 +253,16 @@ defineExpose({
 
   &--center {
     justify-content: center;
+    text-align: center;
   }
 
   &--with-description {
-    align-items: flex-start;
+    align-items: center;
     padding: 32rpx;
 
     .zx-alert__icon {
       margin-right: 20rpx;
+      margin-top: 4rpx;
 
       &.is-big {
         font-size: 56rpx;
@@ -257,18 +271,31 @@ defineExpose({
   }
 
   &--dark {
+    color: #fff;
+    
     .zx-alert__title,
     .zx-alert__description {
       color: #fff;
     }
+    
+    .zx-alert__close-text {
+      color: #fff;
+    }
+  }
+  
+  &--with-icon {
+    padding-left: 32rpx;
   }
 }
 
 .zx-alert__icon {
   font-size: 48rpx;
   width: 48rpx;
-  margin-right: 20rpx;
+  margin-right: 16rpx;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &.is-big {
     font-size: 56rpx;
@@ -320,19 +347,5 @@ defineExpose({
   .zx-alert--dark & {
     color: #fff;
   }
-}
-
-/* 动画效果 */
-.zx-alert-fade-enter-active {
-  transition: opacity 0.2s;
-}
-
-.zx-alert-fade-leave-active {
-  transition: opacity 0.2s;
-}
-
-.zx-alert-fade-enter-from,
-.zx-alert-fade-leave-to {
-  opacity: 0;
 }
 </style>

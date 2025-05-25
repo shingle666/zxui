@@ -12,7 +12,7 @@
         type="primary"
         @click="handleClick('/pages/components/icon/index')"
       ></zx-text>
-      
+
       <zx-text
         text="zx-avatar 组件使用示例"
         type="primary"
@@ -24,7 +24,7 @@
         type="primary"
         @click="handleClick('/pages/components/button/index')"
       ></zx-text>
-      
+
       <zx-text
         text="zx-badge 组件使用示例"
         type="primary"
@@ -72,7 +72,7 @@
         type="primary"
         @click="handleClick('/pages/components/safe-bottom/index')"
       ></zx-text>
-      
+
       <zx-text
         text="zx-transition 组件使用示例"
         type="primary"
@@ -125,19 +125,19 @@
         type="primary"
         @click="handleClick('/pages/components/card/index')"
       ></zx-text>
-      
+
       <zx-text
         text="zx-autocomplete 组件使用示例"
         type="primary"
         @click="handleClick('/pages/components/autocomplete/index')"
       ></zx-text>
-      
+
       <zx-text
         text="zx-checkbox 组件使用示例"
         type="primary"
         @click="handleClick('/pages/components/checkbox/index')"
       ></zx-text>
-      
+
       <zx-text
         text="zx-checkbox-group 组件使用示例"
         type="primary"
@@ -155,7 +155,7 @@
         type="primary"
         @click="handleClick('/pages/components/backtop/index')"
       ></zx-text>
-      
+
       <zx-text
         text="zx-link 组件使用示例"
         type="primary"
@@ -203,7 +203,7 @@
         type="primary"
         @click="handleClick('/pages/components/html/index')"
       ></zx-text>
-      
+
       <zx-text
         text="zx-slider 组件使用示例"
         type="primary"
@@ -244,6 +244,12 @@
         text="zx-tag 组件使用示例"
         type="primary"
         @click="handleClick('/pages/components/tag/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-swipe-action 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/zx-swipe-action/index')"
       ></zx-text>
 
       <zx-text
@@ -295,6 +301,18 @@
       ></zx-text>
 
       <zx-text
+        text="zx-affix 组件测试"
+        type="primary"
+        @click="handleClick('/pages/components/affix/test')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-affix 组件使用示例 example"
+        type="primary"
+        @click="handleClick('/pages/components/affix/example')"
+      ></zx-text>
+
+      <zx-text
         text="zx-watermark 组件使用示例"
         type="primary"
         @click="handleClick('/pages/components/watermark/index')"
@@ -311,7 +329,171 @@
         type="primary"
         @click="handleClick('/pages/components/space/index')"
       ></zx-text>
-      
+
+      <zx-text
+        text="zx-sticky 组件使用示例"
+        type="primary"
+        @click="handleClick('/pages/components/sticky/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-sticky 组件测试"
+        type="primary"
+        @click="handleClick('/pages/components/sticky/demo')"
+      ></zx-text>
+
+      <zx-text
+        text="tag check"
+        type="primary"
+        @click="handleClick('/pages/components/tag/check')"
+      ></zx-text>
+
+      <zx-text
+        text="breadcrumb"
+        type="primary"
+        @click="handleClick('/pages/components/breadcrumb/index')"
+      ></zx-text>
+
+      <zx-text
+        text="combox"
+        type="primary"
+        @click="handleClick('/pages/components/combox/index')"
+      ></zx-text>
+
+      <zx-text
+        text="countdown"
+        type="primary"
+        @click="handleClick('/pages/components/countdown/index')"
+      ></zx-text>
+
+      <zx-text
+        text="fab"
+        type="primary"
+        @click="handleClick('/pages/components/fab/index')"
+      ></zx-text>
+
+      <zx-text
+        text="fav"
+        type="primary"
+        @click="handleClick('/pages/components/fav/index')"
+      ></zx-text>
+
+      <zx-text
+        text="anchor"
+        type="primary"
+        @click="handleClick('/pages/components/anchor/index')"
+      ></zx-text>
+
+      <zx-text
+        text="color-picker"
+        type="primary"
+        @click="handleClick('/pages/components/color-picker/index')"
+      ></zx-text>
+
+      <zx-text
+        text="date-picker"
+        type="primary"
+        @click="handleClick('/pages/components/date-picker/index')"
+      ></zx-text>
+
+       <zx-text
+        text="dialog"
+        type="primary"
+        @click="handleClick('/pages/components/dialog/index')"
+      ></zx-text>
+
+       <zx-text
+        text="drawer"
+        type="primary"
+        @click="handleClick('/pages/components/drawer/index')"
+      ></zx-text>
+
+       <zx-text
+        text="dropdown"
+        type="primary"
+        @click="handleClick('/pages/components/dropdown/index')"
+      ></zx-text>
+
+      <zx-text
+        text="menu"
+        type="primary"
+        @click="handleClick('/pages/components/menu/index')"
+      ></zx-text>
+
+      <zx-text
+        text="popconfirm"
+        type="primary"
+        @click="handleClick('/pages/components/popconfirm/index')"
+      ></zx-text>
+
+      <zx-text
+        text="popover"
+        type="primary"
+        @click="handleClick('/pages/components/popover/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-file 文件操作组件"
+        type="primary"
+        @click="handleClick('/pages/components/file/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-file 文件上传案例"
+        type="primary"
+        @click="handleClick('/pages/components/file/demo')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-rate 评分组件"
+        type="primary"
+        @click="handleClick('/pages/components/rate/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-scroll 滚动组件"
+        type="primary"
+        @click="handleClick('/pages/components/scroll/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-section 组件"
+        type="primary"
+        @click="handleClick('/pages/components/section/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-segmented 分段控制器"
+        type="primary"
+        @click="handleClick('/pages/components/segmented/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-select 选择器"
+        type="primary"
+        @click="handleClick('/pages/components/select/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-select-v2 虚拟化选择器"
+        type="primary"
+        @click="handleClick('/pages/components/select-v2/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-statistic 统计组件"
+        type="primary"
+        @click="handleClick('/pages/components/statistic/index')"
+      ></zx-text>
+
+      <zx-text
+        text="zx-steps 步骤条组件"
+        type="primary"
+        @click="handleClick('/pages/components/steps/index')"
+      ></zx-text>
+
+
+<view style="height: 100px;"></view>
     </view>
   </view>
 </template>

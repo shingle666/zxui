@@ -88,7 +88,6 @@ const props = defineProps({
 const iconStyle = computed(() => ({
   color: props.color,
   fontSize: props.size,
-  lineHeight: props.size,
   fontWeight: props.bold ? "bold" : "normal",
   top: props.top,
 }));

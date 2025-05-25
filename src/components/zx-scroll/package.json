@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-scroll",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "基于uni-app scroll-view的增强滚动组件",
   "main": "zx-scroll.vue",
   "keywords": [

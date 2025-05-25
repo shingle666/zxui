@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-color-picker",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "一个功能完整的 Vue 3 颜色选择器组件",
   "main": "index.js",
   "keywords": [
@@ -13,8 +13,5 @@
   ],
   "author": "tanzhenxing",
   "license": "MIT",
-  "peerDependencies": {
-    "vue": "^3.0.0"
-  },
   "homepage": "https://zxui.org/components/color-picker"
 }

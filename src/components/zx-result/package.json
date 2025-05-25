@@ -1,12 +1,17 @@
 {
-  "name": "zx-result",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-result",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "result",
+    "结果",
+    "结果组件",
+    "结果功能"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
-  "description": ""
+  "description": "zx-result 结果组件，用于展示结果信息"
 }

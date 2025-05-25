@@ -1,0 +1,16 @@
+{
+  "name": "@tanzhenxing/zx-anchor-link",
+  "version": "1.0.2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "anchor-link",
+    "锚点链接",
+    "锚点链接组件"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "锚点链接组件"
+}

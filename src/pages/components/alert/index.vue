@@ -1,15 +1,14 @@
 <template>
   <view class="container">
-    <!-- 顶部标题 -->
-    <zx-navbar title="Alert 提示" left-icon="arrow-left" @click-left="goBack"></zx-navbar>
     
     <scroll-view scroll-y style="flex: 1">
       <view class="content">
         <!-- 基础用法 -->
         <view class="demo-section">
           <view class="demo-title">基础用法</view>
-          <view class="demo-desc">Alert 组件提供四种类型，由 type 属性指定，默认值为 info。</view>
+          <view class="demo-desc">Alert 组件提供五种类型，由 type 属性指定，默认值为 info。</view>
           <view class="demo-block">
+            <zx-alert title="主要提示的文案" type="primary" :closable="false" />
             <zx-alert title="成功提示的文案" type="success" :closable="false" />
             <zx-alert title="消息提示的文案" type="info" :closable="false" />
             <zx-alert title="警告提示的文案" type="warning" :closable="false" />
@@ -22,6 +21,7 @@
           <view class="demo-title">主题</view>
           <view class="demo-desc">Alert 组件提供了两个不同的主题：light 和 dark。</view>
           <view class="demo-block">
+            <zx-alert title="主要提示的文案" type="primary" effect="dark" :closable="false" />
             <zx-alert title="成功提示的文案" type="success" effect="dark" :closable="false" />
             <zx-alert title="消息提示的文案" type="info" effect="dark" :closable="false" />
             <zx-alert title="警告提示的文案" type="warning" effect="dark" :closable="false" />
@@ -48,6 +48,7 @@
           <view class="demo-title">带图标</view>
           <view class="demo-desc">通过设置 show-icon 属性来显示 Alert 的 icon。</view>
           <view class="demo-block">
+            <zx-alert title="主要提示的文案" type="primary" show-icon :closable="false" />
             <zx-alert title="成功提示的文案" type="success" show-icon :closable="false" />
             <zx-alert title="消息提示的文案" type="info" show-icon :closable="false" />
             <zx-alert title="警告提示的文案" type="warning" show-icon :closable="false" />
@@ -60,6 +61,7 @@
           <view class="demo-title">文字居中</view>
           <view class="demo-desc">使用 center 属性来让文字水平居中。</view>
           <view class="demo-block">
+            <zx-alert title="主要提示的文案" type="primary" center show-icon :closable="false" />
             <zx-alert title="成功提示的文案" type="success" center show-icon :closable="false" />
             <zx-alert title="消息提示的文案" type="info" center show-icon :closable="false" />
             <zx-alert title="警告提示的文案" type="warning" center show-icon :closable="false" />
@@ -72,6 +74,12 @@
           <view class="demo-title">带描述</view>
           <view class="demo-desc">为 Alert 组件添加一个更加详细的描述。</view>
           <view class="demo-block">
+            <zx-alert 
+              title="带描述的提示" 
+              type="primary" 
+              description="这是一条主要的提示信息，用来告知用户重要内容。"
+              :closable="false" 
+            />
             <zx-alert 
               title="带描述的提示" 
               type="success" 
@@ -92,6 +100,13 @@
           <view class="demo-title">带图标和描述</view>
           <view class="demo-desc">同时显示图标和描述的例子。</view>
           <view class="demo-block">
+            <zx-alert 
+              title="主要提示" 
+              type="primary" 
+              description="这是一条详细的主要提示信息，用来说明重要内容和关键信息。"
+              show-icon
+              :closable="false" 
+            />
             <zx-alert 
               title="成功提示" 
               type="success" 
@@ -216,6 +231,48 @@
               <text class="api-col">主题样式</text>
               <text class="api-col">String</text>
               <text class="api-col">light</text>
+            </view>
+            <view class="api-row">
+              <text class="api-col">custom-style</text>
+              <text class="api-col">自定义样式</text>
+              <text class="api-col">Object</text>
+              <text class="api-col">—</text>
+            </view>
+            <view class="api-row header">
+              <text class="api-col">事件名称</text>
+              <text class="api-col">说明</text>
+              <text class="api-col">回调参数</text>
+              <text class="api-col">—</text>
+            </view>
+            <view class="api-row">
+              <text class="api-col">close</text>
+              <text class="api-col">关闭时触发</text>
+              <text class="api-col">event</text>
+              <text class="api-col">—</text>
+            </view>
+            <view class="api-row header">
+              <text class="api-col">插槽名</text>
+              <text class="api-col">说明</text>
+              <text class="api-col">—</text>
+              <text class="api-col">—</text>
+            </view>
+            <view class="api-row">
+              <text class="api-col">default</text>
+              <text class="api-col">描述内容</text>
+              <text class="api-col">—</text>
+              <text class="api-col">—</text>
+            </view>
+            <view class="api-row">
+              <text class="api-col">title</text>
+              <text class="api-col">标题内容</text>
+              <text class="api-col">—</text>
+              <text class="api-col">—</text>
+            </view>
+            <view class="api-row">
+              <text class="api-col">icon</text>
+              <text class="api-col">图标内容</text>
+              <text class="api-col">—</text>
+              <text class="api-col">—</text>
             </view>
           </view>
         </view>

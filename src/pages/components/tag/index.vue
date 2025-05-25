@@ -4,7 +4,7 @@
 		
 		<view class="demo-wrap">
 			<!-- 基础用法 -->
-			<zx-demo-block title="基础用法">
+			<view title="基础用法">
 				<view class="flex-wrap gap-10">
 					<zx-tag text="Primary" type="primary" />
 					<zx-tag text="Success" type="success" />
@@ -12,10 +12,10 @@
 					<zx-tag text="Warning" type="warning" />
 					<zx-tag text="Danger" type="danger" />
 				</view>
-			</zx-demo-block>
+			</view>
 
 			<!-- 不同主题 -->
-			<zx-demo-block title="不同主题">
+			<view title="不同主题">
 				<view class="demo-item">
 					<view class="demo-item-title">Dark 主题</view>
 					<view class="flex-wrap gap-10">
@@ -48,19 +48,19 @@
 						<zx-tag text="Danger" type="danger" effect="plain" />
 					</view>
 				</view>
-			</zx-demo-block>
+			</view>
 
 			<!-- 不同尺寸 -->
-			<zx-demo-block title="不同尺寸">
+			<view title="不同尺寸">
 				<view class="flex-wrap gap-10 align-center">
 					<zx-tag text="Large" type="primary" size="large" />
 					<zx-tag text="Default" type="primary" size="default" />
 					<zx-tag text="Small" type="primary" size="small" />
 				</view>
-			</zx-demo-block>
+			</view>
 
 			<!-- 圆形标签 -->
-			<zx-demo-block title="圆形标签">
+			<view title="圆形标签">
 				<view class="demo-item">
 					<view class="demo-item-title">Dark 主题</view>
 					<view class="flex-wrap gap-10">
@@ -87,10 +87,10 @@
 						<zx-tag text="Info" type="info" effect="plain" round />
 					</view>
 				</view>
-			</zx-demo-block>
+			</view>
 
 			<!-- 可移除标签 -->
-			<zx-demo-block title="可移除标签">
+			<view title="可移除标签">
 				<view class="flex-wrap gap-10">
 					<zx-tag 
 						v-for="(tag, index) in removableTags" 
@@ -102,10 +102,10 @@
 						@close="handleRemove"
 					/>
 				</view>
-			</zx-demo-block>
+			</view>
 
 			<!-- 动态编辑标签 -->
-			<zx-demo-block title="动态编辑标签">
+			<view title="动态编辑标签">
 				<view class="flex-wrap gap-10 align-center">
 					<zx-tag 
 						v-for="(tag, index) in dynamicTags" 
@@ -133,10 +133,10 @@
 						@click="showInput"
 					/>
 				</view>
-			</zx-demo-block>
+			</view>
 
 			<!-- 可选中标签 (CheckTag) -->
-			<zx-demo-block title="可选中标签 (CheckTag)">
+			<view title="可选中标签 (CheckTag)">
 				<view class="demo-item">
 					<view class="demo-item-title">基础用法</view>
 					<view class="flex-wrap gap-10">
@@ -156,49 +156,49 @@
 						<zx-check-tag v-model:checked="checked6" text="Danger" type="danger" />
 					</view>
 				</view>
-			</zx-demo-block>
+			</view>
 
 			<!-- 带图标的标签 -->
-			<zx-demo-block title="带图标的标签">
+			<view title="带图标的标签">
 				<view class="flex-wrap gap-10">
 					<zx-tag text="收藏" type="warning" icon="star" />
 					<zx-tag text="设置" type="info" icon="setting" />
 					<zx-tag text="删除" type="danger" icon="trash" />
 					<zx-tag text="用户" type="success" icon="account" />
 				</view>
-			</zx-demo-block>
+			</view>
 
 			<!-- 边框描边 -->
-			<zx-demo-block title="边框描边">
+			<view title="边框描边">
 				<view class="flex-wrap gap-10">
 					<zx-tag text="Primary" type="primary" hit />
 					<zx-tag text="Success" type="success" hit />
 					<zx-tag text="Warning" type="warning" hit />
 					<zx-tag text="Danger" type="danger" hit />
 				</view>
-			</zx-demo-block>
+			</view>
 
 			<!-- 禁用状态 -->
-			<zx-demo-block title="禁用状态">
+			<view title="禁用状态">
 				<view class="flex-wrap gap-10">
 					<zx-tag text="Disabled" type="primary" disabled />
 					<zx-tag text="Disabled" type="success" disabled />
 					<zx-tag text="Disabled" type="warning" disabled closable />
 					<zx-tag text="Disabled" type="danger" disabled />
 				</view>
-			</zx-demo-block>
+			</view>
 
 			<!-- 自定义颜色 -->
-			<zx-demo-block title="自定义颜色">
+			<view title="自定义颜色">
 				<view class="flex-wrap gap-10">
 					<zx-tag text="自定义背景" bgColor="#ff6b6b" color="#ffffff" />
 					<zx-tag text="自定义边框" effect="plain" borderColor="#ff9f43" color="#ff9f43" />
 					<zx-tag text="渐变背景" bgColor="linear-gradient(45deg, #667eea 0%, #764ba2 100%)" color="#ffffff" />
 				</view>
-			</zx-demo-block>
+			</view>
 
 			<!-- 兼容旧版本 -->
-			<zx-demo-block title="兼容旧版本">
+			<view title="兼容旧版本">
 				<view class="demo-item">
 					<view class="demo-item-title">尺寸兼容</view>
 					<view class="flex-wrap gap-10 align-center">
@@ -215,7 +215,7 @@
 						<zx-tag text="Plain Fill" type="success" plain plainFill />
 					</view>
 				</view>
-			</zx-demo-block>
+			</view>
 		</view>
 	</view>
 </template>

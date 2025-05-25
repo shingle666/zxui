@@ -1,0 +1,12 @@
+{
+  "name": "@tanzhenxing/zx-countdown",
+  "version": "1.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["倒计时", "countdown", "倒计时组件", "countdown组件"],
+  "author": "tanzhenxing",
+  "license": "MIT",
+  "description": "倒计时组件"
+}

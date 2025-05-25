@@ -1,0 +1,14 @@
+{
+  "name": "@tanzhenxing/zx-dropdown-item",
+  "version": "1.0.3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-dropdown-item"
+  ],
+  "author": "tanzhenxin",
+  "license": "ISC",
+  "description": "zx-dropdown-item"
+}

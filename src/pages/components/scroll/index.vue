@@ -1,11 +1,5 @@
 <template>
 	<view class="container">
-		<uni-nav-bar 
-			title="ZX-Scroll 增强滚动组件" 
-			:border="false" 
-			background-color="#007AFF" 
-			color="#fff"
-		/>
 		
 		<view class="content">
 			<!-- 基础滚动示例 -->

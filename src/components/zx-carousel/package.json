@@ -1,11 +1,11 @@
 {
   "name": "@tanzhenxing/zx-carousel",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "zx-carousel 走马灯组件，在有限空间内循环播放同一类型的图片、文字等内容",
   "main": "zx-carousel.vue",
   "keywords": [
     "carousel",
-    "swiper", 
+    "swiper",
     "轮播",
     "走马灯",
     "uni-app",
@@ -13,14 +13,7 @@
   ],
   "author": "tanzhenxing",
   "license": "MIT",
-  "components": {
-    "zx-carousel": "./zx-carousel.vue",
-    "zx-carousel-item": "./zx-carousel-item.vue"
-  },
   "dependencies": {
-    "vue": "^3.0.0"
-  },
-  "peerDependencies": {
-    "@dcloudio/uni-app": "^3.0.0"
+    "@tanzhenxing/zx-carousel-item": "^1.0.2"
   }
 }

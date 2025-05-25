@@ -1,0 +1,17 @@
+{
+  "name": "@tanzhenxing/zx-fab",
+  "version": "1.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "悬浮按钮",
+    "fab",
+    "悬浮按钮组件",
+    "fab组件"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "悬浮按钮"
+}

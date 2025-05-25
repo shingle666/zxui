@@ -1,0 +1,14 @@
+{
+  "name": "@tanzhenxing/zx-node",
+  "version": "1.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-node"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "zx-node 是一个基于 uni-app 的递归组件，用于渲染富文本内容和多媒体元素"
+}

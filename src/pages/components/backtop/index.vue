@@ -14,7 +14,7 @@
         <image class="demo-image" src="/static/images/demo.jpg" mode="widthFix"></image>
         
         <!-- 基础用法示例 -->
-        <zx-back-top :scrollTop="scrollTop"></zx-back-top>
+        <zx-backtop :scrollTop="scrollTop"></zx-backtop>
       </view>
     </view>
 
@@ -25,33 +25,33 @@
         <view class="style-item">
           <view class="item-title">方形按钮</view>
           <view class="style-showcase">
-            <zx-back-top 
+            <zx-backtop 
               mode="square" 
               :scrollTop="scrollTop"
               backgroundColor="#fafafa"
-            ></zx-back-top>
+            ></zx-backtop>
           </view>
         </view>
         
         <view class="style-item">
           <view class="item-title">自定义颜色</view>
           <view class="style-showcase">
-            <zx-back-top 
+            <zx-backtop 
               :scrollTop="scrollTop" 
               backgroundColor="#2979ff" 
               iconColor="#ffffff"
-            ></zx-back-top>
+            ></zx-backtop>
           </view>
         </view>
         
         <view class="style-item">
           <view class="item-title">自定义大小</view>
           <view class="style-showcase">
-            <zx-back-top 
+            <zx-backtop 
               :scrollTop="scrollTop" 
               size="120rpx"
               iconSize="60rpx"
-            ></zx-back-top>
+            ></zx-backtop>
           </view>
         </view>
       </view>
@@ -64,21 +64,21 @@
         <view class="style-item">
           <view class="item-title">左侧按钮</view>
           <view class="style-showcase">
-            <zx-back-top 
+            <zx-backtop 
               :scrollTop="scrollTop" 
               position="left"
-            ></zx-back-top>
+            ></zx-backtop>
           </view>
         </view>
         
         <view class="style-item">
           <view class="item-title">自定义距离</view>
           <view class="style-showcase">
-            <zx-back-top 
+            <zx-backtop 
               :scrollTop="scrollTop" 
               bottom="150rpx"
               right="80rpx"
-            ></zx-back-top>
+            ></zx-backtop>
           </view>
         </view>
       </view>
@@ -91,30 +91,30 @@
         <view class="style-item">
           <view class="item-title">淡入动画 (默认)</view>
           <view class="style-showcase">
-            <zx-back-top 
+            <zx-backtop 
               :scrollTop="scrollTop" 
               animation="fade"
-            ></zx-back-top>
+            ></zx-backtop>
           </view>
         </view>
         
         <view class="style-item">
           <view class="item-title">滑入动画</view>
           <view class="style-showcase">
-            <zx-back-top 
+            <zx-backtop 
               :scrollTop="scrollTop" 
               animation="slide"
-            ></zx-back-top>
+            ></zx-backtop>
           </view>
         </view>
         
         <view class="style-item">
           <view class="item-title">缩放动画</view>
           <view class="style-showcase">
-            <zx-back-top 
+            <zx-backtop 
               :scrollTop="scrollTop" 
               animation="scale"
-            ></zx-back-top>
+            ></zx-backtop>
           </view>
         </view>
       </view>
@@ -127,40 +127,40 @@
         <view class="style-item">
           <view class="item-title">箭头图标 (默认)</view>
           <view class="style-showcase">
-            <zx-back-top 
+            <zx-backtop 
               :scrollTop="scrollTop" 
               iconName="arrow-up"
-            ></zx-back-top>
+            ></zx-backtop>
           </view>
         </view>
         
         <view class="style-item">
           <view class="item-title">火箭图标</view>
           <view class="style-showcase">
-            <zx-back-top 
+            <zx-backtop 
               :scrollTop="scrollTop" 
               iconName="rocket"
-            ></zx-back-top>
+            ></zx-backtop>
           </view>
         </view>
         
         <view class="style-item">
           <view class="item-title">TOP图标</view>
           <view class="style-showcase">
-            <zx-back-top 
+            <zx-backtop 
               :scrollTop="scrollTop" 
               iconName="top"
-            ></zx-back-top>
+            ></zx-backtop>
           </view>
         </view>
         
         <view class="style-item">
           <view class="item-title">顶部图标</view>
           <view class="style-showcase">
-            <zx-back-top 
+            <zx-backtop 
               :scrollTop="scrollTop" 
               iconName="dingbu"
-            ></zx-back-top>
+            ></zx-backtop>
           </view>
         </view>
       </view>
@@ -170,13 +170,13 @@
     <view class="section">
       <view class="section-title">震动反馈</view>
       <view class="demo-box">
-        <zx-back-top 
+        <zx-backtop 
           :scrollTop="scrollTop" 
           :isVibrate="true"
           backgroundColor="#ff9500"
           iconColor="#ffffff"
           @onClick="handleClick"
-        ></zx-back-top>
+        ></zx-backtop>
         <view class="feedback-text">点击按钮体验震动效果</view>
       </view>
     </view>
@@ -185,12 +185,12 @@
     <view class="section">
       <view class="section-title">事件监听</view>
       <view class="demo-box">
-        <zx-back-top 
+        <zx-backtop 
           :scrollTop="scrollTop" 
           @onClick="handleClick"
           @onShow="handleShow"
           @onHide="handleHide"
-        ></zx-back-top>
+        ></zx-backtop>
         <view class="event-log">
           <view class="log-title">事件日志：</view>
           <view class="log-content">

@@ -1,12 +1,18 @@
 {
-  "name": "zx-pagination",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-pagination",
+  "version": "1.0.2",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "zx-pagination",
+    "uni-app",
+    "分页",
+    "分页组件",
+    "分页功能"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
-  "description": ""
+  "description": "zx-pagination 分页组件"
 }

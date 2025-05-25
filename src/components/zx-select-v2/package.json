@@ -1,12 +1,18 @@
 {
-  "name": "zx-select-v2",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-select-v2",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "select",
+    "选择器",
+    "选择器组件",
+    "选择器组件",
+    "选择器组件"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
-  "description": ""
+  "description": "zx-select-v2 虚拟化选择器组件，用于在多个选项中进行单选"
 }

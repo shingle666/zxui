@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-avatar-group",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,5 +15,8 @@
   ],
   "author": "tanzhenxing",
   "license": "MIT",
-  "description": "uni-app 头像组组件"
+  "description": "uni-app 头像组组件",
+  "dependencies": {
+    "@tanzhenxing/zx-avatar": "^1.0.4"
+  }
 }

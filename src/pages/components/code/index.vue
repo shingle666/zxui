@@ -98,7 +98,7 @@
 				<view class="demo-title">仅展示效果</view>
 				<view class="demo-description">隐藏代码块，只显示文本样式效果</view>
 				<view class="demo-wrapper">
-					<zx-text-display />
+					
 				</view>
 			</view>
 

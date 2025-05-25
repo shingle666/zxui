@@ -1,12 +1,15 @@
 {
-  "name": "zx-affix",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-affix",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["affix", "vue", "component"],
+  "author": "tanzhenxing",
   "license": "ISC",
-  "description": ""
+  "description": "affix component",
+  "dependencies": {
+    "vue": "^3.5.13"
+  }
 }
