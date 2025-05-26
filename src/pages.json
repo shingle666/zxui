@@ -506,11 +506,222 @@
 			}
 		},
 		{
-			"path": "pages/components/zx-swipe-action/index",
+			"path": "pages/components/swipe-action/index",
 			"style": {
 				"navigationBarTitleText": "ZxSwipeAction 滑动操作组件"
 			}
+		},
+		{
+			"path": "pages/components/car-number/index",
+			"style": {
+				"navigationBarTitleText": "ZxCarNumber 车牌号输入组件"
+			}
+		},
+		{
+			"path": "pages/components/action-sheet/index",
+			"style": {
+				"navigationBarTitleText": "zx-action-sheet 动作面板"
+			}
+		},
+		{
+			"path": "pages/components/barcode/index",
+			"style": {
+				"navigationBarTitleText": "zx-barcode 条形码组件"
+			}
+		},
+		{
+			"path": "pages/components/capsule/index",
+			"style": {
+				"navigationBarTitleText": "zx-capsule 胶囊组件"
+			}
+		},
+		{
+			"path": "pages/components/waterfall/index",
+			"style": {
+				"navigationBarTitleText": "zx-waterfall 瀑布流组件"
+			}
+		},
+		{
+			"path": "pages/components/table/index",
+			"style": {
+				"navigationBarTitleText": "zx-table 表格组件"
+			}
+		},
+		{
+			"path": "pages/components/cell/index",
+			"style": {
+				"navigationBarTitleText": "zx-cell 组件"
+			}
+		},
+		{
+			"path": "pages/components/cell/group",
+			"style": {
+				"navigationBarTitleText": "zx-cell-group 组件"
+			}
+		},
+		{
+			"path": "pages/components/charts/area",
+			"style": {
+				"navigationBarTitleText": "zx-charts-area 组件"
+			}
+		},
+		{
+			"path": "pages/components/charts/bar",
+			"style": {
+				"navigationBarTitleText": "zx-charts-bar 组件"
+			}
+		},
+		{
+			"path": "pages/components/charts/column",
+			"style": {
+				"navigationBarTitleText": "zx-charts-column 组件"
+			}
+		},
+		{
+			"path": "pages/components/charts/funnel",
+			"style": {
+				"navigationBarTitleText": "zx-charts-funnel 组件"
+			}
+		},
+		{
+			"path": "pages/components/charts/line",
+			"style": {
+				"navigationBarTitleText": "zx-charts-line 组件"
+			}
+		},
+		{
+			"path": "pages/components/charts/pie",
+			"style": {
+				"navigationBarTitleText": "zx-charts-pie 组件"
+			}
+		},
+		{
+			"path": "pages/components/charts/radar",
+			"style": {
+				"navigationBarTitleText": "zx-charts-radar 组件"
+			}
+		},
+		{
+			"path": "pages/components/charts/scatter",
+			"style": {
+				"navigationBarTitleText": "zx-charts-scatter 组件"
+			}
+		},
+		{
+			"path": "pages/components/copyright/index",
+			"style": {
+				"navigationBarTitleText": "zx-copyright 组件"
+			}
+		},
+		{
+			"path": "pages/components/coupon/index",
+			"style": {
+				"navigationBarTitleText": "zx-coupon 组件"
+			}
+		},
+		{
+			"path": "pages/components/cropper/index",
+			"style": {
+				"navigationBarTitleText": "zx-cropper 组件"
+			}
+		},
+		{
+			"path": "pages/components/drag/index",
+			"style": {
+				"navigationBarTitleText": "zx-drag 组件"
+			}
+		},
+		{
+			"path": "pages/components/flex/index",
+			"style": {
+				"navigationBarTitleText": "zx-flex 组件"
+			}
+		},
+		{
+			"path": "pages/components/gallery/index",
+			"style": {
+				"navigationBarTitleText": "zx-gallery 组件"
+			}
+		},
+		{
+			"path": "pages/components/goods-nav/index",
+			"style": {
+				"navigationBarTitleText": "zx-goods-nav 组件"
+			}
+		},
+		{
+			"path": "pages/components/grid/index",
+			"style": {
+				"navigationBarTitleText": "zx-grid 组件"
+			}
+		},
+		{
+			"path": "pages/components/group/index",
+			"style": {
+				"navigationBarTitleText": "zx-group 组件"
+			}
+		},
+		{
+			"path": "pages/components/indexed-list/index",
+			"style": {
+				"navigationBarTitleText": "zx-indexed-list 组件"
+			}
+		},
+		{
+			"path": "pages/components/landscape/index",
+			"style": {
+				"navigationBarTitleText": "zx-landscape 组件"
+			}
+		},
+		{
+			"path": "pages/components/list/index",
+			"style": {
+				"navigationBarTitleText": "zx-list 组件"
+			}
+		},
+		{
+			"path": "pages/components/list-item/index",
+			"style": {
+				"navigationBarTitleText": "zx-list-item 组件"
+			}
+		},
+		{
+			"path": "pages/components/list-chat/index",
+			"style": {
+				"navigationBarTitleText": "zx-list-chat 组件"
+			}
+		},
+		{
+			"path": "pages/components/list-ad/index",
+			"style": {
+				"navigationBarTitleText": "zx-list-ad 组件"
+			}
+		},
+		{
+			"path": "pages/components/refresh/index",
+			"style": {
+				"navigationBarTitleText": "zx-refresh 组件"
+			}
+		},
+		{
+			"path": "pages/components/lucky-grid/index",
+			"style": {
+				"navigationBarTitleText": "zx-lucky-grid 组件"
+			}
+		},
+		{
+			"path": "pages/components/pk/index",
+			"style": {
+				"navigationBarTitleText": "zx-pk 组件"
+			}
+		},
+		{
+			"path": "pages/components/read-more/index",
+			"style": {
+				"navigationBarTitleText": "zx-read-more 组件"
+			}
 		}
+
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

@@ -1,0 +1,17 @@
+{
+  "name": "@tanzhenxing/zx-toast",
+  "version": "1.0.3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-toast",
+    "提示",
+    "提示组件",
+    "提示组件"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "提示组件"
+}

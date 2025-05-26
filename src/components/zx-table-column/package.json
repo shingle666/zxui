@@ -1,0 +1,18 @@
+{
+  "name": "@tanzhenxing/zx-table-column",
+  "version": "1.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-table-column",
+    "table-column",
+    "uniapp",
+    "vue3",
+    "setup"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "zx-table-column 表格列组件"
+}

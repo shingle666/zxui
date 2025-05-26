@@ -1,12 +1,18 @@
 {
-  "name": "zx-table-v2",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-table-v2",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "zx-table-v2",
+    "table-v2",
+    "uniapp",
+    "vue3",
+    "setup"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
-  "description": ""
+  "description": "zx-table-v2 表格组件"
 }

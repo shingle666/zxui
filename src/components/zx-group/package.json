@@ -1,0 +1,17 @@
+{
+  "name": "@tanzhenxing/zx-group",
+  "version": "1.0.2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-group",
+    "分组",
+    "分组组件",
+    "分组组件"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "分组组件"
+}

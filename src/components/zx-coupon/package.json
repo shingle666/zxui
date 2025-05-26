@@ -1,0 +1,17 @@
+{
+  "name": "@tanzhenxing/zx-coupon",
+  "version": "1.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-coupon",
+    "优惠券",
+    "优惠券组件",
+    "优惠券组件"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "zx-coupon 优惠券组件"
+}

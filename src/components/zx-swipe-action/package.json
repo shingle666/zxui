@@ -1,12 +1,21 @@
 {
-  "name": "zx-swipe-action",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-swipe-action",
+  "version": "1.0.3",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "zx-swipe-action",
+    "swipe-action",
+    "swipe-action组件",
+    "swipe-action组件uniapp",
+    "swipe-action组件uniapp实现"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
-  "description": ""
+  "description": "基于 Element Plus SwipeAction 组件设计的 uni-app 滑动操作组件",
+  "dependencies": {
+    "@tanzhenxing/zx-swipe-action-item": "^1.0.1"
+  }
 }

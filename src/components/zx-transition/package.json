@@ -1,12 +1,17 @@
 {
-  "name": "zx-transition",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-transition",
+  "version": "1.0.6",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "zx-transition",
+    "过渡",
+    "过渡组件",
+    "过渡组件"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
-  "description": ""
+  "description": "过渡组件"
 }

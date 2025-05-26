@@ -213,8 +213,7 @@ function codeSetAllowedFor(chr) {
     }
 }
 
-var Graphics = function(ctx, width, height) {
-
+var Graphics = function(ctx, width, height, options = {}) {
     this.width = width;
     this.height = height;
     this.quiet = Math.round(this.width / 40);
@@ -230,8 +229,8 @@ var Graphics = function(ctx, width, height) {
     };
 
     this.ctx = ctx;
-    this.fg = "#000000";
-    this.bg = "#ffffff";
+    this.fg = options.foregroundColor || "#000000";
+    this.bg = options.backgroundColor || "#ffffff";
 
     // fill background
     this.fillBgRect(0,0, width, height);
@@ -365,38 +364,36 @@ var PATTERNS = [
 ]
 
 export default{
-		code128 : function (ctx, text, width, height) {
+    code128: function (ctx, text, width, height, options = {}) {
+        width = parseInt(width);
+        height = parseInt(height);
 
-		width = parseInt(width);
+        var codes = stringToCode128(text);
 
-		height = parseInt(height);
+        // 使用传入的配置初始化Graphics
+        var g = new Graphics(ctx, width, height, options);
 
-		var codes = stringToCode128(text);
+        var barWeight = g.area.width / ((codes.length - 3) * 11 + 35);
 
-		var g = new Graphics(ctx, width, height);
+        var x = g.area.left;
+        var y = g.area.top;
+        for (var i = 0; i < codes.length; i++) {
+            var c = codes[i];
+            //two bars at a time: 1 black and 1 white
+            for (var bar = 0; bar < 8; bar += 2) {
+                var barW = PATTERNS[c][bar] * barWeight;
+                var barH = height - y;
+                var spcW = PATTERNS[c][bar + 1] * barWeight;
 
-		var barWeight = g.area.width / ((codes.length - 3) * 11 + 35);
+                //no need to draw if 0 width
+                if (barW > 0) {
+                    g.fillFgRect(x, y, barW, barH);
+                }
 
-		var x = g.area.left;
-		var y = g.area.top;
-		for (var i = 0; i < codes.length; i++) {
-			var c = codes[i];
-			//two bars at a time: 1 black and 1 white
-			for (var bar = 0; bar < 8; bar += 2) {
-				var barW = PATTERNS[c][bar] * barWeight;
-				// var barH = height - y - this.border;
-				var barH = height - y;
-				var spcW = PATTERNS[c][bar + 1] * barWeight;
+                x += barW + spcW;
+            }
+        }
 
-				//no need to draw if 0 width
-				if (barW > 0) {
-					g.fillFgRect(x, y, barW, barH);
-				}
-
-				x += barW + spcW;
-			}
-		}
-
-		ctx.draw();
-	}
+        ctx.draw();
+    }
 }

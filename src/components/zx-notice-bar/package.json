@@ -1,0 +1,16 @@
+{
+  "name": "@tanzhenxing/zx-notice-bar",
+  "version": "1.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-notice-bar",
+    "通知栏",
+    "通知栏组件"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "一个基于 uni-app、Vue3 <script setup> 语法开发的高兼容性通知栏组件，适配 H5、小程序、App。"
+}

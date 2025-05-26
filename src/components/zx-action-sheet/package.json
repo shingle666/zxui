@@ -1,0 +1,30 @@
+{
+  "name": "@tanzhenxing/zx-action-sheet",
+  "version": "1.0.2",
+  "description": "基于uni-app的底部弹出动作面板组件，支持多主题、自定义样式、图标徽标，适用于H5、小程序、App等多平台",
+  "main": "zx-action-sheet.vue",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "uni-app",
+    "uniapp",
+    "vue3",
+    "action-sheet",
+    "bottom-sheet",
+    "popup",
+    "menu",
+    "mobile",
+    "cross-platform",
+    "h5",
+    "miniprogram",
+    "app"
+  ],
+  "author": "tanzhenxing",
+  "license": "MIT",
+  "homepage": "https://zxui.org/components/action-sheet",
+  "files": [
+    "zx-action-sheet.vue",
+    "README.md"
+  ]
+}

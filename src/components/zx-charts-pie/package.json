@@ -1,0 +1,14 @@
+{
+  "name": "@tanzhenxing/zx-charts-pie",
+  "version": "1.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-charts-pie"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "zx-charts-pie"
+}

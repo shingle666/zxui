@@ -1,0 +1,17 @@
+{
+  "name": "@tanzhenxing/zx-tree-v2",
+  "version": "1.0.1",
+  "description": "树组件",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-tree-v2",
+    "树",
+    "树组件",
+    "树组件"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC"
+}

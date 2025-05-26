@@ -1,0 +1,17 @@
+{
+  "name": "@tanzhenxing/zx-tips",
+  "version": "1.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-tips",
+    "提示",
+    "提示组件",
+    "提示组件"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "提示组件"
+}

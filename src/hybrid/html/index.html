@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI驱动的前端组件化方案</title>
+  <link rel="stylesheet" href="https://cdn.mp.ac.cn/font-awesome/css/font-awesome.min.css">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <script src="https://cdn.mp.ac.cn/tailwindcss/index.min.js"></script>
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <script src="https://cdn.mp.ac.cn/chart.js/dist/chart.umd.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script> -->
+  
+  <!-- Tailwind配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3b82f6',
+            secondary: '#64748b',
+            accent: '#06b6d4',
+            dark: '#1e293b',
+            light: '#f8fafc'
+          },
+          fontFamily: {
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .card-shadow {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+      .text-balance {
+        text-wrap: balance;
+      }
+      .transition-custom {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+    }
+  </style>
+</head>
+<body class="font-inter bg-light text-dark antialiased">
+  <!-- 顶部导航栏 -->
+  <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-md shadow-sm">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <i class="fa fa-cubes text-primary text-2xl"></i>
+        <h1 class="text-xl font-bold">AI<span class="text-primary">Component</span></h1>
+      </div>
+      
+      <!-- 桌面导航 -->
+      <nav class="hidden md:flex space-x-8">
+        <a href="#features" class="text-dark hover:text-primary transition-colors">特性</a>
+        <a href="#components" class="text-dark hover:text-primary transition-colors">组件展示</a>
+        <a href="#workflow" class="text-dark hover:text-primary transition-colors">工作流程</a>
+        <a href="#examples" class="text-dark hover:text-primary transition-colors">使用示例</a>
+        <a href="#docs" class="text-dark hover:text-primary transition-colors">文档</a>
+      </nav>
+      
+      <!-- 移动端菜单按钮 -->
+      <button id="menu-toggle" class="md:hidden text-dark focus:outline-none">
+        <i class="fa fa-bars text-xl"></i>
+      </button>
+    </div>
+    
+    <!-- 移动端导航菜单 -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+      <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+        <a href="#features" class="text-dark hover:text-primary py-2 transition-colors">特性</a>
+        <a href="#components" class="text-dark hover:text-primary py-2 transition-colors">组件展示</a>
+        <a href="#workflow" class="text-dark hover:text-primary py-2 transition-colors">工作流程</a>
+        <a href="#examples" class="text-dark hover:text-primary py-2 transition-colors">使用示例</a>
+        <a href="#docs" class="text-dark hover:text-primary py-2 transition-colors">文档</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 英雄区域 -->
+  <section class="pt-32 pb-20 md:pt-40 md:pb-28 bg-gradient-to-br from-primary/5 to-light">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-10 md:mb-0">
+          <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight mb-6">
+            AI驱动的<span class="text-primary">组件化</span>开发
+          </h1>
+          <p class="text-lg text-secondary mb-8 max-w-lg text-balance">
+            结合人工智能技术，实现前端组件的自动化生成、优化和集成，大幅提升开发效率和代码质量。
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="#components" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+              探索组件库
+            </a>
+            <a href="#docs" class="px-6 py-3 bg-white text-primary border border-primary rounded-lg hover:bg-primary/5 transition-all">
+              查看文档
+            </a>
+          </div>
+          <div class="mt-10 flex items-center space-x-6">
+            <div class="flex -space-x-2">
+              <img src="https://picsum.photos/id/1001/100" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-white">
+              <img src="https://picsum.photos/id/1002/100" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-white">
+              <img src="https://picsum.photos/id/1003/100" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-white">
+              <img src="https://picsum.photos/id/1004/100" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-white">
+            </div>
+            <div>
+              <div class="flex items-center">
+                <div class="flex">
+                  <i class="fa fa-star text-yellow-400"></i>
+                  <i class="fa fa-star text-yellow-400"></i>
+                  <i class="fa fa-star text-yellow-400"></i>
+                  <i class="fa fa-star text-yellow-400"></i>
+                  <i class="fa fa-star text-yellow-400"></i>
+                </div>
+                <span class="ml-2 font-semibold">4.9/5</span>
+              </div>
+              <p class="text-sm text-secondary">来自100+开发者的评价</p>
+            </div>
+          </div>
+        </div>
+        <div class="md:w-1/2 relative">
+          <div class="bg-white p-6 rounded-xl shadow-2xl transform md:rotate-2 hover:rotate-0 transition-all duration-500">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="font-bold text-lg">AI组件生成器</h3>
+              <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">Beta</span>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-4 mb-4">
+              <p class="text-sm text-secondary mb-2">描述你需要的组件</p>
+              <textarea class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none resize-none" rows="3" placeholder="例如: 创建一个带搜索功能的用户列表组件...">创建一个带搜索功能的用户列表组件，支持分页和筛选</textarea>
+            </div>
+            <button class="w-full py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all flex items-center justify-center">
+              <i class="fa fa-magic mr-2"></i> 生成组件代码
+            </button>
+          </div>
+          <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-accent/20 rounded-full filter blur-3xl z-[-1]"></div>
+          <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 rounded-full filter blur-3xl z-[-1]"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 特性部分 -->
+  <section id="features" class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">强大特性</h2>
+        <p class="text-lg text-secondary">我们的AI组件化方案提供了一系列强大功能，让前端开发变得前所未有的高效和简单</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- 特性卡片1 -->
+        <div class="bg-white p-8 rounded-xl border border-gray-100 card-shadow hover:shadow-xl transition-custom group">
+          <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-custom">
+            <i class="fa fa-bolt text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">AI自动生成</h3>
+          <p class="text-secondary">基于自然语言描述，AI可以自动生成符合设计规范的组件代码，大幅减少手动编码时间。</p>
+        </div>
+        
+        <!-- 特性卡片2 -->
+        <div class="bg-white p-8 rounded-xl border border-gray-100 card-shadow hover:shadow-xl transition-custom group">
+          <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-custom">
+            <i class="fa fa-puzzle-piece text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">组件生态系统</h3>
+          <p class="text-secondary">丰富的组件库和模板，支持按需加载和自定义扩展，构建一致且高效的用户界面。</p>
+        </div>
+        
+        <!-- 特性卡片3 -->
+        <div class="bg-white p-8 rounded-xl border border-gray-100 card-shadow hover:shadow-xl transition-custom group">
+          <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-custom">
+            <i class="fa fa-refresh text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">持续优化</h3>
+          <p class="text-secondary">AI会根据使用数据和反馈持续优化组件性能和用户体验，保持代码库的健康状态。</p>
+        </div>
+      </div>
+      
+      <div class="mt-16 bg-gradient-to-r from-primary/5 to-accent/5 p-8 rounded-2xl">
+        <div class="flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2 mb-8 md:mb-0">
+            <h3 class="text-2xl font-bold mb-4">提升开发效率达70%</h3>
+            <p class="text-secondary mb-6">根据内部测试，使用我们的AI组件化方案可以将前端开发时间减少70%，同时提高代码质量和一致性。</p>
+            <div class="flex space-x-4">
+              <div class="flex items-center">
+                <div class="w-3 h-3 rounded-full bg-primary mr-2"></div>
+                <span>开发时间</span>
+              </div>
+              <div class="flex items-center">
+                <div class="w-3 h-3 rounded-full bg-accent mr-2"></div>
+                <span>代码质量</span>
+              </div>
+            </div>
+          </div>
+          <div class="md:w-1/2">
+            <canvas id="efficiencyChart" width="400" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 组件展示 -->
+  <section id="components" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">智能组件库</h2>
+        <p class="text-lg text-secondary">我们的AI可以生成各种类型的高质量组件，满足不同场景的需求</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 组件卡片1 -->
+        <div class="bg-white rounded-xl overflow-hidden card-shadow hover:shadow-xl transition-custom">
+          <div class="h-48 bg-primary/10 flex items-center justify-center">
+            <i class="fa fa-list-alt text-primary text-6xl"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">数据表格组件</h3>
+            <p class="text-secondary mb-4">支持排序、筛选、分页和自定义操作的智能数据表格，满足各种数据展示需求。</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-secondary">AI生成 · 可定制</span>
+              <button class="px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-custom">
+                查看示例
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 组件卡片2 -->
+        <div class="bg-white rounded-xl overflow-hidden card-shadow hover:shadow-xl transition-custom">
+          <div class="h-48 bg-accent/10 flex items-center justify-center">
+            <i class="fa fa-search text-accent text-6xl"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">搜索组件</h3>
+            <p class="text-secondary mb-4">智能搜索框，支持实时搜索、联想建议和高级筛选功能，提升用户体验。</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-secondary">AI生成 · 可定制</span>
+              <button class="px-4 py-2 bg-accent/10 text-accent rounded-lg hover:bg-accent/20 transition-custom">
+                查看示例
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 组件卡片3 -->
+        <div class="bg-white rounded-xl overflow-hidden card-shadow hover:shadow-xl transition-custom">
+          <div class="h-48 bg-primary/10 flex items-center justify-center">
+            <i class="fa fa-calendar text-primary text-6xl"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">日历组件</h3>
+            <p class="text-secondary mb-4">功能丰富的日历组件，支持事件管理、日期选择和视图切换，满足各种日程需求。</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-secondary">AI生成 · 可定制</span>
+              <button class="px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-custom">
+                查看示例
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 组件卡片4 -->
+        <div class="bg-white rounded-xl overflow-hidden card-shadow hover:shadow-xl transition-custom">
+          <div class="h-48 bg-accent/10 flex items-center justify-center">
+            <i class="fa fa-chart-bar text-accent text-6xl"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">数据可视化</h3>
+            <p class="text-secondary mb-4">多种图表类型的可视化组件，支持数据绑定和交互，让数据展示更加直观。</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-secondary">AI生成 · 可定制</span>
+              <button class="px-4 py-2 bg-accent/10 text-accent rounded-lg hover:bg-accent/20 transition-custom">
+                查看示例
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 组件卡片5 -->
+        <div class="bg-white rounded-xl overflow-hidden card-shadow hover:shadow-xl transition-custom">
+          <div class="h-48 bg-primary/10 flex items-center justify-center">
+            <i class="fa fa-user-circle text-primary text-6xl"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">用户认证组件</h3>
+            <p class="text-secondary mb-4">完整的用户认证解决方案，包括登录、注册、密码找回和用户信息管理。</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-secondary">AI生成 · 可定制</span>
+              <button class="px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-custom">
+                查看示例
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 组件卡片6 -->
+        <div class="bg-white rounded-xl overflow-hidden card-shadow hover:shadow-xl transition-custom">
+          <div class="h-48 bg-accent/10 flex items-center justify-center">
+            <i class="fa fa-sliders text-accent text-6xl"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">表单组件</h3>
+            <p class="text-secondary mb-4">智能表单生成器，支持各种表单字段类型、验证逻辑和布局选项。</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-secondary">AI生成 · 可定制</span>
+              <button class="px-4 py-2 bg-accent/10 text-accent rounded-lg hover:bg-accent/20 transition-custom">
+                查看示例
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-12 text-center">
+        <button class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+          浏览完整组件库
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 工作流程 -->
+  <section id="workflow" class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">工作流程</h2>
+        <p class="text-lg text-secondary">简单几步，即可利用AI生成高质量的前端组件</p>
+      </div>
+      
+      <div class="relative">
+        <!-- 连接线 -->
+        <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-primary/20 transform -translate-x-1/2 z-0"></div>
+        
+        <!-- 步骤1 -->
+        <div class="relative z-10 flex flex-col md:flex-row items-center mb-16">
+          <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
+            <h3 class="text-2xl font-bold mb-3">1. 描述需求</h3>
+            <p class="text-secondary">使用自然语言详细描述你需要的组件功能和设计要求，越详细越好。</p>
+          </div>
+          <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white text-xl font-bold mb-8 md:mb-0">
+            1
+          </div>
+          <div class="md:w-1/2 md:pl-12">
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <p class="italic">"创建一个响应式导航栏，包含品牌标志、主导航菜单和用户操作按钮，在移动设备上转为汉堡菜单"</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 步骤2 -->
+        <div class="relative z-10 flex flex-col md:flex-row items-center mb-16">
+          <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right order-1 md:order-2">
+            <h3 class="text-2xl font-bold mb-3">2. AI生成组件</h3>
+            <p class="text-secondary">AI分析你的需求，生成符合现代前端标准的组件代码，包括HTML、CSS和JavaScript。</p>
+          </div>
+          <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white text-xl font-bold mb-8 md:mb-0 order-2 md:order-1">
+            2
+          </div>
+          <div class="md:w-1/2 md:pl-12 order-3">
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <pre class="text-sm font-mono overflow-x-auto">
+&lt;nav class="navbar fixed w-full top-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-md shadow-sm"&gt;
+  &lt;div class="container mx-auto px-4 py-3 flex justify-between items-center"&gt;
+    &lt;div class="flex items-center space-x-2"&gt;
+      &lt;i class="fa fa-logo text-primary text-2xl"&gt;&lt;/i&gt;
+      &lt;h1 class="text-xl font-bold"&gt;BrandName&lt;/h1&gt;
+    &lt;/div&gt;
+    
+    &lt;!-- 桌面导航 --&gt;
+    &lt;div class="hidden md:flex space-x-8"&gt;
+      &lt;a href="#" class="text-dark hover:text-primary transition-colors"&gt;首页&lt;/a&gt;
+      &lt;a href="#" class="text-dark hover:text-primary transition-colors"&gt;产品&lt;/a&gt;
+      &lt;a href="#" class="text-dark hover:text-primary transition-colors"&gt;服务&lt;/a&gt;
+      &lt;a href="#" class="text-dark hover:text-primary transition-colors"&gt;关于我们&lt;/a&gt;
+    &lt;/div&gt;
+    
+    &lt;!-- 用户操作按钮 --&gt;
+    &lt;div class="flex items-center space-x-4"&gt;
+      &lt;button class="hidden md:block px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary/5 transition-colors"&gt;登录&lt;/button&gt;
+      &lt;button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"&gt;注册&lt;/button&gt;
+      
+      &lt;!-- 移动端菜单按钮 --&gt;
+      &lt;button class="md:hidden text-dark focus:outline-none"&gt;
+        &lt;i class="fa fa-bars text-xl"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</pre>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 步骤3 -->
+        <div class="relative z-10 flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 md:text-right">
+            <h3 class="text-2xl font-bold mb-3">3. 定制与优化</h3>
+            <p class="text-secondary">根据你的需求对生成的组件进行定制和优化，AI会提供建议和备选方案。</p>
+          </div>
+          <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white text-xl font-bold mb-8 md:mb-0">
+            3
+          </div>
+          <div class="md:w-1/2 md:pl-12">
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <div class="flex flex-col space-y-4">
+                <div>
+                  <label class="block text-sm font-medium mb-1">主题颜色</label>
+                  <div class="flex space-x-2">
+                    <button class="w-6 h-6 rounded-full bg-primary border-2 border-white focus:outline-none focus:ring-2 focus:ring-primary"></button>
+                    <button class="w-6 h-6 rounded-full bg-accent border-2 border-white focus:outline-none focus:ring-2 focus:ring-accent"></button>
+                    <button class="w-6 h-6 rounded-full bg-purple-500 border-2 border-white focus:outline-none focus:ring-2 focus:ring-purple-500"></button>
+                    <button class="w-6 h-6 rounded-full bg-green-500 border-2 border-white focus:outline-none focus:ring-2 focus:ring-green-500"></button>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1">动画效果</label>
+                  <select class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                    <option>淡入淡出</option>
+                    <option>滑动</option>
+                    <option>缩放</option>
+                    <option>无动画</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1">响应式断点</label>
+                  <div class="flex items-center">
+                    <input type="range" min="320" max="1280" value="768" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    <span class="ml-2 text-sm">768px</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 使用示例 -->
+  <section id="examples" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">使用示例</h2>
+        <p class="text-lg text-secondary">看看其他开发者如何使用我们的AI组件化方案</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- 示例卡片1 -->
+        <div class="bg-white rounded-xl overflow-hidden card-shadow hover:shadow-xl transition-custom">
+          <div class="h-64 relative">
+            <img src="https://picsum.photos/id/180/800/600" alt="电商网站" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white">电商产品展示</h3>
+                <p class="text-white/80">使用AI生成的产品卡片和筛选组件</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <img src="https://picsum.photos/id/1005/100" alt="用户头像" class="w-10 h-10 rounded-full mr-3">
+              <div>
+                <p class="font-medium">李明</p>
+                <p class="text-sm text-secondary">电商平台前端开发</p>
+              </div>
+            </div>
+            <p class="text-secondary mb-4">"使用AI组件化方案，我在一周内完成了整个产品展示模块，比传统开发方式节省了近一半的时间。"</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-secondary">开发时间: 3天</span>
+              <button class="px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-custom">
+                查看详情
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 示例卡片2 -->
+        <div class="bg-white rounded-xl overflow-hidden card-shadow hover:shadow-xl transition-custom">
+          <div class="h-64 relative">
+            <img src="https://picsum.photos/id/3/800/600" alt="数据分析仪表盘" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white">数据分析仪表盘</h3>
+                <p class="text-white/80">使用AI生成的图表和数据可视化组件</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <img src="https://picsum.photos/id/1006/100" alt="用户头像" class="w-10 h-10 rounded-full mr-3">
+              <div>
+                <p class="font-medium">王华</p>
+                <p class="text-sm text-secondary">数据可视化工程师</p>
+              </div>
+            </div>
+            <p class="text-secondary mb-4">"AI生成的图表组件不仅美观而且功能强大，我只需调整数据绑定就可以完成复杂的数据可视化需求。"</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-secondary">开发时间: 2天</span>
+              <button class="px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-custom">
+                查看详情
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 文档部分 -->
+  <section id="docs" class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">文档与资源</h2>
+        <p class="text-lg text-secondary">获取完整的文档和教程，快速上手我们的AI组件化方案</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- 文档卡片1 -->
+        <div class="bg-white p-8 rounded-xl border border-gray-100 card-shadow hover:shadow-xl transition-custom">
+          <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+            <i class="fa fa-book text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">快速入门</h3>
+          <p class="text-secondary mb-4">了解如何安装和配置AI组件化工具，开始使用AI生成你的第一个组件。</p>
+          <a href="#" class="text-primary flex items-center hover:underline">
+            查看教程 <i class="fa fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+        
+        <!-- 文档卡片2 -->
+        <div class="bg-white p-8 rounded-xl border border-gray-100 card-shadow hover:shadow-xl transition-custom">
+          <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+            <i class="fa fa-code text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">组件API参考</h3>
+          <p class="text-secondary mb-4">详细了解每个组件的属性、方法和事件，掌握如何定制和扩展组件功能。</p>
+          <a href="#" class="text-primary flex items-center hover:underline">
+            查看文档 <i class="fa fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+        
+        <!-- 文档卡片3 -->
+        <div class="bg-white p-8 rounded-xl border border-gray-100 card-shadow hover:shadow-xl transition-custom">
+          <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+            <i class="fa fa-film text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">视频教程</h3>
+          <p class="text-secondary mb-4">通过视频教程学习如何使用AI组件化方案解决实际开发问题。</p>
+          <a href="#" class="text-primary flex items-center hover:underline">
+            观看视频 <i class="fa fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="mt-16 bg-gradient-to-r from-primary/5 to-accent/5 p-8 rounded-2xl">
+        <div class="flex flex-col md:flex-row items-center">
+          <div class="md:w-2/3 mb-8 md:mb-0">
+            <h3 class="text-2xl font-bold mb-4">加入我们的开发者社区</h3>
+            <p class="text-secondary mb-6">与其他开发者交流经验，分享使用技巧，获取最新的组件和工具更新。</p>
+            <div class="flex flex-wrap gap-4">
+              <a href="#" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all">
+                GitHub
+              </a>
+              <a href="#" class="px-6 py-3 bg-white text-primary border border-primary rounded-lg hover:bg-primary/5 transition-all">
+                Discord
+              </a>
+              <a href="#" class="px-6 py-3 bg-white text-primary border border-primary rounded-lg hover:bg-primary/5 transition-all">
+                论坛
+              </a>
+            </div>
+          </div>
+          <div class="md:w-1/3 flex justify-center">
+            <img src="https://picsum.photos/id/20/200/200" alt="社区" class="w-40 h-40 rounded-full object-cover">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="bg-dark text-white pt-16 pb-8">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div>
+          <div class="flex items-center space-x-2 mb-6">
+            <i class="fa fa-cubes text-primary text-2xl"></i>
+            <h1 class="text-xl font-bold">AI<span class="text-primary">Component</span></h1>
+          </div>
+          <p class="text-gray-400 mb-6">
+            结合人工智能技术，实现前端组件的自动化生成、优化和集成，大幅提升开发效率和代码质量。
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fa fa-github text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fa fa-twitter text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fa fa-linkedin text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fa fa-youtube-play text-xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-6">产品</h3>
+          <ul class="space-y-3">
+            <li><a href="#components" class="text-gray-400 hover:text-white transition-colors">组件库</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">模板</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">插件</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">集成工具</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">企业解决方案</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-6">资源</h3>
+          <ul class="space-y-3">
+            <li><a href="#docs" class="text-gray-400 hover:text-white transition-colors">文档</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">教程</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">API参考</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">示例</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">博客</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-6">公司</h3>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">关于我们</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">联系我们</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">招聘信息</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">隐私政策</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">服务条款</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <p class="text-gray-400 mb-4 md:mb-0">© 2025 AIComponent. 保留所有权利。</p>
+          <div class="flex space-x-6">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">隐私政策</a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">服务条款</a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">Cookie政策</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // 导航栏滚动效果
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('py-2', 'shadow-md');
+        navbar.classList.remove('py-3', 'shadow-sm');
+      } else {
+        navbar.classList.add('py-3', 'shadow-sm');
+        navbar.classList.remove('py-2', 'shadow-md');
+      }
+    });
+    
+    // 移动端菜单切换
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // 关闭移动端菜单
+          document.getElementById('mobile-menu').classList.add('hidden');
+        }
+      });
+    });
+    
+    // 效率图表
+    window.addEventListener('load', function() {
+      const ctx = document.getElementById('efficiencyChart').getContext('2d');
+      const efficiencyChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['传统开发', 'AI组件化'],
+          datasets: [
+            {
+              label: '开发时间',
+              data: [100, 30],
+              borderColor: '#3b82f6',
+              backgroundColor: 'rgba(59, 130, 246, 0.1)',
+              tension: 0.4,
+              fill: true
+            },
+            {
+              label: '代码质量',
+              data: [60, 95],
+              borderColor: '#06b6d4',
+              backgroundColor: 'rgba(6, 182, 212, 0.1)',
+              tension: 0.4,
+              fill: true
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: {
+                callback: function(value) {
+                  return value + '%';
+                }
+              }
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+    

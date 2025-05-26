@@ -1,0 +1,20 @@
+{
+  "name": "@tanzhenxing/zx-touch",
+  "version": "1.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-touch",
+    "触摸",
+    "触摸组件",
+    "触摸组件"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "触摸组件",
+  "dependencies": {
+    "default-passive-events": "^2.0.0"
+  }
+}

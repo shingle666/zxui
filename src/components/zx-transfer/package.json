@@ -1,12 +1,17 @@
 {
-  "name": "zx-transfer",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-transfer",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "zx-transfer",
+    "穿梭",
+    "穿梭组件",
+    "穿梭组件"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
-  "description": ""
+  "description": "穿梭组件"
 }
