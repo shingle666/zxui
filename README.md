@@ -25,12 +25,14 @@ zxUI的取名来源于开发者姓名拼音"zhen xing"的首字母缩写 + UI，
 ## ✨ 主要特性
 
 - 🌍 **跨平台支持** - 支持iOS、Android、H5、微信小程序等14个平台
-- 🚀 **高性能** - 基于uni-app，性能优异
-- 📱 **响应式设计** - 适配各种屏幕尺寸
-- 🎨 **丰富组件** - 提供100+精美UI组件
-- 📚 **详细文档** - 完善的使用文档和示例
-- 🔧 **易于使用** - 支持按需引入，开箱即用
-- 🎯 **主题定制** - 支持自定义主题和样式
+- 🚀 **高性能** - 基于uni-app，性能优异，高效运行
+- 📱 **响应式设计** - 智能适配各种屏幕尺寸与设备
+- 🎨 **丰富组件** - 提供100+精美UI组件，满足各类场景需求
+- 📚 **详细文档** - 完善的使用文档和丰富的示例代码
+- 🔧 **易于使用** - 支持按需引入，开箱即用，降低学习成本
+- 🎯 **主题定制** - 灵活的主题系统，支持全局定制与组件级别样式覆盖
+- 🔄 **平台适配** - 智能识别运行平台，自动适配平台特性
+- 🛠️ **开发工具** - 配套VSCode插件，提供代码提示与自动补全
 
 ## 🚀 支持平台
 
@@ -52,12 +54,12 @@ zxUI的取名来源于开发者姓名拼音"zhen xing"的首字母缩写 + UI，
       <img src="https://zxui.org/static/img/wechat.png" width="40"><br>
       <strong>微信小程序</strong>
     </td>
-  </tr>
-  <tr>
     <td align="center">
       <img src="https://zxui.org/static/img/qq.png" width="40"><br>
       <strong>QQ小程序</strong>
     </td>
+  </tr>
+  <tr>
     <td align="center">
       <img src="https://zxui.org/static/img/baidu.png" width="40"><br>
       <strong>百度小程序</strong>
@@ -69,6 +71,36 @@ zxUI的取名来源于开发者姓名拼音"zhen xing"的首字母缩写 + UI，
     <td align="center">
       <img src="https://zxui.org/static/img/toutiao.png" width="40"><br>
       <strong>头条小程序</strong>
+    </td>
+    <td align="center">
+      <img src="https://zxui.org/static/img/dingtalk.png" width="40"><br>
+      <strong>钉钉小程序</strong>
+    </td>
+    <td align="center">
+      <img src="https://zxui.org/static/img/weibo.png" width="40"><br>
+      <strong>微博小程序</strong>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://zxui.org/static/img/jd.png" width="40"><br>
+      <strong>京东小程序</strong>
+    </td>
+    <td align="center">
+      <img src="https://zxui.org/static/img/kuaishou.png" width="40"><br>
+      <strong>快手小程序</strong>
+    </td>
+    <td align="center">
+      <img src="https://zxui.org/static/img/qianfan.png" width="40"><br>
+      <strong>千帆小程序</strong>
+    </td>
+    <td align="center">
+      <img src="https://zxui.org/static/img/desktop.png" width="40"><br>
+      <strong>Windows/MacOS</strong>
+    </td>
+    <td align="center">
+      <img src="https://zxui.org/static/img/360.png" width="40"><br>
+      <strong>360小程序</strong>
     </td>
   </tr>
 </table>
