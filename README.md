@@ -1,7 +1,7 @@
 # zxUI
 
 <p align="center">
-  <img src="https://zxui.org/img/zxui-logo.png" width="160" alt="zxUI Logo">
+  <img src="https://zxui.org/logo.png" width="160" alt="zxUI Logo">
 </p>
 
 <p align="center">
@@ -16,7 +16,7 @@
 
 ## 📖 项目介绍
 
-zxUI是一套基于Vue.js 3.0和TypeScript开发的uni-app跨平台UI框架，提供了丰富的组件、布局及界面库。它能够显著提升您的前端开发效率，实现一套代码多端发布。
+zxUI是一套基于uni-app开发的跨平台UI框架，提供了丰富的组件、布局及界面库。它能够显著提升您的前端开发效率，实现一套代码多端发布。
 
 ### 🎯 项目愿景
 
@@ -25,7 +25,7 @@ zxUI的取名来源于开发者姓名拼音"zhen xing"的首字母缩写 + UI，
 ## ✨ 主要特性
 
 - 🌍 **跨平台支持** - 支持iOS、Android、H5、微信小程序等14个平台
-- 🚀 **高性能** - 基于Vue 3.0和TypeScript，性能优异
+- 🚀 **高性能** - 基于uni-app，性能优异
 - 📱 **响应式设计** - 适配各种屏幕尺寸
 - 🎨 **丰富组件** - 提供100+精美UI组件
 - 📚 **详细文档** - 完善的使用文档和示例
@@ -96,7 +96,7 @@ yarn add @tanzhenxing/zxui
   "easycom": {
     "autoscan": true,
     "custom": {
-      "^zx-(.*)": "@tanzhenxing/zxui/components/zx-$1/zx-$1.vue"
+      "^zx-(.*)": "@tanzhenxing/zx-$1/zx-$1.vue"
     }
   }
 }
@@ -112,7 +112,7 @@ yarn add @tanzhenxing/zxui
 </template>
 
 <script>
-import ZxButton from '@tanzhenxing/zxui/components/zx-button/zx-button.vue'
+import ZxButton from '@tanzhenxing/zx-button/zx-button.vue'
 
 export default {
   components: {
@@ -127,7 +127,7 @@ export default {
 在 `main.js` 中引入样式：
 
 ```javascript
-import 'zxui/theme.scss'
+import 'zx-button/theme.scss'
 ```
 
 ## 🎨 组件库
@@ -228,7 +228,7 @@ uni.$zx.trim(' hello world ') // 去除空格
 
 ```bash
 # 克隆项目
-git clone https://github.com/tanzhenxing/zxui.git
+git clone https://github.com/shingle666/zxui.git
 
 # 安装依赖
 npm install
@@ -246,7 +246,7 @@ npm run build:h5
 ### 目录结构
 
 ```
-uni-vite/
+zxui/
 ├── src/                    # 源代码目录
 │   ├── components/         # UI组件库
 │   │   ├── zx-button/     # 按钮组件
@@ -270,7 +270,7 @@ uni-vite/
 
 ## 🤝 贡献
 
-我们欢迎所有的贡献，请阅读 [贡献指南](https://github.com/tanzhenxing/zxui/blob/main/CONTRIBUTING.md) 来了解如何参与项目开发。
+我们欢迎所有的贡献，请阅读 [贡献指南](https://github.com/shingle666/zxui/blob/main/CONTRIBUTING.md) 来了解如何参与项目开发。
 
 ### 贡献者
 
@@ -278,18 +278,18 @@ uni-vite/
 
 ## 📄 版权信息
 
-本项目基于 [MIT](https://github.com/tanzhenxing/zxui/blob/main/LICENSE) 协议发布。
+本项目基于 [MIT](https://github.com/shingle666/zxui/blob/main/LICENSE) 协议发布。
 
 **注意：** 请勿将zxUI应用到非法领域，如涉及赌博、暴力等方面。如因此产生纠纷或法律问题，zxUI不承担任何责任。
 
 ## 🌟 Star 历史
 
-[![Star History Chart](https://api.star-history.com/svg?repos=tanzhenxing/zxui&type=Date)](https://star-history.com/#tanzhenxing/zxui&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=shingle666/zxui&type=Date)](https://star-history.com/#shingle666/zxui&Date)
 
 ## 📞 联系我们
 
 - 官方网站：[https://zxui.org](https://zxui.org)
-- GitHub：[https://github.com/tanzhenxing/zxui](https://github.com/tanzhenxing/zxui)
+- GitHub：[https://github.com/shingle666/zxui](https://github.com/shingle666/zxui)
 - 邮箱：support@zxui.org
 
 ---
