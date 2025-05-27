@@ -26,6 +26,12 @@
 			}
 		},
 		{
+			"path": "pages/components/icon/list",
+			"style": {
+				"navigationBarTitleText": "Icon 图标列表组件"
+			}
+		},
+		{
 			"path": "pages/components/button/index",
 			"style": {
 				"navigationBarTitleText": "Button 按钮组件"

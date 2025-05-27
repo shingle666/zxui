@@ -46,6 +46,7 @@ const datalist = ref([
     lists: [
       { title: "Button 按钮", path: "/pages/components/button/index" },
       { title: "Icon 图标", path: "/pages/components/icon/index" },
+      { title: "Icon 图标列表", path: "/pages/components/icon/list" },
       { title: "Text 文本", path: "/pages/components/text/index" },
       { title: "Link 链接", path: "/pages/components/link/index" },
       { title: "Title 标题", path: "/pages/components/title/index" },
@@ -214,9 +215,9 @@ const datalist = ref([
       { title: "Charts-pie 饼状图", path: "/pages/components/charts/pie" },
       { title: "Charts-radar 雷达图", path: "/pages/components/charts/radar" },
       { title: "Charts-scatter 散点图", path: "/pages/components/charts/scatter" },
-      { title: "Lucky-grid 九宫格抽奖", path: "/pages/components/lucky-grid/index" },
-      { title: "Lucky-wheel 幸运轮盘", path: "/pages/components/lucky-wheel/index" },
-      { title: "Lucky-box 幸运宝箱", path: "/pages/components/lucky-box/index" },
+      { title: "Lucky-grid 九宫格抽奖", path: "/pages/components/lucky/grid" },
+      { title: "Lucky-wheel 幸运轮盘", path: "/pages/components/lucky/wheel" },
+      { title: "Lucky-box 幸运宝箱", path: "/pages/components/lucky/box" },
       { title: "Turntable 转盘", path: "/pages/components/turntable/index" }
     ]
   },
