@@ -26,7 +26,10 @@
         </view>
       </view>
     </view>
-    <!-- 优化后的底部导航 -->
+    <!-- 返回顶部 -->
+    <zx-backtop :scrollTop="scrollTop"></zx-backtop>
+
+    <!-- 底部导航 -->
     <zx-tabbar
       :value="tabbarValue"
       :items="tabbarList"
@@ -40,9 +43,10 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { onLoad } from "@dcloudio/uni-app";
+import { onLoad, onPageScroll } from "@dcloudio/uni-app";
 
 const title = ref("功能组件");
+const scrollTop = ref(0);
 const datalist = ref([
   {
     title: "基础组件",
@@ -253,6 +257,19 @@ const tabbarList = [
   { icon: 'camera', title: '媒体', name: 3 },
   { icon: 'chat', title: '交互', name: 4 }
 ];
+
+// 监听页面滚动
+onPageScroll((e) => {
+  scrollTop.value = e.scrollTop;
+});
+
+
+function handleBacktopClick() {
+  uni.pageScrollTo({
+    scrollTop: 0,
+    duration: 300
+  });
+}
 
 function onTabbarChange(name) {
   tabbarValue.value = typeof name === 'number' ? name : tabbarList.findIndex(i => i.name === name);
