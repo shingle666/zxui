@@ -47,7 +47,6 @@
 
 <script setup>
 import { ref, watch, computed, nextTick } from 'vue'
-import { useI18n } from '@dcloudio/zx-app'
 
 const props = defineProps({
   modelValue: {

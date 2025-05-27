@@ -1,10 +1,5 @@
 <script setup>
-import { computed, provide, ref, toRefs, defineOptions } from 'vue';
-
-// 定义组件名称
-defineOptions({
-  name: 'zx-table'
-});
+import { computed, provide, ref, toRefs } from 'vue';
 
 const props = defineProps({
   // 表格数据

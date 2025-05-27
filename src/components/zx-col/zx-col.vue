@@ -186,14 +186,12 @@ $breakpoints: (
 $layout-namespace: ".zx-";
 $col: $layout-namespace + "col";
 
-@function getSize($size) {
-  /* TODO 1/24 * $size * 100 * 1%; 使用计算后的值，为了解决 vue3 控制台报错 */
-  @return 0.04166666666 * $size * 100 * 1%;
-}
+@use "sass:meta";
+@use "sass:map";
 
 @mixin res($key, $map: $breakpoints) {
-  @if map-has-key($map, $key) {
-    @media screen and #{inspect(map-get($map,$key))} {
+  @if map.has-key($map, $key) {
+    @media screen and #{meta.inspect(map.get($map, $key))} {
       @content;
     }
   } @else {
@@ -241,7 +239,7 @@ $col: $layout-namespace + "col";
   }
 }
 
-@each $point in map-keys($breakpoints) {
+@each $point in map.keys($breakpoints) {
   @include res($point) {
     #{$col}-#{$point}-0 {
       display: none;

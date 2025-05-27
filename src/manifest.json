@@ -1,9 +1,9 @@
 {
-    "name" : "uni-vite",
-    "appid" : "",
-    "description" : "",
-    "versionName" : "1.0.0",
-    "versionCode" : "100",
+    "name" : "zxui",
+    "appid" : "wx04fbe318ed5dbddc",
+    "description" : "zxui",
+    "versionName" : "1.0.1",
+    "versionCode" : "101",
     "transformPx" : false,
     "app-plus" : {
         "usingComponents" : true,

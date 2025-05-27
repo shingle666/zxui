@@ -692,12 +692,6 @@
 			}
 		},
 		{
-			"path": "pages/components/list-ad/index",
-			"style": {
-				"navigationBarTitleText": "zx-list-ad 组件"
-			}
-		},
-		{
 			"path": "pages/components/refresh/index",
 			"style": {
 				"navigationBarTitleText": "zx-refresh 组件"
@@ -720,9 +714,73 @@
 			"style": {
 				"navigationBarTitleText": "zx-read-more 组件"
 			}
+		},
+		{
+			"path": "pages/components/row/index",
+			"style": {
+				"navigationBarTitleText": "row 组件"
+			}
+		},
+		{
+			"path": "pages/components/col/index",
+			"style": {
+				"navigationBarTitleText": "col 组件"
+			}
+		},
+		{
+			"path": "pages/components/poster/index",
+			"style": {
+				"navigationBarTitleText": "poster 组件"
+			}
+		},
+		{
+			"path": "pages/components/tour/index",
+			"style": {
+				"navigationBarTitleText": "tour 组件"
+			}
+		},
+		{
+			"path": "pages/components/touch/index",
+			"style": {
+				"navigationBarTitleText": "touch 组件"
+			}
+		},
+		{
+			"path": "pages/components/tooltip/index",
+			"style": {
+				"navigationBarTitleText": "tooltip 组件"
+			}
+		},
+		{
+			"path": "pages/components/toast/index",
+			"style": {
+				"navigationBarTitleText": "toast 组件"
+			}
+		},
+		{
+			"path": "pages/components/tips/index",
+			"style": {
+				"navigationBarTitleText": "tips 组件"
+			}
+		},
+		{
+			"path": "pages/components/stamp/index",
+			"style": {
+				"navigationBarTitleText": "stamp 组件"
+			}
+		},
+		{
+			"path": "pages/components/sign/index",
+			"style": {
+				"navigationBarTitleText": "sign 组件"
+			}
+		},
+		{
+			"path": "pages/components/search-bar/index",
+			"style": {
+				"navigationBarTitleText": "search-bar 组件"
+			}
 		}
-		
-
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

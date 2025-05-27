@@ -1,16 +1,37 @@
 <template>
   <view class="content">
-    <view>
-      <zx-text
-        v-for="(item, index) in datalist"
-        :key="index"
-        :text="item.title"
-        type="primary"
-        @click="handleClick(item.path)"
-      ></zx-text>
-
-      <view style="height: 100px"></view>
+    <view class="header">
+      <image class="logo" src="https://zxui.org/logo.png" mode="widthFix" />
+      <text class="title">zxUI</text>
+      <text class="slogan">多平台快速开发的UI框架</text>
+      <text class="desc">zxUI是一套基于uni-app开发的跨平台UI框架，提供丰富组件、布局及界面库，让你一套代码多端发布。</text>
     </view>
+    <view v-for="(category, cIndex) in datalist" :key="cIndex" class="category-section">
+      <view class="section-title">
+        <text>{{ category.title }}</text>
+      </view>
+      <view class="component-list">
+        <view 
+          class="component-item" 
+          v-for="(item, index) in category.lists" 
+          :key="index"
+          @click="handleClick(item.path)"
+          :class="{ 'no-border': index === category.lists.length - 1 }"
+        >
+          <text class="item-title">{{ item.title }}</text>
+          <text class="item-arrow">›</text>
+        </view>
+      </view>
+    </view>
+    <!-- 优化后的底部导航 -->
+    <zx-tabbar
+      :value="tabbarValue"
+      :items="tabbarList"
+      @change="onTabbarChange"
+      fixed
+      placeholder
+      safeAreaInsetBottom
+    />
   </view>
 </template>
 
@@ -20,157 +41,322 @@ import { onLoad } from "@dcloudio/uni-app";
 
 const title = ref("功能组件");
 const datalist = ref([
-  { title: "zx-waterfall 瀑布流组件", path: "/pages/components/waterfall/index" },
-  { title: "zx-pk ", path: "/pages/components/pk/index" },
-  { title: "zx-read-more 组件", path: "/pages/components/read-more/index" },
-  { title: "zx-lucky-grid 幸运转盘组件", path: "/pages/components/lucky-grid/index" },
-  { title: "zx-list 列表组件", path: "/pages/components/list/index" },
-  { title: "zx-list-item 列表项组件", path: "/pages/components/list-item/index" },
-  { title: "zx-list-chat 聊天列表组件", path: "/pages/components/list-chat/index" },
-  { title: "zx-list-ad 广告列表组件", path: "/pages/components/list-ad/index" },
-  { title: "zx-refresh 下拉刷新组件", path: "/pages/components/refresh/index" },
-  { title: "zx-landscape 横屏组件", path: "/pages/components/landscape/index" },
-  { title: "zx-indexed-list 索引列表组件", path: "/pages/components/indexed-list/index" },
-  { title: "zx-group 分组组件", path: "/pages/components/group/index" },
-  { title: "zx-grid 宫格组件", path: "/pages/components/grid/index" },
-  { title: "zx-goods-nav 商品导航组件", path: "/pages/components/goods-nav/index" },
-  { title: "zx-gallery 图片轮播组件", path: "/pages/components/gallery/index" },
-  { title: "zx-flex 弹性布局组件", path: "/pages/components/flex/index" },
-  { title: "zx-copyright 版权组件", path: "/pages/components/copyright/index" },
-  { title: "zx-drag 拖拽组件", path: "/pages/components/drag/index" },
-  { title: "zx-coupon 优惠券组件", path: "/pages/components/coupon/index" },
-  { title: "zx-cropper 裁剪组件", path: "/pages/components/cropper/index" },
-  { title: "zx-charts-area", path: "/pages/components/charts/area" },
-  { title: "zx-charts-bar", path: "/pages/components/charts/bar" },
-  { title: "zx-charts-column", path: "/pages/components/charts/column" },
-  { title: "zx-charts-funnel", path: "/pages/components/charts/funnel" },
-  { title: "zx-charts-line", path: "/pages/components/charts/line" },
-  { title: "zx-charts-pie", path: "/pages/components/charts/pie" },
-  { title: "zx-charts-radar", path: "/pages/components/charts/radar" },
-  { title: "zx-charts-scatter", path: "/pages/components/charts/scatter" },
-  { title: "zx-cell 组件", path: "/pages/components/cell/index" },
-  { title: "zx-cell-group 组件", path: "/pages/components/cell/group" },
-  { title: "zx-table 表格组件", path: "/pages/components/table/index" },
-  { title: "zx-capsule 胶囊组件", path: "/pages/components/capsule/index" },
-  { title: "zx-text 组件使用示例", path: "/pages/components/text/index" },
-  { title: "zx-icon 组件使用示例", path: "/pages/components/icon/index" },
-  { title: "zx-avatar 组件使用示例", path: "/pages/components/avatar/index" },
-  { title: "zx-button 组件使用示例", path: "/pages/components/button/index" },
-  { title: "zx-badge 组件使用示例", path: "/pages/components/badge/index" },
-  { title: "zx-album 组件使用示例", path: "/pages/components/album/index" },
-  { title: "zx-area-picker 组件使用示例", path: "/pages/components/area-picker/index" },
-  { title: "zx-audio 组件使用示例", path: "/pages/components/audio/index" },
-  { title: "zx-video 组件使用示例", path: "/pages/components/video/index" },
-  { title: "zx-camera 组件使用示例", path: "/pages/components/camera/index" },
-  { title: "zx-status-bar 组件使用示例", path: "/pages/components/status-bar/index" },
-  { title: "zx-safe-bottom 组件使用示例", path: "/pages/components/safe-bottom/index" },
-  { title: "zx-transition 组件使用示例", path: "/pages/components/transition/index" },
-  { title: "zx-overlay 组件使用示例", path: "/pages/components/overlay/index" },
-  { title: "zx-popup 组件使用示例", path: "/pages/components/popup/index" },
-  { title: "zx-image 组件使用示例", path: "/pages/components/image/index" },
-  { title: "zx-avatar-group 组件使用示例", path: "/pages/components/avatar/group" },
-  { title: "zx-calendar 组件使用示例", path: "/pages/components/calendar/index" },
-  { title: "zx-canvas 组件使用示例", path: "/pages/components/canvas/index" },
-  { title: "zx-card 组件使用示例", path: "/pages/components/card/index" },
-  { title: "zx-autocomplete 组件使用示例", path: "/pages/components/autocomplete/index" },
-  { title: "zx-checkbox 组件使用示例", path: "/pages/components/checkbox/index" },
-  { title: "zx-checkbox-group 组件使用示例", path: "/pages/components/checkbox/group" },
-  { title: "zx-empty 组件使用示例", path: "/pages/components/empty/index" },
-  { title: "zx-backtop 组件使用示例", path: "/pages/components/backtop/index" },
-  { title: "zx-link 组件使用示例", path: "/pages/components/link/index" },
-  { title: "zx-map 组件使用示例", path: "/pages/components/map/index" },
-  { title: "zx-qrcode 组件使用示例", path: "/pages/components/qrcode/index" },
-  { title: "zx-editor 组件使用示例", path: "/pages/components/editor/index" },
-  { title: "zx-tabs 组件使用示例", path: "/pages/components/tabs/index" },
-  { title: "zx-title 组件使用示例", path: "/pages/components/title/index" },
-  { title: "zx-swiper 组件使用示例", path: "/pages/components/swiper/index" },
-  { title: "zx-html 组件使用示例", path: "/pages/components/html/index" },
-  { title: "zx-slider 组件使用示例", path: "/pages/components/slider/index" },
-  { title: "zx-upload 组件使用示例", path: "/pages/components/upload/index" },
-  { title: "zx-navbar 组件使用示例", path: "/pages/components/navbar/index" },
-  { title: "zx-code 组件使用示例", path: "/pages/components/code/index" },
-  { title: "zx-switch 组件使用示例", path: "/pages/components/switch/index" },
-  { title: "zx-textarea 组件使用示例", path: "/pages/components/textarea/index" },
-  { title: "zx-tag 组件使用示例", path: "/pages/components/tag/index" },
-  { title: "zx-swipe-action 组件使用示例", path: "/pages/components/swipe-action/index" },
-  { title: "zx-mention 组件使用示例", path: "/pages/components/mention/index" },
-  { title: "zx-movable 组件使用示例", path: "/pages/components/movable/index" },
-  { title: "zx-descriptions 组件使用示例", path: "/pages/components/descriptions/index" },
-  { title: "zx-pagination 组件使用示例", path: "/pages/components/pagination/index" },
-  { title: "zx-result 组件使用示例", path: "/pages/components/result/index" },
-  { title: "zx-skeleton 组件使用示例", path: "/pages/components/skeleton/index" },
-  { title: "zx-alert 组件使用示例", path: "/pages/components/alert/index" },
-  { title: "zx-affix 组件使用示例", path: "/pages/components/affix/index" },
-  { title: "zx-affix 组件测试", path: "/pages/components/affix/test" },
-  { title: "zx-affix 组件使用示例 example", path: "/pages/components/affix/example" },
-  { title: "zx-watermark 组件使用示例", path: "/pages/components/watermark/index" },
-  { title: "zx-scrollbar 组件使用示例", path: "/pages/components/scrollbar/index" },
-  { title: "zx-space 组件使用示例", path: "/pages/components/space/index" },
-  { title: "zx-sticky 组件使用示例", path: "/pages/components/sticky/index" },
-  { title: "zx-sticky 组件测试", path: "/pages/components/sticky/demo" },
-  { title: "tag check", path: "/pages/components/tag/check" },
-  { title: "breadcrumb", path: "/pages/components/breadcrumb/index" },
-  { title: "combox", path: "/pages/components/combox/index" },
-  { title: "countdown", path: "/pages/components/countdown/index" },
-  { title: "fab", path: "/pages/components/fab/index" },
-  { title: "fav", path: "/pages/components/fav/index" },
-  { title: "anchor", path: "/pages/components/anchor/index" },
-  { title: "color-picker", path: "/pages/components/color-picker/index" },
-  { title: "date-picker", path: "/pages/components/date-picker/index" },
-  { title: "dialog", path: "/pages/components/dialog/index" },
-  { title: "drawer", path: "/pages/components/drawer/index" },
-  { title: "dropdown", path: "/pages/components/dropdown/index" },
-  { title: "menu", path: "/pages/components/menu/index" },
-  { title: "popconfirm", path: "/pages/components/popconfirm/index" },
-  { title: "popover", path: "/pages/components/popover/index" },
-  { title: "zx-file 文件操作组件", path: "/pages/components/file/index" },
-  { title: "zx-file 文件上传案例", path: "/pages/components/file/demo" },
-  { title: "zx-rate 评分组件", path: "/pages/components/rate/index" },
-  { title: "zx-scroll 滚动组件", path: "/pages/components/scroll/index" },
-  { title: "zx-section 组件", path: "/pages/components/section/index" },
-  { title: "zx-segmented 分段控制器", path: "/pages/components/segmented/index" },
-  { title: "zx-select 选择器", path: "/pages/components/select/index" },
-  { title: "zx-select-v2 虚拟化选择器", path: "/pages/components/select-v2/index" },
-  { title: "zx-statistic 统计组件", path: "/pages/components/statistic/index" },
-  { title: "zx-steps 步骤条组件", path: "/pages/components/steps/index" },
-  { title: "zx-swipe-action 滑动操作组件", path: "/pages/components/swipe-action/index" },
-  { title: "zx-car-number 车牌号输入组件", path: "/pages/components/car-number/index" },
-  { title: "zx-action-sheet 动作面板", path: "/pages/components/action-sheet/index" },
-  { title: "zx-barcode 条形码组件", path: "/pages/components/barcode/index" }
+  {
+    title: "基础组件",
+    lists: [
+      { title: "Button 按钮", path: "/pages/components/button/index" },
+      { title: "Icon 图标", path: "/pages/components/icon/index" },
+      { title: "Text 文本", path: "/pages/components/text/index" },
+      { title: "Link 链接", path: "/pages/components/link/index" },
+      { title: "Title 标题", path: "/pages/components/title/index" },
+      { title: "Divider 分割线", path: "/pages/components/divider/index" },
+      { title: "Badge 徽标", path: "/pages/components/badge/index" },
+      { title: "Tag 标签", path: "/pages/components/tag/index" }
+    ]
+  },
+  {
+    title: "布局组件",
+    lists: [
+      { title: "Row 行", path: "/pages/components/row/index" },
+      { title: "Col 列", path: "/pages/components/col/index" },
+      { title: "Grid 宫格", path: "/pages/components/grid/index" },
+      { title: "Cell 单元格", path: "/pages/components/cell/index" },
+      { title: "Space 间距", path: "/pages/components/space/index" },
+      { title: "Flex 弹性布局", path: "/pages/components/flex/index" },
+      { title: "Group 分组", path: "/pages/components/group/index" },
+      { title: "Line 线条", path: "/pages/components/line/index" },
+      { title: "Section 区块", path: "/pages/components/section/index" },
+      { title: "Sticky 吸顶", path: "/pages/components/sticky/index" },
+      { title: "Affix 固钉", path: "/pages/components/affix/index" }
+    ]
+  },
+  {
+    title: "表单组件",
+    lists: [
+      { title: "Input 输入框", path: "/pages/components/input/index" },
+      { title: "Textarea 文本域", path: "/pages/components/textarea/index" },
+      { title: "Radio 单选框", path: "/pages/components/radio/index" },
+      { title: "Checkbox 复选框", path: "/pages/components/checkbox/index" },
+      { title: "Switch 开关", path: "/pages/components/switch/index" },
+      { title: "Slider 滑块", path: "/pages/components/slider/index" },
+      { title: "Form 表单", path: "/pages/components/form/index" },
+      { title: "Rate 评分", path: "/pages/components/rate/index" },
+      { title: "Calendar 日历", path: "/pages/components/calendar/index" },
+      { title: "Picker 选择器", path: "/pages/components/picker/index" },
+      { title: "Date-picker 日期选择器", path: "/pages/components/date-picker/index" },
+      { title: "Area-picker 地区选择器", path: "/pages/components/area-picker/index" },
+      { title: "Select 选择器", path: "/pages/components/select/index" },
+      { title: "Select-v2 虚拟化选择器", path: "/pages/components/select-v2/index" },
+      { title: "Upload 上传", path: "/pages/components/upload/index" },
+      { title: "Color-picker 颜色选择器", path: "/pages/components/color-picker/index" },
+      { title: "Car-number 车牌号输入", path: "/pages/components/car-number/index" },
+      { title: "SMS-code 验证码", path: "/pages/components/sms-code/index" },
+      { title: "Autocomplete 自动完成", path: "/pages/components/autocomplete/index" }
+    ]
+  },
+  {
+    title: "数据展示",
+    lists: [
+      { title: "Table 表格", path: "/pages/components/table/index" },
+      { title: "Card 卡片", path: "/pages/components/card/index" },
+      { title: "List 列表", path: "/pages/components/list/index" },
+      { title: "List-item 列表项", path: "/pages/components/list-item/index" },
+      { title: "List-chat 聊天列表", path: "/pages/components/list-chat/index" },
+      { title: "List-ad 广告列表", path: "/pages/components/list-ad/index" },
+      { title: "Collapse 折叠面板", path: "/pages/components/collapse/index" },
+      { title: "Descriptions 描述列表", path: "/pages/components/descriptions/index" },
+      { title: "Timeline 时间轴", path: "/pages/components/timeline/index" },
+      { title: "Tree 树形控件", path: "/pages/components/tree/index" },
+      { title: "Statistic 统计数值", path: "/pages/components/statistic/index" },
+      { title: "Pagination 分页", path: "/pages/components/pagination/index" },
+      { title: "Waterfall 瀑布流", path: "/pages/components/waterfall/index" },
+      { title: "Indexed-list 索引列表", path: "/pages/components/indexed-list/index" },
+      { title: "Progress 进度条", path: "/pages/components/progress/index" },
+      { title: "Countdown 倒计时", path: "/pages/components/countdown/index" },
+      { title: "Steps 步骤条", path: "/pages/components/steps/index" }
+    ]
+  },
+  {
+    title: "导航组件",
+    lists: [
+      { title: "Navbar 导航栏", path: "/pages/components/navbar/index" },
+      { title: "Tabs 标签页", path: "/pages/components/tabs/index" },
+      { title: "Segmented 分段器", path: "/pages/components/segmented/index" },
+      { title: "Toolbar 工具栏", path: "/pages/components/toolbar/index" },
+      { title: "Menu 菜单", path: "/pages/components/menu/index" },
+      { title: "Dropdown 下拉菜单", path: "/pages/components/dropdown/index" },
+      { title: "Breadcrumb 面包屑", path: "/pages/components/breadcrumb/index" },
+      { title: "Backtop 回到顶部", path: "/pages/components/backtop/index" },
+      { title: "Page-header 页头", path: "/pages/components/page-header/index" },
+      { title: "Anchor 锚点", path: "/pages/components/anchor/index" }
+    ]
+  },
+  {
+    title: "反馈组件",
+    lists: [
+      { title: "Alert 警告提示", path: "/pages/components/alert/index" },
+      { title: "Dialog 对话框", path: "/pages/components/dialog/index" },
+      { title: "Drawer 抽屉", path: "/pages/components/drawer/index" },
+      { title: "Toast 轻提示", path: "/pages/components/toast/index" },
+      { title: "Tips 提示", path: "/pages/components/tips/index" },
+      { title: "Notify 通知", path: "/pages/components/notify/index" },
+      { title: "Popconfirm 气泡确认框", path: "/pages/components/popconfirm/index" },
+      { title: "Popover 气泡卡片", path: "/pages/components/popover/index" },
+      { title: "Popup 弹出层", path: "/pages/components/popup/index" },
+      { title: "Action-sheet 动作面板", path: "/pages/components/action-sheet/index" },
+      { title: "Overlay 遮罩", path: "/pages/components/overlay/index" },
+      { title: "Result 结果", path: "/pages/components/result/index" },
+      { title: "Empty 空状态", path: "/pages/components/empty/index" },
+      { title: "Skeleton 骨架屏", path: "/pages/components/skeleton/index" },
+      { title: "No-network 无网络", path: "/pages/components/no-network/index" },
+      { title: "Notice-bar 通知栏", path: "/pages/components/notice-bar/index" },
+      { title: "Loading 加载", path: "/pages/components/loading/index" },
+      { title: "Tooltip 文字提示", path: "/pages/components/tooltip/index" },
+      { title: "Watermark 水印", path: "/pages/components/watermark/index" }
+    ]
+  },
+  {
+    title: "媒体组件",
+    lists: [
+      { title: "Image 图片", path: "/pages/components/image/index" },
+      { title: "Avatar 头像", path: "/pages/components/avatar/index" },
+      { title: "Swiper 轮播", path: "/pages/components/swiper/index" },
+      { title: "Gallery 图片预览", path: "/pages/components/gallery/index" },
+      { title: "Video 视频", path: "/pages/components/video/index" },
+      { title: "Audio 音频", path: "/pages/components/audio/index" },
+      { title: "Canvas 画布", path: "/pages/components/canvas/index" },
+      { title: "Camera 相机", path: "/pages/components/camera/index" },
+      { title: "Barcode 条形码", path: "/pages/components/barcode/index" },
+      { title: "Qrcode 二维码", path: "/pages/components/qrcode/index" },
+      { title: "Html 富文本", path: "/pages/components/html/index" },
+      { title: "Code 代码", path: "/pages/components/code/index" },
+      { title: "Web-view 网页视图", path: "/pages/components/web-view/index" },
+      { title: "Richtext 富文本", path: "/pages/components/richtext/index" },
+      { title: "Editor 编辑器", path: "/pages/components/editor/index" },
+      { title: "File 文件", path: "/pages/components/file/index" },
+      { title: "Album 相册", path: "/pages/components/album/index" },
+      { title: "Map 地图", path: "/pages/components/map/index" }
+    ]
+  },
+  {
+    title: "交互组件",
+    lists: [
+      { title: "Fab 悬浮按钮", path: "/pages/components/fab/index" },
+      { title: "Fav 收藏", path: "/pages/components/fav/index" },
+      { title: "Drag 拖动", path: "/pages/components/drag/index" },
+      { title: "Touch 触摸", path: "/pages/components/touch/index" },
+      { title: "Sign 签名", path: "/pages/components/sign/index" },
+      { title: "Stamp 印章", path: "/pages/components/stamp/index" },
+      { title: "Tour 引导", path: "/pages/components/tour/index" },
+      { title: "Search-bar 搜索栏", path: "/pages/components/search-bar/index" },
+      { title: "Read-more 阅读更多", path: "/pages/components/read-more/index" },
+      { title: "Swipe-action 滑动操作", path: "/pages/components/swipe-action/index" },
+      { title: "Refresh 下拉刷新", path: "/pages/components/refresh/index" },
+      { title: "Scroll 滚动列表", path: "/pages/components/scroll/index" },
+      { title: "Scrollbar 滚动条", path: "/pages/components/scrollbar/index" },
+      { title: "Movable 可移动", path: "/pages/components/movable/index" },
+      { title: "Landscape 强制横屏", path: "/pages/components/landscape/index" },
+      { title: "Recorder 录音", path: "/pages/components/recorder/index" },
+      { title: "Cropper 裁剪", path: "/pages/components/cropper/index" },
+      { title: "More 更多", path: "/pages/components/more/index" },
+      { title: "PK 拼杀", path: "/pages/components/pk/index" },
+      { title: "Goods-nav 商品导航", path: "/pages/components/goods-nav/index" }
+    ]
+  },
+  {
+    title: "图表/游戏",
+    lists: [
+      { title: "Charts-area 区域图", path: "/pages/components/charts/area" },
+      { title: "Charts-bar 柱状图", path: "/pages/components/charts/bar" },
+      { title: "Charts-column 柱状图", path: "/pages/components/charts/column" },
+      { title: "Charts-funnel 漏斗图", path: "/pages/components/charts/funnel" },
+      { title: "Charts-line 折线图", path: "/pages/components/charts/line" },
+      { title: "Charts-pie 饼状图", path: "/pages/components/charts/pie" },
+      { title: "Charts-radar 雷达图", path: "/pages/components/charts/radar" },
+      { title: "Charts-scatter 散点图", path: "/pages/components/charts/scatter" },
+      { title: "Lucky-grid 九宫格抽奖", path: "/pages/components/lucky-grid/index" },
+      { title: "Lucky-wheel 幸运轮盘", path: "/pages/components/lucky-wheel/index" },
+      { title: "Lucky-box 幸运宝箱", path: "/pages/components/lucky-box/index" },
+      { title: "Turntable 转盘", path: "/pages/components/turntable/index" }
+    ]
+  },
+  {
+    title: "其他组件",
+    lists: [
+      { title: "Transition 过渡动画", path: "/pages/components/transition/index" },
+      { title: "Status-bar 状态栏", path: "/pages/components/status-bar/index" },
+      { title: "Safe-bottom 安全区域", path: "/pages/components/safe-bottom/index" },
+      { title: "Copyright 版权", path: "/pages/components/copyright/index" },
+      { title: "Poster 海报", path: "/pages/components/poster/index" },
+      { title: "Transfer 穿梭框", path: "/pages/components/transfer/index" },
+      { title: "Time 时间", path: "/pages/components/time/index" },
+      { title: "Mention 提及", path: "/pages/components/mention/index" },
+      { title: "Carousel 轮播", path: "/pages/components/carousel/index" },
+      { title: "Cascader 级联选择", path: "/pages/components/cascader/index" },
+      { title: "Capsule 胶囊", path: "/pages/components/capsule/index" },
+      { title: "Label 标签", path: "/pages/components/label/index" },
+      { title: "Coupon 优惠券", path: "/pages/components/coupon/index" }
+    ]
+  }
 ]);
 
-onLoad((options) => {
-  console.log(JSON.stringify(options));
-});
+// 新增底部导航数据
+const tabbarValue = ref(0);
+const tabbarList = [
+  { icon: 'home', title: '基础', name: 0 },
+  { icon: 'grid', title: '布局', name: 1, badge: 2 },
+  { icon: 'order', title: '表单', name: 2, dot: true },
+  { icon: 'camera', title: '媒体', name: 3 },
+  { icon: 'chat', title: '交互', name: 4 }
+];
 
-const handleClick = (path) => {
-  uni.navigateTo({
-    url: path,
-  });
-};
+function onTabbarChange(name) {
+  tabbarValue.value = typeof name === 'number' ? name : tabbarList.findIndex(i => i.name === name);
+  // 可根据 name 跳转页面等
+  // if (name === 0) uni.switchTab({ url: '/pages/index/index' })
+}
+
+function handleClick(path) {
+  uni.navigateTo({ url: path });
+}
 </script>
 
 <style>
 .content {
   display: flex;
   flex-direction: column;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.header {
+  padding: 40rpx 30rpx 20rpx 30rpx;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  border-bottom: 2rpx solid #f0f0f0;
 }
 
 .logo {
-  height: 200rpx;
-  width: 200rpx;
-  margin: 200rpx auto 50rpx;
-}
-
-.text-area {
-  display: flex;
-  justify-content: center;
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 10rpx;
 }
 
 .title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 8rpx;
+}
+
+.slogan {
+  font-size: 28rpx;
+  color: #1989fa;
+  margin-bottom: 8rpx;
+}
+
+.desc {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 12rpx;
+  text-align: center;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12rpx;
+  font-size: 24rpx;
+  color: #1989fa;
+}
+
+.links navigator {
+  color: #1989fa;
+}
+
+.category-section {
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  padding: 20rpx 30rpx;
+  padding-bottom: 10rpx;
+  font-size: 28rpx;
+  color: #666;
+  font-weight: 500;
+}
+
+.component-list {
+  background-color: #fff;
+  margin: 0 30rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.component-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  background-color: #fff;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.no-border {
+  border-bottom: none;
+}
+
+.item-title {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.item-arrow {
+  color: #ccc;
   font-size: 36rpx;
-  color: #8f8f94;
+  font-weight: 300;
 }
 </style>

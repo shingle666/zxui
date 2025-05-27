@@ -48,7 +48,6 @@ const alignClass = computed(() => align.value !== 'top' ? `zx-row--flex-align-${
   position: relative;
   flex-direction: row;
   box-sizing: border-box;
-  @include utils-clearfix;
 }
 
 .zx-row--flex {

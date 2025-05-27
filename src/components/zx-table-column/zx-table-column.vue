@@ -1,10 +1,5 @@
 <script setup>
-import { computed, inject, onBeforeUnmount, onMounted, ref, defineOptions, useSlots } from 'vue';
-
-// 定义组件名称
-defineOptions({
-  name: 'zx-table-column'
-});
+import { computed, inject, onBeforeUnmount, onMounted, ref, useSlots } from 'vue';
 
 // 生成简单的唯一ID
 const generateId = () => {
