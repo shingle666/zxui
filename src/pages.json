@@ -680,13 +680,13 @@
 			}
 		},
 		{
-			"path": "pages/components/list-item/index",
+			"path": "pages/components/list/item",
 			"style": {
 				"navigationBarTitleText": "zx-list-item 组件"
 			}
 		},
 		{
-			"path": "pages/components/list-chat/index",
+			"path": "pages/components/list/chat",
 			"style": {
 				"navigationBarTitleText": "zx-list-chat 组件"
 			}
@@ -698,9 +698,15 @@
 			}
 		},
 		{
-			"path": "pages/components/lucky-grid/index",
+			"path": "pages/components/lucky/grid",
 			"style": {
 				"navigationBarTitleText": "zx-lucky-grid 组件"
+			}
+		},
+		{
+			"path": "pages/components/lucky/wheel",
+			"style": {
+				"navigationBarTitleText": "zx-lucky-wheel 组件"
 			}
 		},
 		{
@@ -779,6 +785,12 @@
 			"path": "pages/components/search-bar/index",
 			"style": {
 				"navigationBarTitleText": "search-bar 组件"
+			}
+		},
+		{
+			"path": "pages/components/tabbar/index",
+			"style": {
+				"navigationBarTitleText": "tabbar 组件"
 			}
 		}
 	],
