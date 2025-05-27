@@ -2,13 +2,13 @@
   <view class="zx-input-container" :class="[size ? 'zx-input-' + size : '']">
     <!-- 前缀图标 -->
     <view class="zx-input-prefix" v-if="prefixIcon">
-      <text :class="prefixIcon" @click="onClickPrefixIcon"></text>
+      <zx-icon :name="prefixIcon" @click="onClickPrefixIcon" size="30rpx" />
     </view>
 
     <!-- 输入框 -->
     <input
       class="zx-input"
-      :style="getStyle"
+      :style="getInputStyle"
       :value="modelValue"
       :type="type"
       :name="name"
@@ -50,7 +50,7 @@
       v-if="clearable && modelValue && !disabled && isFocused"
       @click="onClear"
     >
-      <text class="uni-icon">&#xe434;</text>
+      <zx-icon name="close" size="30rpx" />
     </view>
 
     <!-- 密码显示切换 -->
@@ -59,12 +59,12 @@
       v-if="password && !disabled"
       @click="togglePasswordVisible"
     >
-      <text class="uni-icon" :class="showPassword ? '' : 'uni-eye-active'">&#xe568;</text>
+      <zx-icon :name="showPassword ? 'eye-off' : 'eye'" :class="showPassword ? '' : 'uni-eye-active'" size="30rpx" />
     </view>
 
     <!-- 后缀图标 -->
     <view class="zx-input-suffix" v-if="suffixIcon">
-      <text :class="suffixIcon" @click="onClickSuffixIcon"></text>
+      <zx-icon :name="suffixIcon" @click="onClickSuffixIcon" size="30rpx" />
     </view>
   </view>
 </template>
@@ -311,21 +311,34 @@ const getStyle = computed(() => {
 
   switch (props.size) {
     case "small":
-      style.height = "45rpx";
-      style.fontSize = "28rpx";
+      style.height = "60rpx";
+      style.fontSize = "26rpx";
       style.padding = "15rpx 20rpx";
       break;
     case "large":
-      style.height = "80rpx";
-      style.fontSize = "34rpx";
+      style.height = "100rpx";
+      style.fontSize = "36rpx";
       style.padding = "10rpx 20rpx";
       break;
     default:
-      style.height = "55rpx";
-      style.fontSize = "30rpx";
+      style.height = "80rpx";
+      style.fontSize = "32rpx";
       style.padding = "15rpx 20rpx";
       break;
   }
+  return style;
+});
+
+// 计算 input 的 padding，保证图标不重叠
+const getInputStyle = computed(() => {
+  let style = { ...getStyle.value };
+  let left = 0, right = 0;
+  if (props.prefixIcon) left += 40;
+  if (props.suffixIcon) right += 40;
+  if (props.clearable && props.modelValue && !props.disabled && isFocused.value) right += 40;
+  if (props.password && !props.disabled) right += 40;
+  style.paddingLeft = left ? `${left}rpx` : style.paddingLeft || style.padding;
+  style.paddingRight = right ? `${right}rpx` : style.paddingRight || style.padding;
   return style;
 });
 
@@ -411,41 +424,54 @@ function onClickSuffixIcon(e) {
 .zx-input {
   flex: 1;
   width: 100%;
+  box-sizing: border-box;
 }
 
-.zx-input-small {
-  font-size: 28rpx;
+.zx-input-prefix {
+  position: absolute;
+  left: 10rpx;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  z-index: 2;
 }
 
-.zx-input-large {
-  font-size: 34rpx;
-}
-
-.zx-input-prefix,
 .zx-input-suffix {
+  position: absolute;
+  right: 10rpx;
+  top: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 10rpx;
+  z-index: 2;
 }
 
-.zx-input-clear,
-.zx-input-password-eye {
+.zx-input-clear {
+  position: absolute;
+  right: 50rpx;
+  top: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 10rpx;
+  z-index: 2;
+  color: #c0c4cc;
+}
+
+.zx-input-password-eye {
+  position: absolute;
+  right: 90rpx;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  z-index: 2;
   color: #c0c4cc;
 }
 
 .zx-input-clear:active,
 .zx-input-password-eye:active {
   opacity: 0.8;
-}
-
-.uni-icon {
-  font-family: uniicons;
-  font-size: 30rpx;
 }
 
 .uni-eye-active {

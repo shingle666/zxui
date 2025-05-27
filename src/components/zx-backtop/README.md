@@ -20,7 +20,7 @@
 
 ### 基础示例
 
-滚动页面，当滚动高度超过 200px 时，回到顶部按钮会出现在页面右下角。
+滚动页面，当滚动高度超过 200rpx 时，回到顶部按钮会出现在页面右下角。
 
 ```vue
 <template>
@@ -49,17 +49,17 @@ const handleBacktopClick = () => {
 
 ### 自定义内容
 
-显示区域被固定为 40px * 40px 的区域，其中的内容可支持自定义。
+显示区域被固定为 80rpx * 80rpx 的区域，其中的内容可支持自定义。
 
 ```vue
-<zx-backtop :scrollTop="scrollTop" :bottom="100">
+<zx-backtop :scrollTop="scrollTop" :bottom="200">
   <view style="
     height: 100%;
     width: 100%;
     background-color: #f2f5f6;
-    box-shadow: 0 0 6px rgba(0,0,0,.12);
+    box-shadow: 0 0 6rpx rgba(0,0,0,.12);
     text-align: center;
-    line-height: 40px;
+    line-height: 80rpx;
     color: #1989fa;
   ">
     UP
@@ -75,7 +75,7 @@ const handleBacktopClick = () => {
   mode="square" 
   backgroundColor="#409EFF" 
   iconColor="#ffffff"
-  size="50px"
+  size="100rpx"
 ></zx-backtop>
 ```
 
@@ -85,7 +85,7 @@ const handleBacktopClick = () => {
 <zx-backtop 
   :scrollTop="scrollTop" 
   :left="100" 
-  :bottom="150"
+  :bottom="200"
 ></zx-backtop>
 ```
 
@@ -142,20 +142,19 @@ const handleBacktopClick = () => {
 
 | 参数               | 说明                        | 类型     | 默认值     |
 |-------------------|----------------------------|----------|-----------|
-| target            | 触发滚动的对象（暂不支持，预留）  | String   | —         |
 | visibilityHeight  | 滚动高度达到此参数值才出现      | Number   | 200       |
-| right             | 控制其显示位置，距离页面右边距   | Number   | 40        |
-| bottom            | 控制其显示位置，距离页面底部距离 | Number   | 40        |
-| left              | 控制其显示位置，距离页面左边距   | Number   | null      |
+| right             | 控制其显示位置，距离页面右边距   | Number   | 10        |
+| bottom            | 控制其显示位置，距离页面底部距离 | Number   | 120       |
+| left              | 控制其显示位置，距离页面左边距   | Number   | 0         |
 | scrollTop         | 当前滚动距离，用于控制显示/隐藏 | Number   | 0         |
 | duration          | 返回顶部滚动时间(ms)          | Number   | 300       |
 | zIndex            | 层级                        | Number   | 9999      |
 | mode              | 形状，可选值：circle、square   | String   | circle    |
 | backgroundColor   | 背景色                      | String   | #ffffff   |
-| size              | 组件大小                    | String   | 40px      |
+| size              | 组件大小                    | String   | 80rpx     |
 | iconName          | 图标名称，可选：arrow-up、rocket、top、dingbu | String | arrow-up |
 | iconColor         | 图标颜色                    | String   | #999999   |
-| iconSize          | 图标大小                    | String   | 24px      |
+| iconSize          | 图标大小                    | String   | 50rpx     |
 | animation         | 动画效果，可选值：fade、slide、scale | String | fade   |
 | vibrate           | 点击时是否震动反馈            | Boolean  | false     |
 | customClass       | 自定义类名                  | String   | —         |
@@ -179,9 +178,9 @@ const handleBacktopClick = () => {
 1. 组件需要传入 `scrollTop` 参数，该参数为当前滚动距离，可以通过监听滚动事件获取
 2. 图标使用组件内置的几种图标，包括：arrow-up, rocket, top, dingbu
 3. 自定义位置时，如果设置了 `left` 属性，优先级高于 `right` 属性
-4. 组件默认在滚动超过 200px 时显示，可通过 `visibilityHeight` 参数自定义
-5. 位置参数 `right`、`bottom`、`left` 单位为 px，不需要带单位
-6. 尺寸参数 `size`、`iconSize` 需要带单位，支持 px、rpx 等
+4. 组件默认在滚动超过 200rpx 时显示，可通过 `visibilityHeight` 参数自定义
+5. 位置参数 `right`、`bottom`、`left` 单位为 rpx，不需要带单位
+6. 尺寸参数 `size`、`iconSize` 需要带单位，推荐使用 rpx
 
 ## 更新日志
 

@@ -4,7 +4,7 @@
 	</view>
 </template>
 <script setup>
-import { onMounted, ref, watch, computed } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
 	// 自定义行内样式
@@ -79,60 +79,6 @@ const styleIn = computed(() => {
 	return styleStr;
 });
 
-onMounted(() => {
-	// 整合样式数组
-	initcustomClass();
-});
-
-const initcustomClass = () => {
-	let customClassData = ['zx-flex-box', 'zx-flex'];
-	if (props.direction == 'column') {
-		customClassData.push('zx-column');
-	} else {
-		customClassData.push('zx-row');
-	}
-	if (props.direction == 'row') {
-		if (props.wrap) {
-			customClassData.push('zx-wrap');
-		} else {
-			customClassData.push('zx-nowrap');
-		}
-	}
-	customClassData = customClassData.concat(customClassArray.value);
-	this.classIn = customClassData;
-	this.styleIn = '';
-	this.styleIn += styleIn.value;
-};
-watch(
-	() => props.wrap,
-	() => {
-		initcustomClass();
-	}
-);
-watch(
-	() => props.justifyContent,
-	() => {
-		initcustomClass();
-	}
-);
-watch(
-	() => props.alignItems,
-	() => {
-		initcustomClass();
-	}
-);
-watch(
-	() => props.customClass,
-	() => {
-		initcustomClass();
-	}
-);
-watch(
-	() => props.customStyle,
-	() => {
-		initcustomClass();
-	}
-);
 </script>
 <style scoped>
 .zx-flex-box {

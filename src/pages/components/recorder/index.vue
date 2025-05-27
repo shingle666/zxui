@@ -148,7 +148,6 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
-import zxRecorder from './zx-recorder.vue';
 
 // 组件引用
 const basicRecorder = ref(null);

@@ -798,6 +798,186 @@
 			"style": {
 				"navigationBarTitleText": "tabbar 组件"
 			}
+		},
+		{
+			"path": "pages/components/divider/index",
+			"style": {
+				"navigationBarTitleText": "divider 组件"
+			}
+		},
+		{
+			"path": "pages/components/line/index",
+			"style": {
+				"navigationBarTitleText": "line 组件"
+			}
+		},
+		{
+			"path": "pages/components/input/index",
+			"style": {
+				"navigationBarTitleText": "input 组件"
+			}
+		},
+		{
+			"path": "pages/components/radio/index",
+			"style": {
+				"navigationBarTitleText": "radio 组件"
+			}
+		},
+		{
+			"path": "pages/components/radio/group",
+			"style": {
+				"navigationBarTitleText": "radio-group 组件"
+			}
+		},
+		{
+			"path": "pages/components/form/index",
+			"style": {
+				"navigationBarTitleText": "form 组件"
+			}
+		},
+		{
+			"path": "pages/components/picker/index",
+			"style": {
+				"navigationBarTitleText": "picker 组件"
+			}
+		},
+		{
+			"path": "pages/components/picker/view",
+			"style": {
+				"navigationBarTitleText": "picker-view 组件"
+			}
+		},
+		{
+			"path": "pages/components/sms-code/index",
+			"style": {
+				"navigationBarTitleText": "sms-code 组件"
+			}
+		},
+		{
+			"path": "pages/components/time/picker",
+			"style": {
+				"navigationBarTitleText": "time-picker 组件"
+			}
+		},
+		{
+			"path": "pages/components/time/select",
+			"style": {
+				"navigationBarTitleText": "time-select 组件"
+			}
+		},
+		{
+			"path": "pages/components/timeline/index",
+			"style": {
+				"navigationBarTitleText": "timeline 组件"
+			}
+		},
+		{
+			"path": "pages/components/tree/index",
+			"style": {
+				"navigationBarTitleText": "tree 组件"
+			}
+		},
+		{
+			"path": "pages/components/progress/index",
+			"style": {
+				"navigationBarTitleText": "progress 组件"
+			}
+		},
+		{
+			"path": "pages/components/toolbar/index",
+			"style": {
+				"navigationBarTitleText": "toolbar 组件"
+			}
+		},
+		{
+			"path": "pages/components/page-header/index",
+			"style": {
+				"navigationBarTitleText": "page-header 组件"
+			}
+		},
+		{
+			"path": "pages/components/notify/index",
+			"style": {
+				"navigationBarTitleText": "notify 组件"
+			}
+		},
+		{
+			"path": "pages/components/no-network/index",
+			"style": {
+				"navigationBarTitleText": "no-network 组件"
+			}
+		},
+		{
+			"path": "pages/components/notice-bar/index",
+			"style": {
+				"navigationBarTitleText": "notice-bar 组件"
+			}
+		},
+		{
+			"path": "pages/components/loading/index",
+			"style": {
+				"navigationBarTitleText": "loading 组件"
+			}
+		},
+		{
+			"path": "pages/components/web-view/index",
+			"style": {
+				"navigationBarTitleText": "web-view 组件"
+			}
+		},
+		{
+			"path": "pages/components/richtext/index",
+			"style": {
+				"navigationBarTitleText": "richtext 组件"
+			}
+		},
+		{
+			"path": "pages/components/recorder/index",
+			"style": {
+				"navigationBarTitleText": "recorder 组件"
+			}
+		},
+		{
+			"path": "pages/components/more/index",
+			"style": {
+				"navigationBarTitleText": "more 组件"
+			}
+		},
+		{
+			"path": "pages/components/lucky/box",
+			"style": {
+				"navigationBarTitleText": "zx-lucky-box 组件"
+			}
+		},
+		{
+			"path": "pages/components/turntable/index",
+			"style": {
+				"navigationBarTitleText": "zx-turntable 组件"
+			}
+		},
+		{
+			"path": "pages/components/transfer/index",
+			"style": {
+				"navigationBarTitleText": "zx-transfer 组件"
+			}
+		},
+		{
+			"path": "pages/components/cascader/index",
+			"style": {
+				"navigationBarTitleText": "zx-cascader 组件"
+			}
+		},
+		{
+			"path": "pages/components/label/index",
+			"style": {
+				"navigationBarTitleText": "zx-label 组件"
+			}
+		},
+		{
+			"path": "pages/components/carousel/index",
+			"style": {
+				"navigationBarTitleText": "zx-carousel 组件"
+			}
 		}
 	],
 	"globalStyle": {

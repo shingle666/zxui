@@ -273,16 +273,16 @@ const pagers = computed(() => {
   const pagerCount = props.pagerCount
   const halfPagerCount = (pagerCount - 1) / 2
   const currentPage = innerCurrentPage.value
-  const pageCount = pageCount.value
+  const totalPageCount = pageCount.value
 
   let showPrevMore = false
   let showNextMore = false
 
-  if (pageCount > pagerCount) {
+  if (totalPageCount > pagerCount) {
     if (currentPage > pagerCount - halfPagerCount) {
       showPrevMore = true
     }
-    if (currentPage < pageCount - halfPagerCount) {
+    if (currentPage < totalPageCount - halfPagerCount) {
       showNextMore = true
     }
   }
@@ -290,8 +290,8 @@ const pagers = computed(() => {
   const array = []
 
   if (showPrevMore && !showNextMore) {
-    const startPage = pageCount - (pagerCount - 2)
-    for (let i = startPage; i < pageCount; i++) {
+    const startPage = totalPageCount - (pagerCount - 2)
+    for (let i = startPage; i < totalPageCount; i++) {
       array.push(i)
     }
   } else if (!showPrevMore && showNextMore) {
@@ -304,7 +304,7 @@ const pagers = computed(() => {
       array.push(i)
     }
   } else {
-    for (let i = 2; i < pageCount; i++) {
+    for (let i = 2; i < totalPageCount; i++) {
       array.push(i)
     }
   }

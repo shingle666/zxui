@@ -389,21 +389,18 @@ function getItemType(item) {
 		if (item.type) {
 			return ['image', 'video', 'custom'].includes(item.type) ? item.type : 'image';
 		}
-		
 		// 检查是否有视频相关属性
 		if (item.video || item.videoUrl) {
 			return 'video';
 		}
-		
-		// 通过keyName或url判断
-		const url = getSource(item);
+		// 只判断字段，不再调用 getSource
+		const url = item[props.keyName] || item.url || item.image || item.src || '';
 		if (url) {
 			const videoExts = ['.mp4', '.mov', '.avi', '.wmv', '.flv', '.webm', '.m4v'];
 			const isVideo = videoExts.some(ext => url.toLowerCase().includes(ext));
 			return isVideo ? 'video' : 'image';
 		}
 	}
-	
 	return 'custom';
 }
 
@@ -420,17 +417,10 @@ function getSource(item) {
 	if (typeof item === 'string') {
 		return item;
 	}
-	
 	if (typeof item === 'object' && item !== null) {
-		// 视频类型特殊处理
-		if (getItemType(item) === 'video') {
-			return item.video || item.videoUrl || item[props.keyName] || item.url || '';
-		}
-		
-		// 图片类型
-		return item[props.keyName] || item.url || item.image || item.src || '';
+		// 只根据字段直接返回，不再调用 getItemType
+		return item.video || item.videoUrl || item[props.keyName] || item.url || item.image || item.src || '';
 	}
-	
 	return '';
 }
 

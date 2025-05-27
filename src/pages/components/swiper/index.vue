@@ -270,28 +270,28 @@ const controlCurrent = ref(0);
 
 // 图片列表
 const imageList = ref([
-	'https://cdn.uviewui.com/uview/swiper/swiper1.png',
-	'https://cdn.uviewui.com/uview/swiper/swiper2.png',
-	'https://cdn.uviewui.com/uview/swiper/swiper3.png',
-	'https://cdn.uviewui.com/uview/album/1.jpg'
+	'https://cdn.mp.ac.cn/banner/01.jpg',
+	'https://cdn.mp.ac.cn/banner/02.jpg',
+	'https://cdn.mp.ac.cn/banner/03.jpg',
+	'https://cdn.mp.ac.cn/banner/04.jpg'
 ]);
 
 // 带标题的图片列表
 const imageListWithTitle = ref([
 	{
-		url: 'https://cdn.uviewui.com/uview/swiper/swiper1.png',
+		url: 'https://cdn.mp.ac.cn/banner/01.jpg',
 		title: '美丽的自然风光'
 	},
 	{
-		url: 'https://cdn.uviewui.com/uview/swiper/swiper2.png',
+		url: 'https://cdn.mp.ac.cn/banner/02.jpg',
 		title: '现代都市建筑'
 	},
 	{
-		url: 'https://cdn.uviewui.com/uview/swiper/swiper3.png',
+		url: 'https://cdn.mp.ac.cn/banner/03.jpg',
 		title: '宁静的湖泊景色'
 	},
 	{
-		url: 'https://cdn.uviewui.com/uview/album/1.jpg',
+		url: 'https://cdn.mp.ac.cn/banner/04.jpg',
 		title: '壮观的山峰雪景'
 	}
 ]);
@@ -300,13 +300,13 @@ const imageListWithTitle = ref([
 const videoList = ref([
 	{
 		type: 'video',
-		url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-		poster: 'https://cdn.uviewui.com/uview/swiper/swiper1.png',
+		url: 'https://cdn.mp.ac.cn/video/imlove.mp4',
+		poster: 'https://cdn.mp.ac.cn/banner/01.jpg',
 		title: '示例视频1'
 	},
 	{
 		type: 'image', // 混合显示图片
-		url: 'https://cdn.uviewui.com/uview/swiper/swiper2.png',
+		url: 'https://cdn.mp.ac.cn/banner/02.jpg',
 		title: '图片内容'
 	}
 ]);

@@ -1,4 +1,6 @@
-<template>
+TypeError: Cannot set properties of undefined (setting 'classIn')
+    at initcustomClass (zx-flex.vue:102:15)
+    at zx-flex.vue:84:2<template>
   <view class="demo-container">
     <text class="title">基础用法</text>
     <zx-flex>

@@ -58,12 +58,9 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import ZxDivider from './zx-divider.vue'
+<script setup>
+import { ref } from 'vue';
 
-defineOptions({
-  name: 'ZxDividerDemo'
-})
 </script>
 
 <style scoped lang="scss">

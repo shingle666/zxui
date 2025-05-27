@@ -7,7 +7,7 @@
 			<view class="section-title">基础用法</view>
 			<view class="section-content">
 				<zx-image 
-					src="/static/images/demo1.jpg" 
+					src="https://cdn.mp.ac.cn/banner/01.jpg" 
 					width="300rpx" 
 					height="200rpx"
 				></zx-image>
@@ -80,10 +80,10 @@
 				</view>
 				<view class="placeholder-demo">
 					<zx-image 
-						src="https://example.com/not-exist.jpg" 
+						src="https://cdn.mp.ac.cn/banner/01.jpg" 
 						width="200rpx" 
 						height="200rpx"
-						errorImage="/static/images/error.png"
+						errorImage="https://cdn.mp.ac.cn/images/error.png"
 					></zx-image>
 					<text class="demo-text">加载失败显示错误图</text>
 				</view>
@@ -145,80 +145,73 @@
 	</view>
 </template>
 
-<script>
-import zxImage from '@/components/zx-image/zx-image.vue'
+<script setup>
+import { ref, onMounted } from 'vue'
 
-export default {
-	components: {
-		zxImage
-	},
-	data() {
-		return {
-			imageSrc: '/static/images/demo1.jpg',
-			eventLog: '',
-			modeList: [
-				{ mode: 'scaleToFill', index: 0 },
-				{ mode: 'aspectFit', index: 1 },
-				{ mode: 'aspectFill', index: 2 },
-				{ mode: 'widthFix', index: 3 },
-				{ mode: 'heightFix', index: 4 },
-				{ mode: 'top', index: 5 },
-				{ mode: 'bottom', index: 6 },
-				{ mode: 'center', index: 7 },
-				{ mode: 'left', index: 8 },
-				{ mode: 'right', index: 9 },
-				{ mode: 'top left', index: 10 },
-				{ mode: 'top right', index: 11 },
-				{ mode: 'bottom left', index: 12 },
-				{ mode: 'bottom right', index: 13 }
-			],
-			lazyLoadList: []
-		}
-	},
-	onLoad() {
-		// 生成懒加载图片列表
-		this.generateLazyLoadList();
-	},
-	methods: {
-		generateLazyLoadList() {
-			const baseUrl = '/static/images/';
-			const images = ['demo1.jpg', 'demo2.jpg', 'demo3.jpg', 'demo4.jpg', 'demo5.jpg'];
-			
-			// 如果没有这些图片，可以使用相同的图片多次
-			let list = [];
-			for (let i = 0; i < 10; i++) {
-				const randomIndex = Math.floor(Math.random() * images.length);
-				list.push({
-					src: baseUrl + images[randomIndex % images.length]
-				});
-			}
-			
-			this.lazyLoadList = list;
-		},
-		loadManualImage() {
-			this.$refs.manualImage.loadImage();
-			this.logEvent('手动触发加载图片');
-		},
-		onImageLoad(e) {
-			this.logEvent(`图片 ${e.index + 1} 加载成功，尺寸: ${e.detail.width}x${e.detail.height}`);
-		},
-		onImageError(e) {
-			this.logEvent(`图片 ${e.index + 1} 加载失败`);
-		},
-		onImageClick(e) {
-			this.logEvent(`点击了图片 ${e.index + 1}`);
-		},
-		logEvent(message) {
-			this.eventLog = message + '\n' + this.eventLog;
-			if (this.eventLog.length > 500) {
-				this.eventLog = this.eventLog.substring(0, 500) + '...';
-			}
-		}
+const imageSrc = ref('https://cdn.mp.ac.cn/banner/01.jpg')
+const eventLog = ref('')
+const modeList = [
+	{ mode: 'scaleToFill', index: 0 },
+	{ mode: 'aspectFit', index: 1 },
+	{ mode: 'aspectFill', index: 2 },
+	{ mode: 'widthFix', index: 3 },
+	{ mode: 'heightFix', index: 4 },
+	{ mode: 'top', index: 5 },
+	{ mode: 'bottom', index: 6 },
+	{ mode: 'center', index: 7 },
+	{ mode: 'left', index: 8 },
+	{ mode: 'right', index: 9 },
+	{ mode: 'top left', index: 10 },
+	{ mode: 'top right', index: 11 },
+	{ mode: 'bottom left', index: 12 },
+	{ mode: 'bottom right', index: 13 }
+]
+const lazyLoadList = ref([])
+const manualImage = ref(null)
+
+function generateLazyLoadList() {
+	const baseUrl = 'https://cdn.mp.ac.cn/banner/'
+	const images = ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg']
+	let list = []
+	for (let i = 0; i < 10; i++) {
+		const randomIndex = Math.floor(Math.random() * images.length)
+		list.push({
+			src: baseUrl + images[randomIndex % images.length]
+		})
+	}
+	lazyLoadList.value = list
+}
+
+function loadManualImage() {
+	manualImage.value && manualImage.value.loadImage()
+	logEvent('手动触发加载图片')
+}
+
+function onImageLoad(e) {
+	logEvent(`图片 ${e.index + 1} 加载成功，尺寸: ${e.detail.width}x${e.detail.height}`)
+}
+
+function onImageError(e) {
+	logEvent(`图片 ${e.index + 1} 加载失败`)
+}
+
+function onImageClick(e) {
+	logEvent(`点击了图片 ${e.index + 1}`)
+}
+
+function logEvent(message) {
+	eventLog.value = message + '\n' + eventLog.value
+	if (eventLog.value.length > 500) {
+		eventLog.value = eventLog.value.substring(0, 500) + '...'
 	}
 }
+
+onMounted(() => {
+	generateLazyLoadList()
+})
 </script>
 
-<style>
+<style lang="scss" scoped>
 .container {
 	padding: 20rpx;
 }

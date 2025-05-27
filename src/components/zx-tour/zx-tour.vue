@@ -35,8 +35,9 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, nextTick } from 'vue'
-import { onReady, onShow } from '@dcloudio/uni-app'
+import { ref, watch, computed, nextTick,getCurrentInstance,onMounted } from 'vue'
+
+const { proxy } = getCurrentInstance()
 
 const props = defineProps({
   modelValue: Boolean, // 控制引导显示
@@ -109,7 +110,7 @@ function updateStepRect() {
   }
   // 跨端 selector 查询
   uni.createSelectorQuery()
-    .in(getCurrentInstance().proxy)
+    .in(proxy)
     .select(step.selector)
     .boundingClientRect(rect => {
       if (rect) {
@@ -172,12 +173,10 @@ watch(current, () => {
   nextTick(updateStepRect)
 })
 
-onReady(() => {
+onMounted(() => {
   if (props.modelValue) updateStepRect()
 })
-onShow(() => {
-  if (props.modelValue) updateStepRect()
-})
+
 </script>
 
 <style scoped>

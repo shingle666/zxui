@@ -133,8 +133,8 @@ function swipeClick(e, index) {
     
     <view class="section">
       <view class="section-title">基本用法</view>
-      <ZxSwipeAction>
-        <ZxSwipeActionItem 
+      <zx-swipe-action>
+        <zx-swipe-action-item 
           :left-options="options2"
           :right-options="options1"
           :threshold="0"
@@ -143,9 +143,9 @@ function swipeClick(e, index) {
           <view class="content-box" @click="contentClick">
             <text class="content-text">使用数据填充</text>
           </view>
-        </ZxSwipeActionItem>
+        </zx-swipe-action-item>
         
-        <ZxSwipeActionItem @click="bindClick">
+        <zx-swipe-action-item @click="bindClick">
           <template #left>
             <view class="slot-button">
               <text 
@@ -162,9 +162,9 @@ function swipeClick(e, index) {
               <text class="slot-button-text">删除</text>
             </view>
           </template>
-        </ZxSwipeActionItem>
+        </zx-swipe-action-item>
         
-        <ZxSwipeActionItem
+        <zx-swipe-action-item
           :right-options="options1"
           @click="bindClick"
         >
@@ -179,19 +179,19 @@ function swipeClick(e, index) {
           <view class="content-box" @click="contentClick">
             <text class="content-text">数据与插槽混合使用</text>
           </view>
-        </ZxSwipeActionItem>
-      </ZxSwipeAction>
+        </zx-swipe-action-item>
+      </zx-swipe-action>
     </view>
     
     <view class="section">
       <view class="section-title">禁止滑动</view>
-      <ZxSwipeAction>
-        <ZxSwipeActionItem :disabled="true">
+      <zx-swipe-action>
+        <zx-swipe-action-item :disabled="true">
           <view class="content-box">
             <text class="content-text">禁止左右滑动</text>
           </view>
-        </ZxSwipeActionItem>
-      </ZxSwipeAction>
+        </zx-swipe-action-item>
+      </zx-swipe-action>
     </view>
     
     <view class="section">
@@ -204,8 +204,8 @@ function swipeClick(e, index) {
           <text class="button-text">当前状态：{{ isOpened ? '打开' : '关闭' }}</text>
         </view>
       </view>
-      <ZxSwipeAction>
-        <ZxSwipeActionItem
+      <zx-swipe-action>
+        <zx-swipe-action-item
           :left-options="options2"
           :right-options="options2"
           :show="isOpened ? 'right' : 'none'"
@@ -216,14 +216,14 @@ function swipeClick(e, index) {
           <view class="content-box">
             <text class="content-text">使用变量控制组件的开启状态</text>
           </view>
-        </ZxSwipeActionItem>
-      </ZxSwipeAction>
+        </zx-swipe-action-item>
+      </zx-swipe-action>
     </view>
     
     <view class="section">
       <view class="section-title">滑动列表</view>
-      <ZxSwipeAction>
-        <ZxSwipeActionItem
+      <zx-swipe-action>
+        <zx-swipe-action-item
           v-for="(item, index) in swipeList"
           :key="item.id"
           :right-options="item.options"
@@ -233,8 +233,8 @@ function swipeClick(e, index) {
           <view class="content-box">
             <text class="content-text">{{ item.content }}</text>
           </view>
-        </ZxSwipeActionItem>
-      </ZxSwipeAction>
+        </zx-swipe-action-item>
+      </zx-swipe-action>
     </view>
   </view>
 </template>

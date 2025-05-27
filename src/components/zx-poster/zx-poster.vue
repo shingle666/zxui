@@ -4,7 +4,8 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, defineEmits, defineProps } from 'vue'
+import { ref, watch, onMounted,getCurrentInstance } from 'vue'
+const { proxy } = getCurrentInstance()
 
 const emit = defineEmits(['ready'])
 const props = defineProps({
@@ -542,7 +543,7 @@ function startDraw(data, callback) {
 								callback && callback(false)
 							}
 						},
-						getCurrentInstance().proxy
+						proxy
 					)
 					// #endif
 				}, time)

@@ -1,7 +1,5 @@
 <template>
 	<view class="container">
-		<zx-navbar title="Tag 标签" left-icon="arrow-left" @leftClick="$zx.route()"></zx-navbar>
-		
 		<view class="demo-wrap">
 			<!-- 基础用法 -->
 			<view title="基础用法">
@@ -296,7 +294,7 @@ const handleCheck = (checked) => {
 
 <style lang="scss" scoped>
 .container {
-	background-color: #f5f5f5;
+	margin-top: 20rpx;
 	min-height: 100vh;
 }
 

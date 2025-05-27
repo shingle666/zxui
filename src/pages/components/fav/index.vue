@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<uni-card is-full title="基础用法">
+		<zx-card is-full title="基础用法">
 			<view class="fav-demo-item">
 				<view class="fav-demo-title">默认未收藏状态</view>
 				<zx-fav :checked="false" @click="onBasicClick"></zx-fav>
@@ -9,9 +9,9 @@
 				<view class="fav-demo-title">已收藏状态</view>
 				<zx-fav :checked="true" @click="onBasicClick"></zx-fav>
 			</view>
-		</uni-card>
+		</zx-card>
 		
-		<uni-card is-full title="自定义样式">
+		<zx-card is-full title="自定义样式">
 			<view class="fav-demo-item">
 				<view class="fav-demo-title">自定义背景色和文本色</view>
 				<zx-fav 
@@ -40,9 +40,9 @@
 					@click="onWidthClick"
 				></zx-fav>
 			</view>
-		</uni-card>
+		</zx-card>
 		
-		<uni-card is-full title="禁用状态">
+		<zx-card is-full title="禁用状态">
 			<view class="fav-demo-item">
 				<view class="fav-demo-title">禁用未收藏状态</view>
 				<zx-fav :checked="false" disabled></zx-fav>
@@ -51,9 +51,9 @@
 				<view class="fav-demo-title">禁用已收藏状态</view>
 				<zx-fav :checked="true" disabled></zx-fav>
 			</view>
-		</uni-card>
+		</zx-card>
 		
-		<uni-card is-full title="自定义内容">
+		<zx-card is-full title="自定义内容">
 			<view class="fav-demo-item">
 				<view class="fav-demo-title">自定义文本内容</view>
 				<zx-fav 
@@ -62,9 +62,9 @@
 					@click="onCustomTextClick"
 				></zx-fav>
 			</view>
-		</uni-card>
+		</zx-card>
 		
-		<uni-card is-full title="自定义图标">
+		<zx-card is-full title="自定义图标">
 			<view class="fav-demo-item">
 				<view class="fav-demo-title">无图标</view>
 				<zx-fav 
@@ -82,7 +82,7 @@
 					@click="onHeartIconClick"
 				></zx-fav>
 			</view>
-		</uni-card>
+		</zx-card>
 	</view>
 </template>
 

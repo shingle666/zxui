@@ -1,7 +1,7 @@
 <template>
   <view v-if="show" class="zx-notice-bar" :style="{ backgroundColor }" @click="onClick">
     <slot name="icon">
-      <uni-icons v-if="showIcon" class="zx-notice-bar-icon" type="sound" :color="color" :size="fontSize * 1.5" />
+      <zx-icon v-if="showIcon" class="zx-notice-bar-icon" name="sound" :color="color" :size="fontSize * 1.5 + 'px'" />
     </slot>
     <view class="zx-notice-bar__content-wrapper" :class="{
       'zx-notice-bar__content-wrapper--scrollable': scrollable,
@@ -30,18 +30,16 @@
     </view>
     <view v-if="isShowGetMore" class="zx-notice-bar__more" @click.stop="clickMore">
       <text v-if="moreText.length > 0" :style="{ color: moreColor, fontSize: fontSize + 'px' }">{{ moreText }}</text>
-      <uni-icons v-else type="right" :color="moreColor" :size="fontSize * 1.1" />
+      <zx-icon v-else name="arrow-right" :color="moreColor" :size="fontSize * 1.1 + 'px'" />
     </view>
     <view class="zx-notice-bar-close" v-if="isShowClose">
-      <uni-icons type="closeempty" :color="color" :size="fontSize * 1.1" @click.stop="close" />
+      <zx-icon name="close" :color="color" :size="fontSize * 1.1 + 'px'" @click.stop="close" />
     </view>
   </view>
 </template>
 
 <script setup>
-import { ref, computed, watch, nextTick } from 'vue';
-import { onMounted } from 'vue';
-import UniIcons from '@/uni_modules/uni-icons/components/uni-icons/uni-icons.vue';
+import { ref, computed, watch, nextTick,onMounted } from 'vue';
 
 const props = defineProps({
   text: { type: String, default: '' },
@@ -104,6 +102,7 @@ onMounted(() => {
     initAnimation();
   });
 });
+
 </script>
 
 <style lang="scss" scoped>

@@ -45,22 +45,22 @@ const { proxy } = getCurrentInstance();
 const props = defineProps({
   // 滚动高度达到此参数值才出现
   visibilityHeight: {
-    type: Number,
+    type: [Number, String],
     default: 200,
   },
   // 控制其显示位置，距离页面右边距
   right: {
-    type: Number,
+    type: [Number, String],
     default: 10,
   },
   // 控制其显示位置，距离页面底部距离
   bottom: {
-    type: Number,
+    type: [Number, String],
     default: 120,
   },
   // 控制其显示位置，距离页面左边距，设置后优先级高于right
   left: {
-    type: Number,
+    type: [Number, String],
     default: 0,
   },
   // 当前滚动距离，用于控制显示/隐藏
@@ -165,7 +165,7 @@ watch(
 const contentStyle = computed(() => {
   let styles = {
     position: "fixed",
-    bottom: `${props.bottom}rpx`,
+    bottom: `${parseInt(props.bottom)}rpx`,
     width: props.size,
     height: props.size,
     zIndex: props.zIndex,
@@ -175,9 +175,9 @@ const contentStyle = computed(() => {
 
   // 设置位置 - left 优先级高于 right
   if (props.left) {
-    styles.left = `${props.left}rpx`;
+    styles.left = `${parseInt(props.left)}rpx`;
   } else {
-    styles.right = `${props.right}rpx`;
+    styles.right = `${parseInt(props.right)}rpx`;
   }
 
   // 设置圆角

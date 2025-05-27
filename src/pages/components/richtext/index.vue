@@ -223,7 +223,6 @@ const nodes = [{
 
 <script setup>
 import { ref } from 'vue'
-import zxRichtext from '@/components/zx-richtext/zx-richtext.vue'
 
 // 基础内容
 const basicContent = ref(`

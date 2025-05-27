@@ -5,16 +5,16 @@
       <view class="subtitle">返回顶部按钮，方便快速返回顶部的场景</view>
     </view>
 
+    <!-- 演示切换按钮 -->
+    <view style="display: flex; flex-wrap: wrap; gap: 20rpx; margin-bottom: 40rpx;">
+      <button v-for="item in demoList" :key="item.value" size="mini" :type="currentDemo === item.value ? 'primary' : 'default'" @click="currentDemo = item.value">{{ item.label }}</button>
+    </view>
+
     <!-- 基础用法 -->
     <view class="section">
       <view class="section-title">基础用法</view>
       <view class="demo-box">
-        <image class="demo-image" src="/static/images/demo.jpg" mode="widthFix"></image>
-        <image class="demo-image" src="/static/images/demo.jpg" mode="widthFix"></image>
-        <image class="demo-image" src="/static/images/demo.jpg" mode="widthFix"></image>
-        
-        <!-- 基础用法示例 -->
-        <zx-backtop :scrollTop="scrollTop"></zx-backtop>
+        <zx-backtop v-if="currentDemo === 'base'" :scrollTop="scrollTop"></zx-backtop>
       </view>
     </view>
 
@@ -25,33 +25,21 @@
         <view class="style-item">
           <view class="item-title">方形按钮</view>
           <view class="style-showcase">
-            <zx-backtop 
-              mode="square" 
-              :scrollTop="scrollTop"
-              backgroundColor="#fafafa"
-            ></zx-backtop>
+            <zx-backtop v-if="currentDemo === 'square'" :scrollTop="scrollTop" mode="square"></zx-backtop>
           </view>
         </view>
         
         <view class="style-item">
           <view class="item-title">自定义颜色</view>
           <view class="style-showcase">
-            <zx-backtop 
-              :scrollTop="scrollTop" 
-              backgroundColor="#2979ff" 
-              iconColor="#ffffff"
-            ></zx-backtop>
+            <zx-backtop v-if="currentDemo === 'color'" :scrollTop="scrollTop" backgroundColor="#2979ff" iconColor="#fff"></zx-backtop>
           </view>
         </view>
         
         <view class="style-item">
           <view class="item-title">自定义大小</view>
           <view class="style-showcase">
-            <zx-backtop 
-              :scrollTop="scrollTop" 
-              size="120rpx"
-              iconSize="60rpx"
-            ></zx-backtop>
+            <zx-backtop v-if="currentDemo === 'size'" :scrollTop="scrollTop" size="120rpx" iconSize="60rpx"></zx-backtop>
           </view>
         </view>
       </view>
@@ -64,21 +52,14 @@
         <view class="style-item">
           <view class="item-title">左侧按钮</view>
           <view class="style-showcase">
-            <zx-backtop 
-              :scrollTop="scrollTop" 
-              position="left"
-            ></zx-backtop>
+            <zx-backtop v-if="currentDemo === 'left'" :scrollTop="scrollTop" left="100" bottom="200"></zx-backtop>
           </view>
         </view>
         
         <view class="style-item">
           <view class="item-title">自定义距离</view>
           <view class="style-showcase">
-            <zx-backtop 
-              :scrollTop="scrollTop" 
-              bottom="150rpx"
-              right="80rpx"
-            ></zx-backtop>
+            <zx-backtop v-if="currentDemo === 'distance'" :scrollTop="scrollTop" right="80" bottom="150"></zx-backtop>
           </view>
         </view>
       </view>
@@ -91,30 +72,21 @@
         <view class="style-item">
           <view class="item-title">淡入动画 (默认)</view>
           <view class="style-showcase">
-            <zx-backtop 
-              :scrollTop="scrollTop" 
-              animation="fade"
-            ></zx-backtop>
+            <zx-backtop v-if="currentDemo === 'fade'" :scrollTop="scrollTop" animation="fade"></zx-backtop>
           </view>
         </view>
         
         <view class="style-item">
           <view class="item-title">滑入动画</view>
           <view class="style-showcase">
-            <zx-backtop 
-              :scrollTop="scrollTop" 
-              animation="slide"
-            ></zx-backtop>
+            <zx-backtop v-if="currentDemo === 'slide'" :scrollTop="scrollTop" animation="slide"></zx-backtop>
           </view>
         </view>
         
         <view class="style-item">
           <view class="item-title">缩放动画</view>
           <view class="style-showcase">
-            <zx-backtop 
-              :scrollTop="scrollTop" 
-              animation="scale"
-            ></zx-backtop>
+            <zx-backtop v-if="currentDemo === 'scale'" :scrollTop="scrollTop" animation="scale"></zx-backtop>
           </view>
         </view>
       </view>
@@ -127,40 +99,28 @@
         <view class="style-item">
           <view class="item-title">箭头图标 (默认)</view>
           <view class="style-showcase">
-            <zx-backtop 
-              :scrollTop="scrollTop" 
-              iconName="arrow-up"
-            ></zx-backtop>
+            <zx-backtop v-if="currentDemo === 'arrow'" :scrollTop="scrollTop" iconName="arrow-up"></zx-backtop>
           </view>
         </view>
         
         <view class="style-item">
           <view class="item-title">火箭图标</view>
           <view class="style-showcase">
-            <zx-backtop 
-              :scrollTop="scrollTop" 
-              iconName="rocket"
-            ></zx-backtop>
+            <zx-backtop v-if="currentDemo === 'rocket'" :scrollTop="scrollTop" iconName="rocket"></zx-backtop>
           </view>
         </view>
         
         <view class="style-item">
           <view class="item-title">TOP图标</view>
           <view class="style-showcase">
-            <zx-backtop 
-              :scrollTop="scrollTop" 
-              iconName="top"
-            ></zx-backtop>
+            <zx-backtop v-if="currentDemo === 'top'" :scrollTop="scrollTop" iconName="top"></zx-backtop>
           </view>
         </view>
         
         <view class="style-item">
           <view class="item-title">顶部图标</view>
           <view class="style-showcase">
-            <zx-backtop 
-              :scrollTop="scrollTop" 
-              iconName="dingbu"
-            ></zx-backtop>
+            <zx-backtop v-if="currentDemo === 'dingbu'" :scrollTop="scrollTop" iconName="dingbu"></zx-backtop>
           </view>
         </view>
       </view>
@@ -170,13 +130,7 @@
     <view class="section">
       <view class="section-title">震动反馈</view>
       <view class="demo-box">
-        <zx-backtop 
-          :scrollTop="scrollTop" 
-          :isVibrate="true"
-          backgroundColor="#ff9500"
-          iconColor="#ffffff"
-          @onClick="handleClick"
-        ></zx-backtop>
+        <zx-backtop v-if="currentDemo === 'vibrate'" :scrollTop="scrollTop" :vibrate="true" backgroundColor="#ff9500" iconColor="#fff" @click="handleClick"></zx-backtop>
         <view class="feedback-text">点击按钮体验震动效果</view>
       </view>
     </view>
@@ -185,12 +139,7 @@
     <view class="section">
       <view class="section-title">事件监听</view>
       <view class="demo-box">
-        <zx-backtop 
-          :scrollTop="scrollTop" 
-          @onClick="handleClick"
-          @onShow="handleShow"
-          @onHide="handleHide"
-        ></zx-backtop>
+        <zx-backtop :scrollTop="scrollTop" @click="handleClick" @show="handleShow" @hide="handleHide"></zx-backtop>
         <view class="event-log">
           <view class="log-title">事件日志：</view>
           <view class="log-content">
@@ -228,27 +177,55 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
+import { onPageScroll } from '@dcloudio/uni-app';
 
 // 滚动高度
 const scrollTop = ref(0);
+// 当前演示类型
+const currentDemo = ref('base');
 // 事件日志
 const eventLogs = ref([]);
+// 演示类型列表
+const demoList = [
+  { label: '基础用法', value: 'base' },
+  { label: '方形按钮', value: 'square' },
+  { label: '自定义颜色', value: 'color' },
+  { label: '自定义大小', value: 'size' },
+  { label: '左侧按钮', value: 'left' },
+  { label: '自定义距离', value: 'distance' },
+  { label: '淡入动画', value: 'fade' },
+  { label: '滑入动画', value: 'slide' },
+  { label: '缩放动画', value: 'scale' },
+  { label: '箭头图标', value: 'arrow' },
+  { label: '火箭图标', value: 'rocket' },
+  { label: 'TOP图标', value: 'top' },
+  { label: '顶部图标', value: 'dingbu' },
+  { label: '震动反馈', value: 'vibrate' }
+];
 // 参数列表
 const params = [
-  { name: 'mode', desc: '形状：circle/square', type: 'String', default: 'circle' },
-  { name: 'iconName', desc: '图标名称', type: 'String', default: 'arrow-up' },
-  { name: 'duration', desc: '滚动时间(ms)', type: 'Number', default: '300' },
-  { name: 'scrollTop', desc: '滚动距离', type: 'Number', default: '0' },
-  { name: 'top', desc: '显示阈值', type: 'Number', default: '100' },
-  { name: 'position', desc: '位置：right/left', type: 'String', default: 'right' },
-  { name: 'animation', desc: '动画：fade/slide/scale', type: 'String', default: 'fade' },
-  { name: 'isVibrate', desc: '是否震动', type: 'Boolean', default: 'false' }
+  { name: 'scrollTop', desc: '当前滚动距离，用于控制显示/隐藏', type: 'Number', default: '0' },
+  { name: 'visibilityHeight', desc: '滚动高度达到此值才出现', type: 'Number | String', default: '200' },
+  { name: 'right', desc: '距离页面右边距（rpx）', type: 'Number | String', default: '10' },
+  { name: 'bottom', desc: '距离页面底部距离（rpx）', type: 'Number | String', default: '120' },
+  { name: 'left', desc: '距离页面左边距（rpx，优先级高于right）', type: 'Number | String', default: '0' },
+  { name: 'duration', desc: '返回顶部滚动时间(ms)', type: 'Number', default: '300' },
+  { name: 'zIndex', desc: '层级', type: 'Number', default: '9999' },
+  { name: 'mode', desc: '返回顶部的形状：circle-圆形，square-方形', type: 'String', default: 'circle' },
+  { name: 'backgroundColor', desc: '背景色', type: 'String', default: '#ffffff' },
+  { name: 'size', desc: '组件大小（rpx）', type: 'String', default: '80rpx' },
+  { name: 'iconName', desc: '自定义图标', type: 'String', default: 'arrow-up' },
+  { name: 'iconColor', desc: '图标颜色', type: 'String', default: '#999999' },
+  { name: 'iconSize', desc: '图标大小（rpx）', type: 'String', default: '50rpx' },
+  { name: 'animation', desc: '动画效果：fade、slide、scale', type: 'String', default: 'fade' },
+  { name: 'vibrate', desc: '点击时是否震动反馈', type: 'Boolean', default: 'false' },
+  { name: 'customClass', desc: '自定义类名', type: 'String', default: '' }
 ];
 
-// 滚动监听
-const onPageScroll = (e) => {
+// 页面滚动监听
+onPageScroll((e) => {
   scrollTop.value = e.scrollTop;
-};
+});
 
 // 清空日志
 const clearLogs = () => {
@@ -273,15 +250,6 @@ const handleHide = () => {
   clearLogs();
 };
 
-// 页面挂载
-onMounted(() => {
-  uni.$on('onPageScroll', onPageScroll);
-});
-
-// 页面卸载
-onUnmounted(() => {
-  uni.$off('onPageScroll', onPageScroll);
-});
 </script>
 
 <style scoped>

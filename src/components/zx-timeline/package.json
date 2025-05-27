@@ -1,12 +1,18 @@
 {
-  "name": "zx-timeline",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-timeline",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "zx-timeline",
+    "timeline",
+    "时间轴",
+    "timeline",
+    "时间轴"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
-  "description": ""
+  "description": "时间轴组件"
 }

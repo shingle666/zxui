@@ -14,8 +14,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import zxPoster from '@/components/zx-poster/zx-poster.vue'
+import { ref, getCurrentInstance } from 'vue'
+const { proxy } = getCurrentInstance()
 
 const posterRef = ref(null)
 const posterUrl = ref('')

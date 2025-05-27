@@ -11,7 +11,7 @@
       >
         <!-- 前缀图标 -->
         <view v-if="prefixIcon" class="zx-date-picker__prefix-icon">
-          <text class="zx-icon" :class="prefixIcon"></text>
+          <zx-icon :name="prefixIcon" />
         </view>
 
         <!-- 输入值显示 -->
@@ -31,12 +31,12 @@
           class="zx-date-picker__clear-icon"
           @click.stop="handleClear"
         >
-          <text class="zx-icon zx-icon-close-circle"></text>
+          <zx-icon name="close-circle" />
         </view>
 
         <!-- 后缀图标 -->
         <view v-else class="zx-date-picker__suffix-icon">
-          <text class="zx-icon" :class="suffixIcon"></text>
+          <zx-icon :name="suffixIcon" />
         </view>
       </view>
     </view>
@@ -89,19 +89,19 @@
         <template v-if="type === 'date' || type === 'datetime'">
           <view class="zx-date-picker__header">
             <view class="zx-date-picker__nav" @click="prevYear">
-              <text class="zx-icon zx-icon-arrow-left-double"></text>
+              <zx-icon name="arrow-left-double" />
             </view>
             <view class="zx-date-picker__nav" @click="prevMonth">
-              <text class="zx-icon zx-icon-arrow-left"></text>
+              <zx-icon name="arrow-left" />
             </view>
             <view class="zx-date-picker__current">
               <text>{{ currentYear }}年{{ currentMonth }}月</text>
             </view>
             <view class="zx-date-picker__nav" @click="nextMonth">
-              <text class="zx-icon zx-icon-arrow-right"></text>
+              <zx-icon name="arrow-right" />
             </view>
             <view class="zx-date-picker__nav" @click="nextYear">
-              <text class="zx-icon zx-icon-arrow-right-double"></text>
+              <zx-icon name="arrow-right-double" />
             </view>
           </view>
 
@@ -168,19 +168,19 @@
             <view class="zx-date-picker__panel zx-date-picker__panel--left">
               <view class="zx-date-picker__header">
                 <view class="zx-date-picker__nav" @click="prevYear('left')">
-                  <text class="zx-icon zx-icon-arrow-left-double"></text>
+                  <zx-icon name="arrow-left-double" />
                 </view>
                 <view class="zx-date-picker__nav" @click="prevMonth('left')">
-                  <text class="zx-icon zx-icon-arrow-left"></text>
+                  <zx-icon name="arrow-left" />
                 </view>
                 <view class="zx-date-picker__current">
                   <text>{{ leftYear }}年{{ leftMonth }}月</text>
                 </view>
                 <view class="zx-date-picker__nav" @click="nextMonth('left')">
-                  <text class="zx-icon zx-icon-arrow-right"></text>
+                  <zx-icon name="arrow-right" />
                 </view>
                 <view class="zx-date-picker__nav" @click="nextYear('left')">
-                  <text class="zx-icon zx-icon-arrow-right-double"></text>
+                  <zx-icon name="arrow-right-double" />
                 </view>
               </view>
 
@@ -211,19 +211,19 @@
             <view class="zx-date-picker__panel zx-date-picker__panel--right">
               <view class="zx-date-picker__header">
                 <view class="zx-date-picker__nav" @click="prevYear('right')">
-                  <text class="zx-icon zx-icon-arrow-left-double"></text>
+                  <zx-icon name="arrow-left-double" />
                 </view>
                 <view class="zx-date-picker__nav" @click="prevMonth('right')">
-                  <text class="zx-icon zx-icon-arrow-left"></text>
+                  <zx-icon name="arrow-left" />
                 </view>
                 <view class="zx-date-picker__current">
                   <text>{{ rightYear }}年{{ rightMonth }}月</text>
                 </view>
                 <view class="zx-date-picker__nav" @click="nextMonth('right')">
-                  <text class="zx-icon zx-icon-arrow-right"></text>
+                  <zx-icon name="arrow-right" />
                 </view>
                 <view class="zx-date-picker__nav" @click="nextYear('right')">
-                  <text class="zx-icon zx-icon-arrow-right-double"></text>
+                  <zx-icon name="arrow-right-double" />
                 </view>
               </view>
 
@@ -311,13 +311,13 @@
         <template v-else-if="type === 'month'">
           <view class="zx-date-picker__header">
             <view class="zx-date-picker__nav" @click="prevYear">
-              <text class="zx-icon zx-icon-arrow-left-double"></text>
+              <zx-icon name="arrow-left-double" />
             </view>
             <view class="zx-date-picker__current">
               <text>{{ currentYear }}年</text>
             </view>
             <view class="zx-date-picker__nav" @click="nextYear">
-              <text class="zx-icon zx-icon-arrow-right-double"></text>
+              <zx-icon name="arrow-right-double" />
             </view>
           </view>
 
@@ -338,13 +338,13 @@
         <template v-else-if="type === 'year'">
           <view class="zx-date-picker__header">
             <view class="zx-date-picker__nav" @click="prevDecade">
-              <text class="zx-icon zx-icon-arrow-left-double"></text>
+              <zx-icon name="arrow-left-double" />
             </view>
             <view class="zx-date-picker__current">
               <text>{{ startYear }}-{{ endYear }}</text>
             </view>
             <view class="zx-date-picker__nav" @click="nextDecade">
-              <text class="zx-icon zx-icon-arrow-right-double"></text>
+              <zx-icon name="arrow-right-double" />
             </view>
           </view>
 
@@ -370,7 +370,7 @@ import { ref, reactive, computed, watch, onMounted, nextTick } from "vue";
 
 /**
  * zx-date-picker 日期选择器组件
- * @description 基于Element Plus设计的日期选择器组件，支持单个日期、日期范围、年月等多种选择模式
+ * @description 日期选择器组件，支持单个日期、日期范围、年月等多种选择模式
  */
 
 // Define emits
@@ -468,12 +468,12 @@ const props = defineProps({
   // 后缀图标
   suffixIcon: {
     type: String,
-    default: "zx-icon-calendar",
+    default: "calendar",
   },
   // 清除图标
   clearIcon: {
     type: String,
-    default: "zx-icon-close-circle",
+    default: "close-circle",
   },
   // 是否触发表单验证
   validateEvent: {
@@ -1733,33 +1733,4 @@ defineExpose({
   color: #606266;
 }
 
-// 图标样式
-.zx-icon {
-  font-family: "iconfont";
-  font-size: 28rpx;
-
-  &-calendar::before {
-    content: "\e6bb";
-  }
-
-  &-close-circle::before {
-    content: "\e6a4";
-  }
-
-  &-arrow-left::before {
-    content: "\e6be";
-  }
-
-  &-arrow-right::before {
-    content: "\e6c0";
-  }
-
-  &-arrow-left-double::before {
-    content: "\e6bd";
-  }
-
-  &-arrow-right-double::before {
-    content: "\e6bf";
-  }
-}
 </style>

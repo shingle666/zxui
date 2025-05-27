@@ -152,8 +152,14 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+
+$zx-tips-color: #666;
+$zx-light-color: #999;
+$zx-primary: #409eff;
+
 .zx-no-network {
-  @include flex(column);
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: -100px;
@@ -165,7 +171,8 @@ onMounted(() => {
   }
 
   &__app {
-    @include flex(row);
+    display: flex;
+    flex-direction: row;
     margin-top: 6px;
 
     &__setting {
@@ -181,7 +188,8 @@ onMounted(() => {
   }
 
   &__retry {
-    @include flex(row);
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     margin-top: 15px;
   }

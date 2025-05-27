@@ -62,7 +62,7 @@ const isActive = computed(() => {
 const shouldRender = computed(() => {
 	if (!props.lazy) return true;
 	// 延迟渲染：只有激活过的标签页才渲染
-	return tabsContext.renderedPanes?.includes(paneName.value);
+	return Array.isArray(tabsContext.renderedPanes) && tabsContext.renderedPanes.includes(paneName.value);
 });
 
 const paneClass = computed(() => {
