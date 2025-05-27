@@ -21,7 +21,7 @@ import { onLoad } from "@dcloudio/uni-app";
 const title = ref("功能组件");
 const datalist = ref([
   { title: "zx-waterfall 瀑布流组件", path: "/pages/components/waterfall/index" },
-  { title: "zx-pk 组件", path: "/pages/components/pk/index" },
+  { title: "zx-pk ", path: "/pages/components/pk/index" },
   { title: "zx-read-more 组件", path: "/pages/components/read-more/index" },
   { title: "zx-lucky-grid 幸运转盘组件", path: "/pages/components/lucky-grid/index" },
   { title: "zx-list 列表组件", path: "/pages/components/list/index" },
@@ -136,7 +136,7 @@ const datalist = ref([
   { title: "zx-swipe-action 滑动操作组件", path: "/pages/components/swipe-action/index" },
   { title: "zx-car-number 车牌号输入组件", path: "/pages/components/car-number/index" },
   { title: "zx-action-sheet 动作面板", path: "/pages/components/action-sheet/index" },
-  { title: "zx-barcode 条形码组件", path: "/pages/components/barcode/index" },
+  { title: "zx-barcode 条形码组件", path: "/pages/components/barcode/index" }
 ]);
 
 onLoad((options) => {
