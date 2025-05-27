@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://zxui.org">官方网站</a> |
-  <a href="https://github.com/tanzhenxing/zxui">GitHub</a> |
+  <a href="https://github.com/shingle666/zxui">GitHub</a> |
   <a href="https://zxui.org/components/intro.html">组件文档</a>
 </p>
 
