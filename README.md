@@ -404,7 +404,7 @@ zxui/
 
 ## 🤝 贡献
 
-我们欢迎所有的贡献，请阅读 [贡献指南](https://github.com/shingle666/zxui/blob/main/CONTRIBUTING.md) 来了解如何参与项目开发。
+我们欢迎所有的贡献，请阅读 [贡献指南](https://github.com/shingle666/zxui/CONTRIBUTING.md) 来了解如何参与项目开发。
 
 ### 贡献者
 
