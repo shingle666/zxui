@@ -21,7 +21,7 @@
       </view>
       <view class="result-box" v-if="result1">
         <text class="result-title">选中结果：</text>
-        <text class="result-content">{{result1}}</text>
+        <text class="result-content">{{ result1 }}</text>
       </view>
     </view>
     
@@ -48,7 +48,7 @@
       </view>
       <view class="result-box" v-if="result2">
         <text class="result-title">选中结果：</text>
-        <text class="result-content">{{result2}}</text>
+        <text class="result-content">{{ result2 }}</text>
       </view>
     </view>
     
@@ -68,7 +68,7 @@
       </view>
       <view class="result-box" v-if="result3">
         <text class="result-title">选中结果：</text>
-        <text class="result-content">{{result3}}</text>
+        <text class="result-content">{{ result3 }}</text>
       </view>
     </view>
   </view>
@@ -227,16 +227,17 @@ const handleSelect3 = (item) => {
 }
 
 .custom-item {
-  padding: 10rpx 0;
-  
-  .item-name {
-    font-size: 28rpx;
-    color: #606266;
-  }
-  
-  .item-addr {
-    font-size: 24rpx;
-    color: #b4b4b4;
-  }
+  display: flex;
+  flex-direction: column;
+}
+
+.item-name {
+  font-size: 28rpx;
+  color: #606266;
+}
+
+.item-addr {
+  font-size: 24rpx;
+  color: #b4b4b4;
 }
 </style>

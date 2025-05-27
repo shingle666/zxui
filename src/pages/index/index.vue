@@ -6,7 +6,10 @@
       <text class="slogan">多平台快速开发的UI框架</text>
       <text class="desc">zxUI是一套基于uni-app开发的跨平台UI框架，提供丰富组件、布局及界面库，让你一套代码多端发布。</text>
     </view>
-    <view v-for="(category, cIndex) in datalist" :key="cIndex" class="category-section">
+    <view class="search-bar-container">
+      <zx-search-bar v-model="searchValue" placeholder="功能搜索" @confirm="handleSearch" :bgColor="'#fff'" />
+    </view>
+    <view v-for="(category, cIndex) in filteredList" :key="cIndex" class="category-section">
       <view class="section-title">
         <text>{{ category.title }}</text>
       </view>
@@ -36,7 +39,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
 
 const title = ref("功能组件");
@@ -260,9 +263,35 @@ function onTabbarChange(name) {
 function handleClick(path) {
   uni.navigateTo({ url: path });
 }
+
+const searchValue = ref("");
+const filteredList = computed(() => {
+  if (!searchValue.value.trim()) return datalist.value;
+  return datalist.value
+    .map(category => {
+      const filteredItems = category.lists.filter(item =>
+        item.title.toLowerCase().includes(searchValue.value.toLowerCase())
+      );
+      return filteredItems.length
+        ? { ...category, lists: filteredItems }
+        : null;
+    })
+    .filter(Boolean);
+});
+
+function handleSearch() {
+  if (!searchValue.value.trim()) {
+    uni.showToast({ title: '请输入关键词', icon: 'none' });
+    return;
+  }
+  if (typeof uni.hideKeyboard === 'function') {
+    uni.hideKeyboard();
+  }
+  // filteredList 已自动响应，无需额外处理
+}
 </script>
 
-<style>
+<style scoped>
 .content {
   display: flex;
   flex-direction: column;
@@ -359,5 +388,26 @@ function handleClick(path) {
   color: #ccc;
   font-size: 36rpx;
   font-weight: 300;
+}
+
+.search-bar-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #fff;
+  padding: 16rpx 20rpx;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
+  margin: 24rpx 30rpx 20rpx 30rpx;
+}
+.search-bar-container .zx-searchbar {
+  flex: 1;
+}
+.search-bar-container .zx-button {
+  margin-left: 16rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 28rpx;
+  border-radius: 8rpx;
 }
 </style>

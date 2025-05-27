@@ -47,6 +47,8 @@
 
 <script setup>
 import { ref, watch, computed, nextTick } from 'vue'
+import { initVueI18n } from '@dcloudio/uni-i18n'
+import messages from './i18n/index.js'
 
 const props = defineProps({
   modelValue: {
@@ -105,21 +107,14 @@ const emit = defineEmits([
   'focus'
 ])
 
-const { t } = useI18n({
-  useScope: 'local',
-  messages: {
-    'zh-Hans': require('./i18n/zh-Hans.json'),
-    'zh-Hant': require('./i18n/zh-Hant.json'),
-    'en': require('./i18n/en.json')
-  }
-})
+const { t } = initVueI18n(messages)
 
 const inputValue = ref(props.modelValue)
 const showInput = ref(false)
 const focusSync = ref(false)
 
-const placeholderText = computed(() => props.placeholder || t('placeholder'))
-const cancelTextI18n = computed(() => props.cancelText || t('cancel'))
+const placeholderText = computed(() => props.placeholder || t('zx-search-bar.placeholder'))
+const cancelTextI18n = computed(() => props.cancelText || t('zx-search-bar.cancel'))
 
 watch(() => props.modelValue, (val) => {
   inputValue.value = val

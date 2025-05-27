@@ -5,7 +5,6 @@
   </view>
   <!-- #endif -->
   <!-- #ifdef APP-NVUE -->
-  <!-- 在nvue上，类名样式不生效，换为style -->
   <!-- 设置right正值失效，设置 left 负值 -->
   <view :class="['zx-col']" :style="nvueColStyle">
     <slot></slot>

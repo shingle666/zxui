@@ -1,6 +1,6 @@
 <template>
   <zx-transition :show="visible" name="fade">
-    <view 
+    <view
       :class="[
         'zx-alert',
         `zx-alert--${type}`,
@@ -8,8 +8,8 @@
           'zx-alert--center': center,
           'zx-alert--with-description': !!description,
           'zx-alert--with-icon': showIcon,
-          [`zx-alert--${effect}`]: effect
-        }
+          [`zx-alert--${effect}`]: effect,
+        },
       ]"
       :style="alertStyle"
       role="alert"
@@ -17,11 +17,7 @@
       <!-- 图标 -->
       <view v-if="showIcon" class="zx-alert__icon" :class="iconClass">
         <slot name="icon">
-          <zx-icon 
-            :name="iconName" 
-            :size="iconSize"
-            :color="iconColor"
-          />
+          <zx-icon :name="iconName" :size="iconSize" :color="iconColor" />
         </slot>
       </view>
 
@@ -31,7 +27,7 @@
         <view v-if="title || $slots.title" class="zx-alert__title" :class="titleClass">
           <slot name="title">{{ title }}</slot>
         </view>
-        
+
         <!-- 描述 -->
         <view v-if="description || $slots.default" class="zx-alert__description">
           <slot>{{ description }}</slot>
@@ -39,11 +35,7 @@
       </view>
 
       <!-- 关闭按钮 -->
-      <view 
-        v-if="closable"
-        class="zx-alert__close-btn"
-        @click="handleClose"
-      >
+      <view v-if="closable" class="zx-alert__close-btn" @click="handleClose">
         <template v-if="closeText">
           <text class="zx-alert__close-text">{{ closeText }}</text>
         </template>
@@ -56,64 +48,65 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, ref, computed } from 'vue';
+import { getCurrentInstance, ref, computed } from "vue";
 
 const { proxy } = getCurrentInstance();
 
 // 设置组件名称
 proxy.$options = proxy.$options || {};
-proxy.$options.name = 'zx-alert';
+proxy.$options.name = "zx-alert";
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(["close"]);
 
 const props = defineProps({
   // 标题
   title: {
     type: String,
-    default: ''
+    default: "",
   },
   // 类型: primary, success, warning, info, error
   type: {
     type: String,
-    default: 'info',
-    validator: (value) => ['primary', 'success', 'warning', 'info', 'error'].includes(value)
+    default: "info",
+    validator: (value) =>
+      ["primary", "success", "warning", "info", "error"].includes(value),
   },
   // 描述性文本
   description: {
     type: String,
-    default: ''
+    default: "",
   },
   // 是否可以关闭
   closable: {
     type: Boolean,
-    default: true
+    default: true,
   },
   // 文字是否居中
   center: {
     type: Boolean,
-    default: false
+    default: false,
   },
   // 自定义关闭按钮文本
   closeText: {
     type: String,
-    default: ''
+    default: "",
   },
   // 是否显示类型图标
   showIcon: {
     type: Boolean,
-    default: false
+    default: false,
   },
   // 主题样式: light, dark
   effect: {
     type: String,
-    default: 'light',
-    validator: (value) => ['light', 'dark'].includes(value)
+    default: "light",
+    validator: (value) => ["light", "dark"].includes(value),
   },
   // 自定义样式
   customStyle: {
     type: Object,
-    default: () => ({})
-  }
+    default: () => ({}),
+  },
 });
 
 // 组件可见性
@@ -121,67 +114,67 @@ const visible = ref(true);
 
 // 类型对应的图标
 const typeIconMap = {
-  primary: 'checkmark-circle-fill',
-  success: 'checkmark-circle-fill',
-  warning: 'warning-fill',
-  info: 'information-circle-fill',
-  error: 'close-circle-fill'
+  primary: "checkmark-circle-fill",
+  success: "checkmark-circle-fill",
+  warning: "warning-fill",
+  info: "information-circle-fill",
+  error: "close-circle-fill",
 };
 
 // 计算属性
 const iconName = computed(() => typeIconMap[props.type]);
 
 const iconSize = computed(() => {
-  return props.description ? '32' : '28';
+  return props.description ? "32" : "28";
 });
 
 const iconClass = computed(() => {
   return {
-    'is-big': !!props.description
+    "is-big": !!props.description,
   };
 });
 
 const titleClass = computed(() => {
   return {
-    'is-bold': !!props.description
+    "is-bold": !!props.description,
   };
 });
 
 const iconColor = computed(() => {
-  if (props.effect === 'dark') {
-    return '#fff';
+  if (props.effect === "dark") {
+    return "#fff";
   }
-  
+
   const colorMap = {
-    primary: '#409eff',
-    success: '#67c23a',
-    warning: '#e6a23c',
-    info: '#909399',
-    error: '#f56c6c'
+    primary: "#409eff",
+    success: "#67c23a",
+    warning: "#e6a23c",
+    info: "#909399",
+    error: "#f56c6c",
   };
-  
+
   return colorMap[props.type];
 });
 
 const closeIconColor = computed(() => {
-  return props.effect === 'dark' ? '#fff' : '#909399';
+  return props.effect === "dark" ? "#fff" : "#909399";
 });
 
 const alertStyle = computed(() => {
   return {
-    ...props.customStyle
+    ...props.customStyle,
   };
 });
 
 // 处理关闭
 const handleClose = (event) => {
   visible.value = false;
-  emit('close', event);
+  emit("close", event);
 };
 
 // 暴露方法
 defineExpose({
-  close: handleClose
+  close: handleClose,
 });
 </script>
 
@@ -272,17 +265,17 @@ defineExpose({
 
   &--dark {
     color: #fff;
-    
+
     .zx-alert__title,
     .zx-alert__description {
       color: #fff;
     }
-    
+
     .zx-alert__close-text {
       color: #fff;
     }
   }
-  
+
   &--with-icon {
     padding-left: 32rpx;
   }

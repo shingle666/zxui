@@ -1,5 +1,5 @@
-let windowWidth = uni.getSystemInfoSync().windowWidth
-// uni-app@2.9起, 屏幕最多适配到960, 超出则按375计算
+let windowWidth = uni.getWindowInfo().windowWidth
+// 屏幕最多适配到960, 超出则按375计算
 if (windowWidth > 960) windowWidth = 375
 
 export const rpx2px = (value) => {

@@ -27,7 +27,7 @@
 		<view class="title">自定义样式</view>
 		<view class="icon-group">
 			<view class="icon-item">
-				<zx-icon name="star" color="#ff9500" size="40rpx" :customStyle="{ transform: 'rotate(45deg)' }"></zx-icon>
+				<zx-icon name="arrow-upward" color="#ff9500" size="40rpx" :style="{ transform: 'rotate(45deg)' }"></zx-icon>
 				<text class="icon-text">旋转45度</text>
 			</view>
 			<view class="icon-item">

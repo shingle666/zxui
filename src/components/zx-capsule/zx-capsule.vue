@@ -99,7 +99,7 @@ const getCapsuleInfo = () => {
 	try {
 		// 微信小程序获取胶囊信息
 		const wxCapsuleInfo = wx.getMenuButtonBoundingClientRect();
-		const wxSystemInfo = uni.getSystemInfoSync();
+		const wxSystemInfo = uni.getWindowInfo();
 		
 		capsuleInfo.value = {
 			width: wxCapsuleInfo.width,
@@ -121,7 +121,7 @@ const getCapsuleInfo = () => {
 	// #ifdef H5 || APP-PLUS
 	try {
 		// H5和APP使用状态栏高度和默认尺寸
-		const sysInfo = uni.getSystemInfoSync();
+		const sysInfo = uni.getWindowInfo();
 		systemInfo.value = {
 			statusBarHeight: sysInfo.statusBarHeight || 20
 		};

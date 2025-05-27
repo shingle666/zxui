@@ -178,17 +178,7 @@
 </template>
 
 <script setup>
-import {
-  ref,
-  reactive,
-  computed,
-  watch,
-  onMounted,
-  onBeforeUnmount,
-  defineProps,
-  defineEmits,
-  defineExpose,
-} from "vue";
+import { ref, reactive, computed, watch, onMounted, onBeforeUnmount } from "vue";
 import { onLoad, onUnload } from "@dcloudio/uni-app";
 
 const emit = defineEmits(["click"]);
@@ -408,7 +398,7 @@ onBeforeUnmount(() => {
 });
 
 defineExpose({
-  draw
+  draw,
 });
 </script>
 

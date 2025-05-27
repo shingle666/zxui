@@ -84,7 +84,6 @@
  */
 
 import { ref, getCurrentInstance, watch, onMounted, computed } from 'vue';
-import zxBadge from '../zx-badge/zx-badge.vue';
 
 const { proxy } = getCurrentInstance();
 const emits = defineEmits(['click', 'error', 'load']);

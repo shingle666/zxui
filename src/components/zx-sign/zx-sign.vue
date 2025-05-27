@@ -76,7 +76,7 @@ onMounted(() => {
 	// 计算画笔大小
 	lineSize.value = uni.upx2px(parseInt(props.lineSize));
 	// 获取画布高宽
-	let systemInfo = uni.getSystemInfoSync();
+	let systemInfo = uni.getWindowInfo();
 	if (props.width) {
 		canvasWidth.value = uni.upx2px(parseInt(props.width));
 	} else {

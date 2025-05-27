@@ -382,7 +382,7 @@ async function judgePermissionPhotoLibrary(callback) {
 	callback && callback(true)
 	// #endif
 	// #ifdef APP-PLUS
-	const res = uni.getSystemInfoSync()
+	const res = uni.getDeviceInfo()
 	let result
 	let isAndroid = res.platform.toLocaleLowerCase() == 'android'
 	if (isAndroid) {
@@ -509,7 +509,7 @@ function startDraw(data, callback) {
 				startDrawLine(ctx.value, item)
 			}
 		})
-		const platform = uni.getSystemInfoSync().platform
+		const platform = uni.getWindowInfo().platform
 		let time = 80
 		if (platform === 'android') {
 			time = 300

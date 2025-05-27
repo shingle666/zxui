@@ -140,7 +140,7 @@ function gotoAndroidSetting() {
 onMounted(() => {
   // 判断平台
   // #ifdef APP-PLUS
-  isIOS.value = uni.getSystemInfoSync().platform === "ios";
+  isIOS.value = uni.getDeviceInfo().platform === "ios";
   // #endif
   checkNetwork();
   uni.onNetworkStatusChange((res) => {

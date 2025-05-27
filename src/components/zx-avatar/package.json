@@ -14,5 +14,10 @@
   ],
   "author": "tanzhenxing",
   "license": "MIT",
-  "description": "uni-app 头像组件"
+  "description": "uni-app 头像组件",
+  "dependencies": {
+    "@tanzhenxing/zx-badge": "^1.0.5",
+    "@tanzhenxing/zx-icon": "^1.0.7",
+    "@tanzhenxing/zx-text": "^1.0.15"
+  }
 }

@@ -1,4 +1,4 @@
-let windowWidth = uni.getSystemInfoSync().windowWidth
+let windowWidth = uni.getWindowInfo().windowWidth
 if (windowWidth > 960) windowWidth = 375
 
 export const rpx2px = (value) => {

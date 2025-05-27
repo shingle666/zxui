@@ -131,7 +131,7 @@
 		const style = { marginRight: '4px' };
 		// #ifdef APP-NVUE
 		try {
-			if (uni.getSystemInfoSync().platform.toLowerCase() === 'ios') {
+			if (uni.getDeviceInfo().platform.toLowerCase() === 'ios') {
 				style.marginTop = '-1px';
 			}
 		} catch (e) {}
@@ -143,7 +143,7 @@
 		let value = 0;
 		let windowHeight = 600;
 		try {
-			windowHeight = uni.getSystemInfoSync().windowHeight;
+			windowHeight = uni.getWindowInfo().windowHeight;
 		} catch (e) {}
 		if (props.position === 'top') {
 			value = -windowHeight * 0.25;

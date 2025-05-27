@@ -83,8 +83,8 @@ if (uni.canIUse('getWindowInfo')) {
   system = uni.getDeviceInfo().system
 } else {
 // #endif
-  const systemInfo = uni.getSystemInfoSync()
-  windowWidth = systemInfo.windowWidth
+  const systemInfo = uni.getDeviceInfo()
+  windowWidth = uni.getWindowInfo().windowWidth
   // #ifdef MP-WEIXIN
   system = systemInfo.system
 }

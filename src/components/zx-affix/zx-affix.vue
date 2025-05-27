@@ -28,7 +28,15 @@
  * @example <zx-affix :offset="120"><button>固定按钮</button></zx-affix>
  */
 
-import {  ref,  computed,  onMounted,  onUnmounted,  getCurrentInstance,  nextTick,  watch,} from "vue";
+import {
+  ref,
+  computed,
+  onMounted,
+  onUnmounted,
+  getCurrentInstance,
+  nextTick,
+  watch,
+} from "vue";
 
 const { proxy } = getCurrentInstance();
 
@@ -113,11 +121,11 @@ const getElementRect = (selector) => {
   return new Promise((resolve) => {
     // 微信小程序中，增加更精确的选择器查询
     const query = uni.createSelectorQuery();
-    
+
     // #ifdef MP-WEIXIN
     query.in(proxy);
     // #endif
-    
+
     query
       .select(selector)
       .boundingClientRect((rect) => {
@@ -128,23 +136,17 @@ const getElementRect = (selector) => {
 };
 
 // 获取系统信息
-const getSystemInfo = () => {
+const get_window_info = () => {
   return new Promise((resolve) => {
-    uni.getSystemInfo({
-      success: (res) => {
-        windowHeight.value = res.windowHeight || res.screenHeight;
-        // #ifdef MP-WEIXIN
-        // 微信小程序需要减去状态栏高度
-        if (res.statusBarHeight) {
-          windowHeight.value = res.windowHeight - res.statusBarHeight;
-        }
-        // #endif
-        resolve(res);
-      },
-      fail: () => {
-        resolve({ windowHeight: 667 }); // 默认高度
-      },
-    });
+    const res = uni.getWindowInfo();
+    windowHeight.value = res.windowHeight || res.screenHeight;
+    // #ifdef MP-WEIXIN
+    // 微信小程序需要减去状态栏高度
+    if (res.statusBarHeight) {
+      windowHeight.value = res.windowHeight - res.statusBarHeight;
+    }
+    // #endif
+    resolve(res);
   });
 };
 
@@ -170,7 +172,7 @@ const updateAffixStatus = async () => {
     placeholderWidth.value = rect.width;
 
     // 获取系统信息
-    const systemInfo = await getSystemInfo();
+    const systemInfo = await get_window_info();
 
     // 计算是否需要固定
     let shouldFixed = false;
@@ -185,12 +187,12 @@ const updateAffixStatus = async () => {
 
     // #ifdef MP-WEIXIN
     // 微信小程序调试信息
-    console.log('微信小程序固钉状态计算:', {
+    console.log("微信小程序固钉状态计算:", {
       rect,
       systemInfo: { windowHeight: systemInfo.windowHeight },
       shouldFixed,
       position: props.position,
-      offset: props.offset
+      offset: props.offset,
     });
     // #endif
 
@@ -208,7 +210,7 @@ const updateAffixStatus = async () => {
     });
   } catch (error) {
     console.warn("zx-affix updateAffixStatus error:", error);
-    
+
     // #ifdef MP-WEIXIN
     console.error("微信小程序固钉更新失败:", error);
     // 在小程序中，如果出错，尝试重新初始化
@@ -338,7 +340,7 @@ onMounted(() => {
       const currentPage = pages[pages.length - 1];
       if (currentPage && currentPage.onPageScroll) {
         const originalOnPageScroll = currentPage.onPageScroll;
-        currentPage.onPageScroll = function(e) {
+        currentPage.onPageScroll = function (e) {
           throttledScroll(e);
           if (originalOnPageScroll) {
             originalOnPageScroll.call(this, e);
@@ -354,7 +356,7 @@ onMounted(() => {
 
     // 监听窗口大小变化
     uni.onWindowResize && uni.onWindowResize(handleWindowResize);
-    
+
     // 微信小程序额外初始化
     // #ifdef MP-WEIXIN
     // 延迟更新，确保页面渲染完成

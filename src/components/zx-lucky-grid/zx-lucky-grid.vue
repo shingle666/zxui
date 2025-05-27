@@ -151,7 +151,7 @@ function draw() {
     const { node, width, height } = res[0]
     myCanvas = node
     const ctx = node.getContext('2d')
-    dpr.value = uni.getSystemInfoSync().pixelRatio
+    dpr.value = uni.getWindowInfo().pixelRatio
     // #ifndef H5
     node.width = width * dpr.value
     node.height = height * dpr.value

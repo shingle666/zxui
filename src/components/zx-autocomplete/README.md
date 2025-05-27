@@ -1,9 +1,15 @@
-# ZxAutocomplete 自动补全输入框
+# ZxAutocomplete 自动补全输入框（Vue3 + <script setup> 语法，uni-app 多端）
 
-根据输入内容提供对应的输入建议。
+根据输入内容提供对应的输入建议，支持 H5、小程序、App。无浏览器特有 DOM 依赖。
+
+## 组件特性
+- 支持 v-model 双向绑定
+- 支持同步/异步数据源
+- 支持自定义建议项模板
+- 支持清空、禁用、下拉宽度自适应等
+- 兼容 H5、微信/支付宝/百度/字节小程序、App（nvue/普通）
 
 ## 基础用法
-
 ```vue
 <template>
   <zx-autocomplete
@@ -14,58 +20,38 @@
   />
 </template>
 
-<script>
-import ZxAutocomplete from '@/components/zx-autocomplete'
+<script setup>
+import { ref, onMounted } from 'vue'
 
-export default {
-  components: {
-    ZxAutocomplete
-  },
-  data() {
-    return {
-      state: '',
-      restaurants: []
-    }
-  },
-  mounted() {
-    this.restaurants = this.loadAll()
-  },
-  methods: {
-    querySearch(queryString, cb) {
-      const restaurants = this.restaurants
-      const results = queryString
-        ? restaurants.filter(this.createFilter(queryString))
-        : restaurants
-      // 调用 callback 返回建议列表的数据
-      cb(results)
-    },
-    createFilter(queryString) {
-      return (restaurant) => {
-        return (
-          restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
-        )
-      }
-    },
-    loadAll() {
-      return [
-        { value: '三全鲜食（北新泾店）', address: '长宁区新渔路144号' },
-        { value: 'Hot honey 首尔炸鸡（仙霞路）', address: '上海市长宁区淞虹路661号' },
-        { value: '新旺角茶餐厅', address: '上海市普陀区真北路988号创邑金沙谷6号楼113' },
-        { value: '泷千家(天山西路店)', address: '天山西路438号' }
-      ]
-    },
-    handleSelect(item) {
-      console.log(item)
-    }
-  }
+const state = ref('')
+const restaurants = ref([])
+
+onMounted(() => {
+  restaurants.value = loadAll()
+})
+function querySearch(queryString, cb) {
+  const results = queryString
+    ? restaurants.value.filter(createFilter(queryString))
+    : restaurants.value
+  cb(results)
+}
+function createFilter(queryString) {
+  return (restaurant) =>
+    restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+}
+function loadAll() {
+  return [
+    { value: '三全鲜食（北新泾店）', address: '长宁区新渔路144号' },
+    { value: 'Hot honey 首尔炸鸡', address: '上海市长宁区淞虹路661号' }
+  ]
+}
+function handleSelect(item) {
+  uni.showToast({ title: '选中：' + item.value, icon: 'none' })
 }
 </script>
 ```
 
 ## 自定义模板
-
-可自定义输入建议的显示模板。
-
 ```vue
 <template>
   <zx-autocomplete
@@ -75,35 +61,51 @@ export default {
     @select="handleSelect"
   >
     <template #default="{ item }">
-      <div class="suggestion-item">
-        <div class="value">{{ item.value }}</div>
-        <span class="address">{{ item.address }}</span>
-      </div>
+      <view class="custom-item">
+        <view class="item-name">{{ item.value }}</view>
+        <view class="item-addr">{{ item.address }}</view>
+      </view>
     </template>
   </zx-autocomplete>
 </template>
 
-<style>
-.suggestion-item {
+<style scoped>
+.custom-item {
   display: flex;
   flex-direction: column;
 }
-.value {
+.item-name {
   font-size: 28rpx;
   color: #606266;
 }
-.address {
+.item-addr {
   font-size: 24rpx;
   color: #b4b4b4;
 }
 </style>
 ```
 
-## 远程搜索
-
-从服务端搜索数据。
-
+## 远程搜索（异步）
 ```vue
+<script setup>
+import { ref } from 'vue'
+const state = ref('')
+function querySearchAsync(queryString, cb) {
+  setTimeout(() => {
+    const results = queryString
+      ? [
+          { value: '结果1' },
+          { value: '结果2' },
+          { value: '结果3' }
+        ]
+      : []
+    cb(results)
+  }, 500)
+}
+function handleSelect(item) {
+  uni.showToast({ title: '选中：' + item.value, icon: 'none' })
+}
+</script>
 <template>
   <zx-autocomplete
     v-model="state"
@@ -112,38 +114,9 @@ export default {
     @select="handleSelect"
   />
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      state: ''
-    }
-  },
-  methods: {
-    querySearchAsync(queryString, cb) {
-      // 模拟异步请求
-      setTimeout(() => {
-        const results = queryString
-          ? [
-              { value: '结果1' },
-              { value: '结果2' },
-              { value: '结果3' }
-            ]
-          : []
-        cb(results)
-      }, 500)
-    },
-    handleSelect(item) {
-      console.log(item)
-    }
-  }
-}
-</script>
 ```
 
-## 属性
-
+## 属性（Props）
 | 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | v-model / modelValue | 选中项绑定值 | String | — |
@@ -158,8 +131,7 @@ export default {
 | highlightFirstItem | 是否默认高亮远程搜索结果的第一项 | Boolean | false |
 | fitInputWidth | 下拉框的宽度是否与输入框相同 | Boolean | false |
 
-## 事件
-
+## 事件（Emits）
 | 事件名 | 说明 | 参数 |
 | --- | --- | --- |
 | select | 点击选中建议项时触发 | 选中的建议项 |
@@ -169,10 +141,17 @@ export default {
 | blur | 在输入框失去焦点时触发 | 输入框的值 |
 | clear | 在点击清空按钮时触发 | — |
 
-## 插槽
-
+## 插槽（Slots）
 | 插槽名 | 说明 | 参数 |
 | --- | --- | --- |
 | default | 自定义输入建议的内容 | { item } |
 | suffix | 输入框后缀内容 | — |
 | loading | 自定义加载中状态内容 | — |
+
+## 多端兼容注意事项
+- 组件未使用任何浏览器特有 DOM API，适用于 uni-app 支持的所有平台。
+- 下拉宽度自适应（fitInputWidth）依赖 uni.createSelectorQuery，部分平台如 nvue 可能不支持，建议兼容性测试。
+- 建议 fetchSuggestions 支持 callback 形式，兼容同步/异步。
+
+## 贡献与反馈
+如有问题或建议，欢迎 issue 或 PR。

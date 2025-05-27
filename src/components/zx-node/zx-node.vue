@@ -134,7 +134,7 @@ const instance = getCurrentInstance()
 const ctrl = ref({})
 
 // #ifdef MP-WEIXIN
-const isiOS = uni.getSystemInfoSync().system.includes('iOS')
+const isiOS = uni.getDeviceInfo().system.includes('iOS')
 // #endif
 
 // 内部变量

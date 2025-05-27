@@ -35,7 +35,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxSearchBar from '@/components/zx-search-bar/zx-search-bar.vue'
 
 const searchValue = ref('')
 const eventLog = ref([])

@@ -116,9 +116,8 @@ function unique(n = 6) {
 	return 'tui_' + new Date().getTime() + rnd
 }
 function initDom(callback) {
-	let { windowWidth, windowHeight, platform: pf } = uni.getSystemInfoSync()
-	let remScale = (windowWidth || 375) / 375
-	platform.value = pf
+	let { windowWidth, windowHeight} = uni.getWindowInfo()
+	platform.value = uni.getDeviceInfo().platform
 	let bd = {}
 	bd.windowHeight = windowHeight
 	bd.realTopSize = (props.topSize * remScale) / 2

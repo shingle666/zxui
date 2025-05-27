@@ -141,15 +141,7 @@
 </template>
 
 <script setup>
-import {
-  ref,
-  watch,
-  onMounted,
-  onBeforeUnmount,
-  defineProps,
-  defineEmits,
-  defineExpose,
-} from "vue";
+import { ref, watch, onMounted, onBeforeUnmount } from "vue";
 
 const emit = defineEmits(["click"]);
 const props = defineProps({
