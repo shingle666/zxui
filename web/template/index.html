@@ -10,7 +10,7 @@
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   <script src="https://cdn.mp.ac.cn/chart.js/dist/chart.umd.js"></script>
   <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script> -->
-  
+  <script src="https://cdn.mp.ac.cn/vue/dist/vue.global.prod.js"></script>
   <!-- Tailwind配置 -->
   <script>
     tailwind.config = {
@@ -50,8 +50,8 @@
 </head>
 <body class="font-inter bg-light text-dark antialiased">
   <!-- 顶部导航栏 -->
-  <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-md shadow-sm">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+  <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-md" :class="navbarClass">
+    <div class="container mx-auto px-4 flex justify-between items-center">
       <div class="flex items-center space-x-2">
         <i class="fa fa-cubes text-primary text-2xl"></i>
         <h1 class="text-xl font-bold">AI<span class="text-primary">Component</span></h1>
@@ -59,27 +59,27 @@
       
       <!-- 桌面导航 -->
       <nav class="hidden md:flex space-x-8">
-        <a href="#features" class="text-dark hover:text-primary transition-colors">特性</a>
-        <a href="#components" class="text-dark hover:text-primary transition-colors">组件展示</a>
-        <a href="#workflow" class="text-dark hover:text-primary transition-colors">工作流程</a>
-        <a href="#examples" class="text-dark hover:text-primary transition-colors">使用示例</a>
-        <a href="#docs" class="text-dark hover:text-primary transition-colors">文档</a>
+        <a href="#features" @click="smoothScroll($event, '#features')" class="text-dark hover:text-primary transition-colors">特性</a>
+        <a href="#components" @click="smoothScroll($event, '#components')" class="text-dark hover:text-primary transition-colors">组件展示</a>
+        <a href="#workflow" @click="smoothScroll($event, '#workflow')" class="text-dark hover:text-primary transition-colors">工作流程</a>
+        <a href="#examples" @click="smoothScroll($event, '#examples')" class="text-dark hover:text-primary transition-colors">使用示例</a>
+        <a href="#docs" @click="smoothScroll($event, '#docs')" class="text-dark hover:text-primary transition-colors">文档</a>
       </nav>
       
       <!-- 移动端菜单按钮 -->
-      <button id="menu-toggle" class="md:hidden text-dark focus:outline-none">
+      <button @click="toggleMobileMenu" class="md:hidden text-dark focus:outline-none">
         <i class="fa fa-bars text-xl"></i>
       </button>
     </div>
     
     <!-- 移动端导航菜单 -->
-    <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+    <div v-show="isMobileMenuVisible" class="md:hidden bg-white border-t">
       <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
-        <a href="#features" class="text-dark hover:text-primary py-2 transition-colors">特性</a>
-        <a href="#components" class="text-dark hover:text-primary py-2 transition-colors">组件展示</a>
-        <a href="#workflow" class="text-dark hover:text-primary py-2 transition-colors">工作流程</a>
-        <a href="#examples" class="text-dark hover:text-primary py-2 transition-colors">使用示例</a>
-        <a href="#docs" class="text-dark hover:text-primary py-2 transition-colors">文档</a>
+        <a href="#features" @click="smoothScroll($event, '#features')" class="text-dark hover:text-primary py-2 transition-colors">特性</a>
+        <a href="#components" @click="smoothScroll($event, '#components')" class="text-dark hover:text-primary py-2 transition-colors">组件展示</a>
+        <a href="#workflow" @click="smoothScroll($event, '#workflow')" class="text-dark hover:text-primary py-2 transition-colors">工作流程</a>
+        <a href="#examples" @click="smoothScroll($event, '#examples')" class="text-dark hover:text-primary py-2 transition-colors">使用示例</a>
+        <a href="#docs" @click="smoothScroll($event, '#docs')" class="text-dark hover:text-primary py-2 transition-colors">文档</a>
       </div>
     </div>
   </header>
@@ -659,97 +659,124 @@
     </div>
   </footer>
 
-  <!-- JavaScript -->
+  <!-- Vue JavaScript -->
   <script>
-    // 导航栏滚动效果
-    window.addEventListener('scroll', function() {
-      const navbar = document.getElementById('navbar');
-      if (window.scrollY > 50) {
-        navbar.classList.add('py-2', 'shadow-md');
-        navbar.classList.remove('py-3', 'shadow-sm');
-      } else {
-        navbar.classList.add('py-3', 'shadow-sm');
-        navbar.classList.remove('py-2', 'shadow-md');
-      }
-    });
-    
-    // 移动端菜单切换
-    document.getElementById('menu-toggle').addEventListener('click', function() {
-      const mobileMenu = document.getElementById('mobile-menu');
-      mobileMenu.classList.toggle('hidden');
-    });
-    
-    // 平滑滚动
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        
-        if (targetElement) {
-          window.scrollTo({
-            top: targetElement.offsetTop - 80,
-            behavior: 'smooth'
-          });
-          
-          // 关闭移动端菜单
-          document.getElementById('mobile-menu').classList.add('hidden');
-        }
-      });
-    });
-    
-    // 效率图表
-    window.addEventListener('load', function() {
-      const ctx = document.getElementById('efficiencyChart').getContext('2d');
-      const efficiencyChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ['传统开发', 'AI组件化'],
-          datasets: [
-            {
-              label: '开发时间',
-              data: [100, 30],
-              borderColor: '#3b82f6',
-              backgroundColor: 'rgba(59, 130, 246, 0.1)',
-              tension: 0.4,
-              fill: true
-            },
-            {
-              label: '代码质量',
-              data: [60, 95],
-              borderColor: '#06b6d4',
-              backgroundColor: 'rgba(6, 182, 212, 0.1)',
-              tension: 0.4,
-              fill: true
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            tooltip: {
-              mode: 'index',
-              intersect: false,
-            }
+    const app = Vue.createApp({
+      data() {
+        return {
+          isMobileMenuVisible: false,
+          navbarClass: {
+            'py-3': true,
+            'py-2': false,
+            'shadow-sm': true,
+            'shadow-md': false
           },
-          scales: {
-            y: {
-              beginAtZero: true,
-              max: 100,
-              ticks: {
-                callback: function(value) {
-                  return value + '%';
+          chartInstance: null,
+          chartData: {
+            labels: ['传统开发', 'AI组件化'],
+            datasets: [
+              {
+                label: '开发时间',
+                data: [100, 30],
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                tension: 0.4,
+                fill: true
+              },
+              {
+                label: '代码质量',
+                data: [60, 95],
+                borderColor: '#06b6d4',
+                backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                tension: 0.4,
+                fill: true
+              }
+            ]
+          },
+          chartOptions: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'top',
+              },
+              tooltip: {
+                mode: 'index',
+                intersect: false,
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 100,
+                ticks: {
+                  callback: function(value) {
+                    return value + '%';
+                  }
                 }
               }
             }
           }
         }
-      });
+      },
+      methods: {
+        toggleMobileMenu() {
+          this.isMobileMenuVisible = !this.isMobileMenuVisible;
+        },
+        smoothScroll(event, targetId) {
+          event.preventDefault();
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
+            });
+            
+            // 关闭移动端菜单
+            this.isMobileMenuVisible = false;
+          }
+        },
+        initChart() {
+          const ctx = document.getElementById('efficiencyChart').getContext('2d');
+          this.chartInstance = new Chart(ctx, {
+            type: 'line',
+            data: this.chartData,
+            options: this.chartOptions
+          });
+        },
+        handleScroll() {
+          if (window.scrollY > 50) {
+            this.navbarClass = {
+              'py-2': true,
+              'py-3': false,
+              'shadow-md': true,
+              'shadow-sm': false
+            };
+          } else {
+            this.navbarClass = {
+              'py-3': true,
+              'py-2': false,
+              'shadow-sm': true,
+              'shadow-md': false
+            };
+          }
+        }
+      },
+      mounted() {
+        // 监听滚动事件
+        window.addEventListener('scroll', this.handleScroll);
+        
+        // 初始化图表
+        this.initChart();
+      },
+      beforeUnmount() {
+        // 移除事件监听器
+        window.removeEventListener('scroll', this.handleScroll);
+      }
     });
+    
+    // 挂载Vue应用
+    app.mount('body');
   </script>
 </body>
 </html>
