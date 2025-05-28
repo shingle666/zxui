@@ -52,6 +52,7 @@ const datalist = ref([
     title: "基础组件",
     lists: [
       { title: "Button 按钮", path: "/pages/components/button/index" },
+      { title: "barrage 弹幕", path: "/pages/components/barrage/index" },
       { title: "Icon 图标", path: "/pages/components/icon/index" },
       { title: "Icon 图标列表", path: "/pages/components/icon/list" },
       { title: "Text 文本", path: "/pages/components/text/index" },

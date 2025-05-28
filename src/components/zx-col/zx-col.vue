@@ -158,6 +158,7 @@ watch(parentWidth, updateNvueWidth);
 </script>
 
 <style lang="scss" scoped>
+@use "sass:math";
 /* breakpoints */
 $--sm: 768px !default;
 $--md: 992px !default;
@@ -192,7 +193,7 @@ $col: $layout-namespace + "col";
   @if $num == 0 {
     @return 0%;
   } @else {
-    @return percentage($num / 24);
+    @return math.percentage(math.div($num, 24));
   }
 }
 

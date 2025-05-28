@@ -978,6 +978,12 @@
 			"style": {
 				"navigationBarTitleText": "zx-carousel 组件"
 			}
+		},
+		{
+			"path": "pages/components/barrage/index",
+			"style": {
+				"navigationBarTitleText": "zx-barrage 组件"
+			}
 		}
 	],
 	"globalStyle": {
