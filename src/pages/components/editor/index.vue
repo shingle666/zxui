@@ -197,7 +197,7 @@ const onMaxLengthChange = (event) => {
 
 // 设置传统模式默认内容
 const setDefaultContent = () => {
-  editorRef.value.setDefault({
+  /* editorRef.value.setDefault({
     title: '示例文章标题',
     contents: [
       { type: 'h3', content: '欢迎使用 zx-editor 富文本编辑器', focusin: false },
@@ -210,13 +210,13 @@ const setDefaultContent = () => {
       { type: 'spline', content: '', focusin: false },
       { type: 'txt', content: '您可以使用底部工具栏添加不同类型的内容，也可以切换到富文本模式体验更丰富的编辑功能。', focusin: false }
     ]
-  });
+  }); */
   
-  updateEditorInfo();
+  /* updateEditorInfo();
   uni.showToast({
     title: '传统模式内容已设置',
     icon: 'success'
-  });
+  }); */
 };
 
 // 设置富文本内容
