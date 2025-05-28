@@ -96,7 +96,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import ZxSelect from '@/components/zx-select/zx-select.vue';
 
 // 基础选择器
 const basicValue = ref('');

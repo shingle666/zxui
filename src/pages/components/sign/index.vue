@@ -24,7 +24,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxSign from '@/components/zx-sign/zx-sign.vue'
 
 const signRef = ref(null)
 const signImg = ref('')

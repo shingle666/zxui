@@ -73,7 +73,6 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import ZxFile from '@/components/zx-file/zx-file.vue';
 
 const fileUploader = ref(null);
 const fileList = ref([]);

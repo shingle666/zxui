@@ -56,8 +56,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxList from '@/components/zx-list/zx-list.vue'
-import zxListItem from '@/components/zx-list-item/zx-list-item.vue'
 
 const switchChecked = ref(false)
 function onSwitchChange(val) {

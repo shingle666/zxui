@@ -136,7 +136,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxSwitch from './zx-switch.vue';
 
 // 基础用法
 const basicValue = ref(false);

@@ -174,7 +174,6 @@
 
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue';
-import zxVideo from '@/components/zx-video/zx-video.vue';
 
 // 视频参数
 const videoRef = ref(null);

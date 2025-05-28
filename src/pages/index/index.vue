@@ -91,6 +91,7 @@ const datalist = ref([
       { title: "Rate 评分", path: "/pages/components/rate/index" },
       { title: "Calendar 日历", path: "/pages/components/calendar/index" },
       { title: "Picker 选择器", path: "/pages/components/picker/index" },
+      { title: "Picker view 选择器", path: "/pages/components/picker/view" },
       { title: "Date-picker 日期选择器", path: "/pages/components/date-picker/index" },
       { title: "Area-picker 地区选择器", path: "/pages/components/area-picker/index" },
       { title: "Select 选择器", path: "/pages/components/select/index" },

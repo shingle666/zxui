@@ -22,7 +22,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxRefresh from '@/components/zx-refresh/zx-refresh.vue'
 
 const lastEvent = ref('无')
 function onReload() {

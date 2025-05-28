@@ -9,7 +9,7 @@
       @sortend="onSortEnd"
       @change="onChange"
     >
-      <template #default="{ entity, index, isEdit, fixed }">
+      <template #default="{ entity, isEdit, fixed }">
         <view class="drag-item" :class="{ fixed }">
           <text>{{ entity.name }}</text>
           <text v-if="fixed" class="fixed-label">固定</text>
@@ -33,7 +33,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxDrag from '@/components/zx-drag/zx-drag.vue'
 
 const isEdit = ref(true)
 const columns = ref(3)

@@ -183,7 +183,6 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import zxCode from '@/components/zx-code/zx-code.vue'
 
 // 页面标题
 uni.setNavigationBarTitle({

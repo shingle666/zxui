@@ -18,7 +18,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxIndexedList from '@/components/zx-indexed-list/zx-indexed-list.vue';
 
 const airportList = ref([
   {

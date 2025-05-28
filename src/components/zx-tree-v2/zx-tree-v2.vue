@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, defineEmits } from 'vue'
+import { ref, computed } from 'vue'
 
 // 递归节点组件
 const TreeNode = defineAsyncComponent(() => import('./zx-tree-v2-node.vue'))

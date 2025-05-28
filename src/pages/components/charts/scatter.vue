@@ -20,7 +20,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import zxChartsScatter from '@/components/zx-charts-scatter/zx-charts-scatter.vue';
 
 const scatterRef = ref();
 const dataset = [

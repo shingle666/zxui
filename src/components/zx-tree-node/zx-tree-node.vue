@@ -1,3 +1,47 @@
+<template>
+  <view :class="['zx-tree-node', `zx-tree-node-level-${props.level}`]">
+    <view class="zx-tree-node-content" @click="handleClick">
+      <template v-if="!isLeafNode">
+        <text class="zx-tree-node-expand" @click.stop="handleExpand">
+          {{ expanded ? '-' : '+' }}
+        </text>
+      </template>
+      <template v-if="props.showCheckbox">
+        <checkbox
+          class="zx-tree-node-checkbox"
+          :checked="checked"
+          @click.stop="handleCheck"
+        />
+      </template>
+      <!-- <template v-if="$slots.default">
+        <slot :node="props.node" :level="props.level"></slot>
+      </template> -->
+      <template v-else>
+        <text class="zx-tree-node-label">{{ props.node[props.props.label] }}</text>
+      </template>
+      <text v-if="loading" class="zx-tree-node-loading">加载中...</text>
+    </view>
+    <view v-if="expanded && children && children.length > 0" class="zx-tree-node-children">
+      <zx-tree-node
+        v-for="(child, idx) in children"
+        :key="child[props.props.key] || idx"
+        :node="child"
+        :props="props.props"
+        :level="props.level + 1"
+        :show-checkbox="props.showCheckbox"
+        :checked-keys="props.checkedKeys"
+        :lazy="props.lazy"
+        :load="props.load"
+        :is-leaf="props.isLeaf"
+        @node-click="emit('node-click', $event)"
+        @check-change="emit('check-change', ...arguments)"
+        @check="emit('check', ...arguments)"
+        @toggle-check="emit('toggle-check', $event)"
+      />
+    </view>
+  </view>
+</template>
+
 <script setup>
 import { ref, computed } from 'vue'
 const props = defineProps({
@@ -8,8 +52,7 @@ const props = defineProps({
   checkedKeys: Array,
   lazy: Boolean,
   load: Function,
-  isLeaf: Function,
-  renderContent: Function,
+  isLeaf: Function
 })
 const emit = defineEmits(['node-click', 'check-change', 'check', 'toggle-check'])
 const expanded = ref(false)
@@ -43,50 +86,7 @@ function handleClick() {
   emit('node-click', props.node)
 }
 </script>
-<template>
-  <view :class="['zx-tree-node', `zx-tree-node-level-${props.level}`]">
-    <view class="zx-tree-node-content" @click="handleClick">
-      <template v-if="!isLeafNode">
-        <text class="zx-tree-node-expand" @click.stop="handleExpand">
-          {{ expanded ? '-' : '+' }}
-        </text>
-      </template>
-      <template v-if="props.showCheckbox">
-        <checkbox
-          class="zx-tree-node-checkbox"
-          :checked="checked"
-          @click.stop="handleCheck"
-        />
-      </template>
-      <template v-if="props.renderContent">
-        <view v-html="props.renderContent({ node: props.node, level: props.level })" />
-      </template>
-      <template v-else>
-        <text class="zx-tree-node-label">{{ props.node[props.props.label] }}</text>
-      </template>
-      <text v-if="loading" class="zx-tree-node-loading">加载中...</text>
-    </view>
-    <view v-if="expanded && children && children.length > 0" class="zx-tree-node-children">
-      <zx-tree-node
-        v-for="(child, idx) in children"
-        :key="child[props.props.key] || idx"
-        :node="child"
-        :props="props.props"
-        :level="props.level + 1"
-        :show-checkbox="props.showCheckbox"
-        :checked-keys="props.checkedKeys"
-        :lazy="props.lazy"
-        :load="props.load"
-        :is-leaf="props.isLeaf"
-        :render-content="props.renderContent"
-        @node-click="emit('node-click', $event)"
-        @check-change="emit('check-change', ...arguments)"
-        @check="emit('check', ...arguments)"
-        @toggle-check="emit('toggle-check', $event)"
-      />
-    </view>
-  </view>
-</template>
+
 <style scoped>
 .zx-tree-node {
   margin-left: 8px;
@@ -113,4 +113,4 @@ function handleClick() {
 .zx-tree-node-children {
   margin-left: 16px;
 }
-</style> 
+</style>

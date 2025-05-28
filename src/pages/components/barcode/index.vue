@@ -83,7 +83,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import ZxBarcode from '@/components/zx-barcode/zx-barcode.vue';
 
 // 基本条形码文本
 const basicText = ref('1234567890');

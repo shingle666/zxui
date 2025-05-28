@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, defineEmits, defineProps, onMounted } from 'vue';
+import { ref, watch, computed, onMounted } from 'vue';
 
 const emit = defineEmits(['change', 'delete', 'hide']);
 const props = defineProps({

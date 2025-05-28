@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, defineEmits, nextTick } from 'vue'
+import { ref, computed } from 'vue'
 
 const props = defineProps({
     display: { type: String, default: 'hide' },

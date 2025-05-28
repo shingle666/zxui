@@ -26,8 +26,7 @@
 </template>
 
 <script setup>
-// 按需引入组件（如未全局注册）
-import zxCopyright from '@/components/zx-copyright/zx-copyright.vue';
+
 </script>
 
 <style scoped>

@@ -176,8 +176,6 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import ZxAnchor from '@/components/zx-anchor/zx-anchor.vue'
-import ZxAnchorLink from '@/components/zx-anchor-link/zx-anchor-link.vue'
 
 // 页面加载后初始化
 onMounted(() => {

@@ -22,7 +22,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import ZxLuckyWheel from '@/components/zx-lucky-wheel/zx-lucky-wheel.vue'
 
 const wheelRef = ref()
 const blocks = ref([

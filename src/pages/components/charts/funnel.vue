@@ -16,7 +16,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import zxChartsFunnel from '@/components/zx-charts-funnel/zx-charts-funnel.vue';
 
 const funnelRef = ref();
 const funnelData = [

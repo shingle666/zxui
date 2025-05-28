@@ -28,7 +28,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import zxChartsLine from '@/components/zx-charts-line/zx-charts-line.vue';
 
 const lineRef = ref();
 const xAxis = ['一月', '二月', '三月', '四月', '五月'];

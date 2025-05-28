@@ -30,7 +30,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxTimeSelect from '@/components/zx-time-select/zx-time-select.vue'
 
 const time1 = ref('')
 const time2 = ref('')

@@ -27,7 +27,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxTour from '@/components/zx-tour/zx-tour.vue'
 
 const showTour = ref(false)
 const steps = [

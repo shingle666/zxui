@@ -23,7 +23,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxPk from '@/components/zx-pk/zx-pk.vue';
 
 const status = ref('button');
 const onChoose = (side) => {

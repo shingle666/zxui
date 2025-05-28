@@ -33,7 +33,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxTimePicker from '@/components/zx-time-picker/zx-time-picker.vue'
 
 const time1 = ref('12:30:00')
 const timeRange = ref(['08:00:00', '18:00:00'])

@@ -35,8 +35,8 @@
       </view>
     </view>
     <view class="zx-transfer__buttons">
-      <button class="zx-transfer__btn" :disabled="leftChecked.length === 0" @tap="moveToRight">&gt;&gt;</button>
-      <button class="zx-transfer__btn" :disabled="rightChecked.length === 0" @tap="moveToLeft">&lt;&lt;</button>
+      <zx-icon name="arrow-double-right" class="zx-transfer__btn" :class="{ 'is-disabled': leftChecked.length === 0 }" @tap="leftChecked.length === 0 ? null : moveToRight()"></zx-icon>
+      <zx-icon name="arrow-double-left" class="zx-transfer__btn" :class="{ 'is-disabled': rightChecked.length === 0 }" @tap="rightChecked.length === 0 ? null : moveToLeft()"></zx-icon>
     </view>
     <view class="zx-transfer__panel">
       <view class="zx-transfer__header">
@@ -77,6 +77,7 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
+import zxIcon from '../zx-icon/zx-icon.vue'
 
 // props 定义
 const props = defineProps({

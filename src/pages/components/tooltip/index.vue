@@ -39,7 +39,7 @@
       </zx-tooltip>
     </view>
     <view class="demo-row">
-      <zx-tooltip :content="动态内容" :show-after="500" :hide-after="500">
+      <zx-tooltip content="动态内容" :show-after="500" :hide-after="500">
         <button @click="changeContent">动态内容</button>
       </zx-tooltip>
     </view>
@@ -48,9 +48,10 @@
 
 <script setup>
 import { ref } from 'vue';
-const 动态内容 = ref('初始内容');
+
+
 function changeContent() {
-  动态内容.value = '内容已变更 ' + Date.now();
+  
 }
 </script>
 

@@ -10,7 +10,7 @@
 	</view>
 </template>
 <script setup>
-import { ref, defineEmits, defineProps } from 'vue';
+import { ref } from 'vue';
 
 const props = defineProps({
 	show: {

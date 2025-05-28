@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import zxNoticeBar from '@/components/zx-notice-bar/zx-notice-bar.vue';
+import { ref } from 'vue';
 
 function onClick() {
   uni.showToast({ title: '点击公告栏' });

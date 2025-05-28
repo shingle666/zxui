@@ -134,7 +134,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import ZxInputNumber from './zx-input-number.vue'
 
 // 各种演示数据
 const basicValue = ref(1)

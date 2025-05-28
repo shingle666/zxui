@@ -116,7 +116,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import zxRichtext from './zx-richtext.vue'
 
 // 基础内容
 const basicContent = ref(`
@@ -160,9 +159,9 @@ const interactiveContent = ref(`
 const complexContent = ref(`
 	<div>
 		<h2>功能完整的富文本示例</h2>
-		<blockquote>
+		<div>
 			<p>这是一个引用块，展示复杂的HTML结构渲染效果。</p>
-		</blockquote>
+		</div>
 		
 		<h3>列表示例</h3>
 		<ul>

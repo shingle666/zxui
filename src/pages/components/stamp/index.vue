@@ -30,7 +30,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxStamp from '@/components/zx-stamp/zx-stamp.vue';
 
 const imgPath = ref('');
 const stampRef = ref(null);

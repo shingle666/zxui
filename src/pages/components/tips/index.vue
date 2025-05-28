@@ -15,7 +15,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import ZxTips from '@/components/zx-tips/zx-tips.vue';
 
 const tipsTop = ref();
 const tipsCenter = ref();

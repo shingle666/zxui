@@ -49,15 +49,6 @@
 				<view class="code-example">
 					<text class="code-title">示例代码：</text>
 					<text class="code-text">
-&lt;zx-richtext 
-  :content="content"
-  font-size="32rpx"
-  color="#2979ff"
-  line-height="1.8"
-  text-align="center"
-  :text-indent="true"
-  :custom-style="styleObject"
-/&gt;
 					</text>
 				</view>
 			</view>
@@ -79,12 +70,7 @@
 				<view class="code-example">
 					<text class="code-title">示例代码：</text>
 					<text class="code-text">
-&lt;zx-richtext 
-  :content="imageContent"
-  img-max-width="280rpx"
-  img-border-radius="16rpx"
-  @itemclick="handleImageClick"
-/&gt;
+
 					</text>
 				</view>
 			</view>
@@ -104,14 +90,7 @@
 				<view class="code-example">
 					<text class="code-title">事件处理：</text>
 					<text class="code-text">
-const handleItemClick = (e) => {
-  const { node } = e.detail
-  if (node.name === 'a') {
-    // 处理链接点击
-  } else if (node.name === 'img') {
-    // 处理图片点击
-  }
-}
+
 					</text>
 				</view>
 			</view>
@@ -181,13 +160,7 @@ const handleItemClick = (e) => {
 				<view class="code-example">
 					<text class="code-title">数组格式示例：</text>
 					<text class="code-text">
-const nodes = [{
-  name: 'div',
-  children: [
-    { name: 'h3', children: [{ type: 'text', text: '标题' }] },
-    { name: 'p', children: [{ type: 'text', text: '内容' }] }
-  ]
-}]
+
 					</text>
 				</view>
 			</view>
@@ -269,7 +242,6 @@ const configContent = ref(`
 		<p>长按文本测试选择功能，点击图片测试预览功能。</p>
 		<img src="http://qiniu-web-assets.dcloud.net.cn/unidoc/zh/uni-app.png" alt="HTTP图片测试" />
 		<p>注意观察HTTP链接是否转换为HTTPS。</p>
-		<script>alert('这是测试脚本')</script>
 	</div>
 `)
 
@@ -278,9 +250,9 @@ const complexContent = ref(`
 	<div>
 		<h2>富文本完整功能演示</h2>
 		
-		<blockquote style="border-left: 4px solid #ddd; padding-left: 16px; color: #666; font-style: italic; margin: 16px 0;">
+		<div style="border-left: 4px solid #ddd; padding-left: 16px; color: #666; font-style: italic; margin: 16px 0;">
 			这是一个引用块，展示复杂HTML结构的渲染效果。
-		</blockquote>
+		</div>
 		
 		<h3>列表功能</h3>
 		<ul>

@@ -43,7 +43,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxTransfer from '@/components/zx-transfer/zx-transfer.vue'
 
 // 基础用法
 const data1 = ref([

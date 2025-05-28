@@ -235,9 +235,9 @@ const setRichContent = () => {
     <pre><code>function hello() {
   console.log("Hello, zx-editor!");
 }</code></pre>
-    <blockquote>
+    <div>
       <p>这是一个引用块，用来展示引用内容。</p>
-    </blockquote>
+    </div>
     <p style="text-align: center;">居中对齐的文本</p>
     <hr>
     <p>感谢使用 zx-editor 组件！</p>

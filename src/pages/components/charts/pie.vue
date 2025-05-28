@@ -16,7 +16,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import zxChartsPie from '@/components/zx-charts-pie/zx-charts-pie.vue';
 
 const pieRef = ref();
 const pieData = [

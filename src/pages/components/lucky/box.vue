@@ -22,7 +22,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import ZxLuckyBox from '@/components/zx-lucky-box/zx-lucky-box.vue'
 
 const luckyRef = ref()
 const blocks = ref([

@@ -18,8 +18,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import ZxNotify from '@/components/zx-notify/zx-notify.vue'
-import ZxIcon from '@/components/zx-icon/zx-icon.vue'
 
 const notifyRef = ref()
 const slotNotifyRef = ref()

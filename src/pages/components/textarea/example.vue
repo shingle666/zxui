@@ -1,196 +1,115 @@
+<template>
 	<view class="example-container">
 		<view class="title">zx-textarea 组件示例</view>
-		
+
 		<!-- 基础用法 -->
 		<view class="section">
 			<view class="section-title">基础用法</view>
-			<zx-textarea 
-				v-model="basicValue" 
-				placeholder="请输入内容"
-				@input="onInput"
-				@change="onChange"
-			/>
+			<zx-textarea v-model="basicValue" placeholder="请输入内容" @input="onInput" @change="onChange" />
 			<text class="result">输入值: {{ basicValue }}</text>
 		</view>
-		
+
 		<!-- 带字数统计 -->
 		<view class="section">
 			<view class="section-title">带字数统计</view>
-			<zx-textarea 
-				v-model="countValue" 
-				placeholder="最多输入100个字符"
-				:count="true"
-				:maxlength="100"
-			/>
+			<zx-textarea v-model="countValue" placeholder="最多输入100个字符" :count="true" :maxlength="100" />
 		</view>
-		
+
 		<!-- 清除按钮 -->
 		<view class="section">
 			<view class="section-title">清除按钮</view>
-			<zx-textarea 
-				v-model="clearableValue" 
-				placeholder="带清除按钮的输入框"
-				:clearable="true"
-				@clear="onClear"
-			/>
+			<zx-textarea v-model="clearableValue" placeholder="带清除按钮的输入框" :clearable="true" @clear="onClear" />
 		</view>
-		
+
 		<!-- 自适应高度 -->
 		<view class="section">
 			<view class="section-title">自适应高度</view>
-			<zx-textarea 
-				v-model="autoHeightValue" 
-				placeholder="输入区域高度自适应，不会出现滚动条"
-				:auto-height="true"
-			/>
+			<zx-textarea v-model="autoHeightValue" placeholder="输入区域高度自适应，不会出现滚动条" :auto-height="true" />
 		</view>
-		
+
 		<!-- 禁用状态 -->
 		<view class="section">
 			<view class="section-title">禁用状态</view>
-			<zx-textarea 
-				v-model="disabledValue" 
-				placeholder="禁用状态"
-				:disabled="true"
-			/>
+			<zx-textarea v-model="disabledValue" placeholder="禁用状态" :disabled="true" />
 		</view>
-		
+
 		<!-- 不同边框样式 -->
 		<view class="section">
 			<view class="section-title">不同边框样式</view>
 			<view class="border-examples">
 				<view class="border-item">
 					<text class="border-label">四周边框</text>
-					<zx-textarea 
-						v-model="borderValue1" 
-						placeholder="四周边框"
-						border="surround"
-					/>
+					<zx-textarea v-model="borderValue1" placeholder="四周边框" border="surround" />
 				</view>
 				<view class="border-item">
 					<text class="border-label">底部边框</text>
-					<zx-textarea 
-						v-model="borderValue2" 
-						placeholder="底部边框"
-						border="bottom"
-					/>
+					<zx-textarea v-model="borderValue2" placeholder="底部边框" border="bottom" />
 				</view>
 				<view class="border-item">
 					<text class="border-label">无边框</text>
-					<zx-textarea 
-						v-model="borderValue3" 
-						placeholder="无边框"
-						border="none"
-					/>
+					<zx-textarea v-model="borderValue3" placeholder="无边框" border="none" />
 				</view>
 			</view>
 		</view>
-		
+
 		<!-- 自定义样式 -->
 		<view class="section">
 			<view class="section-title">自定义样式</view>
-			<zx-textarea 
-				v-model="customValue" 
-				placeholder="自定义样式的输入框"
-				:count="true"
-				:maxlength="200"
-				fontSize="16px"
-				color="#333"
-				backgroundColor="#f8f9fa"
-				borderColor="#007bff"
-				borderRadius="8px"
-				padding="12px"
-			/>
+			<zx-textarea v-model="customValue" placeholder="自定义样式的输入框" :count="true" :maxlength="200" fontSize="16px"
+				color="#333" backgroundColor="#f8f9fa" borderColor="#007bff" borderRadius="8px" padding="12px" />
 		</view>
-		
+
 		<!-- 不同输入模式 -->
 		<view class="section">
 			<view class="section-title">不同输入模式</view>
 			<view class="input-mode-examples">
 				<view class="mode-item">
 					<text class="mode-label">数字输入</text>
-					<zx-textarea 
-						v-model="numericValue" 
-						placeholder="数字输入模式"
-						inputmode="numeric"
-					/>
+					<zx-textarea v-model="numericValue" placeholder="数字输入模式" inputmode="numeric" />
 				</view>
 				<view class="mode-item">
 					<text class="mode-label">邮箱输入</text>
-					<zx-textarea 
-						v-model="emailValue" 
-						placeholder="邮箱输入模式"
-						inputmode="email"
-					/>
+					<zx-textarea v-model="emailValue" placeholder="邮箱输入模式" inputmode="email" />
 				</view>
 				<view class="mode-item">
 					<text class="mode-label">搜索输入</text>
-					<zx-textarea 
-						v-model="searchValue" 
-						placeholder="搜索输入模式"
-						inputmode="search"
-					/>
+					<zx-textarea v-model="searchValue" placeholder="搜索输入模式" inputmode="search" />
 				</view>
 			</view>
 		</view>
-		
+
 		<!-- 键盘类型 -->
 		<view class="section">
 			<view class="section-title">键盘确认按钮类型</view>
 			<view class="confirm-examples">
 				<view class="confirm-item">
 					<text class="confirm-label">发送</text>
-					<zx-textarea 
-						v-model="sendValue" 
-						placeholder="确认按钮显示发送"
-						confirm-type="send"
-						@confirm="onConfirm"
-					/>
+					<zx-textarea v-model="sendValue" placeholder="确认按钮显示发送" confirm-type="send" @confirm="onConfirm" />
 				</view>
 				<view class="confirm-item">
 					<text class="confirm-label">搜索</text>
-					<zx-textarea 
-						v-model="searchConfirmValue" 
-						placeholder="确认按钮显示搜索"
-						confirm-type="search"
-						@confirm="onConfirm"
-					/>
+					<zx-textarea v-model="searchConfirmValue" placeholder="确认按钮显示搜索" confirm-type="search"
+						@confirm="onConfirm" />
 				</view>
 			</view>
 		</view>
-		
+
 		<!-- 自定义占位符样式 -->
 		<view class="section">
 			<view class="section-title">自定义占位符样式</view>
-			<zx-textarea 
-				v-model="placeholderStyleValue" 
-				placeholder="红色占位符文字"
-				placeholder-style="color: #f56c6c; font-style: italic;"
-			/>
+			<zx-textarea v-model="placeholderStyleValue" placeholder="红色占位符文字"
+				placeholder-style="color: #f56c6c; font-style: italic;" />
 		</view>
-		
+
 		<!-- 事件处理 -->
 		<view class="section">
 			<view class="section-title">事件处理</view>
-			<zx-textarea 
-				v-model="eventValue" 
-				placeholder="测试各种事件"
-				:count="true"
-				:clearable="true"
-				@focus="onFocus"
-				@blur="onBlur"
-				@input="onInputEvent"
-				@change="onChangeEvent"
-				@confirm="onConfirm"
-				@clear="onClearEvent"
-			/>
+			<zx-textarea v-model="eventValue" placeholder="测试各种事件" :count="true" :clearable="true" @focus="onFocus"
+				@blur="onBlur" @input="onInputEvent" @change="onChangeEvent" @confirm="onConfirm"
+				@clear="onClearEvent" />
 			<view class="event-log">
 				<text class="log-title">事件日志:</text>
-				<text 
-					v-for="(log, index) in eventLogs" 
-					:key="index" 
-					class="log-item"
-				>
+				<text v-for="(log, index) in eventLogs" :key="index" class="log-item">
 					{{ log }}
 				</text>
 			</view>
@@ -200,7 +119,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxTextarea from './zx-textarea.vue';
 
 // 基础用法
 const basicValue = ref('');
@@ -404,18 +322,18 @@ const addEventLog = (message) => {
 		max-width: 800px;
 		margin: 0 auto;
 	}
-	
+
 	.border-examples,
 	.input-mode-examples,
 	.confirm-examples {
 		flex-direction: row;
 		gap: 20px;
 	}
-	
+
 	.border-item,
 	.mode-item,
 	.confirm-item {
 		flex: 1;
 	}
 }
-</style> 
+</style>

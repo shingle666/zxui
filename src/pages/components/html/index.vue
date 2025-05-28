@@ -183,11 +183,6 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 
-// 页面配置
-defineOptions({
-  navigationBarTitleText: 'zx-html 组件示例'
-})
-
 // 响应式数据
 const dynamicHtmlRef = ref(null)
 const eventCount = ref(0)
@@ -205,9 +200,9 @@ const basicContent = ref(`
       支持 <em style="color: #3498db;">全端渲染</em>（H5、小程序、App）。
     </p>
     
-    <blockquote style="border-left: 4px solid #3498db; padding: 10px 15px; background: #ecf0f1; margin: 15px 0;">
+    <div style="border-left: 4px solid #3498db; padding: 10px 15px; background: #ecf0f1; margin: 15px 0;">
       <p>💡 支持丰富的 HTML 标签、自定义样式、事件处理等功能</p>
-    </blockquote>
+    </div>
     
     <h3>✨ 主要特性：</h3>
     <ul style="padding-left: 20px;">

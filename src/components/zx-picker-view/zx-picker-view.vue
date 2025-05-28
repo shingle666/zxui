@@ -1,427 +1,155 @@
 <template>
-	<zx-popup :show="show" @close="closeHandler">
-		<view class="zx-picker">
-			<zx-toolbar
-				v-if="showToolbar"
-				:cancelColor="cancelColor"
-				:confirmColor="confirmColor"
-				:cancelText="cancelText"
-				:confirmText="confirmText"
-				:title="title"
-				@cancel="cancel"
-				@confirm="confirm"
-			></zx-toolbar>
-			<picker-view
-				class="zx-picker__view"
-				:indicatorStyle="`height: ${itemHeight}; ${indicatorStyle}`"
-				:indicatorClass="indicatorClass"
-				:maskStyle="maskStyle"
-				:maskClass="maskClass"
-				:maskTopStyle="maskTopStyle"
-				:maskBottomStyle="maskBottomStyle"
-				:value="innerIndex"
-				:immediateChange="immediateChange"
-				:style="{
-					height: `${visibleItemCount * parseInt(itemHeight)}rpx`
-				}"
-				@change="changeHandler"
-				@pickstart="pickstartHandler"
-				@pickend="pickendHandler"
+	<view class="zx-picker-view-container">
+		<picker-view
+			class="zx-picker-view"
+			:indicator-style="indicatorStyle"
+			:indicator-class="indicatorClass"
+			:mask-style="maskStyle"
+			:mask-class="maskClass"
+			:value="value"
+			:immediate-change="immediateChange"
+			@change="onChange"
+			@pickstart="onPickStart"
+			@pickend="onPickEnd"
+			:style="pickerViewStyle"
+		>
+			<picker-view-column
+				v-for="(column, columnIndex) in columns"
+				:key="columnIndex"
+				class="zx-picker-view__column"
 			>
-				<picker-view-column v-for="(item, index) in innerColumns" :key="index" class="zx-picker__view__column">
-					<text
-						v-if="$u.test.array(item)"
-						class="zx-picker__view__column__item zx-line-1"
-						v-for="(item1, index1) in item"
-						:key="index1"
-						:style="{
-							height: itemHeight,
-							lineHeight: itemHeight,
-							fontWeight: index1 === innerIndex[index] ? 'bold' : 'normal'
-						}"
-					>
-						{{ getItemText(item1) }}
-					</text>
-				</picker-view-column>
-			</picker-view>
-			<view v-if="loading" class="zx-picker--loading">
-				<zx-loading-icon mode="circle"></zx-loading-icon>
-			</view>
-		</view>
-	</zx-popup>
+				<view
+					v-for="(item, itemIndex) in column"
+					:key="itemIndex"
+					class="zx-picker-view__column-item"
+					:style="itemStyle"
+				>
+					{{ getItemText(item) }}
+				</view>
+			</picker-view-column>
+		</picker-view>
+	</view>
 </template>
 
 <script setup>
+import { ref, computed, watch } from 'vue';
+
 /**
- * zx-picker
- * @description 选择器组件，基于uni-app的picker-view组件封装
- * @property {Boolean}			show				是否显示picker弹窗（默认 false ）
- * @property {Boolean}			showToolbar			是否显示顶部的操作栏（默认 true ）
- * @property {String}			title				顶部标题
- * @property {Array}			columns				对象数组，设置每一列的数据
- * @property {Boolean}			loading				是否显示加载中状态（默认 false ）
- * @property {String | Number}	itemHeight			各列中，单个选项的高度（默认 44 ）
- * @property {String}			cancelText			取消按钮的文字（默认 '取消' ）
- * @property {String}			confirmText			确认按钮的文字（默认 '确定' ）
- * @property {String}			cancelColor			取消按钮的颜色（默认 '#909193' ）
- * @property {String}			confirmColor		确认按钮的颜色（默认 '#3c9cff' ）
- * @property {String | Number}	visibleItemCount	每列中可见选项的数量（默认 5 ）
- * @property {String}			keyName				选项对象中，需要展示的属性键名（默认 'text' ）
- * @property {Boolean}			closeOnClickOverlay	是否允许点击遮罩关闭选择器（默认 false ）
- * @property {Array}			defaultIndex		各列的默认索引
- * @property {String}           indicatorStyle      设置选择器中间选中框的样式（默认 '' ）
- * @property {String}           indicatorClass      设置选择器中间选中框的类名（默认 '' ）
- * @property {String}           maskStyle           设置蒙层的样式（默认 '' ）
- * @property {String}           maskClass           设置蒙层的类名（默认 '' ）
- * @property {String}           maskTopStyle        设置蒙层上半部分的样式（默认 '' ）仅 app-nvue（3.6.7+）支持
- * @property {String}           maskBottomStyle     设置蒙层下半部分的样式（默认 '' ）仅 app-nvue（3.6.7+）支持
- * @property {Boolean}			immediateChange		是否在手指松开时立即触发change事件（默认 false ）
- * @event {Function} close		关闭选择器时触发
- * @event {Function} cancel		点击取消按钮触发
- * @event {Function} change		当选择值变化时触发
- * @event {Function} confirm	点击确定按钮，返回当前选择的值
- * @event {Function} pickstart  当滚动选择开始时触发
- * @event {Function} pickend    当滚动选择结束时触发
+ * zx-picker-view
+ * @description 嵌入页面的滚动选择器。
+ * @property {Array} value 数组中的数字依次表示 picker-view 内的 picker-view-column 选择的第几项（下标从 0 开始），数字大于 picker-view-column 可选项长度时，选择最后一项。
+ * @property {Array} columns 对象数组，设置每一列的数据。格式：[[{text: '北京'}, {text: '上海'}], [{text: '男'}, {text: '女'}]]
+ * @property {String} keyName 选项对象中，需要展示的属性键名（默认 'text' ）
+ * @property {String} itemHeight 各列中，单个选项的高度, 单位rpx (默认 '88rpx' )。
+ * @property {String | Number} visibleItemCount 每列中可见选项的数量（默认 5 ）。
+ * @property {String} indicatorStyle 设置选择器中间选中框的样式。
+ * @property {String} indicatorClass 设置选择器中间选中框的类名。
+ * @property {String} maskStyle 设置蒙层的样式。
+ * @property {String} maskClass 设置蒙层的类名。
+ * @property {Boolean} immediateChange 是否在手指松开时立即触发 change 事件。若不开启则会在滚动动画结束后触发 change 事件。（微信小程序 2.21.1+ 支持）
+ * @event {Function} change 当滚动选择，value 改变时触发 change 事件，event.detail = {value: value}；value为数组，表示 picker-view 内的 picker-view-column 当前选择的是第几项（下标从 0 开始）。
+ * @event {Function} pickstart 当滚动选择开始时候触发事件。（微信小程序2.3.1、快手小程序支持）
+ * @event {Function} pickend 当滚动选择结束时候触发事件。（微信小程序2.3.1、快手小程序支持）
  */
-
-import { ref, getCurrentInstance } from 'vue';
-
-const { proxy } = getCurrentInstance();
-const instance = getCurrentInstance()
 
 const props = defineProps({
-	// 是否展示picker弹窗
-	show: {
-		type: Boolean,
-		default: false
-	},
-	// 是否展示顶部的操作栏
-	showToolbar: {
-		type: Boolean,
-		default: true
-	},
-	// 顶部标题
-	title: {
-		type: String,
-		default: ''
-	},
-	// 对象数组，设置每一列的数据
-	columns: {
-		type: Array,
-		default: () => {
-			return [];
-		}
-	},
-	// 是否显示加载中状态
-	loading: {
-		type: Boolean,
-		default: false
-	},
-	// 各列中，单个选项的高度
-	itemHeight: {
-		type: String,
-		default: '88rpx'
-	},
-	// 取消按钮的文字
-	cancelText: {
-		type: String,
-		default: '取消'
-	},
-	// 确认按钮的文字
-	confirmText: {
-		type: String,
-		default: '确认'
-	},
-	// 取消按钮的颜色
-	cancelColor: {
-		type: String,
-		default: '#909193'
-	},
-	// 确认按钮的颜色
-	confirmColor: {
-		type: String,
-		default: '#3c9cff'
-	},
-	// 每列中可见选项的数量
-	visibleItemCount: {
-		type: [String, Number],
-		default: 5
-	},
-	// 选项对象中，需要展示的属性键名
-	keyName: {
-		type: String,
-		default: 'text'
-	},
-	// 是否允许点击遮罩关闭选择器
-	closeOnClickOverlay: {
-		type: Boolean,
-		default: false
-	},
-	// 各列的默认索引
-	defaultIndex: {
-		type: Array,
-		default: () => {
-			return [];
-		}
-	},
-	// 是否在手指松开时立即触发 change 事件。若不开启则会在滚动动画结束后触发 change 事件，只在微信2.21.1及以上有效
-	immediateChange: {
-		type: Boolean,
-		default: false
-	},
-	// 设置选择器中间选中框的样式
-	indicatorStyle: {
-		type: String,
-		default: ''
-	},
-	// 设置选择器中间选中框的类名
-	indicatorClass: {
-		type: String,
-		default: ''
-	},
-	// 设置蒙层的样式
-	maskStyle: {
-		type: String,
-		default: ''
-	},
-	// 设置蒙层的类名
-	maskClass: {
-		type: String,
-		default: ''
-	},
-	// 设置蒙层上半部分的样式（仅 app-nvue（3.6.7+）支持）
-	maskTopStyle: {
-		type: String,
-		default: ''
-	},
-	// 设置蒙层下半部分的样式（仅 app-nvue（3.6.7+）支持）
-	maskBottomStyle: {
-		type: String,
-		default: ''
-	}
+  value: {
+    type: Array,
+    default: () => []
+  },
+  columns: {
+    type: Array,
+    default: () => []
+  },
+  keyName: {
+    type: String,
+    default: 'text'
+  },
+  itemHeight: {
+    type: String,
+    default: '88rpx'
+  },
+  visibleItemCount: {
+    type: [String, Number],
+    default: 5
+  },
+  indicatorStyle: {
+    type: String,
+    default: 'height: 88rpx;'
+  },
+  indicatorClass: {
+    type: String,
+    default: ''
+  },
+  maskStyle: {
+    type: String,
+    default: ''
+  },
+  maskClass: {
+    type: String,
+    default: ''
+  },
+  immediateChange: {
+    type: Boolean,
+    default: false
+  }
 });
 
-// 上一次选择的列索引
-const lastIndex = ref([]);
-// 索引值 ，对应picker-view的value
-const innerIndex = ref([]);
-// 各列的值
-const innerColumns = ref([]);
-// 上一次的变化列索引
-const columnIndex = ref(0);
+const emit = defineEmits(['change', 'pickstart', 'pickend']);
 
-// 获取item需要显示的文字，判别为对象还是文本
+const pickerViewStyle = computed(() => {
+  const height = parseInt(props.itemHeight) * Number(props.visibleItemCount);
+  return `height: ${height}rpx;`;
+});
+
+const itemStyle = computed(() => {
+  return `height: ${props.itemHeight}; line-height: ${props.itemHeight};`;
+});
+
 const getItemText = (item) => {
-	if (testObject(item)) {
-		return item[props.keyName];
-	} else {
-		return item;
-	}
-};
-// 关闭选择器
-const closeHandler = () => {
-	if (props.closeOnClickOverlay) {
-		proxy.$emit('close');
-	}
-};
-// 点击工具栏的取消按钮
-const cancel = () => {
-	proxy.$emit('cancel');
-};
-// 点击工具栏的确定按钮
-const confirm = () => {
-	proxy.$emit('confirm', {
-		indexs: innerIndex.value,
-		value: innerColumns.value.map((item, index) => item[innerIndex.value[index]]),
-		values: innerColumns.value
-	});
-};
-// 选择器某一列的数据发生变化时触发
-const changeHandler = (e) => {
-	const { value } = e.detail;
-	let index = 0,
-		columnIndex = 0;
-	// 通过对比前后两次的列索引，得出当前变化的是哪一列
-	for (let i = 0; i < value.length; i++) {
-		let item = value[i];
-		if (item !== (lastIndex.value[i] || 0)) {
-			// 把undefined转为合法假值0
-			// 设置columnIndex为当前变化列的索引
-			columnIndex = i;
-			// index则为变化列中的变化项的索引
-			index = item;
-			break; // 终止循环，即使少一次循环，也是性能的提升
-		}
-	}
-	columnIndex.value = columnIndex;
-	const values = innerColumns.value;
-	// 将当前的各项变化索引，设置为"上一次"的索引变化值
-	setLastIndex(value);
-	setIndexs(value);
-
-	proxy.$emit('change', {
-		// #ifndef MP-WEIXIN || MP-LARK
-		// 微信小程序不能传递,会因为循环引用而报错
-		picker: instance,
-		// #endif
-		value: innerColumns.value.map((item, index) => item[value[index]]),
-		index,
-		indexs: value,
-		// values为当前变化列的数组内容
-		values,
-		columnIndex
-	});
+  if (typeof item === 'object' && item !== null && props.keyName in item) {
+    return item[props.keyName];
+  }
+  return item;
 };
 
-// 滚动选择开始时触发
-const pickstartHandler = (e) => {
-	proxy.$emit('pickstart', e);
+const onChange = (event) => {
+  emit('change', event.detail.value);
 };
 
-// 滚动选择结束时触发
-const pickendHandler = (e) => {
-	proxy.$emit('pickend', e);
+const onPickStart = (event) => {
+  emit('pickstart', event);
 };
 
-// 设置index索引，此方法可被外部调用设置
-const setIndexs = (index, setLastIndex) => {
-	innerIndex.value = proxy.$util.deepClone(index);
-	if (setLastIndex) {
-		setLastIndex(index);
-	}
+const onPickEnd = (event) => {
+  emit('pickend', event);
 };
-// 记录上一次的各列索引位置
-const setLastIndex = (index) => {
-	// 当能进入此方法，意味着当前设置的各列默认索引，即为"上一次"的选中值，需要记录，是因为changeHandler中
-	// 需要拿前后的变化值进行对比，得出当前发生改变的是哪一列
-	lastIndex.value = proxy.$util.deepClone(index);
-};
-// 设置对应列选项的所有值
-const setColumnValues = (columnIndex, values) => {
-	// 替换innerColumns数组中columnIndex索引的值为values，使用的是数组的splice方法
-	innerColumns.value.splice(columnIndex, 1, values);
-	// 拷贝一份原有的innerIndex做临时变量，将大于当前变化列的所有的列的默认索引设置为0
-	let tmpIndex = proxy.$util.deepClone(innerIndex.value);
-	for (let i = 0; i < innerColumns.value.length; i++) {
-		if (i > columnIndex.value) {
-			tmpIndex[i] = 0;
-		}
-	}
-	// 一次性赋值，不能单个修改，否则无效
-	setIndexs(tmpIndex);
-};
-// 获取对应列的所有选项
-const getColumnValues = (columnIndex) => {
-	// 进行同步阻塞，因为外部得到change事件之后，可能需要执行setColumnValues更新列的值
-	// 索引如果在外部change的回调中调用getColumnValues的话，可能无法得到变更后的列值，这里进行一定延时，保证值的准确性
-	(async () => {
-		await proxy.$util.sleep();
-	})();
-	return innerColumns.value[columnIndex];
-};
-// 设置整体各列的columns的值
-const setColumns = (columns) => {
-	innerColumns.value = proxy.$util.deepClone(columns);
-	// 如果在设置各列数据时，没有被设置默认的各列索引defaultIndex，那么用0去填充它，数组长度为列的数量
-	if (innerIndex.value.length === 0) {
-		innerIndex.value = new Array(columns.length).fill(0);
-	}
-};
-// 获取各列选中值对应的索引
-const getIndexs = () => {
-	return innerIndex.value;
-};
-// 获取各列选中的值
-const getValues = () => {
-	// 进行同步阻塞，因为外部得到change事件之后，可能需要执行setColumnValues更新列的值
-	// 索引如果在外部change的回调中调用getValues的话，可能无法得到变更后的列值，这里进行一定延时，保证值的准确性
-	(async () => {
-		await proxy.$util.sleep();
-	})();
-	return innerColumns.value.map((item, index) => item[innerIndex.value[index]]);
-};
-/**
- * 是否数组
- */
-const testArray=(value)=> {
-    if (typeof Array.isArray === 'function') {
-        return Array.isArray(value)
-    }
-    return Object.prototype.toString.call(value) === '[object Array]'
-}
 
-/**
- * 是否对象
- */
-const testObject=(value)=> {
-    return Object.prototype.toString.call(value) === '[object Object]'
-}
-
-// 初始化组件方法，暴露给外部调用
-// 初始化时判断是否有传入默认索引
-(() => {
-    if (props.columns.length && props.defaultIndex.length) {
-        innerIndex.value = props.defaultIndex;
-    } else if (props.columns.length) {
-        innerIndex.value = new Array(props.columns.length).fill(0);
-    }
-    innerColumns.value = proxy.$util.deepClone(props.columns);
-})();
-
-// 对外暴露方法
-defineExpose({
-    setIndexs,
-    setColumnValues,
-    getColumnValues,
-    setColumns,
-    getIndexs,
-    getValues
-});
 </script>
 
 <style lang="scss" scoped>
-$zx-main-color: #3c9cff;
-.zx-picker {
-	position: relative;
+.zx-picker-view-container {
+  width: 100%;
+}
 
-	&__view {
-		&__column {
-			display: flex;
-			flex: 1;
-			justify-content: center;
+.zx-picker-view {
+  width: 100%;
+}
 
-			&__item {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				font-size: 16px;
-				text-align: center;
-				/* #ifndef APP-NVUE */
-				display: block;
-				/* #endif */
-				color: $zx-main-color;
+.zx-picker-view__column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-				&--disabled {
-					/* #ifndef APP-NVUE */
-					cursor: not-allowed;
-					/* #endif */
-					opacity: 0.35;
-				}
-			}
-		}
-	}
-
-	&--loading {
-		position: absolute;
-		top: 0;
-		right: 0;
-		left: 0;
-		bottom: 0;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		background-color: rgba(255, 255, 255, 0.87);
-		z-index: 1000;
-	}
+.zx-picker-view__column-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 32rpx;
+  color: #333;
 }
 </style>

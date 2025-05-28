@@ -244,7 +244,6 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import ZxSpace from '../../../components/zx-space/zx-space.vue'
 
 defineOptions({
   name: 'ZxSpaceDemo'

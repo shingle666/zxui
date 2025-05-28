@@ -202,7 +202,6 @@
 
 <script setup>
 import { ref, onUnmounted } from 'vue';
-import zxProgress from '@/components/zx-progress/zx-progress.vue';
 
 // 动画演示相关
 const progressRef1 = ref();

@@ -14,7 +14,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxGoodsNav from '@/components/zx-goods-nav/zx-goods-nav.vue'
 
 const options = ref([
   { icon: 'kefu-ermai', text: '客服' },

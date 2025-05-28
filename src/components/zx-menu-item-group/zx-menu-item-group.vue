@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { ref } from 'vue';
 
 // 组件名称
 const name = 'ZxMenuItemGroup';

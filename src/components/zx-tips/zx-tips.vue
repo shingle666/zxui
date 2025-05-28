@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { ref, watch, nextTick, defineProps, defineExpose } from 'vue';
+import { ref, watch, nextTick } from 'vue';
 
 /**
  * zx-tips 顶部/底部/中部消息提示组件

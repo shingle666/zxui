@@ -74,11 +74,7 @@
 </template>
 
 <script setup>
-import ZxSpace from '../../../components/zx-space/zx-space.vue'
-
-defineOptions({
-  name: 'ZxSpaceSimpleTest'
-})
+import { ref } from 'vue';
 </script>
 
 <style scoped>

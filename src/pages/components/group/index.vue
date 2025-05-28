@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import zxGroup from '@/components/zx-group/zx-group.vue';
+import { ref } from 'vue'
 </script>
 
 <style scoped>

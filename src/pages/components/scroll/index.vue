@@ -69,7 +69,7 @@
 				</view>
 			</view>
 			
-			<!-- 加载更多示例 */
+			<!-- 加载更多示例 -->
 			<view class="section">
 				<view class="section-title">加载更多</view>
 				<view class="demo-box">
@@ -120,7 +120,7 @@
 				</view>
 			</view>
 			
-			<!-- 自动滚动示例 */
+			<!-- 自动滚动示例 -->
 			<view class="section">
 				<view class="section-title">自动滚动</view>
 				<view class="demo-box">
@@ -152,7 +152,7 @@
 				</view>
 			</view>
 			
-			<!-- 空状态示例 */
+			<!-- 空状态示例 -->
 			<view class="section">
 				<view class="section-title">空状态</view>
 				<view class="demo-box">

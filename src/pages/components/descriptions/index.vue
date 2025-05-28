@@ -186,9 +186,6 @@
 </template>
 
 <script setup>
-import ZxDescriptions from '@/components/zx-descriptions/zx-descriptions.vue'
-import ZxDescriptionsItem from '@/components/zx-descriptions/zx-descriptions-item.vue'
-
 // 定义组件名称
 defineOptions({
   name: 'DescriptionsDemo'

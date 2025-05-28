@@ -308,7 +308,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxTextarea from '@/components/zx-textarea/zx-textarea.vue';
 
 // 基础用法
 const basicValue = ref('');

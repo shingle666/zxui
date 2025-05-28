@@ -89,11 +89,11 @@
             </view>
           </view>
 
-          <view v-for="(line, idx) in lines" :key="line.id">
+          <view v-for="(line, idx) in lines" :key="line.id+idx">
             <view
               class="zx-charts__broken-line"
               v-for="(l, k) in line.source"
-              :key="l.id"
+              :key="l.id+k"
               :style="{
                 height: brokenLineHeight + 'px',
                 background: line.color,
@@ -157,7 +157,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 
 const emit = defineEmits(["click"]);
 const props = defineProps({

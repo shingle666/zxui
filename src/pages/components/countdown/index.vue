@@ -216,7 +216,6 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import ZxCountdown from '@/components/zx-countdown/zx-countdown.vue';
 
 // 引用
 const countdownRef = ref(null);

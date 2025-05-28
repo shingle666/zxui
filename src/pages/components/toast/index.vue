@@ -20,7 +20,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxToast from '@/components/zx-toast/zx-toast.vue';
 
 const show = ref(false);
 const type = ref('default');

@@ -110,214 +110,204 @@
     </view>
   </view>
 </template>
+<script setup>
+import { ref, reactive, nextTick } from 'vue';
+// 直播地址
+const liveUrls = reactive({
+  rtmp: 'rtmp://ns8.indexforce.com/home/mystream',  // RTMP 测试流
+  flv: 'http://flv3948069e.live.126.net/live/1548036109332286876812.flv', // FLV 测试流
+  hls: 'http://cctvalih5ca.v.myalicdn.com/live/cctv1_2/index.m3u8'  // HLS 测试流
+});
+const currentUrl = ref('rtmp://ns8.indexforce.com/home/mystream');
+const currentSourceIndex = ref(0);
+const sourceLabels = reactive(['RTMP 测试流', 'FLV 测试流', 'HLS 测试流']);
 
-<script>
-import zxLivePlayer from '@/components/zx-live-player/zx-live-player.vue'
+// 播放状态
+const playerState = ref(0);
+const advancedPlayerState = ref(0);
+const isPlaying = ref(false);
 
-export default {
-  components: {
-    zxLivePlayer
-  },
-  data() {
-    return {
-      // 直播地址
-      liveUrls: {
-        rtmp: 'rtmp://ns8.indexforce.com/home/mystream',  // RTMP 测试流
-        flv: 'http://flv3948069e.live.126.net/live/1548036109332286876812.flv', // FLV 测试流
-        hls: 'http://cctvalih5ca.v.myalicdn.com/live/cctv1_2/index.m3u8'  // HLS 测试流
-      },
-      currentUrl: 'rtmp://ns8.indexforce.com/home/mystream',
-      currentSourceIndex: 0,
-      sourceLabels: ['RTMP 测试流', 'FLV 测试流', 'HLS 测试流'],
-      
-      // 播放状态
-      playerState: 0,
-      advancedPlayerState: 0,
-      isPlaying: false,
-      
-      // 播放器设置
-      autoplay: true,
-      isMuted: false,
-      orientation: 'vertical',
-      objectFit: 'contain',
-      fitModeIndex: 0,
-      showControls: true,
-      playerWidth: '100%',
-      playerHeight: '400rpx',
-      
-      // 网络状态信息
-      networkInfo: null,
-      
-      // 截图路径
-      snapshotPath: '',
-      
-      // 状态码说明
-      stateCodeMap: {
-        2001: '已经连接服务器',
-        2002: '已经连接服务器,开始拉流',
-        2003: '网络接收到首个视频数据包(IDR)',
-        2004: '视频播放开始',
-        2005: '视频播放进度',
-        2006: '视频播放结束',
-        2007: '视频播放Loading',
-        2008: '解码器启动',
-        2009: '视频分辨率改变',
-        '-2301': '网络断连，且经多次重连抢救无效',
-        '-2302': '获取加速拉流地址失败',
-        2101: '当前视频帧解码失败',
-        2102: '当前音频帧解码失败',
-        2103: '网络断连, 已启动自动重连',
-        2104: '网络来包不稳：可能是下行带宽不足',
-        2105: '当前视频播放出现卡顿',
-        2106: '硬解启动失败，采用软解',
-        2107: '当前视频帧不连续，可能丢帧',
-        2108: '当前流硬解第一个I帧失败，SDK自动切软解'
-      }
-    }
-  },
-  methods: {
-    // 基础播放器状态变化处理
-    onStateChange(e) {
-      console.log('基础播放器状态变化:', e.detail.code)
-      this.playerState = e.detail.code
-      
-      if (e.detail.code === 2004) {
-        uni.showToast({
-          title: '视频开始播放',
-          icon: 'none'
-        })
-      }
-    },
-    
-    // 高级播放器状态变化处理
-    onAdvancedStateChange(e) {
-      console.log('高级播放器状态变化:', e.detail.code)
-      this.advancedPlayerState = e.detail.code
-      
-      // 更新播放状态
-      if (e.detail.code === 2004) {
-        this.isPlaying = true
-      } else if (e.detail.code === 2006) {
-        this.isPlaying = false
-      }
-    },
-    
-    // 网络状态通知
-    onNetStatus(e) {
-      console.log('网络状态:', e.detail.info)
-      this.networkInfo = e.detail.info
-    },
-    
-    // 全屏变化事件
-    onFullScreenChange(e) {
-      console.log('全屏状态变化:', e.detail.fullScreen, '方向:', e.detail.direction)
-      uni.showToast({
-        title: e.detail.fullScreen ? '进入全屏' : '退出全屏',
-        icon: 'none'
-      })
-    },
-    
-    // 错误事件处理
-    onError(e) {
-      console.error('基础播放器错误:', e.detail.errMsg)
-      uni.showToast({
-        title: '播放出错: ' + e.detail.errMsg,
-        icon: 'none'
-      })
-    },
-    
-    // 高级播放器错误事件处理
-    onAdvancedError(e) {
-      console.error('高级播放器错误:', e.detail.errMsg)
-      uni.showToast({
-        title: '播放出错: ' + e.detail.errMsg,
-        icon: 'none'
-      })
-    },
-    
-    // 获取状态描述
-    getStateDesc(code) {
-      return this.stateCodeMap[code] || `未知状态(${code})`
-    },
-    
-    // 切换播放源
-    onSourceChange(e) {
-      const index = e.detail.value
-      this.currentSourceIndex = index
-      
-      const sources = Object.values(this.liveUrls)
-      this.currentUrl = sources[index]
-      
-      // 重新加载播放器
-      this.$nextTick(() => {
-        this.reload()
-      })
-    },
-    
-    // 切换填充模式
-    onFitModeChange(e) {
-      const index = e.detail.value
-      this.fitModeIndex = index
-      this.objectFit = ['contain', 'fillCrop'][index]
-    },
-    
-    // 播放/暂停切换
-    handlePlayPause() {
-      if (this.isPlaying) {
-        this.$refs.advancedPlayer.stop()
-        this.isPlaying = false
-      } else {
-        this.$refs.advancedPlayer.play()
-      }
-    },
-    
-    // 切换静音状态
-    toggleMute() {
-      this.isMuted = !this.isMuted
-    },
-    
-    // 重新加载直播
-    reload() {
-      if (this.$refs.advancedPlayer) {
-        this.$refs.advancedPlayer.reload()
-        uni.showToast({
-          title: '重新加载',
-          icon: 'none'
-        })
-      }
-    },
-    
-    // 截图
-    async takeSnapshot() {
-      try {
-        const imagePath = await this.$refs.advancedPlayer.snapshot()
-        console.log('截图成功，临时路径:', imagePath)
-        this.snapshotPath = imagePath
-        
-        uni.showToast({
-          title: '截图成功',
-          icon: 'success'
-        })
-      } catch (err) {
-        console.error('截图失败:', err)
-        uni.showToast({
-          title: '截图失败: ' + (err.errMsg || err.message || '未知错误'),
-          icon: 'none'
-        })
-      }
-    },
-    
-    // 切换控制栏显示状态
-    toggleControls() {
-      this.showControls = !this.showControls
-    },
-    
-    // 切换方向
-    toggleOrientation() {
-      this.orientation = this.orientation === 'vertical' ? 'horizontal' : 'vertical'
-    }
+// 播放器设置
+const autoplay = ref(true);
+const isMuted = ref(false);
+const orientation = ref('vertical');
+const objectFit = ref('contain');
+const fitModeIndex = ref(0);
+const showControls = ref(true);
+const playerWidth = ref('100%');
+const playerHeight = ref('400rpx');
+
+// 网络状态信息
+const networkInfo = ref(null);
+
+// 截图路径
+const snapshotPath = ref('');
+
+// 状态码说明
+const stateCodeMap = reactive({
+  2001: '已经连接服务器',
+  2002: '已经连接服务器,开始拉流',
+  2003: '网络接收到首个视频数据包(IDR)',
+  2004: '视频播放开始',
+  2005: '视频播放进度',
+  2006: '视频播放结束',
+  2007: '视频播放Loading',
+  2008: '解码器启动',
+  2009: '视频分辨率改变',
+  '-2301': '网络断连，且经多次重连抢救无效',
+  '-2302': '获取加速拉流地址失败',
+  2101: '当前视频帧解码失败',
+  2102: '当前音频帧解码失败',
+  2103: '网络断连, 已启动自动重连',
+  2104: '网络来包不稳：可能是下行带宽不足',
+  2105: '当前视频播放出现卡顿',
+  2106: '硬解启动失败，采用软解',
+  2107: '当前视频帧不连续，可能丢帧',
+  2108: '当前流硬解第一个I帧失败，SDK自动切软解'
+});
+
+const advancedPlayer = ref(null); // 用于获取组件实例
+
+// 基础播放器状态变化处理
+const onStateChange = (e) => {
+  console.log('基础播放器状态变化:', e.detail.code);
+  playerState.value = e.detail.code;
+  
+  if (e.detail.code === 2004) {
+    uni.showToast({
+      title: '视频开始播放',
+      icon: 'none'
+    });
   }
-}
+};
+
+// 高级播放器状态变化处理
+const onAdvancedStateChange = (e) => {
+  console.log('高级播放器状态变化:', e.detail.code);
+  advancedPlayerState.value = e.detail.code;
+  
+  // 更新播放状态
+  if (e.detail.code === 2004) {
+    isPlaying.value = true;
+  } else if (e.detail.code === 2006) {
+    isPlaying.value = false;
+  }
+};
+
+// 网络状态通知
+const onNetStatus = (e) => {
+  console.log('网络状态:', e.detail.info);
+  networkInfo.value = e.detail.info;
+};
+
+// 全屏变化事件
+const onFullScreenChange = (e) => {
+  console.log('全屏状态变化:', e.detail.fullScreen, '方向:', e.detail.direction);
+  uni.showToast({
+    title: e.detail.fullScreen ? '进入全屏' : '退出全屏',
+    icon: 'none'
+  });
+};
+
+// 错误事件处理
+const onError = (e) => {
+  console.error('基础播放器错误:', e.detail.errMsg);
+  uni.showToast({
+    title: '播放出错: ' + e.detail.errMsg,
+    icon: 'none'
+  });
+};
+
+// 高级播放器错误事件处理
+const onAdvancedError = (e) => {
+  console.error('高级播放器错误:', e.detail.errMsg);
+  uni.showToast({
+    title: '播放出错: ' + e.detail.errMsg,
+    icon: 'none'
+  });
+};
+
+// 获取状态描述
+const getStateDesc = (code) => {
+  return stateCodeMap[code] || `未知状态(${code})`;
+};
+
+// 切换播放源
+const onSourceChange = (e) => {
+  const index = e.detail.value;
+  currentSourceIndex.value = index;
+  
+  const sources = Object.values(liveUrls);
+  currentUrl.value = sources[index];
+  
+  // 重新加载播放器
+  nextTick(() => {
+    reload();
+  });
+};
+
+// 切换填充模式
+const onFitModeChange = (e) => {
+  const index = e.detail.value;
+  fitModeIndex.value = index;
+  objectFit.value = ['contain', 'fillCrop'][index];
+};
+
+// 播放/暂停切换
+const handlePlayPause = () => {
+  if (isPlaying.value) {
+    advancedPlayer.value.stop();
+    isPlaying.value = false;
+  } else {
+    advancedPlayer.value.play();
+  }
+};
+
+// 切换静音状态
+const toggleMute = () => {
+  isMuted.value = !isMuted.value;
+};
+
+// 重新加载直播
+const reload = () => {
+  if (advancedPlayer.value) {
+    advancedPlayer.value.reload();
+    uni.showToast({
+      title: '重新加载',
+      icon: 'none'
+    });
+  }
+};
+
+// 截图
+const takeSnapshot = async () => {
+  try {
+    const imagePath = await advancedPlayer.value.snapshot();
+    console.log('截图成功，临时路径:', imagePath);
+    snapshotPath.value = imagePath;
+    
+    uni.showToast({
+      title: '截图成功',
+      icon: 'success'
+    });
+  } catch (err) {
+    console.error('截图失败:', err);
+    uni.showToast({
+      title: '截图失败: ' + (err.errMsg || err.message || '未知错误'),
+      icon: 'none'
+    });
+  }
+};
+
+// 切换控制栏显示状态
+const toggleControls = () => {
+  showControls.value = !showControls.value;
+};
+
+// 切换方向
+const toggleOrientation = () => {
+  orientation.value = orientation.value === 'vertical' ? 'horizontal' : 'vertical';
+};
 </script>
 
 <style lang="scss">
@@ -476,4 +466,4 @@ export default {
     }
   }
 }
-</style> 
+</style>

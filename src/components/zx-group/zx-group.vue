@@ -13,7 +13,6 @@
 
 <script setup>
 import { ref, computed, watch, getCurrentInstance } from 'vue';
-import { useSlots, defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
   title: {

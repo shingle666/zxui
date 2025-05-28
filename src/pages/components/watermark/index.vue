@@ -248,7 +248,6 @@
 
 <script setup>
 import { ref, reactive, computed, watch } from 'vue'
-import ZxWatermark from '../../../components/zx-watermark/zx-watermark.vue'
 
 defineOptions({
   name: 'ZxWatermarkDemo'

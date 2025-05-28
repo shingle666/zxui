@@ -23,7 +23,7 @@
 	</view>
 </template>
 <script setup>
-import { computed, getCurrentInstance, onMounted, ref, defineExpose } from 'vue';
+import { computed, getCurrentInstance, onMounted, ref } from 'vue';
 
 const { proxy } = getCurrentInstance();
 const emits = defineEmits(['change', 'confirm']);

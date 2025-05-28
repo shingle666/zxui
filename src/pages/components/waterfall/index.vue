@@ -27,7 +27,7 @@
 			@retry="loadData"
 			@change="onChange"
 		>
-			<template #left="{ entity, index }">
+			<template #left="{ entity }">
 				<view class="goods-item">
 					<image class="goods-image" :src="entity.image" mode="widthFix" @load="onImageLoad"></image>
 					<view class="goods-content">
@@ -37,7 +37,7 @@
 				</view>
 			</template>
 			
-			<template #right="{ entity, index }">
+			<template #right="{ entity }">
 				<view class="goods-item">
 					<image class="goods-image" :src="entity.image" mode="widthFix" @load="onImageLoad"></image>
 					<view class="goods-content">

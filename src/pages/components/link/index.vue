@@ -168,13 +168,8 @@
 </template>
 
 <script setup>
-// 导入组件
-import ZxLink from '@/components/zx-link/zx-link.vue';
+import { ref } from 'vue';
 
-// 页面配置
-defineOptions({
-	name: 'LinkDemo'
-});
 </script>
 
 <style lang="scss" scoped>

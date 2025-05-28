@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, defineProps, defineEmits, getCurrentInstance } from 'vue'
+import { ref, computed, watch, getCurrentInstance } from 'vue'
 
 // 组件属性
 const props = defineProps({

@@ -221,88 +221,83 @@
   </div>
 </template>
 
-<script>
-import ZxInputTag from './zx-input-tag.vue'
+<script setup>
+import { ref } from 'vue';
+// 基础用法
+const basicTags = ref(['Vue', 'JavaScript']);
 
-export default {
-  name: 'ZxInputTagDemo',
-  components: {
-    ZxInputTag
-  },
-  data() {
-    return {
-      // 基础用法
-      basicTags: ['Vue', 'JavaScript'],
-      
-      // 触发器
-      triggerKey: 'Enter',
-      triggerTags: [],
-      
-      // 最大标签数
-      maxTags: ['标签1', '标签2'],
-      
-      // 尺寸
-      sizeTags: ['标签'],
-      
-      // 类型和效果
-      selectedType: 'primary',
-      selectedEffect: 'light',
-      typeTags: ['示例标签'],
-      
-      // 拖拽
-      draggableTags: ['可拖拽1', '可拖拽2', '可拖拽3'],
-      
-      // 分隔符
-      delimiterTags: [],
-      
-      // 可清空
-      clearableTags: ['清空测试1', '清空测试2'],
-      
-      // 禁用
-      disabledTags: ['禁用标签1', '禁用标签2'],
-      
-      // 只读
-      readonlyTags: ['只读标签1', '只读标签2'],
-      
-      // 自定义
-      customTags: ['自定义1', '自定义2'],
-      
-      // 前缀后缀
-      affixTags: [],
-      
-      // 事件
-      eventTags: [],
-      eventLogs: []
-    }
-  },
-  methods: {
-    onAddTag(tag) {
-      this.addEventLog(`添加标签: ${tag}`)
-    },
-    onRemoveTag(tag) {
-      this.addEventLog(`移除标签: ${tag}`)
-    },
-    onChange(tags) {
-      this.addEventLog(`标签变化: [${tags.join(', ')}]`)
-    },
-    onFocus() {
-      this.addEventLog('获得焦点')
-    },
-    onBlur() {
-      this.addEventLog('失去焦点')
-    },
-    onClear() {
-      this.addEventLog('清空标签')
-    },
-    addEventLog(message) {
-      const time = new Date().toLocaleTimeString()
-      this.eventLogs.unshift(`[${time}] ${message}`)
-      if (this.eventLogs.length > 10) {
-        this.eventLogs.pop()
-      }
-    }
+// 触发器
+const triggerKey = ref('Enter');
+const triggerTags = ref([]);
+
+// 最大标签数
+const maxTags = ref(['标签1', '标签2']);
+
+// 尺寸
+const sizeTags = ref(['标签']);
+
+// 类型和效果
+const selectedType = ref('primary');
+const selectedEffect = ref('light');
+const typeTags = ref(['示例标签']);
+
+// 拖拽
+const draggableTags = ref(['可拖拽1', '可拖拽2', '可拖拽3']);
+
+// 分隔符
+const delimiterTags = ref([]);
+
+// 可清空
+const clearableTags = ref(['清空测试1', '清空测试2']);
+
+// 禁用
+const disabledTags = ref(['禁用标签1', '禁用标签2']);
+
+// 只读
+const readonlyTags = ref(['只读标签1', '只读标签2']);
+
+// 自定义
+const customTags = ref(['自定义1', '自定义2']);
+
+// 前缀后缀
+const affixTags = ref([]);
+
+// 事件
+const eventTags = ref([]);
+const eventLogs = ref([]);
+
+const addEventLog = (message) => {
+  const time = new Date().toLocaleTimeString();
+  eventLogs.value.unshift(`[${time}] ${message}`);
+  if (eventLogs.value.length > 10) {
+    eventLogs.value.pop();
   }
-}
+};
+
+const onAddTag = (tag) => {
+  addEventLog(`添加标签: ${tag}`);
+};
+
+const onRemoveTag = (tag) => {
+  addEventLog(`移除标签: ${tag}`);
+};
+
+const onChange = (tags) => {
+  addEventLog(`标签变化: [${tags.join(', ')}]`);
+};
+
+const onFocus = () => {
+  addEventLog('获得焦点');
+};
+
+const onBlur = () => {
+  addEventLog('失去焦点');
+};
+
+const onClear = () => {
+  addEventLog('清空标签');
+};
+
 </script>
 
 <style scoped>
@@ -386,4 +381,4 @@ h1 {
   color: #909399;
   font-family: 'Courier New', monospace;
 }
-</style> 
+</style>

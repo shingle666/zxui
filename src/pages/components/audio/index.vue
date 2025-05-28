@@ -192,7 +192,6 @@
 
 <script setup>
 import { ref, reactive, onMounted, onUnmounted, watch } from 'vue';
-import ZxAudio from '@/components/zx-audio/zx-audio.vue';
 
 // 激活的选项卡
 const activeTab = ref(0);

@@ -103,7 +103,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import ZxFile from '@/components/zx-file/zx-file.vue';
 
 const basicFile = ref(null);
 const customFile = ref(null);

@@ -39,8 +39,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxList from '@/components/zx-list/zx-list.vue'
-import zxListChat from '@/components/zx-list-chat/zx-list-chat.vue'
 
 const groupAvatars = [
   { url: 'https://cdn.uviewui.com/uview/common/logo.png' },

@@ -12,7 +12,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxSmsCode from '@/components/zx-sms-code/zx-sms-code.vue';
 
 const codeRef = ref(null);
 

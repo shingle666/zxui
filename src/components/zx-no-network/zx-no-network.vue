@@ -49,7 +49,7 @@
  * @example <zx-no-network></zx-no-network>
  */
 
-import { ref, onMounted, defineProps, defineEmits } from "vue";
+import { ref, onMounted } from "vue";
 
 const props = defineProps({
   // 页面文字提示

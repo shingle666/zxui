@@ -33,7 +33,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxCropper from '@/components/zx-cropper/zx-cropper.vue';
 
 const imageUrl = ref('');
 const resultUrl = ref('');

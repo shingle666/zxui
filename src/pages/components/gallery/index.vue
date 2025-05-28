@@ -15,7 +15,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxGallery from '@/components/zx-gallery/zx-gallery.vue';
 
 const images = ref([
   { src: 'https://cdn.mp.ac.cn/banner/01.jpg', desc: '图片1描述' },

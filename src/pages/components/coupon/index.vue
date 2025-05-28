@@ -18,7 +18,6 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import zxCoupon from '@/components/zx-coupon/zx-coupon.vue';
 
 const coupon1 = ref({
 	color: '#9F6DFA',

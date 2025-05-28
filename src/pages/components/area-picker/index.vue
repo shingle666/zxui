@@ -162,7 +162,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import ZxAreaPicker from '@/components/zx-area-picker/zx-area-picker.vue';
 
 // 基础用法
 const basicResult = ref(null);

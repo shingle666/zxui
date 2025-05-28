@@ -27,7 +27,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxLuckyGrid from '@/components/zx-lucky-grid/zx-lucky-grid.vue'
 
 const luckyGridRef = ref(null)
 const result = ref('')

@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import zxLine from '@/components/zx-line/zx-line.vue'
+import {ref} from 'vue';
 </script>
 
 <style scoped lang="scss">

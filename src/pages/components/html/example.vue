@@ -80,7 +80,6 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import ZxHtml from './zx-html.vue'
 
 // 组件引用
 const dynamicHtmlRef = ref(null)

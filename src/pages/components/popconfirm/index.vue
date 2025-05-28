@@ -189,7 +189,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import ZxPopconfirm from '../../../components/zx-popconfirm/zx-popconfirm.vue';
 
 const handleConfirm = () => {
   uni.showToast({

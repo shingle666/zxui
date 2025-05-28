@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-import { ref, watch, nextTick, defineProps, defineEmits } from 'vue'
+import { ref, watch, nextTick } from 'vue'
 import { changeUnits, resolveImage, getImage } from './utils.js'
 import { LuckyWheel } from './index.esm.js'
 

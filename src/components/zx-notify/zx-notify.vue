@@ -30,10 +30,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, nextTick, defineProps, defineExpose } from "vue";
-import ZxTransition from "@/components/zx-transition/zx-transition.vue";
-import ZxStatusBar from "@/components/zx-status-bar/zx-status-bar.vue";
-import ZxIcon from "@/components/zx-icon/zx-icon.vue";
+import { ref, computed, watch, nextTick } from "vue";
 import deepMerge from "@/utils/deepMerge.js";
 
 const props = defineProps({
@@ -191,7 +188,6 @@ defineExpose({ show, close });
 </script>
 
 <style lang="scss" scoped>
-@import "@/styles/compatibility.scss";
 
 $zx-notify-padding: 8px 10px !default;
 $zx-notify-text-font-size: 15px !default;

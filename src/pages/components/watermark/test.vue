@@ -41,11 +41,7 @@
 </template>
 
 <script setup>
-import ZxWatermark from '../../../components/zx-watermark/zx-watermark.vue'
-
-defineOptions({
-  name: 'ZxWatermarkTest'
-})
+import { ref } from 'vue';
 </script>
 
 <style lang="scss" scoped>

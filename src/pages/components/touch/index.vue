@@ -18,7 +18,6 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import zxTouch from '@/components/zx-touch/zx-touch.vue';
 
 const logs = ref([]);
 

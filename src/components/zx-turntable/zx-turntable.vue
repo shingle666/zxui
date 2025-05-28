@@ -28,7 +28,7 @@
 	</view>
 </template>
 <script setup>
-import { ref, onMounted, defineProps, defineEmits, defineExpose, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 
 const props = defineProps({
 	// 奖品名称

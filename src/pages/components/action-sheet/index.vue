@@ -118,7 +118,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import ZxActionSheet from '@/components/zx-action-sheet/zx-action-sheet.vue';
 
 // 基础用法
 const showBasic = ref(false);

@@ -1,3 +1,117 @@
+<template>
+  <view class="container">
+    <view class="title">
+      <text>滑动操作组件示例</text>
+    </view>
+    
+    <view class="section">
+      <view class="section-title">基本用法</view>
+      <zx-swipe-action>
+        <zx-swipe-action-item 
+          :left-options="options2"
+          :right-options="options1"
+          :threshold="0"
+          @click="bindClick"
+        >
+          <view class="content-box" @click="contentClick">
+            <text class="content-text">使用数据填充</text>
+          </view>
+        </zx-swipe-action-item>
+        
+        <zx-swipe-action-item @click="bindClick">
+          <template #left>
+            <view class="slot-button">
+              <text 
+                class="slot-button-text"
+                @click="bindClick({position:'left', content:{text:'置顶'}})"
+              >置顶</text>
+            </view>
+          </template>
+          <view class="content-box" @click="contentClick">
+            <text class="content-text">使用左右插槽</text>
+          </view>
+          <template #right>
+            <view class="slot-button" @click="bindClick({position:'right', content:{text:'删除'}})">
+              <text class="slot-button-text">删除</text>
+            </view>
+          </template>
+        </zx-swipe-action-item>
+        
+        <zx-swipe-action-item
+          :right-options="options1"
+          @click="bindClick"
+        >
+          <template #left>
+            <view class="slot-button">
+              <text
+                class="slot-button-text"
+                @click="bindClick({position:'left', content:{text:'置顶'}})"
+              >置顶</text>
+            </view>
+          </template>
+          <view class="content-box" @click="contentClick">
+            <text class="content-text">数据与插槽混合使用</text>
+          </view>
+        </zx-swipe-action-item>
+      </zx-swipe-action>
+    </view>
+    
+    <view class="section">
+      <view class="section-title">禁止滑动</view>
+      <zx-swipe-action>
+        <zx-swipe-action-item :disabled="true">
+          <view class="content-box">
+            <text class="content-text">禁止左右滑动</text>
+          </view>
+        </zx-swipe-action-item>
+      </zx-swipe-action>
+    </view>
+    
+    <view class="section">
+      <view class="section-title">使用变量控制开关</view>
+      <view class="example-body">
+        <view
+          class="button"
+          @click="setOpened"
+        >
+          <text class="button-text">当前状态：{{ isOpened ? '打开' : '关闭' }}</text>
+        </view>
+      </view>
+      <zx-swipe-action>
+        <zx-swipe-action-item
+          :left-options="options2"
+          :right-options="options2"
+          :show="isOpened ? 'right' : 'none'"
+          :auto-close="false"
+          @change="change"
+          @click="bindClick"
+        >
+          <view class="content-box">
+            <text class="content-text">使用变量控制组件的开启状态</text>
+          </view>
+        </zx-swipe-action-item>
+      </zx-swipe-action>
+    </view>
+    
+    <view class="section">
+      <view class="section-title">滑动列表</view>
+      <zx-swipe-action>
+        <zx-swipe-action-item
+          v-for="(item, index) in swipeList"
+          :key="item.id"
+          :right-options="item.options"
+          @change="(e) => swipeChange(e, index)"
+          @click="(e) => swipeClick(e, index)"
+        >
+          <view class="content-box">
+            <text class="content-text">{{ item.content }}</text>
+          </view>
+        </zx-swipe-action-item>
+      </zx-swipe-action>
+    </view>
+  </view>
+</template>
+
 <script setup>
 import { ref } from 'vue'
 
@@ -125,121 +239,7 @@ function swipeClick(e, index) {
 }
 </script>
 
-<template>
-  <view class="container">
-    <view class="title">
-      <text>滑动操作组件示例</text>
-    </view>
-    
-    <view class="section">
-      <view class="section-title">基本用法</view>
-      <zx-swipe-action>
-        <zx-swipe-action-item 
-          :left-options="options2"
-          :right-options="options1"
-          :threshold="0"
-          @click="bindClick"
-        >
-          <view class="content-box" @click="contentClick">
-            <text class="content-text">使用数据填充</text>
-          </view>
-        </zx-swipe-action-item>
-        
-        <zx-swipe-action-item @click="bindClick">
-          <template #left>
-            <view class="slot-button">
-              <text 
-                class="slot-button-text"
-                @click="bindClick({position:'left', content:{text:'置顶'}})"
-              >置顶</text>
-            </view>
-          </template>
-          <view class="content-box" @click="contentClick">
-            <text class="content-text">使用左右插槽</text>
-          </view>
-          <template #right>
-            <view class="slot-button" @click="bindClick({position:'right', content:{text:'删除'}})">
-              <text class="slot-button-text">删除</text>
-            </view>
-          </template>
-        </zx-swipe-action-item>
-        
-        <zx-swipe-action-item
-          :right-options="options1"
-          @click="bindClick"
-        >
-          <template #left>
-            <view class="slot-button">
-              <text
-                class="slot-button-text"
-                @click="bindClick({position:'left', content:{text:'置顶'}})"
-              >置顶</text>
-            </view>
-          </template>
-          <view class="content-box" @click="contentClick">
-            <text class="content-text">数据与插槽混合使用</text>
-          </view>
-        </zx-swipe-action-item>
-      </zx-swipe-action>
-    </view>
-    
-    <view class="section">
-      <view class="section-title">禁止滑动</view>
-      <zx-swipe-action>
-        <zx-swipe-action-item :disabled="true">
-          <view class="content-box">
-            <text class="content-text">禁止左右滑动</text>
-          </view>
-        </zx-swipe-action-item>
-      </zx-swipe-action>
-    </view>
-    
-    <view class="section">
-      <view class="section-title">使用变量控制开关</view>
-      <view class="example-body">
-        <view
-          class="button"
-          @click="setOpened"
-        >
-          <text class="button-text">当前状态：{{ isOpened ? '打开' : '关闭' }}</text>
-        </view>
-      </view>
-      <zx-swipe-action>
-        <zx-swipe-action-item
-          :left-options="options2"
-          :right-options="options2"
-          :show="isOpened ? 'right' : 'none'"
-          :auto-close="false"
-          @change="change"
-          @click="bindClick"
-        >
-          <view class="content-box">
-            <text class="content-text">使用变量控制组件的开启状态</text>
-          </view>
-        </zx-swipe-action-item>
-      </zx-swipe-action>
-    </view>
-    
-    <view class="section">
-      <view class="section-title">滑动列表</view>
-      <zx-swipe-action>
-        <zx-swipe-action-item
-          v-for="(item, index) in swipeList"
-          :key="item.id"
-          :right-options="item.options"
-          @change="(e) => swipeChange(e, index)"
-          @click="(e) => swipeClick(e, index)"
-        >
-          <view class="content-box">
-            <text class="content-text">{{ item.content }}</text>
-          </view>
-        </zx-swipe-action-item>
-      </zx-swipe-action>
-    </view>
-  </view>
-</template>
-
-<style lang="scss">
+<style lang="scss" scoped>
 .container {
   padding: 20rpx;
 }

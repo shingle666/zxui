@@ -73,7 +73,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxList from '@/components/zx-list/zx-list.vue'
 
 const baseList = ref([
   { id: 1, title: '列表项 1' },

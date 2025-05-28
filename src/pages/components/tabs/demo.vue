@@ -138,8 +138,6 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
-import zxTabs from './zx-tabs.vue';
-import zxTabPane from './zx-tab-pane.vue';
 
 // 基础用法
 const activeTab1 = ref('user');
