@@ -532,19 +532,19 @@ defineExpose({
     border-radius: 50%;
     padding: 0;
     
-    &[size="default"], &:not([size]) {
-      width: 76rpx;
-      height: 76rpx;
+    &.zx-button--large {
+      width: 90rpx;
+      height: 90rpx;
     }
     
-    &[size="mini"] {
+    &.zx-button--mini {
       width: 56rpx;
       height: 56rpx;
     }
-    
-    &[size="large"] {
-      width: 90rpx;
-      height: 90rpx;
+
+    &:not(.zx-button--large):not(.zx-button--mini) {
+      width: 76rpx;
+      height: 76rpx;
     }
   }
   

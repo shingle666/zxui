@@ -66,12 +66,12 @@
     <view class="section">
       <view class="section-title">加载状态</view>
       <view class="button-group">
-        <view v-for="btn in loadingButtons" :key="btn.label">
+        <view v-for="btn in loadingButtons" :key="btn.id">
           <zx-button :type="btn.type" loading>{{ btn.label }}</zx-button>
         </view>
       </view>
       <view class="button-group" style="margin-top: 20rpx">
-        <view v-for="btn in loadingExtraButtons" :key="btn.label">
+        <view v-for="btn in loadingExtraButtons" :key="btn.id">
           <zx-button :type="btn.type" :text="btn.text" loading>{{ btn.label }}</zx-button>
         </view>
       </view>
@@ -270,13 +270,13 @@ const disabledExtraButtons = [
 ];
 
 const loadingButtons = [
-  { label: "加载中", type: "" },
-  { label: "加载中", type: "primary" },
-  { label: "加载中", type: "success" },
+  { id: "loading-default", label: "加载中", type: "" },
+  { id: "loading-primary", label: "加载中", type: "primary" },
+  { id: "loading-success", label: "加载中", type: "success" },
 ];
 const loadingExtraButtons = [
-  { label: "加载中", type: "primary", text: true },
-  { label: "加载中", type: "success", text: true },
+  { id: "loading-primary-text", label: "加载中", type: "primary", text: true },
+  { id: "loading-success-text", label: "加载中", type: "success", text: true },
 ];
 
 const sizeButtons = [
