@@ -2,7 +2,7 @@
 import { onLaunch } from "@dcloudio/uni-app";
 
 onLaunch((options)=>{
-  console.log('onLaunch:'+JSON.stringify(options))
+  //console.log('onLaunch:'+JSON.stringify(options))
 })
 
 </script>

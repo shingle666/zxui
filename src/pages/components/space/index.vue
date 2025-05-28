@@ -107,13 +107,7 @@
       
       <view class="example-demo wrap-demo">
         <zx-space :wrap="enableWrap">
-          <view 
-            v-for="i in 12" 
-            :key="i" 
-            class="demo-item small"
-          >
-            {{ i }}
-          </view>
+         
         </zx-space>
       </view>
     </view>
@@ -245,10 +239,6 @@
 <script setup>
 import { ref, computed } from 'vue'
 
-defineOptions({
-  name: 'ZxSpaceDemo'
-})
-
 // 方向控制
 const currentDirection = ref('horizontal')
 const directions = [
@@ -289,7 +279,7 @@ const alignmentOptions = [
   { value: 'stretch', label: '拉伸对齐' }
 ]
 
-const currentAlignment = computed(() => alignmentOptions.value[alignmentIndex.value].value)
+const currentAlignment = computed(() => alignmentOptions[alignmentIndex.value].value)
 
 // 填充控制
 const enableFill = ref(false)
@@ -631,4 +621,4 @@ const handleFillRatioChange = (e) => {
     margin-bottom: 4px;
   }
 }
-</style> 
+</style>
