@@ -36,22 +36,22 @@
 import { ref } from 'vue';
 
 const list = ref([
-  { url: '/static/c1.png', text: '宫格1' },
-  { url: '/static/c2.png', text: '宫格2' },
-  { url: '/static/c3.png', text: '宫格3' },
-  { url: '/static/c4.png', text: '宫格4' },
-  { url: '/static/c5.png', text: '宫格5' },
-  { url: '/static/c6.png', text: '宫格6' },
+  { url: 'https://cdn.mp.ac.cn/banner/01.jpg', text: '宫格1' },
+  { url: 'https://cdn.mp.ac.cn/banner/02.jpg', text: '宫格2' },
+  { url: 'https://cdn.mp.ac.cn/banner/03.jpg', text: '宫格3' },
+  { url: 'https://cdn.mp.ac.cn/banner/04.jpg', text: '宫格4' },
+  { url: 'https://cdn.mp.ac.cn/banner/01.jpg', text: '宫格5' },
+  { url: 'https://cdn.mp.ac.cn/banner/02.jpg', text: '宫格6' },
 ]);
 const list2 = ref([
-  { url: '/static/c1.png', text: 'A' },
-  { url: '/static/c2.png', text: 'B' },
-  { url: '/static/c3.png', text: 'C' },
-  { url: '/static/c4.png', text: 'D' },
-  { url: '/static/c5.png', text: 'E' },
-  { url: '/static/c6.png', text: 'F' },
-  { url: '/static/c7.png', text: 'G' },
-  { url: '/static/c8.png', text: 'H' },
+  { url: 'https://cdn.mp.ac.cn/banner/01.jpg', text: 'A' },
+  { url: 'https://cdn.mp.ac.cn/banner/02.jpg', text: 'B' },
+  { url: 'https://cdn.mp.ac.cn/banner/03.jpg', text: 'C' },
+  { url: 'https://cdn.mp.ac.cn/banner/04.jpg', text: 'D' },
+  { url: 'https://cdn.mp.ac.cn/banner/01.jpg', text: 'E' },
+  { url: 'https://cdn.mp.ac.cn/banner/02.jpg', text: 'F' },
+  { url: 'https://cdn.mp.ac.cn/banner/03.jpg', text: 'G' },
+  { url: 'https://cdn.mp.ac.cn/banner/04.jpg', text: 'H' },
 ]);
 
 function onGridChange(e) {

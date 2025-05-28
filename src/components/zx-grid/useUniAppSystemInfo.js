@@ -2,13 +2,13 @@
 export function useUniAppSystemInfo() {
   let windowWidth = 375;
   // #ifdef H5 || APP-PLUS
-  if (typeof uni !== 'undefined' && uni.getSystemInfoSync) {
+  if (typeof uni !== 'undefined' && uni.getWindowInfo()) {
     windowWidth = uni.getWindowInfo().windowWidth;
   }
   // #endif
   // #ifdef MP
-  if (typeof wx !== 'undefined' && wx.getSystemInfoSync) {
-    windowWidth = wx.getSystemInfoSync().windowWidth;
+  if (typeof wx !== 'undefined' && wx.getWindowInfo()) {
+    windowWidth = wx.getWindowInfo().windowWidth;
   }
   // #endif
   return { windowWidth };
