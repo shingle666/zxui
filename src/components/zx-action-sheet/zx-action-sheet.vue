@@ -1,68 +1,39 @@
 <template>
   <view class="zx-actionsheet-wrapper" @touchmove.stop.prevent>
-    <view
-      class="zx-actionsheet"
-      :class="{
-        'zx-actionsheet-show': isShow,
-        'zx-actionsheet-radius': radius,
-        [`zx-actionsheet-theme-${theme}`]: true,
-      }"
-      :style="[customStyle]"
-    >
-      <view
-        v-if="tips"
-        class="zx-actionsheet-tips"
-        :style="{ fontSize: size + 'rpx', color: color }"
-      >
+    <view class="zx-actionsheet" :class="{
+      'zx-actionsheet-show': isShow,
+      'zx-actionsheet-radius': radius,
+      [`zx-actionsheet-theme-${theme}`]: true,
+    }" :style="[customStyle]">
+      <view v-if="tips" class="zx-actionsheet-tips" :style="{ fontSize: size + 'rpx', color: color }">
         <slot name="tips">{{ tips }}</slot>
       </view>
       <view :class="[isCancel ? 'zx-operate-box' : '']">
         <block v-for="(item, index) in items" :key="index">
-          <view
-            class="zx-actionsheet-btn zx-actionsheet-divider"
-            :class="{
-              'zx-btn-last': !isCancel && index == items.length - 1,
-              'zx-btn-disabled': item.disabled,
-            }"
-            hover-class="zx-actionsheet-hover"
-            :hover-stay-time="150"
-            :data-index="index"
-            :style="{
+          <view class="zx-actionsheet-btn zx-actionsheet-divider" :class="{
+            'zx-btn-last': !isCancel && index == items.length - 1,
+            'zx-btn-disabled': item.disabled,
+          }" hover-class="zx-actionsheet-hover" :hover-stay-time="150" :data-index="index" :style="{
               color: item.disabled ? disabledColor : item.color || '#2B2B2B',
               fontSize: item.fontSize || itemFontSize + 'rpx',
-            }"
-            @tap.stop="handleClickItem"
-          >
+            }" @tap.stop="handleClickItem">
             <view class="zx-actionsheet-btn-content">
-              <text
-                v-if="item.icon"
-                class="zx-actionsheet-icon"
-                :class="item.icon"
-              ></text>
+              <zx-icon v-if="item.icon" :name="item.icon" class="zx-actionsheet-icon"></zx-icon>
               <text class="zx-actionsheet-text">{{ item.text }}</text>
               <text v-if="item.badge" class="zx-actionsheet-badge">{{ item.badge }}</text>
             </view>
           </view>
         </block>
       </view>
-      <view
-        v-if="isCancel"
-        class="zx-actionsheet-btn zx-actionsheet-cancel"
-        hover-class="zx-actionsheet-hover"
-        :hover-stay-time="150"
-        @tap="handleClickCancel"
-      >
+      <view v-if="isCancel" class="zx-actionsheet-btn zx-actionsheet-cancel" hover-class="zx-actionsheet-hover"
+        :hover-stay-time="150" @tap="handleClickCancel">
         <slot name="cancel-button">{{ cancelText }}</slot>
       </view>
       <!-- 安全区域适配 -->
       <view v-if="safeAreaInsetBottom" class="zx-actionsheet-safe-area"></view>
     </view>
-    <view
-      class="zx-actionsheet-mask"
-      :class="{ 'zx-mask-show': isShow }"
-      :style="{ backgroundColor: maskColor }"
-      @tap="handleClickMask"
-    ></view>
+    <view class="zx-actionsheet-mask" :class="{ 'zx-mask-show': isShow }" :style="{ backgroundColor: maskColor }"
+      @tap="handleClickMask"></view>
   </view>
 </template>
 
@@ -456,6 +427,7 @@ defineExpose({
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -465,6 +437,7 @@ defineExpose({
   from {
     transform: translate3d(0, 100%, 0);
   }
+
   to {
     transform: translate3d(0, 0, 0);
   }
@@ -478,5 +451,6 @@ defineExpose({
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
+
 /* #endif */
 </style>

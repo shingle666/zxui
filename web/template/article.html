@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.mp.ac.cn/vue/dist/vue.global.prod.js"></script>
+    {{file=head}}
+    <link
+      rel="stylesheet"
+      href="https://cdn.mp.ac.cn/font-awesome/css/font-awesome.min.css"
+    />
+    <script src="https://cdn.mp.ac.cn/tailwindcss/index.min.js"></script>
+    <script src="https://cdn.mp.ac.cn/chart.js/dist/chart.umd.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3b82f6",
+              secondary: "#64748b",
+              accent: "#06b6d4",
+              dark: "#1e293b",
+              light: "#f8fafc",
+            },
+            fontFamily: {
+              inter: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="/css/home.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- 页头 -->
+      {{file=header}}
+      <!-- 正文 -->
+      <div style="display: flex;flex-direction: column;align-items: center;margin-top: 50px;">
+        <div>
+            <h1 class="text-3xl font-bold">{{title}}</h1>
+            <p class="text-sm text-gray-500">{{day}}</p>
+        </div>
+        <div style="max-width: 960px;padding: 20px;width: 100%;">
+            {{content}}
+        </div>
+      </div>
+      <!-- 页脚 -->
+      {{file=footer}}
+    </div>
+  </body>
+</html>

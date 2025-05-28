@@ -139,10 +139,10 @@ const darkItems = ref([
 // 带图标和徽标
 const showWithIcons = ref(false);
 const iconItems = ref([
-  { text: '拍照', icon: 'icon-camera' },
-  { text: '相册选择', icon: 'icon-image' },
-  { text: '文件', icon: 'icon-file', badge: '5' },
-  { text: '收藏', icon: 'icon-star' }
+  { text: '拍照', icon: 'camera' },
+  { text: '相册选择', icon: 'image' },
+  { text: '文件', icon: 'file', badge: '5' },
+  { text: '收藏', icon: 'star' }
 ]);
 
 // 禁用项
