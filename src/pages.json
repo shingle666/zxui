@@ -984,6 +984,12 @@
 			"style": {
 				"navigationBarTitleText": "zx-barrage 组件"
 			}
+		},
+		{
+			"path": "pages/components/share-sheet/index",
+			"style": {
+				"navigationBarTitleText": "zx-share-sheet 组件"
+			}
 		}
 	],
 	"globalStyle": {
