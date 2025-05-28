@@ -10,11 +10,6 @@
 <script setup>
 import { computed } from 'vue'
 
-// 定义组件名称
-defineOptions({
-  name: 'ZxSpace'
-})
-
 // 定义属性
 const props = defineProps({
   // 对齐方式
