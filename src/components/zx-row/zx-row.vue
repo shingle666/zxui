@@ -46,8 +46,22 @@ const alignClass = computed(() => align.value !== 'top' ? `zx-row--flex-align-${
 <style lang="scss" scoped>
 .zx-row {
   position: relative;
-  flex-direction: row;
   box-sizing: border-box;
+  /* #ifndef APP-NVUE */
+  // Clearfix for floated children when not in flex mode
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  /* #endif */
+}
+
+.zx-row--flex {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  flex-direction: row; // Ensure flex-direction is row for flex type
 }
 
 .zx-row--flex {

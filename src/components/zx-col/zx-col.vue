@@ -188,6 +188,14 @@ $col: $layout-namespace + "col";
 @use "sass:meta";
 @use "sass:map";
 
+@function getSize($num) {
+  @if $num == 0 {
+    @return 0%;
+  } @else {
+    @return percentage($num / 24);
+  }
+}
+
 @mixin res($key, $map: $breakpoints) {
   @if map.has-key($map, $key) {
     @media screen and #{meta.inspect(map.get($map, $key))} {
