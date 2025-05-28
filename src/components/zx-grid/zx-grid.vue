@@ -1,7 +1,7 @@
 <template>
   <view class="zx-grid-wrap">
     <view
-      class="zx-grid"
+      class="zx-grid" :id="elId" ref="zx-grid-inner"
       :class="{ 'zx-grid--border': showBorder }"
       :style="{ 'border-left-color': borderColor }"
     >
@@ -11,8 +11,7 @@
 </template>
 
 <script setup>
-import { ref, provide, watch, onMounted } from 'vue';
-import { useUniAppSystemInfo } from './useUniAppSystemInfo';
+import { ref, provide, onMounted, computed, getCurrentInstance } from 'vue';
 
 const props = defineProps({
   column: { type: Number, default: 3 },
@@ -24,30 +23,43 @@ const props = defineProps({
 
 const emit = defineEmits(['change']);
 
-const children = ref([]);
-const width = ref(0);
+const instance = getCurrentInstance();
+const elId = `zx_grid_${Math.ceil(Math.random() * 10e5).toString(36)}`;
+const gridWidth = ref(0);
+
+const itemWidth = computed(() => {
+  if (gridWidth.value === 0) return '0px';
+  return parseInt((gridWidth.value - 1) / props.column) + 'px';
+});
+
+onMounted(() => {
+  // #ifndef APP-NVUE
+  uni.createSelectorQuery()
+    .in(instance)
+    .select(`#${elId}`)
+    .boundingClientRect()
+    .exec(ret => {
+      if (ret && ret[0]) {
+        gridWidth.value = ret[0].width;
+      }
+    });
+  // #endif
+  // #ifdef APP-NVUE
+  const dom = uni.requireNativePlugin('dom');
+  dom.getComponentRect(instance.refs['zx-grid-inner'], (ret) => {
+    if (ret && ret.size) {
+        gridWidth.value = ret.size.width;
+    }
+  });
+  // #endif
+});
 
 provide('zxGrid', {
   props,
-  children,
-  width,
+  width: itemWidth, // Provide the computed itemWidth
   emitChange: (e) => emit('change', e)
 });
 
-function calcWidth() {
-  // 兼容多端，使用系统信息获取屏幕宽度
-  const { windowWidth } = useUniAppSystemInfo();
-  width.value = parseInt((windowWidth - 1) / props.column) + 'px';
-  children.value.forEach((item) => {
-    item.width = width.value;
-  });
-}
-
-onMounted(() => {
-  calcWidth();
-});
-
-watch(() => props.column, calcWidth);
 </script>
 
 <style lang="scss" scoped>

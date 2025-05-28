@@ -2,7 +2,7 @@
   <view v-if="width" :style="itemStyle" class="zx-grid-item">
     <view
       :class="[
-        { 'zx-grid-item--border': showBorder, 'zx-grid-item--border-top': showBorder && index < column, 'zx-highlight': highlight }
+        { 'zx-grid-item--border': showBorder.value, 'zx-grid-item--border-top': showBorder.value && props.index < column.value, 'zx-highlight': highlight.value }
       ]"
       :style="boxStyle"
       class="zx-grid-item__box"
@@ -14,36 +14,33 @@
 </template>
 
 <script setup>
-import { inject, ref, computed, onMounted } from 'vue';
+import { inject, computed } from 'vue';
 
 const props = defineProps({
   index: { type: Number, default: 0 }
 });
 
 const zxGrid = inject('zxGrid');
-const column = zxGrid?.props.column ?? 3;
-const showBorder = zxGrid?.props.showBorder ?? true;
-const square = zxGrid?.props.square ?? true;
-const highlight = zxGrid?.props.highlight ?? true;
-const borderColor = zxGrid?.props.borderColor ?? '#D2D2D2';
-const width = zxGrid?.width;
+
+// Ensure zxGrid is available before accessing its properties
+const column = computed(() => zxGrid?.props?.column ?? 3);
+const showBorder = computed(() => zxGrid?.props?.showBorder ?? true);
+const square = computed(() => zxGrid?.props?.square ?? true);
+const highlight = computed(() => zxGrid?.props?.highlight ?? true);
+const borderColor = computed(() => zxGrid?.props?.borderColor ?? '#D2D2D2');
+const width = computed(() => zxGrid?.width?.value); // width is reactive, directly from the injected zxGrid context
 
 const itemStyle = computed(() => {
-  let style = `width:${width.value};`;
-  if (square) style += `height:${width.value};`;
+  let style = `width:${width.value || 'auto'};`; // Add fallback for width
+  if (square.value) style += `height:${width.value || 'auto'};`; // Use .value for reactive props
   return style;
 });
-const boxStyle = computed(() => ({
-  borderRightColor: borderColor,
-  borderBottomColor: borderColor,
-  borderTopColor: borderColor
-}));
 
-onMounted(() => {
-  if (zxGrid && zxGrid.children) {
-    zxGrid.children.value.push({ width: width.value });
-  }
-});
+const boxStyle = computed(() => ({
+  borderRightColor: borderColor.value, // Use .value for reactive props
+  borderBottomColor: borderColor.value, // Use .value for reactive props
+  borderTopColor: borderColor.value // Use .value for reactive props
+}));
 
 function onClick() {
   zxGrid?.emitChange({ detail: { index: props.index } });
@@ -75,4 +72,4 @@ function onClick() {
 .zx-highlight:active {
   background-color: #f1f1f1;
 }
-</style> 
+</style>
