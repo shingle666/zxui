@@ -102,7 +102,8 @@ const datalist = ref([
       { title: "Color-picker 颜色选择器", path: "/pages/components/color-picker/index" },
       { title: "Car-number 车牌号输入", path: "/pages2/components/car-number/index" },
       { title: "SMS-code 验证码", path: "/pages2/components/sms-code/index" },
-      { title: "Autocomplete 自动完成", path: "/pages/components/autocomplete/index" }
+      { title: "Autocomplete 自动完成", path: "/pages/components/autocomplete/index" },
+      { title: "submit-bar 提交订单栏", path: "/pages3/components/submit/bar" }
     ]
   },
   {
@@ -211,7 +212,9 @@ const datalist = ref([
       { title: "Cropper 裁剪", path: "/pages2/components/cropper/index" },
       { title: "More 更多", path: "/pages2/components/more/index" },
       { title: "PK 拼杀", path: "/pages2/components/pk/index" },
-      { title: "Goods-nav 商品导航", path: "/pages2/components/goods-nav/index" }
+      { title: "Goods-nav 商品导航", path: "/pages2/components/goods-nav/index" },
+      { title: "Goods-card 商品卡片", path: "/pages3/components/goods/card" },
+      { title: "SquareNine 九宫格抽奖", path: "/pages3/components/square-nine/index" },
     ]
   },
   {
