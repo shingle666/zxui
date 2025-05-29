@@ -256,11 +256,11 @@ const datalist = ref([
 // 新增底部导航数据
 const tabbarValue = ref(0);
 const tabbarList = [
-  { icon: 'home', title: '基础', name: 0 },
-  { icon: 'grid', title: '布局', name: 1, badge: 2 },
-  { icon: 'order', title: '表单', name: 2, dot: true },
+  { icon: 'home', title: '常用', name: 0 },
+  { icon: 'grid', title: '营销', name: 1, badge: 2 },
+  { icon: 'order', title: '商城', name: 2, dot: true },
   { icon: 'camera', title: '媒体', name: 3 },
-  { icon: 'chat', title: '交互', name: 4 }
+  { icon: 'chat', title: '表单', name: 4 }
 ];
 
 // 监听页面滚动
