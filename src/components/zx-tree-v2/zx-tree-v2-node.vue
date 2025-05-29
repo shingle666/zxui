@@ -14,9 +14,9 @@
           @click.stop="handleCheck"
         />
       </template>
-      <template v-if="renderContent">
+      <!-- <template v-if="renderContent">
         <view v-html="renderContent({ node, level })" />
-      </template>
+      </template> -->
       <template v-else>
         <text class="zx-tree-v2-node-label">{{ node[props.label] }}</text>
       </template>
@@ -43,7 +43,8 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, defineEmits } from 'vue'
+import { ref, computed } from 'vue'
+
 const props = defineProps({
   node: Object,
   props: Object,

@@ -1,65 +1,35 @@
 <template>
-  <view
-    class="zx-charts__funnel-wrap"
-    :class="{ 'zx-charts__funnel-vertical': legend.direction !== 'vertical' }"
-  >
-    <view
-      class="zx-funnel__legend"
-      :class="{ 'zx-legend__flex-column': legend.direction === 'vertical' }"
-      v-if="legend.show"
-    >
-      <view
-        class="zx-funnel__legend-item"
-        :style="{ marginLeft: legend.direction === 'vertical' ? '0' : '24rpx' }"
-        v-for="(item, index) in dataset"
-        :key="index"
-      >
+  <view class="zx-charts__funnel-wrap" :class="{ 'zx-charts__funnel-vertical': legend.direction !== 'vertical' }">
+    <view class="zx-funnel__legend" :class="{ 'zx-legend__flex-column': legend.direction === 'vertical' }"
+      v-if="legend.show">
+      <view class="zx-funnel__legend-item" :style="{ marginLeft: legend.direction === 'vertical' ? '0' : '24rpx' }"
+        v-for="(item, index) in dataset" :key="index">
         <view class="zx-legend__circle" :style="{ backgroundColor: item.color }"></view>
-        <text
-          :style="{
-            fontSize: (legend.size || 24) + 'rpx',
-            lineHeight: (legend.size || 24) + 'rpx',
-            color: legend.color || '#333',
-          }"
-          >{{ item.name }}</text
-        >
+        <text :style="{
+          fontSize: (legend.size || 24) + 'rpx',
+          lineHeight: (legend.size || 24) + 'rpx',
+          color: legend.color || '#333',
+        }">{{ item.name }}</text>
       </view>
     </view>
     <view class="zx-charts-funnel" :style="{ width: w + 'px', height: h + 'px' }">
-      <view
-        class="zx-charts__funnel-item"
-        :class="['zx-funnel__' + sort]"
-        :style="{
-          width: item.width + 'px',
-          height: itemHeight + 'px',
-          borderTopWidth: sort === 'desc' ? itemHeight + 'px' : 0,
-          borderTopColor: sort === 'desc' ? item.color : 'transparent',
-          borderBottomWidth: sort === 'asc' ? itemHeight + 'px' : 0,
-          borderBottomColor: sort === 'asc' ? item.color : 'transparent',
-          borderLeftWidth: item.diff + 'px',
-          borderRightWidth: item.diff + 'px',
-        }"
-        v-for="(item, index) in dataset"
-        :key="index"
-        @tap.stop="itemClick(index)"
-      ></view>
+      <view class="zx-charts__funnel-item" :class="['zx-funnel__' + sort]" :style="{
+        width: item.width + 'px',
+        height: itemHeight + 'px',
+        borderTopWidth: sort === 'desc' ? itemHeight + 'px' : 0,
+        borderTopColor: sort === 'desc' ? item.color : 'transparent',
+        borderBottomWidth: sort === 'asc' ? itemHeight + 'px' : 0,
+        borderBottomColor: sort === 'asc' ? item.color : 'transparent',
+        borderLeftWidth: item.diff + 'px',
+        borderRightWidth: item.diff + 'px',
+      }" v-for="(item, index) in dataset" :key="index" @tap.stop="itemClick(index)"></view>
 
-      <view
-        class="zx-funnel__tooltip"
-        v-if="tooltip"
-        :class="{ 'zx-funnel__tooltip-show': tooltipShow }"
-      >
+      <view class="zx-funnel__tooltip" v-if="tooltip" :class="{ 'zx-funnel__tooltip-show': tooltipShow }">
         <view class="zx-tooltip__title" v-if="title">{{ title }}</view>
-        <view
-          class="zx-funnel__tooltip-item"
-          :style="{ paddingTop: title ? '24rpx' : '0' }"
-        >
-          <view
-            class="zx-legend__circle"
-            :style="{
-              backgroundColor: dataset[activeIndex] && dataset[activeIndex].color,
-            }"
-          ></view>
+        <view class="zx-funnel__tooltip-item" :style="{ paddingTop: title ? '24rpx' : '0' }">
+          <view class="zx-legend__circle" :style="{
+            backgroundColor: dataset[activeIndex] && dataset[activeIndex].color,
+          }"></view>
           <text class="zx-tooltip__val">{{
             dataset[activeIndex] && dataset[activeIndex].name
           }}</text>
@@ -73,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits, onMounted, onBeforeUnmount } from "vue";
+import { ref, onBeforeUnmount } from "vue";
 
 function ascSort(a, b) {
   return a.value - b.value;
