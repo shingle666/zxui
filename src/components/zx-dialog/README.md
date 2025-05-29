@@ -135,14 +135,6 @@ const dialogVisible = ref(false);
 
 ### 引入
 
-```js
-// 在 uni-app 环境中使用
-import { showConfirm, showAlert } from '@/components/zx-dialog/showDialog.uni.js';
-
-// 在 H5 环境中使用
-import { showConfirm, showAlert } from '@/components/zx-dialog/showDialog.js';
-```
-
 ### showConfirm - 确认对话框
 
 ```js

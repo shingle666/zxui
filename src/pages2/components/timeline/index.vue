@@ -36,7 +36,7 @@
     <zx-timeline>
       <zx-timeline-item timestamp="2023-01-01">
         <template #dot>
-          <image src="/static/star.png" style="width:24rpx;height:24rpx;" />
+          <zx-icon name="star" size="26rpx"></zx-icon>
         </template>
         自定义图片节点
       </zx-timeline-item>

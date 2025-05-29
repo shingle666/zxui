@@ -25,6 +25,7 @@
 
 <script setup>
 import { computed } from 'vue'
+
 const props = defineProps({
   timestamp: String,
   hideTimestamp: Boolean,

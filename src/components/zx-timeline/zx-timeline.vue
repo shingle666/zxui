@@ -1,11 +1,11 @@
 <template>
   <view class="zx-timeline">
-    <slot />
+    <slot></slot>
   </view>
 </template>
 
 <script setup>
-// 仅作为容器，具体内容由 zx-timeline-item 负责
+import {  ref } from 'vue'
 </script>
 
 <style scoped>

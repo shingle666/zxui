@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { computed, inject, watch, ref, toRefs } from "vue";
+import { computed, inject, watch, ref } from "vue";
 
 const props = defineProps({
   span: { type: Number, default: 24 },
