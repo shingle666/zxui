@@ -219,9 +219,9 @@ const processVideo = (content) => {
 const sanitizeHtml = (content) => {
 	// 受信任的标签列表（基于官方文档）
 	const allowedTags = [
-		'a', 'abbr', 'b', 'blockquote', 'br', 'code', 'col', 'colgroup', 
+		'a', 'abbr', 'b', 'br',  'col', 'colgroup', 
 		'dd', 'del', 'div', 'dl', 'dt', 'em', 'fieldset', 'h1', 'h2', 'h3', 
-		'h4', 'h5', 'h6', 'hr', 'i', 'img', 'ins', 'label', 'legend', 'li', 
+		'h4', 'h5', 'h6', 'hr', 'i',  'ins', 'label', 'legend', 'li', 
 		'ol', 'p', 'q', 'span', 'strong', 'sub', 'sup', 'table', 'tbody', 
 		'td', 'tfoot', 'th', 'thead', 'tr', 'ul'
 	];
@@ -312,65 +312,5 @@ onMounted(() => {
 .rich-text-container {
 	word-wrap: break-word;
 	word-break: break-all;
-}
-
-/* 针对富文本内容的全局样式调整 */
-:deep(.rich-text) {
-	line-height: inherit;
-	font-size: inherit;
-	color: inherit;
-}
-
-/* 图片样式优化 */
-:deep(img) {
-	max-width: 100%;
-	height: auto;
-	display: block;
-	margin: 10rpx auto;
-}
-
-/* 表格样式优化 */
-:deep(table) {
-	width: 100%;
-	border-collapse: collapse;
-	margin: 20rpx 0;
-}
-
-:deep(td), :deep(th) {
-	border: 1px solid #ddd;
-	padding: 8rpx 12rpx;
-	text-align: left;
-}
-
-:deep(th) {
-	background-color: #f5f5f5;
-	font-weight: bold;
-}
-
-/* 代码块样式 */
-:deep(code) {
-	background-color: #f5f5f5;
-	padding: 4rpx 8rpx;
-	border-radius: 4rpx;
-	font-family: 'Courier New', monospace;
-}
-
-/* 引用样式 */
-:deep(blockquote) {
-	border-left: 4rpx solid #ddd;
-	padding-left: 20rpx;
-	margin: 20rpx 0;
-	color: #666;
-	font-style: italic;
-}
-
-/* 列表样式 */
-:deep(ul), :deep(ol) {
-	padding-left: 40rpx;
-	margin: 20rpx 0;
-}
-
-:deep(li) {
-	margin: 8rpx 0;
 }
 </style>
