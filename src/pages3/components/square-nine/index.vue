@@ -33,7 +33,7 @@
             class="custom-start-btn" 
             @click="() => triggerCustomStart(2)" 
           >
-            <image src="/static/images/custom-start-icon.png" class="custom-start-icon" mode="aspectFit" />
+            <zx-icon name="star" size="50rpx" color="#fff" />
             <text class="custom-start-text">开始!</text>
           </view>
         </template>

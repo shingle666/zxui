@@ -228,7 +228,6 @@ const datalist = ref([
       { title: "Charts-pie 饼状图", path: "/pages2/components/charts/pie" },
       { title: "Charts-radar 雷达图", path: "/pages2/components/charts/radar" },
       { title: "Charts-scatter 散点图", path: "/pages2/components/charts/scatter" },
-      { title: "Lucky-grid 九宫格抽奖", path: "/pages2/components/lucky/grid" },
       { title: "Lucky-wheel 幸运轮盘", path: "/pages2/components/lucky/wheel" },
       { title: "Turntable 转盘", path: "/pages2/components/turntable/index" }
     ]

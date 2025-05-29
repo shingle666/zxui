@@ -337,12 +337,6 @@
 					}
 				},
 				{
-					"path": "components/lucky/grid",
-					"style": {
-						"navigationBarTitleText": "zx-lucky-grid 组件"
-					}
-				},
-				{
 					"path": "components/lucky/wheel",
 					"style": {
 						"navigationBarTitleText": "zx-lucky-wheel 组件"
