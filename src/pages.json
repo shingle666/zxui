@@ -6,6 +6,34 @@
 				"navigationBarTitleText": "首页",
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/ai/ai",
+			"style": {
+				"navigationBarTitleText": "AI",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/template/template",
+			"style": {
+				"navigationBarTitleText": "模板",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/topic/topic",
+			"style": {	
+				"navigationBarTitleText": "专题",		
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/my/my",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"subPackages": [{
