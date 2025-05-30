@@ -1,7 +1,5 @@
 <template>
   <view class="container">
-    <zx-navbar title="Upload 上传组件" :border="false"></zx-navbar>
-
     <scroll-view scroll-y class="content">
       <!-- 基础图片上传 -->
       <view class="demo-section">

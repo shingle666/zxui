@@ -10,6 +10,7 @@
 			<view class="function-buttons">
 				<button type="primary" @click="showCamera('photo')">拍照模式</button>
 				<button type="primary" @click="showCamera('video')">视频模式</button>
+				<button type="primary" @click="showCamera('scanCode')">扫码模式</button>
 			</view>
 			
 			<view class="function-title">相机控制</view>
@@ -45,6 +46,7 @@
 			@photo="handlePhotoTaken"
 			@video="handleVideoRecorded"
 			@error="handleCameraError"
+			@scan="handleScanCode"
 		></zx-camera>
 		
 		<!-- 提示信息 -->
@@ -56,6 +58,10 @@
 			<view class="tip-item">
 				<text class="tip-title">视频模式：</text>
 				<text class="tip-content">点击"视频模式"按钮打开相机，点击"开始录制"开始视频录制，点击"停止录制"完成录制</text>
+			</view>
+			<view class="tip-item">
+				<text class="tip-title">扫码模式：</text>
+				<text class="tip-content">点击"扫码模式"按钮打开相机进行扫码</text>
 			</view>
 			<view class="tip-item">
 				<text class="tip-title">切换功能：</text>
@@ -74,7 +80,7 @@
 	
 	// 相机状态
 	const cameraVisible = ref(false);
-	const mode = ref('photo'); // photo, video
+	const mode = ref('photo'); // photo, video, scanCode
 	const devicePosition = ref('back');
 	const frameSize = ref('large');
 	const quality = ref('high');
@@ -166,6 +172,17 @@
 		cameraVisible.value = false;
 	};
 	
+	// 扫码成功事件
+	const handleScanCode = (result) => {
+		console.log('扫码成功:', result);
+		uni.showModal({
+			title: '扫码结果',
+			content: result.result || JSON.stringify(result),
+			showCancel: false
+		});
+		cameraVisible.value = false;
+	};
+
 	// 相机错误事件
 	const handleCameraError = (error) => {
 		console.error('相机错误:', error);

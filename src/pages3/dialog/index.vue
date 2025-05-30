@@ -269,7 +269,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import { showConfirm, showAlert } from '../../../components/zx-dialog/showDialog.uni.js';
 
 // 基础对话框
 const dialogVisible = ref(false);
@@ -575,4 +574,4 @@ const handleChineseConfirm = () => {
 		}
 	}
 }
-</style> 
+</style>

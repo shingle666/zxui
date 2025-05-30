@@ -1,7 +1,5 @@
 <template>
 	<view class="container">
-		<zx-navbar title="Switch 开关" :border="false"></zx-navbar>
-		
 		<view class="demo-wrap">
 			<!-- 基础用法 -->
 			<view class="demo-section">

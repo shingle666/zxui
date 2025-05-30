@@ -6,842 +6,733 @@
 				"navigationBarTitleText": "首页",
 				"navigationStyle": "custom"
 			}
-		},
-		{
-			"path": "pages/components/area-picker/index",
-			"style": {
-				"navigationBarTitleText": "Area Picker 区域选择器组件"
-			}
-		},
-
-		{
-			"path": "pages/components/overlay/index",
-			"style": {
-				"navigationBarTitleText": "Overlay 遮罩组件"
-			}
-		},
-		{
-			"path": "pages/components/popup/index",
-			"style": {
-				"navigationBarTitleText": "Popup 弹窗组件"
-			}
-		},
-
-		{
-			"path": "pages/components/autocomplete/index",
-			"style": {
-				"navigationBarTitleText": "autocomplete 自动补全输入框组件"
-			}
-		},
-		{
-			"path": "pages/components/checkbox/index",
-			"style": {
-				"navigationBarTitleText": "checkbox 多选框组件"
-			}
-		},
-		{
-			"path": "pages/components/checkbox/group",
-			"style": {
-				"navigationBarTitleText": "checkbox-group 多选框组组件"
-			}
-		},
-
-		{
-			"path": "pages/components/slider/index",
-			"style": {
-				"navigationBarTitleText": "zx-slider 滑动选择器组件"
-			}
-		},
-
-		{
-			"path": "pages/components/switch/index",
-			"style": {
-				"navigationBarTitleText": "zx-switch 开关组件"
-			}
-		},
-		{
-			"path": "pages/components/textarea/index",
-			"style": {
-				"navigationBarTitleText": "zx-textarea 文本框组件"
-			}
-		},
-
-		{
-			"path": "pages/components/rate/index",
-			"style": {
-				"navigationBarTitleText": "zx-rate 评分组件"
-			}
-		},
-
-		{
-			"path": "pages/components/combox/index",
-			"style": {
-				"navigationBarTitleText": "zx-combox 组合框组件"
-			}
-		},
-		{
-			"path": "pages/components/countdown/index",
-			"style": {
-				"navigationBarTitleText": "zx-countdown 组件"
-			}
-		},
-		{
-			"path": "pages/components/anchor/index",
-			"style": {
-				"navigationBarTitleText": "zx-anchor 组件"
-			}
-		},
-		{
-			"path": "pages/components/color-picker/index",
-			"style": {
-				"navigationBarTitleText": "zx-color-picker 组件"
-			}
-		},
-
-		{
-			"path": "pages/components/date-picker/index",
-			"style": {
-				"navigationBarTitleText": "zx-date-picker 组件"
-			}
-		},
-
-		{
-			"path": "pages/components/popconfirm/index",
-			"style": {
-				"navigationBarTitleText": "zx-popconfirm 气泡确认框组件"
-			}
-		},
-		{
-			"path": "pages/components/popover/index",
-			"style": {
-				"navigationBarTitleText": "Popover 弹出框组件"
-			}
 		}
 	],
 	"subPackages": [{
 			"root": "pages2",
-			"pages": [{
-					"path": "components/segmented/index",
+			"pages": [
+				{
+					"path": "segmented/index",
 					"style": {
 						"navigationBarTitleText": "zx-segmented 分段控制器"
 					}
 				},
 				{
-					"path": "components/select/index",
+					"path": "select/index",
 					"style": {
 						"navigationBarTitleText": "zx-select 选择器"
 					}
 				},
 				{
-					"path": "components/select-v2/index",
+					"path": "select-v2/index",
 					"style": {
 						"navigationBarTitleText": "zx-select-v2 虚拟化选择器"
 					}
 				},
 				{
-					"path": "components/steps/index",
+					"path": "steps/index",
 					"style": {
 						"navigationBarTitleText": "zx-steps 步骤条组件"
 					}
 				},
 				{
-					"path": "components/swipe-action/index",
+					"path": "swipe-action/index",
 					"style": {
 						"navigationBarTitleText": "ZxSwipeAction 滑动操作组件"
 					}
 				},
 				{
-					"path": "components/car-number/index",
+					"path": "car-number/index",
 					"style": {
 						"navigationBarTitleText": "ZxCarNumber 车牌号输入组件"
 					}
 				},
 				{
-					"path": "components/action-sheet/index",
+					"path": "action-sheet/index",
 					"style": {
 						"navigationBarTitleText": "zx-action-sheet 动作面板"
 					}
 				},
 				{
-					"path": "components/barcode/index",
+					"path": "barcode/index",
 					"style": {
 						"navigationBarTitleText": "zx-barcode 条形码组件"
 					}
 				},
 				{
-					"path": "components/capsule/index",
+					"path": "capsule/index",
 					"style": {
 						"navigationBarTitleText": "zx-capsule 胶囊组件"
 					}
 				},
 				{
-					"path": "components/waterfall/index",
+					"path": "waterfall/index",
 					"style": {
 						"navigationBarTitleText": "zx-waterfall 瀑布流组件"
 					}
 				},
 				{
-					"path": "components/table/index",
+					"path": "table/index",
 					"style": {
 						"navigationBarTitleText": "zx-table 表格组件"
 					}
 				},
 				{
-					"path": "components/cell/index",
+					"path": "cell/index",
 					"style": {
 						"navigationBarTitleText": "zx-cell 组件"
 					}
 				},
 				{
-					"path": "components/cell/group",
+					"path": "cell/group",
 					"style": {
 						"navigationBarTitleText": "zx-cell-group 组件"
 					}
 				},
 				{
-					"path": "components/charts/area",
+					"path": "charts/area",
 					"style": {
 						"navigationBarTitleText": "zx-charts-area 组件"
 					}
 				},
 				{
-					"path": "components/charts/bar",
+					"path": "charts/bar",
 					"style": {
 						"navigationBarTitleText": "zx-charts-bar 组件"
 					}
 				},
 				{
-					"path": "components/charts/column",
+					"path": "charts/column",
 					"style": {
 						"navigationBarTitleText": "zx-charts-column 组件"
 					}
 				},
 				{
-					"path": "components/charts/funnel",
+					"path": "charts/funnel",
 					"style": {
 						"navigationBarTitleText": "zx-charts-funnel 组件"
 					}
 				},
 				{
-					"path": "components/charts/line",
+					"path": "charts/line",
 					"style": {
 						"navigationBarTitleText": "zx-charts-line 组件"
 					}
 				},
 				{
-					"path": "components/charts/pie",
+					"path": "charts/pie",
 					"style": {
 						"navigationBarTitleText": "zx-charts-pie 组件"
 					}
 				},
 				{
-					"path": "components/charts/radar",
+					"path": "charts/radar",
 					"style": {
 						"navigationBarTitleText": "zx-charts-radar 组件"
 					}
 				},
 				{
-					"path": "components/charts/scatter",
+					"path": "charts/scatter",
 					"style": {
 						"navigationBarTitleText": "zx-charts-scatter 组件"
 					}
 				},
 				{
-					"path": "components/copyright/index",
+					"path": "copyright/index",
 					"style": {
 						"navigationBarTitleText": "zx-copyright 组件"
 					}
 				},
 				{
-					"path": "components/coupon/index",
+					"path": "coupon/index",
 					"style": {
 						"navigationBarTitleText": "zx-coupon 组件"
 					}
 				},
 				{
-					"path": "components/cropper/index",
+					"path": "cropper/index",
 					"style": {
 						"navigationBarTitleText": "zx-cropper 组件"
 					}
 				},
 				{
-					"path": "components/drag/index",
+					"path": "drag/index",
 					"style": {
 						"navigationBarTitleText": "zx-drag 组件"
 					}
 				},
 				{
-					"path": "components/flex/index",
+					"path": "flex/index",
 					"style": {
 						"navigationBarTitleText": "zx-flex 组件"
 					}
 				},
 				{
-					"path": "components/gallery/index",
+					"path": "gallery/index",
 					"style": {
 						"navigationBarTitleText": "zx-gallery 组件"
 					}
 				},
 				{
-					"path": "components/goods-nav/index",
+					"path": "goods-nav/index",
 					"style": {
 						"navigationBarTitleText": "zx-goods-nav 组件"
 					}
 				},
 				{
-					"path": "components/grid/index",
+					"path": "grid/index",
 					"style": {
 						"navigationBarTitleText": "zx-grid 组件"
 					}
 				},
 				{
-					"path": "components/group/index",
+					"path": "group/index",
 					"style": {
 						"navigationBarTitleText": "zx-group 组件"
 					}
 				},
 				{
-					"path": "components/indexed-list/index",
+					"path": "indexed-list/index",
 					"style": {
 						"navigationBarTitleText": "zx-indexed-list 组件"
 					}
 				},
 				{
-					"path": "components/landscape/index",
+					"path": "landscape/index",
 					"style": {
 						"navigationBarTitleText": "zx-landscape 组件"
 					}
 				},
 				{
-					"path": "components/list/index",
+					"path": "list/index",
 					"style": {
 						"navigationBarTitleText": "zx-list 组件"
 					}
 				},
 				{
-					"path": "components/list/item",
+					"path": "list/item",
 					"style": {
 						"navigationBarTitleText": "zx-list-item 组件"
 					}
 				},
 				{
-					"path": "components/list/chat",
+					"path": "list/chat",
 					"style": {
 						"navigationBarTitleText": "zx-list-chat 组件"
 					}
 				},
 				{
-					"path": "components/refresh/index",
+					"path": "refresh/index",
 					"style": {
 						"navigationBarTitleText": "zx-refresh 组件"
 					}
 				},
 				{
-					"path": "components/lucky/wheel",
+					"path": "lucky/wheel",
 					"style": {
 						"navigationBarTitleText": "zx-lucky-wheel 组件"
 					}
 				},
 				{
-					"path": "components/pk/index",
+					"path": "pk/index",
 					"style": {
 						"navigationBarTitleText": "zx-pk 组件"
 					}
 				},
 				{
-					"path": "components/read-more/index",
+					"path": "read-more/index",
 					"style": {
 						"navigationBarTitleText": "zx-read-more 组件"
 					}
 				},
 				{
-					"path": "components/row/index",
+					"path": "row/index",
 					"style": {
 						"navigationBarTitleText": "row 组件"
 					}
 				},
 				{
-					"path": "components/col/index",
+					"path": "col/index",
 					"style": {
 						"navigationBarTitleText": "col 组件"
 					}
 				},
 				{
-					"path": "components/poster/index",
+					"path": "poster/index",
 					"style": {
 						"navigationBarTitleText": "poster 组件"
 					}
 				},
 				{
-					"path": "components/tour/index",
+					"path": "tour/index",
 					"style": {
 						"navigationBarTitleText": "tour 组件"
 					}
 				},
 				{
-					"path": "components/touch/index",
+					"path": "touch/index",
 					"style": {
 						"navigationBarTitleText": "touch 组件"
 					}
 				},
 				{
-					"path": "components/tooltip/index",
+					"path": "tooltip/index",
 					"style": {
 						"navigationBarTitleText": "tooltip 组件"
 					}
 				},
 				{
-					"path": "components/toast/index",
+					"path": "toast/index",
 					"style": {
 						"navigationBarTitleText": "toast 组件"
 					}
 				},
 				{
-					"path": "components/tips/index",
+					"path": "tips/index",
 					"style": {
 						"navigationBarTitleText": "tips 组件"
 					}
 				},
 				{
-					"path": "components/stamp/index",
+					"path": "stamp/index",
 					"style": {
 						"navigationBarTitleText": "stamp 组件"
 					}
 				},
 				{
-					"path": "components/sign/index",
+					"path": "sign/index",
 					"style": {
 						"navigationBarTitleText": "sign 组件"
 					}
 				},
 				{
-					"path": "components/search-bar/index",
+					"path": "search-bar/index",
 					"style": {
 						"navigationBarTitleText": "search-bar 组件"
 					}
 				},
 				{
-					"path": "components/tabbar/index",
+					"path": "tabbar/index",
 					"style": {
 						"navigationBarTitleText": "tabbar 组件"
 					}
 				},
 				{
-					"path": "components/divider/index",
+					"path": "divider/index",
 					"style": {
 						"navigationBarTitleText": "divider 组件"
 					}
 				},
 				{
-					"path": "components/line/index",
+					"path": "line/index",
 					"style": {
 						"navigationBarTitleText": "line 组件"
 					}
 				},
 				{
-					"path": "components/input/index",
+					"path": "input/index",
 					"style": {
 						"navigationBarTitleText": "input 组件"
 					}
 				},
 				{
-					"path": "components/radio/index",
+					"path": "radio/index",
 					"style": {
 						"navigationBarTitleText": "radio 组件"
 					}
 				},
 				{
-					"path": "components/radio/group",
+					"path": "radio/group",
 					"style": {
 						"navigationBarTitleText": "radio-group 组件"
 					}
 				},
 				{
-					"path": "components/form/index",
+					"path": "form/index",
 					"style": {
 						"navigationBarTitleText": "form 组件"
 					}
 				},
 				{
-					"path": "components/picker/index",
+					"path": "picker/index",
 					"style": {
 						"navigationBarTitleText": "picker 组件"
 					}
 				},
 				{
-					"path": "components/picker/view",
+					"path": "picker/view",
 					"style": {
 						"navigationBarTitleText": "picker-view 组件"
 					}
 				},
 				{
-					"path": "components/sms-code/index",
+					"path": "sms-code/index",
 					"style": {
 						"navigationBarTitleText": "sms-code 组件"
 					}
 				},
 				{
-					"path": "components/time/picker",
+					"path": "time/picker",
 					"style": {
 						"navigationBarTitleText": "time-picker 组件"
 					}
 				},
 				{
-					"path": "components/time/select",
+					"path": "time/select",
 					"style": {
 						"navigationBarTitleText": "time-select 组件"
 					}
 				},
 				{
-					"path": "components/timeline/index",
+					"path": "timeline/index",
 					"style": {
 						"navigationBarTitleText": "timeline 组件"
 					}
 				},
 				{
-					"path": "components/tree/index",
+					"path": "tree/index",
 					"style": {
 						"navigationBarTitleText": "tree 组件"
 					}
 				},
 				{
-					"path": "components/progress/index",
+					"path": "progress/index",
 					"style": {
 						"navigationBarTitleText": "progress 组件"
 					}
 				},
 				{
-					"path": "components/toolbar/index",
+					"path": "toolbar/index",
 					"style": {
 						"navigationBarTitleText": "toolbar 组件"
 					}
 				},
 				{
-					"path": "components/page-header/index",
+					"path": "page-header/index",
 					"style": {
 						"navigationBarTitleText": "page-header 组件"
 					}
 				},
 				{
-					"path": "components/notify/index",
+					"path": "notify/index",
 					"style": {
 						"navigationBarTitleText": "notify 组件"
 					}
 				},
 				{
-					"path": "components/no-network/index",
+					"path": "no-network/index",
 					"style": {
 						"navigationBarTitleText": "no-network 组件"
 					}
 				},
 				{
-					"path": "components/notice-bar/index",
+					"path": "notice-bar/index",
 					"style": {
 						"navigationBarTitleText": "notice-bar 组件"
 					}
 				},
 				{
-					"path": "components/loading/index",
+					"path": "loading/index",
 					"style": {
 						"navigationBarTitleText": "loading 组件"
 					}
 				},
 				{
-					"path": "components/web-view/index",
+					"path": "web-view/index",
 					"style": {
 						"navigationBarTitleText": "web-view 组件"
 					}
 				},
 				{
-					"path": "components/richtext/index",
+					"path": "richtext/index",
 					"style": {
 						"navigationBarTitleText": "richtext 组件"
 					}
 				},
 				{
-					"path": "components/recorder/index",
+					"path": "recorder/index",
 					"style": {
 						"navigationBarTitleText": "recorder 组件"
 					}
 				},
 				{
-					"path": "components/more/index",
+					"path": "more/index",
 					"style": {
 						"navigationBarTitleText": "more 组件"
 					}
 				},
 				{
-					"path": "components/turntable/index",
+					"path": "turntable/index",
 					"style": {
 						"navigationBarTitleText": "zx-turntable 组件"
 					}
 				},
 				{
-					"path": "components/transfer/index",
+					"path": "transfer/index",
 					"style": {
 						"navigationBarTitleText": "zx-transfer 组件"
 					}
 				},
 				{
-					"path": "components/cascader/index",
+					"path": "cascader/index",
 					"style": {
 						"navigationBarTitleText": "zx-cascader 组件"
 					}
 				},
 				{
-					"path": "components/label/index",
+					"path": "label/index",
 					"style": {
 						"navigationBarTitleText": "zx-label 组件"
 					}
 				},
 				{
-					"path": "components/carousel/index",
+					"path": "carousel/index",
 					"style": {
 						"navigationBarTitleText": "zx-carousel 组件"
 					}
 				},
 				{
-					"path": "components/barrage/index",
+					"path": "barrage/index",
 					"style": {
 						"navigationBarTitleText": "zx-barrage 组件"
 					}
 				},
 				{
-					"path": "components/share-sheet/index",
+					"path": "share-sheet/index",
 					"style": {
 						"navigationBarTitleText": "zx-share-sheet 组件"
 					}
 				},
 				{
-					"path": "components/status-bar/index",
+					"path": "status-bar/index",
 					"style": {
 						"navigationBarTitleText": "Status Bar 状态栏组件"
 					}
 				},
 				{
-					"path": "components/safe-bottom/index",
+					"path": "safe-bottom/index",
 					"style": {
 						"navigationBarTitleText": "Safe Bottom 安全底部组件"
 					}
 				},
 				{
-					"path": "components/transition/index",
+					"path": "transition/index",
 					"style": {
 						"navigationBarTitleText": "Transition 过渡组件"
 					}
 				},
 				{
-					"path": "components/mention/index",
+					"path": "mention/index",
 					"style": {
 						"navigationBarTitleText": "zx-mention 提及组件"
 					}
 				},
 				{
-					"path": "components/movable/index",
+					"path": "movable/index",
 					"style": {
 						"navigationBarTitleText": "zx-movable 可拖拽组件"
 					}
 				},
 				{
-					"path": "components/scrollbar/index",
+					"path": "scrollbar/index",
 					"style": {
 						"navigationBarTitleText": "zx-scrollbar 滚动条组件"
 					}
 				},
 				{
-					"path": "components/scroll/index",
+					"path": "scroll/index",
 					"style": {
 						"navigationBarTitleText": "zx-scroll 滚动组件"
 					}
 				},
 				{
-					"path": "components/fab/index",
+					"path": "fab/index",
 					"style": {
 						"navigationBarTitleText": "zx-fab 组件"
 					}
 				},
 				{
-					"path": "components/fav/index",
+					"path": "fav/index",
 					"style": {
 						"navigationBarTitleText": "zx-fav 组件"
 					}
 				},
 				{
-					"path": "components/affix/index",
+					"path": "affix/index",
 					"style": {
 						"navigationBarTitleText": "zx-affix 结果组件"
 					}
 				},
 				{
-					"path": "components/affix/test",
+					"path": "affix/test",
 					"style": {
 						"navigationBarTitleText": "zx-affix 测试页面"
 					}
 				},
 				{
-					"path": "components/affix/example",
+					"path": "affix/example",
 					"style": {
 						"navigationBarTitleText": "zx-affix 示例页面"
 					}
 				},
 				{
-					"path": "components/text/index",
+					"path": "text/index",
 					"style": {
 						"navigationBarTitleText": "Text 文本组件"
 					}
 				},
 				{
-					"path": "components/icon/index",
+					"path": "icon/index",
 					"style": {
 						"navigationBarTitleText": "Icon 图标组件"
 					}
 				},
 				{
-					"path": "components/icon/list",
+					"path": "icon/list",
 					"style": {
 						"navigationBarTitleText": "Icon 图标列表组件"
 					}
 				},
 				{
-					"path": "components/button/index",
+					"path": "button/index",
 					"style": {
 						"navigationBarTitleText": "Button 按钮组件"
 					}
 				},
 				{
-					"path": "components/badge/index",
+					"path": "badge/index",
 					"style": {
 						"navigationBarTitleText": "Badge 徽标组件"
 					}
 				},
 				{
-					"path": "components/link/index",
+					"path": "link/index",
 					"style": {
 						"navigationBarTitleText": "link 链接组件"
 					}
 				},
 				{
-					"path": "components/title/index",
+					"path": "title/index",
 					"style": {
 						"navigationBarTitleText": "title 标题组件"
 					}
 				},
 				{
-					"path": "components/tag/index",
+					"path": "tag/index",
 					"style": {
 						"navigationBarTitleText": "zx-tag 标签组件"
 					}
 				},
 				{
-					"path": "components/tag/check",
+					"path": "tag/check",
 					"style": {
 						"navigationBarTitleText": "check标签组件"
 					}
 				},
 				{
-					"path": "components/space/index",
+					"path": "space/index",
 					"style": {
 						"navigationBarTitleText": "zx-space 间距组件"
 					}
 				},
 				{
-					"path": "components/sticky/index",
+					"path": "sticky/index",
 					"style": {
 						"navigationBarTitleText": "zx-sticky 吸顶组件"
 					}
 				},
 				{
-					"path": "components/sticky/demo",
+					"path": "sticky/demo",
 					"style": {
 						"navigationBarTitleText": "zx-sticky 吸顶组件"
 					}
 				},
 				{
-					"path": "components/section/index",
+					"path": "section/index",
 					"style": {
 						"navigationBarTitleText": "zx-section 标题栏组件"
 					}
 				},
 				{
-					"path": "components/statistic/index",
+					"path": "statistic/index",
 					"style": {
 						"navigationBarTitleText": "Statistic 统计数值组件"
 					}
 				},
 				{
-					"path": "components/album/index",
+					"path": "album/index",
 					"style": {
 						"navigationBarTitleText": "Album 图片预览组件"
 					}
 				},
 				{
-					"path": "components/camera/index",
+					"path": "camera/index",
 					"style": {
 						"navigationBarTitleText": "Camera 相机组件"
 					}
 				},
 				{
-					"path": "components/calendar/index",
+					"path": "calendar/index",
 					"style": {
 						"navigationBarTitleText": "Calendar 日历组件"
 					}
 				},
 				{
-					"path": "components/canvas/index",
+					"path": "canvas/index",
 					"style": {
 						"navigationBarTitleText": "Canvas 画布组件"
 					}
 				},
 				{
-					"path": "components/map/index",
+					"path": "map/index",
 					"style": {
 						"navigationBarTitleText": "map 地图组件"
 					}
 				},
 				{
-					"path": "components/qrcode/index",
+					"path": "qrcode/index",
 					"style": {
 						"navigationBarTitleText": "qrcode 二维码组件"
 					}
 				},
 				{
-					"path": "components/editor/index",
+					"path": "editor/index",
 					"style": {
 						"navigationBarTitleText": "editor 富文本编辑器组件"
 					}
 				},
 				{
-					"path": "components/html/index",
+					"path": "html/index",
 					"style": {
 						"navigationBarTitleText": "zx-html 富文本解析组件"
 					}
 				},
 				{
-					"path": "components/upload/index",
+					"path": "upload/index",
 					"style": {
 						"navigationBarTitleText": "zx-upload 上传组件"
 					}
 				},
 				{
-					"path": "components/upload/test",
+					"path": "upload/test",
 					"style": {
 						"navigationBarTitleText": "Upload 测试页面"
 					}
 				},
 				{
-					"path": "components/code/index",
+					"path": "code/index",
 					"style": {
 						"navigationBarTitleText": "zx-code 源代码展示组件"
 					}
 				},
 				{
-					"path": "components/file/index",
+					"path": "file/index",
 					"style": {
 						"navigationBarTitleText": "zx-file 文件操作组件"
 					}
 				},
 				{
-					"path": "components/file/demo",
+					"path": "file/demo",
 					"style": {
 						"navigationBarTitleText": "zx-file 文件上传案例"
 					}
@@ -850,167 +741,278 @@
 		},
 		{
 			"root": "pages3",
-			"pages": [{
-					"path": "components/alert/index",
+			"pages": [
+				{
+					"path": "alert/index",
 					"style": {
 						"navigationBarTitleText": "Alert 提示组件"
 					}
 				},
 				{
-					"path": "components/audio/index",
+					"path": "audio/index",
 					"style": {
 						"navigationBarTitleText": "Audio 音频组件"
 					}
 				},
 				{
-					"path": "components/video/index",
+					"path": "video/index",
 					"style": {
 						"navigationBarTitleText": "Video 视频组件"
 					}
 				},
 				{
-					"path": "components/avatar/index",
+					"path": "avatar/index",
 					"style": {
 						"navigationBarTitleText": "Avatar Group 头像组件"
 					}
 				},
 				{
-					"path": "components/avatar/group",
+					"path": "avatar/group",
 					"style": {
 						"navigationBarTitleText": "Avatar Group 头像组"
 					}
 				},
 				{
-					"path": "components/empty/index",
+					"path": "empty/index",
 					"style": {
 						"navigationBarTitleText": "empty 空状态组件"
 					}
 				},
 				{
-					"path": "components/backtop/index",
+					"path": "backtop/index",
 					"style": {
 						"navigationBarTitleText": "backtop 回到顶部组件"
 					}
 				},
 				{
-					"path": "components/tabs/index",
+					"path": "tabs/index",
 					"style": {
 						"navigationBarTitleText": "tabs 标签页组件"
 					}
 				},
 				{
-					"path": "components/swiper/index",
+					"path": "swiper/index",
 					"style": {
 						"navigationBarTitleText": "swiper 轮播图组件"
 					}
 				},
 				{
-					"path": "components/image/index",
+					"path": "image/index",
 					"style": {
 						"navigationBarTitleText": "Image 图片组件"
 					}
 				},
 
 				{
-					"path": "components/card/index",
+					"path": "card/index",
 					"style": {
 						"navigationBarTitleText": "Card 卡片组件"
 					}
 				},
 				{
-					"path": "components/navbar/index",
+					"path": "navbar/index",
 					"style": {
 						"navigationBarTitleText": "zx-navbar 导航栏组件"
 					}
 				},
 				{
-					"path": "components/descriptions/index",
+					"path": "descriptions/index",
 					"style": {
 						"navigationBarTitleText": "zx-descriptions 描述列表组件"
 					}
 				},
 				{
-					"path": "components/pagination/index",
+					"path": "pagination/index",
 					"style": {
 						"navigationBarTitleText": "zx-pagination 分页组件"
 					}
 				},
 				{
-					"path": "components/skeleton/index",
+					"path": "skeleton/index",
 					"style": {
 						"navigationBarTitleText": "zx-skeleton 骨架屏组件"
 					}
 				},
 				{
-					"path": "components/result/index",
+					"path": "result/index",
 					"style": {
 						"navigationBarTitleText": "zx-result 结果组件"
 					}
 				},
 				{
-					"path": "components/watermark/index",
+					"path": "watermark/index",
 					"style": {
 						"navigationBarTitleText": "zx-watermark 水印组件"
 					}
 				},
 				{
-					"path": "components/watermark/test",
+					"path": "watermark/test",
 					"style": {
 						"navigationBarTitleText": "zx-watermark 测试页面"
 					}
 				},
 				{
-					"path": "components/breadcrumb/index",
+					"path": "breadcrumb/index",
 					"style": {
 						"navigationBarTitleText": "zx-breadcrumb 组件"
 					}
 				},
 				{
-					"path": "components/collapse/index",
+					"path": "collapse/index",
 					"style": {
 						"navigationBarTitleText": "zx-collapse 组件"
 					}
 				},
 				{
-					"path": "components/dialog/index",
+					"path": "dialog/index",
 					"style": {
 						"navigationBarTitleText": "zx-dialog 组件"
 					}
 				},
 				{
-					"path": "components/drawer/index",
+					"path": "drawer/index",
 					"style": {
 						"navigationBarTitleText": "zx-drawer 组件"
 					}
 				},
 				{
-					"path": "components/dropdown/index",
+					"path": "dropdown/index",
 					"style": {
 						"navigationBarTitleText": "zx-dropdown 下拉菜单组件"
 					}
 				},
 				{
-					"path": "components/menu/index",
+					"path": "menu/index",
 					"style": {
 						"navigationBarTitleText": "zx-menu 菜单组件"
 					}
 				},
 				{
-					"path": "components/submit/bar",
+					"path": "submit/bar",
 					"style": {
 						"navigationBarTitleText": "SubmitBar 提交订单栏组件"
 					}
 				},
 				{
-					"path": "components/goods/card",
+					"path": "goods/card",
 					"style": {
 						"navigationBarTitleText": "GoodsCard 商品卡片组件"
 					}
 				},
 				{
-					"path": "components/square-nine/index",
+					"path": "square-nine/index",
 					"style": {
 						"navigationBarTitleText": "SquareNine 九宫格组件"
+					}
+				},
+				{
+					"path": "area-picker/index",
+					"style": {
+						"navigationBarTitleText": "Area Picker 区域选择器组件"
+					}
+				},
+		
+				{
+					"path": "overlay/index",
+					"style": {
+						"navigationBarTitleText": "Overlay 遮罩组件"
+					}
+				},
+				{
+					"path": "popup/index",
+					"style": {
+						"navigationBarTitleText": "Popup 弹窗组件"
+					}
+				},
+		
+				{
+					"path": "autocomplete/index",
+					"style": {
+						"navigationBarTitleText": "autocomplete 自动补全输入框组件"
+					}
+				},
+				{
+					"path": "checkbox/index",
+					"style": {
+						"navigationBarTitleText": "checkbox 多选框组件"
+					}
+				},
+				{
+					"path": "checkbox/group",
+					"style": {
+						"navigationBarTitleText": "checkbox-group 多选框组组件"
+					}
+				},
+		
+				{
+					"path": "slider/index",
+					"style": {
+						"navigationBarTitleText": "zx-slider 滑动选择器组件"
+					}
+				},
+		
+				{
+					"path": "switch/index",
+					"style": {
+						"navigationBarTitleText": "zx-switch 开关组件"
+					}
+				},
+				{
+					"path": "textarea/index",
+					"style": {
+						"navigationBarTitleText": "zx-textarea 文本框组件"
+					}
+				},
+		
+				{
+					"path": "rate/index",
+					"style": {
+						"navigationBarTitleText": "zx-rate 评分组件"
+					}
+				},
+		
+				{
+					"path": "combox/index",
+					"style": {
+						"navigationBarTitleText": "zx-combox 组合框组件"
+					}
+				},
+				{
+					"path": "countdown/index",
+					"style": {
+						"navigationBarTitleText": "zx-countdown 组件"
+					}
+				},
+				{
+					"path": "anchor/index",
+					"style": {
+						"navigationBarTitleText": "zx-anchor 组件"
+					}
+				},
+				{
+					"path": "color-picker/index",
+					"style": {
+						"navigationBarTitleText": "zx-color-picker 组件"
+					}
+				},
+		
+				{
+					"path": "date-picker/index",
+					"style": {
+						"navigationBarTitleText": "zx-date-picker 组件"
+					}
+				},
+		
+				{
+					"path": "popconfirm/index",
+					"style": {
+						"navigationBarTitleText": "zx-popconfirm 气泡确认框组件"
+					}
+				},
+				{
+					"path": "popover/index",
+					"style": {
+						"navigationBarTitleText": "Popover 弹出框组件"
 					}
 				}
 			]
