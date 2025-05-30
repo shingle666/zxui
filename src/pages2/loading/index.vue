@@ -1,106 +1,92 @@
 <template>
 	<view class="container">
 		<view class="header">
-			<text class="title">zx-loading组件示例</text>
+			<text class="title">zx-loading 组件示例</text>
 		</view>
-		
+
 		<view class="section">
-			<text class="section-title">基础用法</text>
-			<button type="primary" @click="basicLoading = true">显示加载</button>
-			<zx-loading v-model:show="basicLoading" />
-		</view>
-		
-		<view class="section">
-			<text class="section-title">自定义文本</text>
-			<button type="primary" @click="textLoading = true">显示自定义文本</button>
-			<zx-loading v-model:show="textLoading" text="数据加载中..." />
-		</view>
-		
-		<view class="section">
-			<text class="section-title">带遮罩层</text>
-			<button type="primary" @click="maskLoading = true">显示带遮罩的加载</button>
-			<zx-loading v-model:show="maskLoading" mask />
-		</view>
-		
-		<view class="section">
-			<text class="section-title">通过ref调用方法</text>
-			<button type="primary" @click="openLoading">显示加载</button>
-			<button type="default" @click="closeLoading">关闭加载</button>
-			<zx-loading ref="loadingRef" text="使用ref调用..." />
-		</view>
-		
-		<view class="section">
-			<text class="section-title">模拟异步请求</text>
-			<button type="primary" @click="mockRequest">模拟请求数据</button>
-			<view v-if="requestDone" class="result-box">
-				<text>数据加载完成</text>
+			<text class="section-title">加载类型 (type)</text>
+			<view class="loading-group">
+				<zx-loading />
+				<zx-loading type="spinner" />
 			</view>
-			<zx-loading v-model:show="requestLoading" text="请求数据中..." />
 		</view>
+
+		<view class="section">
+			<text class="section-title">自定义颜色 (color)</text>
+			<view class="loading-group">
+				<zx-loading color="#1989fa" />
+				<zx-loading type="spinner" color="#1989fa" />
+			</view>
+		</view>
+
+		<view class="section">
+			<text class="section-title">自定义大小 (size)</text>
+			<view class="loading-group">
+				<zx-loading size="24" />
+				<zx-loading type="spinner" size="24px" />
+        <zx-loading size="40rpx" />
+			</view>
+		</view>
+
+		<view class="section">
+			<text class="section-title">加载文案 (text)</text>
+			<view class="loading-group">
+				<zx-loading size="24px" text="加载中..." />
+			</view>
+		</view>
+
+		<view class="section">
+			<text class="section-title">垂直排列 (vertical)</text>
+			<view class="loading-group">
+				<zx-loading size="24px" vertical text="加载中..." />
+			</view>
+		</view>
+
+		<view class="section">
+			<text class="section-title">自定义文案颜色 (textColor)</text>
+			<view class="loading-group">
+				<zx-loading text-color="#0094ff" text="自定义文案颜色" />
+				<zx-loading color="#1989fa" text-color="#0094ff" text="图标与文案颜色不同" />
+			</view>
+		</view>
+
+    <view class="section">
+			<text class="section-title">自定义文案大小 (textSize)</text>
+			<view class="loading-group">
+				<zx-loading text-size="20px" text="大号字体" />
+        <zx-loading text-size="12rpx" text="小号字体" />
+			</view>
+		</view>
+
+		<view class="section">
+			<text class="section-title">通过 v-model:show 控制显示/隐藏</text>
+			<button type="primary" @click="toggleShow">{{ showLoading ? '隐藏' : '显示' }}加载</button>
+			<zx-loading :show="showLoading" text="v-model 控制" />
+		</view>
+
+		<view class="section">
+			<text class="section-title">自定义图标 (slot icon)</text>
+			<view class="loading-group">
+				<zx-loading vertical text="自定义图标">
+          <template #icon>
+            <image style="width: 30px; height: 30px;" src="/static/logo.png" />
+          </template>
+        </zx-loading>
+			</view>
+		</view>
+
 	</view>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 
-// 基础用法
-const basicLoading = ref(false);
-
-// 自定义文本
-const textLoading = ref(false);
-
-// 带遮罩层
-const maskLoading = ref(false);
-
-// 通过ref调用方法
-const loadingRef = ref(null);
-const openLoading = () => {
-	loadingRef.value.open();
-};
-const closeLoading = () => {
-	loadingRef.value.close();
+const showLoading = ref(true);
+const toggleShow = () => {
+	showLoading.value = !showLoading.value;
 };
 
-// 模拟异步请求
-const requestLoading = ref(false);
-const requestDone = ref(false);
-const mockRequest = () => {
-	requestLoading.value = true;
-	requestDone.value = false;
-	
-	// 模拟网络请求，3秒后关闭loading
-	setTimeout(() => {
-		requestLoading.value = false;
-		requestDone.value = true;
-	}, 3000);
-};
-
-// 监听基础用法loading状态，2秒后自动关闭
-watch(basicLoading, (val) => {
-	if (val) {
-		setTimeout(() => {
-			basicLoading.value = false;
-		}, 2000);
-	}
-});
-
-// 监听自定义文本loading状态，2秒后自动关闭
-watch(textLoading, (val) => {
-	if (val) {
-		setTimeout(() => {
-			textLoading.value = false;
-		}, 2000);
-	}
-});
-
-// 监听带遮罩loading状态，2秒后自动关闭
-watch(maskLoading, (val) => {
-	if (val) {
-		setTimeout(() => {
-			maskLoading.value = false;
-		}, 2000);
-	}
-});
 </script>
 
 <style>

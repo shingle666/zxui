@@ -1,0 +1,13 @@
+{
+  "name": "zx-image-preview",
+  "version": "1.0.0",
+  "description": "图片放大预览组件，支持滑动切换、手势缩放、双击放大等功能。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

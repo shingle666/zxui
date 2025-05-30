@@ -103,7 +103,12 @@ const datalist = ref([
       { title: "Car-number 车牌号输入", path: "/pages2/car-number/index" },
       { title: "SMS-code 验证码", path: "/pages2/sms-code/index" },
       { title: "Autocomplete 自动完成", path: "/pages3/autocomplete/index" },
-      { title: "submit-bar 提交订单栏", path: "/pages3/submit/bar" }
+      { title: "submit-bar 提交订单栏", path: "/pages3/submit/bar" },
+      { title: "number-keyboard", path: "/pages3/number-keyboard/index" },
+      { title: "password-input", path: "/pages3/password-input/index" },
+      { title: "uploader", path: "/pages3/uploader/index" },
+      { title: "floating-panel", path: "/pages3/floating-panel/index" },
+      { title: "floating-bubble", path: "/pages3/floating-bubble/index" },
     ]
   },
   {
@@ -139,7 +144,13 @@ const datalist = ref([
       { title: "Breadcrumb 面包屑", path: "/pages3/breadcrumb/index" },
       { title: "Backtop 回到顶部", path: "/pages3/backtop/index" },
       { title: "Page-header 页头", path: "/pages3/page-header/index" },
-      { title: "Anchor 锚点", path: "/pages3/anchor/index" }
+      { title: "Anchor 锚点", path: "/pages3/anchor/index" },
+      { title: "address-list", path: "/pages3/address-list/index" },
+      { title: "address-edit", path: "/pages3/address-edit/index" },
+      { title: "contact-list", path: "/pages3/contact-list/index" },
+      { title: "contact-card", path: "/pages3/contact-card/index" },
+      { title: "contact-edit", path: "/pages3/contact-edit/index" },
+      { title: "coupon-list", path: "/pages3/coupon-list/index" },
     ]
   },
   {
@@ -163,7 +174,17 @@ const datalist = ref([
       { title: "Notice-bar 通知栏", path: "/pages3/notice-bar/index" },
       { title: "Loading 加载", path: "/pages2/loading/index" },
       { title: "Tooltip 文字提示", path: "/pages2/tooltip/index" },
-      { title: "Watermark 水印", path: "/pages3/watermark/index" }
+      { title: "Watermark 水印", path: "/pages3/watermark/index" },
+      { title: "pull-refresh", path: "/pages3/pull-refresh/index" },
+      { title: "swipe-cell", path: "/pages3/swipe-cell/index" },
+      { title: "circle", path: "/pages3/circle/index" },
+      { title: "highlight", path: "/pages3/highlight/index" },
+      { title: "image-preview", path: "/pages3/image-preview/index" },
+      { title: "lazyload", path: "/pages3/lazyload/index" },
+      { title: "rolling-text", path: "/pages3/rolling-text/index" },
+      { title: "sidebar", path: "/pages3/sidebar/index" },
+      { title: "tree-select", path: "/pages3/tree-select/index" },
+      { title: "area", path: "/pages3/area/index" },
     ]
   },
   {

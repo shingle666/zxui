@@ -1,0 +1,13 @@
+{
+  "name": "zx-sidebar",
+  "version": "1.0.0",
+  "description": "垂直展示的导航栏，用于在不同的内容区域之间进行切换。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

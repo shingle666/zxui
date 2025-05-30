@@ -992,7 +992,35 @@
 				{
 					"path": "color-picker/index",
 					"style": {
-						"navigationBarTitleText": "zx-color-picker 组件"
+						"navigationBarTitleText": "ColorPicker 颜色选择器",
+						"enablePullDownRefresh": false
+					}
+				},
+				{
+					"path": "contact-list/index",
+					"style": {
+						"navigationBarTitleText": "ContactList 联系人列表",
+						"enablePullDownRefresh": false
+					}
+				},
+				{
+					"path": "contact-card/index",
+					"style": {
+						"navigationBarTitleText": "ContactCard 联系人卡片",
+						"enablePullDownRefresh": false
+					}
+				},
+				{
+					"path": "contact-edit/index",
+					"style": {
+						"navigationBarTitleText": "ContactEdit 联系人编辑",
+						"enablePullDownRefresh": false
+					}
+				},
+				{
+					"path": "coupon-list/index",
+					"style": {
+						"navigationBarTitleText": "优惠券列表"
 					}
 				},
 		
@@ -1013,6 +1041,108 @@
 					"path": "popover/index",
 					"style": {
 						"navigationBarTitleText": "Popover 弹出框组件"
+					}
+				},
+				{
+					"path": "number-keyboard/index",
+					"style": {
+						"navigationBarTitleText": "zx-number-keyboard 组件"
+					}
+				},
+				{
+					"path": "password-input/index",
+					"style": {
+						"navigationBarTitleText": "zx-password-input 组件"
+					}
+				},
+				{
+					"path": "uploader/index",
+					"style": {
+						"navigationBarTitleText": "zx-uploader 组件"
+					}
+				},
+				{
+					"path": "floating-panel/index",
+					"style": {
+						"navigationBarTitleText": "floating-panel 组件"
+					}
+				},
+				{
+					"path": "floating-bubble/index",
+					"style": {
+						"navigationBarTitleText": "floating-bubble 组件"
+					}
+				},
+				{
+					"path": "pull-refresh/index",
+					"style": {
+						"navigationBarTitleText": "pull-refresh 组件"
+					}
+				},
+				{
+					"path": "swipe-cell/index",
+					"style": {
+						"navigationBarTitleText": "swipe-cell 组件"
+					}
+				},
+				{
+					"path": "circle/index",
+					"style": {
+						"navigationBarTitleText": "Circle 环形进度条"
+					}
+				},
+				{
+					"path": "highlight/index",
+					"style": {
+						"navigationBarTitleText": "Highlight 文本高亮"
+					}
+				},
+				{
+					"path": "image-preview/index",
+					"style": {
+						"navigationBarTitleText": "image-preview 组件"
+					}
+				},
+				{
+					"path": "lazyload/index",
+					"style": {
+						"navigationBarTitleText": "lazyload 组件"
+					}
+				},
+				{
+					"path": "rolling-text/index",
+					"style": {
+						"navigationBarTitleText": "rolling-text 组件"
+					}
+				},
+				{
+					"path": "sidebar/index",
+					"style": {
+						"navigationBarTitleText": "sidebar 组件"
+					}
+				},
+				{
+					"path": "tree-select/index",
+					"style": {
+						"navigationBarTitleText": "tree-select 组件"
+					}
+				},
+				{
+					"path": "area/index",
+					"style": {
+						"navigationBarTitleText": "area 组件"
+					}
+				},
+				{
+					"path": "address-list/index",
+					"style": {
+						"navigationBarTitleText": "address-list 组件"
+					}
+				},
+				{
+					"path": "address-edit/index",
+					"style": {
+						"navigationBarTitleText": "address-edit 组件"
 					}
 				}
 			]

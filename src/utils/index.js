@@ -60,12 +60,66 @@ function os() {
   return 'unknown';
 }
 
+/**
+ * 为数字或字符串添加单位，默认'px'
+ * @param {String | Number} value 需要添加单位的值
+ * @param {String} unit 单位，默认'px'
+ * @returns {String} 添加单位后的值
+ */
+function addUnit(value, unit = 'px') {
+  if (value == null) {
+    return undefined;
+  }
+  return /^-?\d+(\.\d+)?$/.test(String(value)) ? `${value}${unit}` : String(value);
+}
+
+/**
+ * 创建BEM规范的命名空间
+ * @param {String} name 组件名称
+ * @returns {Function} 返回一个函数，用于生成BEM类名
+ */
+function createNamespace(name) {
+  const prefixedName = `zx-${name}`;
+  const bem = (modifier, subModifier) => {
+    if (modifier && typeof modifier === 'string') {
+      const base = `${prefixedName}__${modifier}`;
+      if (subModifier && typeof subModifier === 'string') {
+        return `${base}_${subModifier}`;
+      }
+      return base;
+    }
+    if (modifier && typeof modifier === 'object') {
+      // bem('block', { mod1: true, mod2: false }) => 'zx-block zx-block--mod1'
+      let result = prefixedName;
+      for (const key in modifier) {
+        if (Object.prototype.hasOwnProperty.call(modifier, key) && modifier[key]) {
+          result += ` ${prefixedName}--${key}`;
+        }
+      }
+      return result;
+    }
+    return prefixedName;
+  };
+  return [prefixedName, bem];
+}
+
 // 工具函数集合
 const util = {
   deepMerge,
   getNonceStr,
   sleep,
-  os
+  os,
+  addUnit,
+  createNamespace
 };
 
-export default util; 
+export default util;
+
+export {
+  deepMerge,
+  getNonceStr,
+  sleep,
+  os,
+  addUnit,
+  createNamespace
+};

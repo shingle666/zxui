@@ -1,6 +1,6 @@
 <template>
 	<view class="zx-camera" :style="{ backgroundColor: backgroundColor }">
-		<!-- #ifdef MP -->
+		
 		<view class="camera-box" :style="{width:width,height:height,backgroundColor: backgroundColor}">
 			<camera ref="cameraRef" class="camera" :mode="mode" :resolution="resolution"
 				:device-position="devicePositionState" :flash="flashMode" :frame-size="frameSize"
@@ -41,15 +41,14 @@
 				</slot>
 			</camera>
 		</view>
-		<!-- #endif -->
-		<!-- #ifndef MP -->
-		<view class="camera-placeholder" @click="handlePlaceholderClick">
+		
+		<!-- <view class="camera-placeholder" @click="handlePlaceholderClick">
 			<view class="camera-placeholder-icon">
 				<zx-icon name="camera-add" size="80rpx" color="#cccccc"></zx-icon>
 			</view>
 			<text class="camera-placeholder-text">{{ placeholderText }}</text>
-		</view>
-		<!-- #endif -->
+		</view> -->
+		
 	</view>
 </template>
 
@@ -164,7 +163,6 @@ const isRecording = ref(false);
 const placeholderText = ref('点击调用相机');
 
 onMounted(() => {
-	// #ifdef MP
 	// 请求相机权限
 	uni.getSetting({
 		success: (res) => {
@@ -173,9 +171,7 @@ onMounted(() => {
 					scope: 'scope.camera',
 					success: () => {
 						// 用户同意授权
-						// #ifdef MP
 						initCamera();
-						// #endif
 					},
 					fail: () => {
 						// 用户拒绝授权
@@ -193,9 +189,7 @@ onMounted(() => {
 				});
 			} else {
 				// 已授权
-				// #ifdef MP
 				initCamera();
-				// #endif
 			}
 		},
 		fail: () => {
@@ -207,34 +201,31 @@ onMounted(() => {
 			emit('close');
 		}
 	});
-	// #endif
 
-	// #ifndef MP
+
+	/* 
 	if (props.mode === 'scanCode') {
 		placeholderText.value = '扫码功能仅限小程序使用';
 	} else if (props.mode === 'video') {
 		placeholderText.value = '点击开始录像';
 	} else {
 		placeholderText.value = '点击拍照';
-	}
-	// #endif
+	} */
+	
 });
 
 // 初始化相机
 const initCamera = () => {
-	// #ifdef MP
 	// 组件挂载时初始化相机
 	setTimeout(() => {
 		if (!cameraContext.value) {
 			cameraContext.value = uni.createCameraContext();
 		}
 	}, 300);
-	// #endif
 };
 
 // 处理占位区域点击事件 (App/Web)
 const handlePlaceholderClick = () => {
-	// #ifndef MP
 	if (props.mode === 'scanCode') {
 		uni.showToast({
 			title: '请在小程序中使用扫码功能',
@@ -275,12 +266,10 @@ const handlePlaceholderClick = () => {
 			}
 		});
 	}
-	// #endif
 };
 
 // 切换闪光灯
 const switchFlash = () => {
-	// #ifdef MP
 	const modes = ["off", "auto", "on", "torch"];
 	const currentIndex = modes.indexOf(flashMode.value);
 	const nextIndex = (currentIndex + 1) % modes.length;
@@ -291,12 +280,10 @@ const switchFlash = () => {
 		icon: "none",
 		duration: 1000,
 	});
-	// #endif
 };
 
 // 切换前后摄像头
 const switchCameraPosition = () => {
-	// #ifdef MP
 	devicePositionState.value = devicePositionState.value === "back" ? "front" : "back";
 
 	uni.showToast({
@@ -304,12 +291,10 @@ const switchCameraPosition = () => {
 		icon: "none",
 		duration: 1000,
 	});
-	// #endif
 };
 
 // 设置缩放
 const setZoom = (zoom) => {
-	// #ifdef MP
 	if (!cameraContext.value) return;
 
 	if (zoom > maxZoom.value) zoom = maxZoom.value;
@@ -324,7 +309,6 @@ const setZoom = (zoom) => {
 			console.error("设置缩放失败:", err);
 		},
 	});
-	// #endif
 };
 
 // 关闭相机
@@ -334,28 +318,22 @@ const close = () => {
 
 // 相机初始化成功时触发
 const cameraReady = (e) => {
-	// #ifdef MP
 	console.log("相机准备就绪:", e);
 	initCamera();
-	// #endif
 };
 
 // 摄像头在非正常终止时触发
 const cameraStop = (e) => {
-	// #ifdef MP
 	console.error("相机停止:", e);
 	emit("error", e);
-	// #endif
 };
 
 // 相机初始化完成时触发
 const cameraInitdone = (e) => {
-	// #ifdef MP
 	console.log("相机初始化完成:", JSON.stringify(e));
 	if (e && e.detail && e.detail.maxZoom) {
 		maxZoom.value = e.detail.maxZoom;
 	}
-	// #endif
 };
 
 // 用户不允许使用摄像头时触发
@@ -413,7 +391,6 @@ const takePhoto = async () => {
 
 // 开始录制视频
 const startRecord = () => {
-	// #ifdef MP
 	if (!cameraContext.value) {
 		initCamera();
 	}
@@ -440,7 +417,6 @@ const startRecord = () => {
 
 // 停止录制视频
 const stopRecord = () => {
-	// #ifdef MP
 	if (!cameraContext.value || !isRecording.value) return;
 
 	cameraContext.value.stopRecord({
@@ -464,20 +440,16 @@ const stopRecord = () => {
 
 // 录制视频
 const switchRecord = () => {
-	// #ifdef MP
 	if (isRecording.value) {
 		stopRecord()
 	} else {
 		startRecord()
 	}
-	// #endif
 }
 
 // 获取 Camera 实时帧数据。
 const onCameraFrame = () => {
-	// #ifdef MP
 	cameraContext.value.onCameraFrame()
-	// #endif
 }
 
 // 组件卸载前清理
