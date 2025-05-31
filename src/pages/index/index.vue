@@ -220,6 +220,7 @@ const datalist = ref([
       { title: "Drag 拖动", path: "/pages2/drag/index" },
       { title: "Touch 触摸", path: "/pages2/touch/index" },
       { title: "Sign 签名", path: "/pages2/sign/index" },
+      { title: "signature", path: "/pages3/signature/index" },
       { title: "Stamp 印章", path: "/pages2/stamp/index" },
       { title: "Tour 引导", path: "/pages2/tour/index" },
       { title: "Search-bar 搜索栏", path: "/pages2/search-bar/index" },
@@ -236,6 +237,7 @@ const datalist = ref([
       { title: "PK 拼杀", path: "/pages2/pk/index" },
       { title: "Goods-nav 商品导航", path: "/pages2/goods-nav/index" },
       { title: "Goods-card 商品卡片", path: "/pages3/goods/card" },
+      { title: "Goods-sku 商品规格", path: "/pages3/goods/sku" },
       { title: "SquareNine 九宫格抽奖", path: "/pages3/square-nine/index" },
     ]
   },
@@ -270,7 +272,10 @@ const datalist = ref([
       { title: "Cascader 级联选择", path: "/pages2/cascader/index" },
       { title: "Capsule 胶囊", path: "/pages2/capsule/index" },
       { title: "Label 标签", path: "/pages2/label/index" },
-      { title: "Coupon 优惠券", path: "/pages2/coupon/index" }
+      { title: "Coupon 优惠券", path: "/pages2/coupon/index" },
+      { title: "delivery-time", path: "/pages3/delivery-time/index" },
+      { title: "invoice", path: "/pages3/invoice/index" },
+     { title: "login", path: "/pages3/login/index" },
     ]
   }
 ]);

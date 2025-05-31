@@ -34,6 +34,13 @@
 				"navigationBarTitleText": "我的",
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "用户登录",
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"subPackages": [{
@@ -928,6 +935,12 @@
 					}
 				},
 				{
+					"path": "goods/sku",
+					"style": {
+						"navigationBarTitleText": "zx-goods-sku 商品规格选择组件"
+					}
+				},
+				{
 					"path": "square-nine/index",
 					"style": {
 						"navigationBarTitleText": "SquareNine 九宫格组件"
@@ -937,6 +950,12 @@
 					"path": "area-picker/index",
 					"style": {
 						"navigationBarTitleText": "Area Picker 区域选择器组件"
+					}
+				},
+				{
+					"path": "signature/index",
+					"style": {
+						"navigationBarTitleText": "zx-signature 签名组件"
 					}
 				},
 		
@@ -1009,6 +1028,12 @@
 					"path": "countdown/index",
 					"style": {
 						"navigationBarTitleText": "zx-countdown 组件"
+					}
+				},
+				{
+					"path": "delivery-time/index",
+					"style": {
+						"navigationBarTitleText": "zx-delivery-time 配送时间选择组件"
 					}
 				},
 				{
@@ -1171,6 +1196,18 @@
 					"path": "address-edit/index",
 					"style": {
 						"navigationBarTitleText": "address-edit 组件"
+					}
+				},
+				{
+					"path": "invoice/index",
+					"style": {
+						"navigationBarTitleText": "Invoice 发票组件"
+					}
+				},
+				{
+					"path": "login/index",
+					"style": {
+						"navigationBarTitleText": "login"
 					}
 				}
 			]

@@ -1,0 +1,51 @@
+{
+  "name": "zx-login",
+  "version": "1.0.0",
+  "description": "一个功能完整的登录组件，支持账号密码登录和手机验证码登录两种方式，兼容 H5、小程序和 App 平台",
+  "main": "zx-login.vue",
+  "keywords": [
+    "vue",
+    "uniapp",
+    "login",
+    "component",
+    "mobile",
+    "h5",
+    "miniprogram",
+    "app"
+  ],
+  "author": "zxui",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zxui/zx-login"
+  },
+  "bugs": {
+    "url": "https://github.com/zxui/zx-login/issues"
+  },
+  "homepage": "https://github.com/zxui/zx-login#readme",
+  "files": [
+    "zx-login.vue",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "Android >= 4.4",
+    "iOS >= 9"
+  ],
+  "uniapp": {
+    "platforms": [
+      "h5",
+      "mp-weixin",
+      "mp-alipay",
+      "mp-baidu",
+      "mp-toutiao",
+      "mp-qq",
+      "app-plus"
+    ]
+  }
+}
