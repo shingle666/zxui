@@ -111,8 +111,9 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
+import { useStore } from 'vuex';
 
 const title = ref("我的");
 
@@ -159,15 +160,10 @@ const aboutMenus = ref([
   { icon: 'share', iconColor: '#1e90ff', title: '分享推荐', path: '/pages/my/share', version: '' }
 ]);
 
-// 底部导航数据
+// 使用 store 中的底部导航数据
+const store = useStore();
 const tabbarValue = ref(4);
-const tabbarList = [
-  { icon: 'home', title: '首页', name: 0, path: '/pages/index/index' },
-  { icon: 'server-man', title: 'AI', name: 1, path: '/pages/ai/ai' },
-  { icon: 'integral', title: '专题', name: 2, path: '/pages/topic/topic', dot: true },
-  { icon: 'grid', title: '模板', name: 3, path: '/pages/template/template' },
-  { icon: 'account', title: '我的', name: 4, path: '/pages/my/my' }
-];
+const tabbarList = computed(() => store.getters.tabbarList);
 
 onLoad(() => {
   uni.setNavigationBarTitle({ title: title.value });
@@ -291,7 +287,7 @@ function handleLogout() {
 
 // 底部导航切换
 function onTabbarChange(name) {
-  let path = tabbarList.find(item => item.name == name).path;
+  let path = tabbarList.value.find(item => item.name == name).path;
   uni.navigateTo({ url: path });
 }
 </script>

@@ -7,7 +7,15 @@ const store = createStore({
       // 在这里定义您的状态
       count: 0,
       user: null,
-      isLoggedIn: false
+      isLoggedIn: false,
+      // 底部导航数据
+      tabbarList: [
+        { icon: 'home', title: '首页', name: 0, path: '/pages/index/index' },
+        { icon: 'server-man', title: 'AI', name: 1, path: '/pages/ai/ai' },
+        { icon: 'integral', title: '专题', name: 2, path: '/pages/topic/topic', dot: true },
+        { icon: 'grid', title: '模板', name: 3, path: '/pages/template/template' },
+        { icon: 'account', title: '我的', name: 4, path: '/pages/my/my' }
+      ]
     }
   },
   mutations: {
@@ -49,6 +57,9 @@ const store = createStore({
     },
     isLoggedIn: state => {
       return state.isLoggedIn
+    },
+    tabbarList: state => {
+      return state.tabbarList
     }
   }
 })

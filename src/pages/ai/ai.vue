@@ -50,6 +50,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { onLoad, onPageScroll } from "@dcloudio/uni-app";
+import { useStore } from 'vuex';
 
 const title = ref("AI智能组件");
 const scrollTop = ref(0);
@@ -169,33 +170,9 @@ const datalist = ref([
   }
 ]);
 
-const tabbarList = ref([
-  {
-    text: "首页",
-    icon: "home",
-    path: "/pages/index/index"
-  },
-  {
-    text: "AI",
-    icon: "robot",
-    path: "/pages/ai/ai"
-  },
-  {
-    text: "模板",
-    icon: "template",
-    path: "/pages/template/template"
-  },
-  {
-    text: "专题",
-    icon: "topic",
-    path: "/pages/topic/topic"
-  },
-  {
-    text: "我的",
-    icon: "user",
-    path: "/pages/my/my"
-  }
-]);
+// 使用 store 中的底部导航数据
+const store = useStore();
+const tabbarList = computed(() => store.getters.tabbarList);
 
 // 搜索过滤
 const filteredList = computed(() => {
@@ -239,7 +216,7 @@ const handleClick = (path) => {
 const onTabbarChange = (index) => {
   const item = tabbarList.value[index];
   if (item.path !== '/pages/ai/ai') {
-    uni.switchTab({
+    uni.navigateTo({
       url: item.path
     });
   }

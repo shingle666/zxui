@@ -80,6 +80,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { onLoad, onPageScroll } from "@dcloudio/uni-app";
+import { useStore } from "vuex";
 
 const title = ref("UI模板");
 const scrollTop = ref(0);
@@ -287,14 +288,9 @@ const templateData = ref([
 ]);
 
 // 底部导航数据
+const store = useStore();
 const tabbarValue = ref(3);
-const tabbarList = [
-  { icon: 'home', title: '首页', name: 0, path: '/pages/index/index' },
-  { icon: 'server-man', title: 'AI', name: 1, path: '/pages/ai/ai' },
-  { icon: 'integral', title: '专题', name: 2, path: '/pages/topic/topic', dot: true },
-  { icon: 'grid', title: '模板', name: 3, path: '/pages/template/template' },
-  { icon: 'account', title: '我的', name: 4, path: '/pages/my/my' }
-];
+const tabbarList = computed(() => store.getters.tabbarList);
 
 // 监听页面滚动
 onPageScroll((e) => {
@@ -365,7 +361,7 @@ function handleTemplateClick(template) {
 
 // 处理底部导航切换
 function onTabbarChange(name) {
-  let path = tabbarList.find(item => item.name == name).path;
+  let path = tabbarList.value.find(item => item.name == name).path;
   uni.navigateTo({ url: path });
 }
 

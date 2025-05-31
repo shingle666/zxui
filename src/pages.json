@@ -874,9 +874,9 @@
 					}
 				},
 				{
-					"path": "watermark/test",
+					"path": "watermark/base",
 					"style": {
-						"navigationBarTitleText": "zx-watermark 测试页面"
+						"navigationBarTitleText": "zx-watermark 基础功能页面"
 					}
 				},
 				{
