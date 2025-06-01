@@ -189,6 +189,9 @@ const datalist = ref([
       { title: "Popconfirm 气泡确认框", path: "/pages3/popconfirm/index" },
       { title: "Popover 气泡卡片", path: "/pages3/popover/index" },
       { title: "Popup 弹出层", path: "/pages3/popup/index" },
+      { title: "Popup-dialog", path: "/pages3/popup/dialog" },
+      { title: "Popup-share", path: "/pages3/popup/share" },
+      { title: "Popup-message", path: "/pages3/popup/message" },
       { title: "Action-sheet 动作面板", path: "/pages2/action-sheet/index" },
       { title: "Overlay 遮罩", path: "/pages3/overlay/index" },
       { title: "Result 结果", path: "/pages3/result/index" },
@@ -285,7 +288,7 @@ const datalist = ref([
   {
     title: "其他组件",
     lists: [
-      { title: "Transition 过渡动画", path: "/pages2/transition/index" },
+      { title: "Transition 过渡动画", path: "/pages3/transition/index" },
       { title: "Status-bar 状态栏", path: "/pages2/status-bar/index" },
       { title: "Safe-bottom 安全区域", path: "/pages2/safe-bottom/index" },
       { title: "Copyright 版权", path: "/pages2/copyright/index" },

@@ -1,478 +1,399 @@
 <template>
-	<view class="zx-popup">
-		<zx-overlay
-			v-if="overlay"
-			:show="show"
-			@click="overlayClick"
-			:duration="overlayDuration"
-			:customStyle="overlayStyle"
-			:opacity="overlayOpacity"
-			:zIndex="zIndex - 1"
-		></zx-overlay>
-		<zx-transition :show="show" :customStyle="transitionStyle" :mode="position" :duration="duration" @afterEnter="afterEnter" @click="clickHandler">
-			<view 
-				class="zx-popup__content" 
-				:style="[contentStyle,border?{border: '1rpx solid #ececec'}:'']" 
-				@tap.stop="noop"
-				:role="role"
-				:aria-modal="true"
-				:aria-label="ariaLabel"
-			>
-				<zx-status-bar v-if="safeAreaInsetTop"></zx-status-bar>
-				<slot></slot>
-				<view
-					v-if="closeable"
-					@tap.stop="close"
-					class="zx-popup__content__close"
-					:class="['zx-popup__content__close--' + closeIconPos]"
-					hover-class="zx-popup__content__close--hover"
-					hover-stay-time="150"
-					role="button"
-					aria-label="关闭"
-				>
-					<zx-icon name="close" color="#909399" size="36rpx" :bold="true"></zx-icon>
-				</view>
-				<zx-safe-bottom v-if="safeAreaInsetBottom"></zx-safe-bottom>
-			</view>
-		</zx-transition>
-	</view>
+  <view v-if="showPopup" class="zx-popup" :class="[popupStyle, isDesktop ? 'fixforpc-z-index' : '']">
+    <view @touchstart="touchstart">
+      <!-- 遮罩层 -->
+      <zx-transition 
+        v-if="maskShow" 
+        :show="showTrans" 
+        mode-class="fade" 
+        :duration="duration"
+        @click="onMaskClick"
+      >
+        <view class="zx-popup__mask" :style="maskStyles"></view>
+      </zx-transition>
+      
+      <!-- 内容区域 -->
+      <zx-transition 
+        :show="showTrans" 
+        :mode-class="animationMode" 
+        :duration="duration"
+        @click="onContentClick"
+      >
+        <view class="zx-popup__wrapper" :style="contentStyles" :class="[popupStyle]" @click="clear">
+          <slot />
+        </view>
+      </zx-transition>
+    </view>
+    
+    <!-- H5 键盘事件处理 -->
+    <!-- #ifdef H5 -->
+    <view v-if="maskShow" @keyup.esc="onMaskClick" style="position: fixed; top: -9999px; left: -9999px;" tabindex="0" ref="keyHandler"></view>
+    <!-- #endif -->
+  </view>
 </template>
 
 <script setup>
+import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
+
 /**
- * popup 弹窗
- * @description 弹出层容器，用于展示弹窗、信息提示等内容，支持上、下、左、右和中部弹出
- * @tutorial https://zxui.org/components/popup
- * @property {Boolean}			show				是否展示弹窗 (默认 false )
- * @property {Boolean}			overlay				是否显示遮罩 （默认 true ）
- * @property {String}			mode				弹出方向（默认 'bottom' ）
- * @property {String | Number}	duration			动画时长，单位ms （默认 300 ）
- * @property {String | Number}	overlayDuration		遮罩层动画时长，单位ms （默认 350 ）
- * @property {Boolean}			closeable			是否显示关闭图标（默认 false ）
- * @property {Object | String}	overlayStyle		自定义遮罩的样式
- * @property {String | Number}	overlayOpacity		遮罩透明度，0-1之间（默认 0.5）
- * @property {Boolean}			closeOnClickOverlay	点击遮罩是否关闭弹窗 （默认  true ）
- * @property {String | Number}	zIndex				层级 （默认 10075 ）
- * @property {Boolean}			safeAreaInsetBottom	是否为iPhoneX留出底部安全距离 （默认 true ）
- * @property {Boolean}			safeAreaInsetTop	是否留出顶部安全距离（状态栏高度） （默认 false ）
- * @property {String}			closeIconPos		自定义关闭图标位置（默认 'top-right' ）
- * @property {String | Number}	round				圆角值（默认 0）
- * @property {Boolean}			zoom				当mode=center时 是否开启缩放（默认 true ）
- * @property {Object}			customStyle			组件的样式，对象形式
- * @property {Boolean}			closeOnEsc			是否支持ESC键关闭（默认 true ）
- * @property {Boolean}			lockScroll			是否锁定背景滚动（默认 true ）
- * @property {String}			role				ARIA角色属性（默认 'dialog' ）
- * @property {String}			ariaLabel			ARIA标签（默认 '弹窗' ）
- * @event {Function}            open                弹出层打开
- * @event {Function}            close               弹出层收起
- * @example <zx-popup><text>窗口内容</text></zx-popup>
+ * ZxPopup 弹出层组件
+ * @description 弹出层组件，支持多种弹出方式和动画效果
  */
-import { getCurrentInstance, ref, computed, onMounted, watch, onBeforeUnmount } from 'vue';
 
-const { proxy } = getCurrentInstance();
 const props = defineProps({
-	// 是否展示弹窗
-	show: {
-		type: Boolean,
-		default: false
-	},
-	// 是否显示遮罩
-	overlay: {
-		type: Boolean,
-		default: true
-	},
-	// 弹出的方向，可选值为 top bottom right left center
-	mode: {
-		type: String,
-		default: 'bottom'
-	},
-	// 动画时长，单位ms
-	duration: {
-		type: [String, Number],
-		default: 300
-	},
-	// 是否显示关闭图标
-	closeable: {
-		type: Boolean,
-		default: false
-	},
-	// 自定义遮罩的样式
-	overlayStyle: {
-		type: [Object, String],
-		default: () => {
-			return {};
-		}
-	},
-	// 点击遮罩是否关闭弹窗
-	closeOnClickOverlay: {
-		type: Boolean,
-		default: true
-	},
-	// 层级
-	zIndex: {
-		type: [String, Number],
-		default: 10075
-	},
-	// 是否为iPhoneX留出底部安全距离
-	safeAreaInsetBottom: {
-		type: Boolean,
-		default: true
-	},
-	// 是否留出顶部安全距离（状态栏高度）
-	safeAreaInsetTop: {
-		type: Boolean,
-		default: false
-	},
-	// 自定义关闭图标位置，top-left为左上角，top-right为右上角，bottom-left为左下角，bottom-right为右下角
-	closeIconPos: {
-		type: String,
-		default: 'top-right'
-	},
-	// 是否显示圆角
-	round: {
-		type: [Boolean, String, Number],
-		default: '5rpx'
-	},
-	// mode=center，也即中部弹出时，是否使用缩放模式
-	zoom: {
-		type: Boolean,
-		default: true
-	},
-	// 弹窗背景色，设置为transparent可去除白色背景
-	bgColor: {
-		type: String,
-		default: ''
-	},
-	// 遮罩的透明度，0-1之间
-	overlayOpacity: {
-		type: [String, Number],
-		default: 0.8
-	},
-	// 边框
-	border: {
-		type: Boolean,
-		default: false
-	},
-	customStyle: {
-		type: Object,
-		default: () => {
-			return {};
-		}
-	},
-	// 是否支持ESC键关闭
-	closeOnEsc: {
-		type: Boolean,
-		default: true
-	},
-	// 是否锁定背景滚动
-	lockScroll: {
-		type: Boolean,
-		default: true
-	},
-	// ARIA角色
-	role: {
-		type: String,
-		default: 'dialog'
-	},
-	// ARIA标签
-	ariaLabel: {
-		type: String,
-		default: '弹窗'
-	}
-});
+  // 是否显示弹窗
+  show: {
+    type: Boolean,
+    default: false
+  },
+  // 弹出方式
+  type: {
+    type: String,
+    default: 'center',
+    validator: (value) => ['top', 'center', 'bottom', 'left', 'right'].includes(value)
+  },
+  // 是否开启动画
+  animation: {
+    type: Boolean,
+    default: true
+  },
+  // 点击遮罩是否关闭
+  maskClick: {
+    type: Boolean,
+    default: true
+  },
+  // 主窗口背景色
+  backgroundColor: {
+    type: String,
+    default: 'transparent'
+  },
+  // 遮罩背景色
+  maskBackgroundColor: {
+    type: String,
+    default: 'rgba(0, 0, 0, 0.4)'
+  },
+  // 圆角设置
+  borderRadius: {
+    type: String,
+    default: '0'
+  },
+  // 是否适配底部安全区
+  safeArea: {
+    type: Boolean,
+    default: true
+  },
+  // z-index 层级
+  zIndex: {
+    type: Number,
+    default: 999
+  },
+  // 动画持续时间
+  duration: {
+    type: Number,
+    default: 50
+  },
+  // 是否显示遮罩
+  overlay: {
+    type: Boolean,
+    default: true
+  }
+})
 
-const overlayDuration = ref(0);
-let originalBodyOverflow = '';
+const emit = defineEmits(['update:show', 'change', 'maskClick', 'open', 'opened', 'close', 'closed'])
 
-// 监听ESC键
-const handleKeydown = (event) => {
-	if (event.key === 'Escape' && props.show && props.closeOnEsc) {
-		close();
-	}
-};
+// 响应式数据
+const showPopup = ref(false)
+const showTrans = ref(false)
+const popupWidth = ref(0)
+const popupHeight = ref(0)
+const safeAreaInsets = ref(0)
+const clearPropagation = ref(false)
+const keyHandler = ref(null)
 
+// 计算属性
+const isDesktop = computed(() => {
+  return popupWidth.value >= 500 && popupHeight.value >= 500
+})
+
+const popupStyle = computed(() => {
+  let style = props.type
+  if (props.type === 'top' && isDesktop.value) {
+    style = 'fixforpc-top'
+  }
+  return style
+})
+
+const animationMode = computed(() => {
+  const modeMap = {
+    top: 'slide-top',
+    bottom: 'slide-bottom', 
+    center: ['zoom-out', 'fade'],
+    left: 'slide-left',
+    right: 'slide-right'
+  }
+  return modeMap[props.type] || 'fade'
+})
+
+const maskShow = computed(() => {
+  return props.overlay
+})
+
+const maskStyles = computed(() => {
+  return {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: props.maskBackgroundColor,
+    zIndex: props.zIndex
+  }
+})
+
+const contentStyles = computed(() => {
+  const baseStyles = {
+    backgroundColor: props.backgroundColor === 'none' ? 'transparent' : props.backgroundColor,
+    borderRadius: props.borderRadius,
+    position: 'fixed',
+    zIndex: props.zIndex + 1
+  }
+  
+  // 根据类型设置位置样式
+  switch (props.type) {
+    case 'top':
+      return {
+        ...baseStyles,
+        left: 0,
+        right: 0,
+        top: 0
+      }
+    case 'bottom':
+      return {
+        ...baseStyles,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        paddingBottom: props.safeArea ? `${safeAreaInsets.value}px` : '0'
+      }
+    case 'left':
+      return {
+        ...baseStyles,
+        left: 0,
+        top: 0,
+        bottom: 0,
+        display: 'flex',
+        flexDirection: 'column'
+      }
+    case 'right':
+      return {
+        ...baseStyles,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        display: 'flex',
+        flexDirection: 'column'
+      }
+    case 'center':
+    default:
+      return {
+        ...baseStyles,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }
+  }
+})
+
+// 方法
+const getSystemInfo = () => {
+  try {
+    const {
+      windowWidth,
+      windowHeight,
+      windowTop,
+      safeArea,
+      screenHeight,
+      safeAreaInsets: sai
+    } = uni.getSystemInfoSync()
+    
+    popupWidth.value = windowWidth
+    popupHeight.value = windowHeight + (windowTop || 0)
+    
+    if (safeArea && props.safeArea) {
+      safeAreaInsets.value = sai ? sai.bottom : 0
+    } else {
+      safeAreaInsets.value = 0
+    }
+  } catch (e) {
+    console.warn('获取系统信息失败:', e)
+  }
+}
+
+const open = () => {
+  if (showPopup.value) return
+  
+  emit('open')
+  showPopup.value = true
+  
+  nextTick(() => {
+    showTrans.value = true
+    
+    // #ifdef H5
+    // 设置焦点以便监听键盘事件
+    if (keyHandler.value && typeof keyHandler.value.focus === 'function') {
+      try {
+        keyHandler.value.focus()
+      } catch (e) {
+        console.warn('设置焦点失败:', e)
+      }
+    }
+    // #endif
+    
+    emit('change', { show: true, type: props.type })
+    
+    // 动画完成后触发 opened 事件
+    setTimeout(() => {
+      emit('opened')
+    }, props.duration)
+  })
+}
+
+const close = () => {
+  if (!showPopup.value) return
+  
+  emit('close')
+  showTrans.value = false
+  emit('change', { show: false, type: props.type })
+  
+  setTimeout(() => {
+    showPopup.value = false
+    emit('closed')
+  }, props.duration)
+}
+
+// 监听器
+watch(() => props.show, (newVal) => {
+  if (newVal) {
+    open()
+  } else {
+    close()
+  }
+}, { immediate: true })
+
+// H5 下禁止底部滚动
+watch(showPopup, (show) => {
+  // #ifdef H5
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = show ? 'hidden' : 'visible'
+  }
+  // #endif
+})
+
+const onMaskClick = () => {
+  if (clearPropagation.value) {
+    clearPropagation.value = false
+    return
+  }
+  
+  emit('maskClick')
+  
+  if (props.maskClick) {
+    emit('update:show', false)
+    close()
+  }
+}
+
+const onContentClick = () => {
+  // 内容区域点击事件，可以用于阻止冒泡等
+}
+
+const clear = (e) => {
+  // #ifndef APP-NVUE
+  if (e && e.stopPropagation) {
+    e.stopPropagation()
+  }
+  // #endif
+  clearPropagation.value = true
+}
+
+const touchstart = () => {
+  clearPropagation.value = false
+}
+
+// 生命周期
 onMounted(() => {
-	overlayDuration.value = parseInt(props.duration) + 50;
-	
-	// 添加ESC键盘事件监听
-	// #ifdef H5
-	document.addEventListener('keydown', handleKeydown);
-	// #endif
-});
+  getSystemInfo()
+})
 
-onBeforeUnmount(() => {
-	// 移除ESC键盘事件监听
-	// #ifdef H5
-	document.removeEventListener('keydown', handleKeydown);
-	// #endif
-	
-	// 恢复滚动状态
-	if (props.lockScroll) {
-		enableScroll();
-	}
-});
+onUnmounted(() => {
+  // #ifdef H5
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = 'visible'
+  }
+  // #endif
+})
 
-const transitionStyle = computed(() => {
-	const style = {
-		zIndex: props.zIndex,
-		position: 'fixed',
-		display: 'flex'
-	};
-	style[props.mode] = 0;
-	if (props.mode === 'left') {
-		style.bottom = 0;
-		style.top = 0;
-		return style;
-	} else if (props.mode === 'right') {
-		style.bottom = 0;
-		style.top = 0;
-		return style;
-	} else if (props.mode === 'top') {
-		style.left = 0;
-		style.right = 0;
-		return style;
-	} else if (props.mode === 'bottom') {
-		style.left = 0;
-		style.right = 0;
-		return style;
-	} else if (props.mode === 'center') {
-		style.alignItems = 'center';
-		style['justify-content'] = 'center';
-		style.bottom = 0;
-		style.top = 0;
-		style.left = 0;
-		style.right = 0;
-		return style;
-	}
-});
-
-const contentStyle = computed(() => {
-	const style = {};
-	// 通过设备信息的safeAreaInsets值来判断是否需要预留顶部状态栏和底部安全局的位置
-	if (props.mode !== 'center') {
-		style.flex = 1;
-	}
-	// 背景色，一般用于设置为transparent，去除默认的白色背景
-	if (props.bgColor) {
-		style.backgroundColor = props.bgColor;
-	}
-	if (props.round) {
-		const value = props.round;
-		if (props.mode === 'top') {
-			style.borderBottomLeftRadius = value;
-			style.borderBottomRightRadius = value;
-		} else if (props.mode === 'bottom') {
-			style.borderTopLeftRadius = value;
-			style.borderTopRightRadius = value;
-		} else if (props.mode === 'center') {
-			style.borderRadius = value;
-		}
-	}
-	return style;
-});
-
-const position = computed(() => {
-	if (props.mode === 'center') {
-		return props.zoom ? 'fade-zoom' : 'fade';
-	}
-	if (props.mode === 'left') {
-		return 'slide-left';
-	}
-	if (props.mode === 'right') {
-		return 'slide-right';
-	}
-	if (props.mode === 'bottom') {
-		return 'slide-up';
-	}
-	if (props.mode === 'top') {
-		return 'slide-down';
-	}
-});
-
-// 禁用滚动
-const disableScroll = () => {
-	// #ifdef H5
-	if (document && document.body) {
-		originalBodyOverflow = document.body.style.overflow;
-		document.body.style.overflow = 'hidden';
-	}
-	// #endif
-};
-
-// 启用滚动
-const enableScroll = () => {
-	// #ifdef H5
-	if (document && document.body) {
-		document.body.style.overflow = originalBodyOverflow;
-	}
-	// #endif
-};
-
-watch(() => props.show, (newValue) => {
-	if (newValue) {
-		// 弹窗显示时
-		if (props.lockScroll) {
-			disableScroll();
-		}
-		
-		// #ifdef MP-WEIXIN
-		const children = proxy.$children;
-		retryComputedComponentRect(children);
-		// #endif
-	} else {
-		// 弹窗关闭时
-		if (props.lockScroll) {
-			enableScroll();
-		}
-	}
-});
-
-// 点击遮罩
-const overlayClick = () => {
-	if (props.closeOnClickOverlay) {
-		proxy.$emit('close');
-	}
-};
-
-const close = (e) => {
-	proxy.$emit('close');
-};
-
-const afterEnter = () => {
-	proxy.$emit('open');
-};
-
-const clickHandler = () => {
-	// 由于中部弹出时，其zx-transition占据了整个页面相当于遮罩，此时需要发出遮罩点击事件，是否无法通过点击遮罩关闭弹窗
-	if (props.mode === 'center') {
-		overlayClick();
-	}
-	proxy.$emit('click');
-};
-
-const noop = () => {};
-
-// #ifdef MP-WEIXIN
-const retryComputedComponentRect = (children) => {
-	// 组件内部需要计算节点的组件
-	const names = [
-		'zx-calendar-month',
-		'zx-album',
-		'zx-collapse-item',
-		'zx-dropdown',
-		'zx-index-item',
-		'zx-index-list',
-		'zx-line-progress',
-		'zx-list-item',
-		'zx-rate',
-		'zx-read-more',
-		'zx-row',
-		'zx-row-notice',
-		'zx-scroll-list',
-		'zx-skeleton',
-		'zx-slider',
-		'zx-steps-item',
-		'zx-sticky',
-		'zx-subsection',
-		'zx-swipe-action-item',
-		'zx-tabbar',
-		'zx-tabs',
-		'zx-tooltip'
-	];
-	// 历遍所有的子组件节点
-	for (let i = 0; i < children.length; i++) {
-		const child = children[i];
-		// 拿到子组件的子组件
-		const grandChild = child.$children;
-		// 判断如果在需要重新初始化的组件数组中名中，并且存在init方法的话，则执行
-		if (names.includes(child.$options.name) && typeof child?.init === 'function') {
-			// 需要进行一定的延时，因为初始化页面需要时间
-			proxy.$util.sleep(50).then(() => {
-				child.init();
-			});
-		}
-		// 如果子组件还有孙组件，进行递归历遍
-		if (grandChild.length) {
-			retryComputedComponentRect(grandChild);
-		}
-	}
-};
-// #endif
+// 暴露方法给父组件
+defineExpose({
+  open,
+  close
+})
 </script>
 
 <style lang="scss" scoped>
 .zx-popup {
-	flex: 1;
-	&__content {
-		background-color: #ffffff;
-		position: relative;
-		box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
-		max-height: 100vh;
-		overflow: auto;
+  position: fixed;
+  /* #ifndef APP-NVUE */
+  z-index: 99;
+  /* #endif */
+  
+  &.top,
+  &.left,
+  &.right {
+    /* #ifdef H5 */
+    top: var(--window-top);
+    /* #endif */
+    /* #ifndef H5 */
+    top: 0;
+    /* #endif */
+  }
+  
+  .zx-popup__mask {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .zx-popup__wrapper {
+    /* #ifndef APP-NVUE */
+    display: block;
+    /* #endif */
+    position: relative;
+    
+    &.left,
+    &.right {
+      /* #ifdef H5 */
+      padding-top: var(--window-top);
+      /* #endif */
+      /* #ifndef H5 */
+      padding-top: 0;
+      /* #endif */
+      flex: 1;
+    }
+  }
+}
 
-		&--round-top {
-			border-top-left-radius: 0;
-			border-top-right-radius: 0;
-			border-bottom-left-radius: 10px;
-			border-bottom-right-radius: 10px;
-		}
+.fixforpc-z-index {
+  /* #ifndef APP-NVUE */
+  z-index: 999;
+  /* #endif */
+}
 
-		&--round-left {
-			border-top-left-radius: 0;
-			border-top-right-radius: 10px;
-			border-bottom-left-radius: 0;
-			border-bottom-right-radius: 10px;
-		}
-
-		&--round-right {
-			border-top-left-radius: 10px;
-			border-top-right-radius: 0;
-			border-bottom-left-radius: 10px;
-			border-bottom-right-radius: 0;
-		}
-
-		&--round-bottom {
-			border-top-left-radius: 10px;
-			border-top-right-radius: 10px;
-			border-bottom-left-radius: 0;
-			border-bottom-right-radius: 0;
-		}
-
-		&--round-center {
-			border-top-left-radius: 10px;
-			border-top-right-radius: 10px;
-			border-bottom-left-radius: 10px;
-			border-bottom-right-radius: 10px;
-		}
-
-		&__close {
-			position: absolute;
-			transition: opacity 0.2s;
-
-			&--hover {
-				opacity: 0.4;
-			}
-		}
-
-		&__close--top-left {
-			top: 15px;
-			left: 15px;
-		}
-
-		&__close--top-right {
-			top: 15px;
-			right: 15px;
-		}
-
-		&__close--bottom-left {
-			bottom: 15px;
-			left: 15px;
-		}
-
-		&__close--bottom-right {
-			right: 15px;
-			bottom: 15px;
-		}
-	}
+.fixforpc-top {
+  top: 0;
 }
 </style>

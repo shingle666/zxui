@@ -551,12 +551,6 @@
 					}
 				},
 				{
-					"path": "transition/index",
-					"style": {
-						"navigationBarTitleText": "Transition 过渡组件"
-					}
-				},
-				{
 					"path": "mention/index",
 					"style": {
 						"navigationBarTitleText": "zx-mention 提及组件"
@@ -849,6 +843,12 @@
 						"navigationBarTitleText": "Image 图片组件"
 					}
 				},
+				{
+					"path": "transition/index",
+					"style": {
+						"navigationBarTitleText": "Transition 过渡动画组件"
+					}
+				},
 
 				{
 					"path": "product-feed/index",
@@ -989,7 +989,24 @@
 						"navigationBarTitleText": "Popup 弹窗组件"
 					}
 				},
-		
+				{
+					"path": "popup/share",
+					"style": {
+						"navigationBarTitleText": "popup-share件"
+					}
+				},
+				{
+					"path": "popup/message",
+					"style": {
+						"navigationBarTitleText": "Popup Message 消息提示"
+					}
+				},
+				{
+					"path": "popup/dialog",
+					"style": {
+						"navigationBarTitleText": "Popup Dialog 弹窗对话框"
+					}
+				},
 				{
 					"path": "autocomplete/index",
 					"style": {
