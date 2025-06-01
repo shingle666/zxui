@@ -2,14 +2,14 @@
 	<view class="zx-toast">
 		<zx-overlay :show="isShow=true" :custom-style="overlayStyle">
 			<view class="zx-toast__content" :style="[contentStyle]"
-				:class="['zx-type-' + type, type === 'loading' || loading ? 'zx-toast__content--loading' : '']">
-				<zx-loading-icon v-if="type === 'loading'" mode="circle" color="rgb(255, 255, 255)"
+				:class="['zx-type-' + currentConfig.type, currentConfig.type === 'loading' || currentConfig.loading ? 'zx-toast__content--loading' : '']">
+				<zx-loading-icon v-if="currentConfig.type === 'loading'" mode="circle" color="rgb(255, 255, 255)"
 					inactiveColor="rgb(120, 120, 120)" size="25"></zx-loading-icon>
-				<zx-icon v-if="type !== 'loading'" :name="icon" size="34rpx" :color="type"
+				<zx-icon v-if="currentConfig.type !== 'loading'" :name="currentConfig.icon" size="34rpx" :color="currentConfig.type"
 					:customStyle="iconStyle"></zx-icon>
-				<zx-gap v-if="type === 'loading' || loading" height="12" bgColor="transparent"></zx-gap>
-				<text class="zx-toast__content__text" :class="['zx-toast__content__text--' + type]"
-					style="max-width: 400rpx;">{{ message }}</text>
+				<zx-gap v-if="currentConfig.type === 'loading' || currentConfig.loading" height="12" bgColor="transparent"></zx-gap>
+				<text class="zx-toast__content__text" :class="['zx-toast__content__text--' + currentConfig.type]"
+					style="max-width: 400rpx;">{{ currentConfig.message }}</text>
 			</view>
 		</zx-overlay>
 	</view>
@@ -117,14 +117,48 @@
 
 	const isShow = ref(props.show)
 	const timer = ref(null) // 定时器
+	
+	// 内部配置状态，用于动态修改 toast 配置
+	const internalConfig = ref({
+		type: props.type,
+		message: props.message,
+		icon: props.icon,
+		duration: props.duration,
+		position: props.position,
+		overlay: props.overlay,
+		zIndex: props.zIndex,
+		customStyle: props.customStyle,
+		url: props.url,
+		back: props.back,
+		params: props.params,
+		loading: props.loading,
+		isTab: props.isTab
+	})
+	
+	// 当前有效的配置（优先使用内部配置）
+	const currentConfig = computed(() => ({
+		type: internalConfig.value.type,
+		message: internalConfig.value.message,
+		icon: internalConfig.value.icon,
+		duration: internalConfig.value.duration,
+		position: internalConfig.value.position,
+		overlay: internalConfig.value.overlay,
+		zIndex: internalConfig.value.zIndex,
+		customStyle: internalConfig.value.customStyle,
+		url: internalConfig.value.url,
+		back: internalConfig.value.back,
+		params: internalConfig.value.params,
+		loading: internalConfig.value.loading,
+		isTab: internalConfig.value.isTab
+	}))
 
 	const overlayStyle = computed(() => {
 		return {
 			justifyContent: 'center',
 			alignItems: 'center',
 			display: 'flex',
-			backgroundColor: props.overlay ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0)',
-			zIndex: props.zIndex,
+			backgroundColor: currentConfig.value.overlay ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0)',
+			zIndex: currentConfig.value.zIndex,
 		};
 	})
 	const iconStyle = computed(() => {
@@ -145,15 +179,15 @@
 		try {
 			windowHeight = uni.getWindowInfo().windowHeight;
 		} catch (e) {}
-		if (props.position === 'top') {
+		if (currentConfig.value.position === 'top') {
 			value = -windowHeight * 0.25;
-		} else if (props.position === 'bottom') {
+		} else if (currentConfig.value.position === 'bottom') {
 			value = windowHeight * 0.25;
 		}
 		return {
 			transform: `translateY(${value}px)`,
-			...props.customStyle,
-			zIndex: props.zIndex,
+			...currentConfig.value.customStyle,
+			zIndex: currentConfig.value.zIndex,
 		};
 	});
 
@@ -173,14 +207,15 @@
 	// 显示toast组件，由父组件通过this.$refs.xxx.show(options)形式调用
 	function show(options = {}) {
 		clearTimer();
+		// 更新内部配置
 		if (typeof options === 'object') {
-			Object.assign(props, options);
+			Object.assign(internalConfig.value, options);
 		}
 		isShow.value = true;
-		if (props.duration > 0) {
+		if (currentConfig.value.duration > 0) {
 			timer.value = setTimeout(() => {
 				hide();
-			}, Number(props.duration));
+			}, Number(currentConfig.value.duration));
 		}
 	}
 	// 隐藏toast组件，由父组件通过this.$refs.xxx.hide()形式调用
@@ -188,9 +223,9 @@
 		clearTimer();
 		isShow.value = false;
 		// 跳转逻辑
-		if (props.url) {
-			uni.navigateTo({ url: props.url, ...props.params });
-		} else if (props.back) {
+		if (currentConfig.value.url) {
+			uni.navigateTo({ url: currentConfig.value.url, ...currentConfig.value.params });
+		} else if (currentConfig.value.back) {
 			uni.navigateBack();
 		}
 	}

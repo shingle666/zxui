@@ -192,6 +192,7 @@ const datalist = ref([
       { title: "Popup-dialog", path: "/pages3/popup/dialog" },
       { title: "Popup-share", path: "/pages3/popup/share" },
       { title: "Popup-message", path: "/pages3/popup/message" },
+      { title: "Elevator 电梯楼层", path: "/pages3/elevator/index" },
       { title: "Action-sheet 动作面板", path: "/pages2/action-sheet/index" },
       { title: "Overlay 遮罩", path: "/pages3/overlay/index" },
       { title: "Result 结果", path: "/pages3/result/index" },

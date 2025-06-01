@@ -222,28 +222,6 @@ const transformStyles = computed(() => {
   return 'transform:' + transform.value + ';' + 'opacity:' + opacity.value + ';' + stylesObject.value
 })
 
-// 监听 show 属性变化
-watch(() => props.show, (newVal) => {
-  if (newVal) {
-    open()
-  } else {
-    if (isShow.value) {
-      close()
-    }
-  }
-}, { immediate: true })
-
-// 生命周期
-onMounted(() => {
-  config.value = {
-    duration: props.duration,
-    timingFunction: 'ease',
-    transformOrigin: '50% 50%',
-    delay: 0
-  }
-  durationTime.value = props.duration
-})
-
 // 方法定义
 const init = (obj = {}) => {
   if (obj.duration) {
@@ -283,46 +261,28 @@ const run = (fn) => {
   animation.value.run(fn)
 }
 
-const open = () => {
-  clearTimeout(timer.value)
-  transform.value = ''
-  isShow.value = true
-  const { opacity: opacityVal, transform: transformVal } = styleInit(false)
-  if (typeof opacityVal !== 'undefined') {
-    opacity.value = opacityVal
+const animationType = (type) => {
+  return {
+    fade: type ? 0 : 1,
+    'slide-top': `translateY(${type ? '0' : '-100%'})`,
+    'slide-right': `translateX(${type ? '0' : '100%'})`,
+    'slide-bottom': `translateY(${type ? '0' : '100%'})`,
+    'slide-left': `translateX(${type ? '0' : '-100%'})`,
+    'zoom-in': `scaleX(${type ? 1 : 0.8}) scaleY(${type ? 1 : 0.8})`,
+    'zoom-out': `scaleX(${type ? 1 : 1.2}) scaleY(${type ? 1 : 1.2})`
   }
-  transform.value = transformVal
-  
-  nextTick(() => {
-    timer.value = setTimeout(() => {
-      animation.value = createAnimation(config.value, getComponentInstance())
-      tranfromInit(false).step()
-      animation.value.run(() => {
-        transform.value = ''
-        opacity.value = opacityVal || 1
-      })
-      emit('change', {
-        detail: isShow.value
-      })
-    }, 20)
-  })
 }
 
-const close = () => {
-  if (!animation.value) return
-  tranfromInit(true)
-    .step()
-    .run(() => {
-      isShow.value = false
-      animationData.value = null
-      animation.value = null
-      const { opacity: opacityVal, transform: transformVal } = styleInit(false)
-      opacity.value = opacityVal || 1
-      transform.value = transformVal
-      emit('change', {
-        detail: isShow.value
-      })
-    })
+const animationMode = () => {
+  return {
+    fade: 'opacity',
+    'slide-top': 'translateY',
+    'slide-right': 'translateX',
+    'slide-bottom': 'translateY',
+    'slide-left': 'translateX',
+    'zoom-in': 'scale',
+    'zoom-out': 'scale'
+  }
 }
 
 const styleInit = (type) => {
@@ -378,29 +338,71 @@ const tranfromInit = (type) => {
   return animation.value
 }
 
-const animationType = (type) => {
-  return {
-    fade: type ? 0 : 1,
-    'slide-top': `translateY(${type ? '0' : '-100%'})`,
-    'slide-right': `translateX(${type ? '0' : '100%'})`,
-    'slide-bottom': `translateY(${type ? '0' : '100%'})`,
-    'slide-left': `translateX(${type ? '0' : '-100%'})`,
-    'zoom-in': `scaleX(${type ? 1 : 0.8}) scaleY(${type ? 1 : 0.8})`,
-    'zoom-out': `scaleX(${type ? 1 : 1.2}) scaleY(${type ? 1 : 1.2})`
+const open = () => {
+  clearTimeout(timer.value)
+  transform.value = ''
+  isShow.value = true
+  const { opacity: opacityVal, transform: transformVal } = styleInit(false)
+  if (typeof opacityVal !== 'undefined') {
+    opacity.value = opacityVal
   }
+  transform.value = transformVal
+  
+  nextTick(() => {
+    timer.value = setTimeout(() => {
+      animation.value = createAnimation(config.value, getComponentInstance())
+      tranfromInit(false).step()
+      animation.value.run(() => {
+        transform.value = ''
+        opacity.value = opacityVal || 1
+      })
+      emit('change', {
+        detail: isShow.value
+      })
+    }, 20)
+  })
 }
 
-const animationMode = () => {
-  return {
-    fade: 'opacity',
-    'slide-top': 'translateY',
-    'slide-right': 'translateX',
-    'slide-bottom': 'translateY',
-    'slide-left': 'translateX',
-    'zoom-in': 'scale',
-    'zoom-out': 'scale'
-  }
+const close = () => {
+  if (!animation.value) return
+  tranfromInit(true)
+    .step()
+    .run(() => {
+      isShow.value = false
+      animationData.value = null
+      animation.value = null
+      const { opacity: opacityVal, transform: transformVal } = styleInit(false)
+      opacity.value = opacityVal || 1
+      transform.value = transformVal
+      emit('change', {
+        detail: isShow.value
+      })
+    })
 }
+
+// 监听 show 属性变化
+watch(() => props.show, (newVal) => {
+  if (newVal) {
+    open()
+  } else {
+    if (isShow.value) {
+      close()
+    }
+  }
+}, { immediate: true })
+
+// 生命周期
+onMounted(() => {
+  config.value = {
+    duration: props.duration,
+    timingFunction: 'ease',
+    transformOrigin: '50% 50%',
+    delay: 0
+  }
+  durationTime.value = props.duration
+})
+
+
 
 const toLine = (name) => {
   return name.replace(/([A-Z])/g, '-$1').toLowerCase()

@@ -802,6 +802,12 @@
 					}
 				},
 				{
+					"path": "elevator/index",
+					"style": {
+						"navigationBarTitleText": "Elevator 电梯楼层组件"
+					}
+				},
+				{
 					"path": "empty/index",
 					"style": {
 						"navigationBarTitleText": "empty 空状态组件"
