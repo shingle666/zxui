@@ -1,0 +1,26 @@
+{
+  "name": "zx-invoice-title-list",
+  "version": "1.0.0",
+  "description": "发票抬头列表组件",
+  "main": "zx-invoice-title-list.vue",
+  "keywords": [
+    "uniapp",
+    "vue",
+    "invoice",
+    "title",
+    "list",
+    "component",
+    "发票抬头",
+    "列表组件"
+  ],
+  "author": "zxui",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zxui/zxui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zxui/zxui/issues"
+  },
+  "homepage": "https://zxui.org"
+}

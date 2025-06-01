@@ -1,0 +1,13 @@
+{
+  "name": "zx-coupon2",
+  "version": "1.0.0",
+  "description": "一个功能丰富、样式美观的优惠券组件，支持多种样式、状态和交互效果。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

@@ -814,6 +814,18 @@
 					}
 				},
 				{
+					"path": "gap/index",
+					"style": {
+						"navigationBarTitleText": "Gap 间隔槽组件"
+					}
+				},
+				{
+					"path": "hiteggs/index",
+					"style": {
+						"navigationBarTitleText": "Hiteggs 砸金蛋组件"
+					}
+				},
+				{
 					"path": "backtop/index",
 					"style": {
 						"navigationBarTitleText": "backtop 回到顶部组件"
@@ -838,6 +850,12 @@
 					}
 				},
 
+				{
+					"path": "product-feed/index",
+					"style": {
+						"navigationBarTitleText": "zx-product-feed 商品流组件"
+					}
+				},
 				{
 					"path": "card/index",
 					"style": {
@@ -1076,6 +1094,12 @@
 						"navigationBarTitleText": "优惠券列表"
 					}
 				},
+				{
+					"path": "coupon2/index",
+					"style": {
+						"navigationBarTitleText": "zx-coupon2 优惠券组件"
+					}
+				},
 		
 				{
 					"path": "date-picker/index",
@@ -1174,10 +1198,57 @@
 						"navigationBarTitleText": "sidebar 组件"
 					}
 				},
-				{
-					"path": "tree-select/index",
+				{"path": "tree-select/index",
 					"style": {
 						"navigationBarTitleText": "tree-select 组件"
+					}
+				},
+				{
+					"path": "giftrain/index",
+					"style": {
+						"navigationBarTitleText": "giftrain 红包雨组件"
+					}
+				},
+				{
+					"path": "dollmachine/index",
+					"style": {
+						"navigationBarTitleText": "dollmachine 抓娃娃机组件"
+					}
+				},
+				{
+					"path": "guessgift/index",
+					"style": {
+						"navigationBarTitleText": "guessgift 你藏我猜组件"
+					}
+				},
+				{
+					"path": "shakedice/index",
+					"style": {
+						"navigationBarTitleText": "shakedice 摇骰子组件"
+					}
+				},
+				{
+					"path": "luckshake/index",
+					"style": {
+						"navigationBarTitleText": "luckshake 摇一摇抽奖组件"
+					}
+				},
+				{
+					"path": "scratchcard/index",
+					"style": {
+						"navigationBarTitleText": "scratchcard 刮刮卡组件"
+					}
+				},
+				{
+					"path": "lottoroll/index",
+					"style": {
+						"navigationBarTitleText": "lottoroll 老虎机抽奖组件"
+					}
+				},
+				{
+					"path": "giftbox/index",
+					"style": {
+						"navigationBarTitleText": "giftbox 神秘礼盒组件"
 					}
 				},
 				{
@@ -1199,6 +1270,12 @@
 					}
 				},
 				{
+					"path": "address/index",
+					"style": {
+						"navigationBarTitleText": "address 地址选择组件"
+					}
+				},
+				{
 					"path": "invoice/index",
 					"style": {
 						"navigationBarTitleText": "Invoice 发票组件"
@@ -1208,6 +1285,126 @@
 					"path": "login/index",
 					"style": {
 						"navigationBarTitleText": "login"
+					}
+				},
+				{
+					"path": "horizontal-scrolling/index",
+					"style": {
+						"navigationBarTitleText": "horizontal-scrolling"
+					}
+				},
+				{
+					"path": "goods-card2/index",
+					"style": {
+						"navigationBarTitleText": "商品卡片2"
+					}
+				},
+				{
+					"path": "cart-bar/index",
+					"style": {
+						"navigationBarTitleText": "cart-bar"
+					}
+				},
+				{
+					"path": "cart-bar2/index",
+					"style": {
+						"navigationBarTitleText": "cart-bar2"
+					}
+				},
+				{
+					"path": "goods-category/index",
+					"style": {
+						"navigationBarTitleText": "goods-category 分类组件"
+					}
+				},
+				{
+					"path": "goods-comment/index",
+					"style": {
+						"navigationBarTitleText": "goods-comment"
+					}
+				},
+				{
+					"path": "ecard/index",
+					"style": {
+						"navigationBarTitleText": "ecard"
+					}
+				},
+				{
+					"path": "goods-filter/index",
+					"style": {
+						"navigationBarTitleText": "goods-filter"
+					}
+				},
+				{
+					"path": "quick-enter/index",
+					"style": {
+						"navigationBarTitleText": "quick-enter 快捷入口"
+					}
+				},
+				{
+					"path": "search-history/index",
+					"style": {
+						"navigationBarTitleText": "SearchHistory 搜索历史"
+					}
+				},
+				{
+					"path": "settle-bar/index",
+					"style": {
+						"navigationBarTitleText": "settle-bar"
+					}
+				},
+				{
+					"path": "goods/sku2",
+					"style": {
+						"navigationBarTitleText": "goods-sku2"
+					}
+				},
+				{
+					"path": "receive-invoice-list/index",
+					"style": {
+						"navigationBarTitleText": "ReceiveInvoiceList 收货发票列表组件"
+					}
+				},
+				{
+					"path": "receive-invoice-edit/index",
+					"style": {
+						"navigationBarTitleText": "ReceiveInvoiceEdit 收货发票编辑组件"
+					}
+				},
+				{
+					"path": "invoice-title-list/index",
+					"style": {
+						"navigationBarTitleText": "invoice-title-list"
+					}
+				},
+				{
+					"path": "invoice-title-edit/index",
+					"style": {
+						"navigationBarTitleText": "发票抬头编辑"
+					}
+				},
+				{
+					"path": "delivery/index",
+					"style": {
+						"navigationBarTitleText": "delivery"
+					}
+				},
+				{
+					"path": "order-cancel-panel/index",
+					"style": {
+						"navigationBarTitleText": "order-cancel-panel"
+					}
+				},
+				{
+					"path": "order-remark/index",
+					"style": {
+						"navigationBarTitleText": "order-remark"
+					}
+				},
+				{
+					"path": "marquee/index",
+					"style": {
+						"navigationBarTitleText": "marquee 跑马灯抽奖"
 					}
 				}
 			]
