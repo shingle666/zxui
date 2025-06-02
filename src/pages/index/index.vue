@@ -46,7 +46,6 @@ import { ref, computed } from "vue";
 import { onLoad, onPageScroll } from "@dcloudio/uni-app";
 import { useStore } from 'vuex';
 
-const title = ref("功能组件");
 const scrollTop = ref(0);
 const datalist = ref([
   {
@@ -144,6 +143,8 @@ const datalist = ref([
       { title: "Dropdown 下拉菜单", path: "/pages3/dropdown/index" },
       { title: "Breadcrumb 面包屑", path: "/pages3/breadcrumb/index" },
       { title: "Backtop 回到顶部", path: "/pages3/backtop/index" },
+      { title: "Fixed-nav 悬浮导航", path: "/pages3/fixed-nav/index" },
+      { title: "Indicator 指示器", path: "/pages3/indicator/index" },
       { title: "Page-header 页头", path: "/pages3/page-header/index" },
       { title: "Anchor 锚点", path: "/pages3/anchor/index" },
       { title: "address-list", path: "/pages3/address-list/index" },
@@ -159,7 +160,9 @@ const datalist = ref([
       { title: "cart-bar2", path: "/pages3/cart-bar2/index" },
       { title: "goods-category 分类组件", path: "/pages3/goods-category/index" },
       { title: "goods-comment", path: "/pages3/goods-comment/index" },
+      { title: "goods-menu", path: "/pages3/goods-menu/index" },
       { title: "Product-feed 商品流", path: "/pages3/product-feed/index" },
+      { title: "side-navbar", path: "/pages3/side-navbar/index" },
       { title: "receive-invoice-list 收货发票列表", path: "/pages3/receive-invoice-list/index" },
       { title: "ecard", path: "/pages3/ecard/index" },
       { title: "receive-invoice-edit", path: "/pages3/receive-invoice-edit/index" },
@@ -221,6 +224,7 @@ const datalist = ref([
     lists: [
       { title: "Image 图片", path: "/pages3/image/index" },
       { title: "Avatar 头像", path: "/pages3/avatar/index" },
+        { title: "Avatar-cropper 头像裁剪", path: "/pages3/avatar-cropper/index" },
       { title: "Swiper 轮播", path: "/pages3/swiper/index" },
       { title: "Gallery 图片预览", path: "/pages2/gallery/index" },
       { title: "Video 视频", path: "/pages3/video/index" },
@@ -265,6 +269,7 @@ const datalist = ref([
       { title: "Goods-nav 商品导航", path: "/pages2/goods-nav/index" },
       { title: "Goods-card 商品卡片", path: "/pages3/goods/card" },
       { title: "Goods-sku 商品规格", path: "/pages3/goods/sku" },
+      { title: "Goods-price 商品价格", path: "/pages3/goods-price/index" },
       { title: "SquareNine 九宫格抽奖", path: "/pages3/square-nine/index" },
       { title: "dollmachine", path: "/pages3/dollmachine/index" },
       { title: "guessgift 你藏我猜", path: "/pages3/guessgift/index" },
@@ -289,6 +294,7 @@ const datalist = ref([
   {
     title: "其他组件",
     lists: [
+      { title: "Animate 动画组件", path: "/pages3/animate/index" },
       { title: "Transition 过渡动画", path: "/pages3/transition/index" },
       { title: "Status-bar 状态栏", path: "/pages2/status-bar/index" },
       { title: "Safe-bottom 安全区域", path: "/pages2/safe-bottom/index" },
@@ -313,6 +319,10 @@ const datalist = ref([
      { title: "search-history", path: "/pages3/search-history/index" },
      { title: "settle-bar", path: "/pages3/settle-bar/index" },
      { title: "goods-sku2", path: "/pages3/goods/sku2" },
+     { title: "trend-arrow", path: "/pages3/trend-arrow/index" },
+     { title: "ellipsis", path: "/pages3/ellipsis/index" },
+     { title: "hover-button", path: "/pages3/hover-button/index" },
+     { title: "infinite-loading", path: "/pages3/infinite-loading/index" },
     ]
   }
 ]);

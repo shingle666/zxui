@@ -859,6 +859,20 @@
 			"root": "pages3",
 			"pages": [
 				{
+				"path": "animate/index",
+				"style": {
+					"navigationBarTitleText": "zx-animate 动画组件",
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "goods-price/index",
+				"style": {
+					"navigationBarTitleText": "zx-goods-price 商品价格",
+					"navigationStyle": "custom"
+				}
+			},
+				{
 					"path": "textarea/index",
 					"style": {
 						"navigationBarTitleText": "zx-textarea 文本域",
@@ -939,6 +953,20 @@
 					"path": "password-input/index",
 					"style": {
 						"navigationBarTitleText": "zx-password-input 密码输入",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "ellipsis/index",
+					"style": {
+						"navigationBarTitleText": "zx-ellipsis 文本省略",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "hover-button/index",
+					"style": {
+						"navigationBarTitleText": "zx-hover-button 悬浮按钮",
 						"navigationStyle": "custom"
 					}
 				},
@@ -1037,6 +1065,20 @@
 					"path": "backtop/index",
 					"style": {
 						"navigationBarTitleText": "zx-backtop 回到顶部",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "fixed-nav/index",
+					"style": {
+						"navigationBarTitleText": "zx-fixed-nav 悬浮导航",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "indicator/index",
+					"style": {
+						"navigationBarTitleText": "zx-indicator 指示器",
 						"navigationStyle": "custom"
 					}
 				},
@@ -1447,6 +1489,13 @@
 					}
 				},
 				{
+					"path": "avatar-cropper/index",
+					"style": {
+						"navigationBarTitleText": "zx-avatar-cropper 头像裁剪",
+						"navigationStyle": "custom"
+					}
+				},
+				{
 					"path": "swiper/index",
 					"style": {
 						"navigationBarTitleText": "zx-swiper 轮播",
@@ -1590,6 +1639,34 @@
 					"path": "goods/sku2",
 					"style": {
 						"navigationBarTitleText": "zx-goods-sku2 商品规格2",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "goods-menu/index",
+					"style": {
+						"navigationBarTitleText": "zx-goods-menu 商品菜单",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "side-navbar/index",
+					"style": {
+						"navigationBarTitleText": "zx-side-navbar",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "trend-arrow/index",
+					"style": {
+						"navigationBarTitleText": "zx-trend-arrow",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "infinite-loading/index",
+					"style": {
+						"navigationBarTitleText": "zx-infinite-loading",
 						"navigationStyle": "custom"
 					}
 				}

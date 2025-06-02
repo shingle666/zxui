@@ -1,16 +1,15 @@
 <template>
-	<!-- #ifdef APP-PLUS || MP-WEIXIN || H5 -->
+	
 	<view class="zx-drag__wrap" :list="list" :style="{ height: getHeight + 'rpx' }" :basedata="baseData">
-		<!-- #endif -->
-		<!-- #ifndef APP-PLUS || MP-WEIXIN || H5 -->
+		
+		
 		<view class="zx-drag__wrap" :style="{ height: getHeight + 'rpx' }">
-			<!-- #endif -->
+			
 			<!-- #ifdef MP-WEIXIN -->
 			<view class="zx-drag__item" v-for="(item, index) in list" :key="item.id" :data-index="index"
-				:style="{ width:100 / columns + '%', height:  baseData.itemHeight + 'px' }"
-				@longpress="longPress" :data-basedata="baseData" :data-edit="isEdit"
-				@touchstart="touchstart" :catch:touchmove="dragging?touchmove:''"
-				:catch:touchend="dragging?touchend:''">
+				:style="{ width: 100 / columns + '%', height: baseData.itemHeight + 'px' }" @longpress="longPress"
+				:data-basedata="baseData" :data-edit="isEdit" @touchstart="touchstart"
+				:catch:touchmove="dragging ? touchmove : ''" :catch:touchend="dragging ? touchend : ''">
 				<slot :entity="item.data" :fixed="item.fixed" :index="index" :height="itemHeight" :isEdit="isEdit">
 				</slot>
 			</view>
@@ -19,8 +18,8 @@
 			<!-- #ifdef APP-PLUS || H5 -->
 			<view class="zx-drag__item" v-for="(item, index) in list" :key="item.id" :data-index="index"
 				:style="{ width: 100 / columns + '%', height: itemHeight + 'rpx' }" @longpress="longPress"
-				:data-basedata="baseData" :data-edit="isEdit" @touchstart="touchstart"
-				@touchmove="touchmove" @touchend="touchend">
+				:data-basedata="baseData" :data-edit="isEdit" @touchstart="touchstart" @touchmove="touchmove"
+				@touchend="touchend">
 				<slot :entity="item.data" :fixed="item.fixed" :index="index" :height="itemHeight" :isEdit="isEdit">
 				</slot>
 			</view>
@@ -28,9 +27,8 @@
 
 			<!-- #ifndef APP-PLUS || MP-WEIXIN || H5-->
 			<view class="zx-drag__item"
-				:class="{'zx-drag__current':current===index,'zx-drag__transition':current!==index && !isInit,'zx-drag__fixed':item.fixed,'zx-drag__hidden':isInit}"
-				v-for="(item, index) in list" :key="item.id" :data-index="index"
-				:style="itemStyle(index, item)"
+				:class="{ 'zx-drag__current': current === index, 'zx-drag__transition': current !== index && !isInit, 'zx-drag__fixed': item.fixed, 'zx-drag__hidden': isInit }"
+				v-for="(item, index) in list" :key="item.id" :data-index="index" :style="itemStyle(index, item)"
 				@longpress="longPress" @touchstart="touchstart" @touchmove.stop.prevent="touchmove"
 				@touchend="touchend">
 				<slot :entity="item.data" :fixed="item.fixed" :index="index" :height="itemHeight" :isEdit="isEdit">
@@ -38,6 +36,7 @@
 			</view>
 			<!-- #endif -->
 		</view>
+	</view>
 </template>
 <script setup>
 import { ref, reactive, computed, watch, onMounted, nextTick } from 'vue'
@@ -116,8 +115,10 @@ function unique(n = 6) {
 	return 'tui_' + new Date().getTime() + rnd
 }
 function initDom(callback) {
-	let { windowWidth, windowHeight} = uni.getWindowInfo()
+	let { windowWidth, windowHeight } = uni.getWindowInfo()
 	platform.value = uni.getDeviceInfo().platform
+	// 计算rpx到px的转换比例
+	const remScale = windowWidth / 750
 	let bd = {}
 	bd.windowHeight = windowHeight
 	bd.realTopSize = (props.topSize * remScale) / 2
@@ -177,8 +178,8 @@ function init() {
 			initDom(() => {
 				// #ifndef APP-PLUS || MP-WEIXIN || H5
 				_list2.map((item, index) => {
-					item.transX = `${index%columns * baseData.itemWidth}px`
-					item.transY = `${Math.floor(index/columns) * baseData.itemHeight}px`
+					item.transX = `${index % columns * baseData.itemWidth}px`
+					item.transY = `${Math.floor(index / columns) * baseData.itemHeight}px`
 				})
 				list.value = _list2
 				listWxs.value = _list2
@@ -329,34 +330,34 @@ onMounted(() => {
 </script>
 
 <style scoped>
-	.zx-drag__wrap {
-		position: relative;
-	}
+.zx-drag__wrap {
+	position: relative;
+}
 
-	.zx-drag__wrap .zx-drag__item {
-		position: absolute;
-		z-index: 2;
-		top: 0;
-		left: 0;
-		/* #ifndef APP-PLUS || MP-WEIXIN || H5 */
-		transition: transform 0s;
-		/* #endif */
-	}
+.zx-drag__wrap .zx-drag__item {
+	position: absolute;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	/* #ifndef APP-PLUS || MP-WEIXIN || H5 */
+	transition: transform 0s;
+	/* #endif */
+}
 
-	.zx-drag__transition {
-		transition: transform 0.35s !important;
-	}
+.zx-drag__transition {
+	transition: transform 0.35s !important;
+}
 
-	.zx-drag__wrap .zx-drag__current {
-		z-index: 10 !important;
-	}
+.zx-drag__wrap .zx-drag__current {
+	z-index: 10 !important;
+}
 
-	.zx-drag__wrap .zx-drag__fixed {
-		z-index: 1 !important;
-	}
+.zx-drag__wrap .zx-drag__fixed {
+	z-index: 1 !important;
+}
 
-	.zx-drag__hidden {
-		opacity: 0;
-		visibility: hidden;
-	}
+.zx-drag__hidden {
+	opacity: 0;
+	visibility: hidden;
+}
 </style>

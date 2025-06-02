@@ -1,0 +1,16 @@
+{
+  "name": "zx-infinite-loading",
+  "version": "1.0.0",
+  "description": "无限滚动加载组件",
+  "main": "zx-infinite-loading.vue",
+  "keywords": [
+    "uniapp",
+    "vue",
+    "infinite",
+    "loading",
+    "scroll",
+    "组件"
+  ],
+  "author": "zxui",
+  "license": "MIT"
+}
