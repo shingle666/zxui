@@ -6,7 +6,7 @@
 			class="zx-sticky-placeholder" 
 			:style="placeholderStyles"
 		></view>
-		
+
 		<!-- 吸顶内容 -->
 		<view 
 			class="zx-sticky" 
