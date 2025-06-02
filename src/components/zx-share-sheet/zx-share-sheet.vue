@@ -1,7 +1,9 @@
 <template>
-  <view v-if="visible" class="zx-share-sheet" :style="{ zIndex: zIndex }">
-    <view class="zx-share-sheet__overlay" :style="overlayStyle" @touchmove.prevent @click="onClickOverlay"></view>
-    <view class="zx-share-sheet__panel" :class="{ 'zx-share-sheet__panel--round': round }" :style="{ animationDuration: duration + 's' }">
+  <zx-popup :show="show" type="bottom" :z-index="zIndex" :duration="duration * 1000" :mask-click="closeOnClickOverlay"
+    :overlay="overlay" :border-radius="round ? '20rpx 20rpx 0 0' : '0'" background-color="#fff"
+    @update:show="$emit('update:show', $event)" @open="$emit('open')" @opened="$emit('opened')" @close="$emit('close')"
+    @closed="$emit('closed')" @mask-click="onClickOverlay">
+    <view class="zx-share-sheet">
       <view v-if="title || description" class="zx-share-sheet__header">
         <view v-if="title" class="zx-share-sheet__title">{{ title }}</view>
         <view v-if="description" class="zx-share-sheet__description">{{ description }}</view>
@@ -9,36 +11,31 @@
       <view class="zx-share-sheet__options-wrapper">
         <scroll-view :scroll-y="true" class="zx-share-sheet__options-scroll">
           <template v-if="Array.isArray(options[0])">
-            <view v-for="(row, rowIndex) in options" :key="rowIndex" class="zx-share-sheet__options" :class="{ 'zx-share-sheet__options--border': rowIndex !== 0 }">
-              <view
-                v-for="(option, index) in row"
-                :key="index"
-                class="zx-share-sheet__option"
-                @click="onSelect(option, index, rowIndex)"
-              >
-                <image v-if="isImageUrl(option.icon)" :src="option.icon" class="zx-share-sheet__image-icon" />
-                <view v-else class="zx-share-sheet__icon-wrapper" :style="iconWrapperStyle(option.icon)">
-                  <zx-icon :name="option.icon" :custom-prefix="option.customPrefix" :color="iconColor(option.icon)" size="60rpx"></zx-icon>
+            <view v-for="(row, rowIndex) in options" :key="rowIndex" class="zx-share-sheet__options"
+              :class="{ 'zx-share-sheet__options--border': rowIndex !== 0 }">
+              <view v-for="(option, index) in row" :key="index" class="zx-share-sheet__option"
+                @click="onSelect(option, index, rowIndex)">
+                <view class="zx-share-sheet__icon-wrapper" :style="iconWrapperStyle(option.icon)">
+                  <zx-icon :name="option.icon" :custom-prefix="option.customPrefix" :color="iconColor(option.icon)"
+                    size="60rpx"></zx-icon>
                 </view>
                 <view v-if="option.name" class="zx-share-sheet__name">{{ option.name }}</view>
-                <view v-if="option.description" class="zx-share-sheet__option-description">{{ option.description }}</view>
+                <view v-if="option.description" class="zx-share-sheet__option-description">{{ option.description }}
+                </view>
               </view>
             </view>
           </template>
           <template v-else>
             <view class="zx-share-sheet__options">
-              <view
-                v-for="(option, index) in options"
-                :key="index"
-                class="zx-share-sheet__option"
-                @click="onSelect(option, index)"
-              >
-                <image v-if="isImageUrl(option.icon)" :src="option.icon" class="zx-share-sheet__image-icon" />
-                <view v-else class="zx-share-sheet__icon-wrapper" :style="iconWrapperStyle(option.icon)">
-                  <zx-icon :name="option.icon" :custom-prefix="option.customPrefix" :color="iconColor(option.icon)" size="60rpx"></zx-icon>
+              <view v-for="(option, index) in options" :key="index" class="zx-share-sheet__option"
+                @click="onSelect(option, index)">
+                <view class="zx-share-sheet__icon-wrapper" :style="iconWrapperStyle(option.icon)">
+                  <zx-icon :name="option.icon" :custom-prefix="option.customPrefix" :color="iconColor(option.icon)"
+                    size="60rpx"></zx-icon>
                 </view>
                 <view v-if="option.name" class="zx-share-sheet__name">{{ option.name }}</view>
-                <view v-if="option.description" class="zx-share-sheet__option-description">{{ option.description }}</view>
+                <view v-if="option.description" class="zx-share-sheet__option-description">{{ option.description }}
+                </view>
               </view>
             </view>
           </template>
@@ -48,11 +45,11 @@
         {{ cancelText }}
       </view>
     </view>
-  </view>
+  </zx-popup>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
   show: {
@@ -99,59 +96,26 @@ const props = defineProps({
     type: Boolean,
     default: true
   },
-  // safeAreaInsetBottom: { // uniapp handles this by default in most cases
-  //   type: Boolean,
-  //   default: true
-  // },
   beforeClose: {
     type: Function,
     default: null
+  },
+  customPrefix: {
+    type: String,
+    default: "zx-icon",
   }
 });
 
 const emit = defineEmits(['update:show', 'select', 'cancel', 'open', 'opened', 'close', 'closed']);
 
-const visible = ref(props.show);
-
-watch(() => props.show, (val) => {
-  if (val) {
-    open();
-  } else {
-    close();
-  }
-});
-
-const open = () => {
-  if (visible.value) return;
-  visible.value = true;
-  emit('open');
-  // Simulate opened event after animation
-  setTimeout(() => {
-    emit('opened');
-  }, props.duration * 1000);
-};
-
-const close = async () => {
-  if (!visible.value) return;
+const onClickOverlay = async () => {
   if (props.beforeClose) {
-    const result = await props.beforeClose('close');
+    const result = await props.beforeClose('overlay');
     if (result === false) {
       return;
     }
   }
-  visible.value = false;
-  emit('update:show', false);
-  emit('close');
-  // Simulate closed event after animation
-  setTimeout(() => {
-    emit('closed');
-  }, props.duration * 1000);
-};
-
-const onClickOverlay = () => {
-  if (props.closeOnClickOverlay) {
-    close();
-  }
+  // zx-popup 会自动处理关闭逻辑
 };
 
 const onCancel = async () => {
@@ -162,7 +126,7 @@ const onCancel = async () => {
     }
   }
   emit('cancel');
-  close();
+  emit('update:show', false);
 };
 
 const onSelect = (option, index, rowIndex) => {
@@ -208,41 +172,6 @@ const iconWrapperStyle = (iconName) => {
 
 <style lang="scss" scoped>
 .zx-share-sheet {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-
-  &__overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    // backdrop-filter: blur(2px); // Optional: for frosted glass effect, check compatibility
-  }
-
-  &__panel {
-    background-color: #fff;
-    // animation: zx-slide-up 0.3s ease-out;
-    // For animation, consider using uni-app's transition component or CSS animations
-    // that are triggered by adding/removing a class when `visible` changes.
-    // Example using a simple slide-up, you'll need to define the keyframes
-    transform: translateY(100%);
-    animation-name: zx-slide-up;
-    animation-timing-function: ease-out;
-    animation-fill-mode: forwards; // Keep the state of the last keyframe
-
-    &--round {
-      border-top-left-radius: 20rpx;
-      border-top-right-radius: 20rpx;
-    }
-  }
 
   &__header {
     padding: 24rpx 32rpx;
@@ -287,6 +216,7 @@ const iconWrapperStyle = (iconName) => {
 
     &--border {
       position: relative;
+
       &::before {
         content: ' ';
         position: absolute;
@@ -338,11 +268,12 @@ const iconWrapperStyle = (iconName) => {
     background-color: #f7f8fa; // $van-gray-2
 
     // Specific background colors for certain icons
-    &.zx-icon--qq, // This class won't be directly on wrapper anymore, but logic is in script
+    &.zx-icon--qq,
+    // This class won't be directly on wrapper anymore, but logic is in script
     &.zx-icon--weibo,
     &.zx-icon--wechat,
     &.zx-icon--wechat-moments {
-       // These specific background colors will be applied based on icon name via :style or a computed class if preferred
+      // These specific background colors will be applied based on icon name via :style or a computed class if preferred
     }
   }
 
@@ -354,7 +285,7 @@ const iconWrapperStyle = (iconName) => {
 
   // Example for direct background styling (can be moved to a computed style for cleanliness)
   .zx-share-sheet__icon-wrapper[style*="--custom-bg-color"] {
-      background-color: var(--custom-bg-color);
+    background-color: var(--custom-bg-color);
   }
 
   // Styling for zx-icon component if needed, though it should be self-contained
@@ -399,15 +330,6 @@ const iconWrapperStyle = (iconName) => {
     &:active {
       background-color: #f2f3f5; // $van-active-color
     }
-  }
-}
-
-@keyframes zx-slide-up {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
   }
 }
 </style>

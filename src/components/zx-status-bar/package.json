@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-status-bar",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "状态栏组件",
   "main": "index.js",
   "scripts": {

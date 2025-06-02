@@ -1,5 +1,7 @@
 <template>
-  <view class="icon-list-container">
+  <view>
+    <zx-navbar title="Icon 图标"></zx-navbar>
+    <view class="icon-list-container">
     <view v-for="(icons, category) in categorizedIcons" :key="category" class="icon-category">
       <view class="category-title">{{ category }}</view>
       <view class="icon-grid">
@@ -9,6 +11,7 @@
         </view>
       </view>
     </view>
+  </view>
   </view>
 </template>
 

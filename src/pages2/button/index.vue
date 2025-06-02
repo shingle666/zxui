@@ -346,7 +346,7 @@ const onContact = (e) => {
 
 <style lang="scss">
 .container {
-  background-color: #f1f1f1;
+  background-color: #f5f5f5;
   padding: 20rpx;
 }
 

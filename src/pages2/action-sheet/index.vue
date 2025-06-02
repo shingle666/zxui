@@ -1,15 +1,13 @@
 <template>
-  <view class="container">
-    <view class="title">
-      <text>动作面板示例</text>
-    </view>
+  <view>
+    <zx-navbar title="动作面板"></zx-navbar>
     
+    <view class="container">
     <!-- 基础用法 -->
-    <view class="section">
-      <view class="section-title">基础用法</view>
-      <view class="button" @tap="openBasic">
-        <text class="button-text">打开基础动作面板</text>
-      </view>
+    <zx-section title="基础用法" padding type="line">
+      <zx-button @tap="openBasic">
+        打开基础动作面板
+      </zx-button>
       <zx-action-sheet 
         v-model:show="showBasic" 
         :items="basicItems"
@@ -17,14 +15,13 @@
         @change="handleChange"
         @cancel="handleCancel"
       />
-    </view>
+    </zx-section>
     
     <!-- 暗色主题 -->
-    <view class="section">
-      <view class="section-title">暗色主题</view>
-      <view class="button" @tap="openDark">
-        <text class="button-text">打开暗色主题动作面板</text>
-      </view>
+    <zx-section title="暗色主题" padding type="line">
+      <zx-button @tap="openDark">
+        打开暗色主题动作面板
+      </zx-button>
       <zx-action-sheet 
         v-model:show="showDark" 
         :items="darkItems"
@@ -32,54 +29,50 @@
         theme="dark"
         @change="handleChange"
       />
-    </view>
+    </zx-section>
     
     <!-- 带图标和徽标 -->
-    <view class="section">
-      <view class="section-title">带图标和徽标</view>
-      <view class="button" @tap="openWithIcons">
-        <text class="button-text">打开带图标的动作面板</text>
-      </view>
+    <zx-section title="带图标和徽标" padding type="line">
+      <zx-button @tap="openWithIcons">
+        打开带图标的动作面板
+      </zx-button>
       <zx-action-sheet 
         v-model:show="showWithIcons" 
         :items="iconItems"
         @change="handleChange"
       />
-    </view>
+    </zx-section>
     
     <!-- 禁用项 -->
-    <view class="section">
-      <view class="section-title">禁用项</view>
-      <view class="button" @tap="openWithDisabled">
-        <text class="button-text">打开带禁用项的动作面板</text>
-      </view>
+    <zx-section title="禁用项" padding type="line">
+      <zx-button @tap="openWithDisabled">
+        打开带禁用项的动作面板
+      </zx-button>
       <zx-action-sheet 
         v-model:show="showWithDisabled" 
         :items="disabledItems"
         @change="handleChange"
       />
-    </view>
+    </zx-section>
     
     <!-- 不自动关闭 -->
-    <view class="section">
-      <view class="section-title">点击项不自动关闭</view>
-      <view class="button" @tap="openNoAutoClose">
-        <text class="button-text">打开不自动关闭的动作面板</text>
-      </view>
+    <zx-section title="点击项不自动关闭" padding type="line">
+      <zx-button @tap="openNoAutoClose">
+        打开不自动关闭的动作面板
+      </zx-button>
       <zx-action-sheet 
         v-model:show="showNoAutoClose" 
         :items="basicItems"
         :close-on-item-click="false"
         @change="handleNoAutoCloseChange"
       />
-    </view>
+    </zx-section>
     
     <!-- 自定义样式 -->
-    <view class="section">
-      <view class="section-title">自定义样式</view>
-      <view class="button" @tap="openCustomStyle">
-        <text class="button-text">打开自定义样式的动作面板</text>
-      </view>
+    <zx-section title="自定义样式" padding type="line">
+      <zx-button @tap="openCustomStyle">
+        打开自定义样式的动作面板
+      </zx-button>
       <zx-action-sheet 
         v-model:show="showCustomStyle" 
         :items="customItems"
@@ -88,14 +81,13 @@
         :item-font-size="30"
         @change="handleChange"
       />
-    </view>
+    </zx-section>
     
     <!-- 使用插槽 -->
-    <view class="section">
-      <view class="section-title">使用插槽</view>
-      <view class="button" @tap="openWithSlots">
-        <text class="button-text">打开使用插槽的动作面板</text>
-      </view>
+    <zx-section title="使用插槽" padding type="line">
+      <zx-button @tap="openWithSlots">
+        打开使用插槽的动作面板
+      </zx-button>
       <zx-action-sheet 
         v-model:show="showWithSlots" 
         :items="basicItems"
@@ -112,7 +104,8 @@
           </view>
         </template>
       </zx-action-sheet>
-    </view>
+    </zx-section>
+  </view>
   </view>
 </template>
 
@@ -306,4 +299,4 @@ const handleNoAutoCloseChange = (item) => {
 .icon-star::before {
   content: "⭐";
 }
-</style> 
+</style>

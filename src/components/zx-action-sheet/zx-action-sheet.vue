@@ -5,18 +5,20 @@
       'zx-actionsheet-radius': radius,
       [`zx-actionsheet-theme-${theme}`]: true,
     }" :style="[customStyle]">
+      <!-- 提示文字 -->
       <view v-if="tips" class="zx-actionsheet-tips" :style="{ fontSize: size + 'rpx', color: color }">
         <slot name="tips">{{ tips }}</slot>
       </view>
       <view :class="[isCancel ? 'zx-operate-box' : '']">
+        <!-- 菜单项 -->
         <block v-for="(item, index) in items" :key="index">
           <view class="zx-actionsheet-btn zx-actionsheet-divider" :class="{
             'zx-btn-last': !isCancel && index == items.length - 1,
             'zx-btn-disabled': item.disabled,
           }" hover-class="zx-actionsheet-hover" :hover-stay-time="150" :data-index="index" :style="{
-              color: item.disabled ? disabledColor : item.color || '#2B2B2B',
-              fontSize: item.fontSize || itemFontSize + 'rpx',
-            }" @tap.stop="handleClickItem">
+            color: item.disabled ? disabledColor : item.color || '#2B2B2B',
+            fontSize: item.fontSize || itemFontSize + 'rpx',
+          }" @tap.stop="handleClickItem">
             <view class="zx-actionsheet-btn-content">
               <zx-icon v-if="item.icon" :name="item.icon" class="zx-actionsheet-icon"></zx-icon>
               <text class="zx-actionsheet-text">{{ item.text }}</text>
@@ -84,12 +86,7 @@ const props = defineProps({
   items: {
     type: Array,
     default: () => {
-      return [
-        {
-          text: "确定",
-          color: "#2B2B2B",
-        },
-      ];
+      return [];
     },
   },
   // 提示文字
@@ -167,7 +164,7 @@ const props = defineProps({
   duration: {
     type: Number,
     default: 250,
-  },
+  }
 });
 
 const isShow = ref(false);
