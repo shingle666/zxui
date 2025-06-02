@@ -1,20 +1,14 @@
 <template>
-  <view class="zx-section">
+  <view class="zx-section" :style="{ borderRadius: borderRadius }">
     <view class="zx-section-header" @click="handleClick">
       <view class="zx-section-header__decoration" v-if="type" :class="type" />
       <slot v-else name="decoration"></slot>
 
       <view class="zx-section-header__content">
-        <text 
-          :style="{'font-size': titleFontSize, 'color': titleColor}" 
-          class="zx-section__content-title" 
-          :class="{'distraction': !subTitle}"
-        >{{ title }}</text>
-        <text 
-          v-if="subTitle" 
-          :style="{'font-size': subTitleFontSize, 'color': subTitleColor}" 
-          class="zx-section-header__content-sub"
-        >{{ subTitle }}</text>
+        <text :style="{ 'font-size': titleFontSize, 'color': titleColor }" class="zx-section__content-title"
+          :class="{ 'distraction': !subTitle }">{{ title }}</text>
+        <text v-if="subTitle" :style="{ 'font-size': subTitleFontSize, 'color': subTitleColor }"
+          class="zx-section-header__content-sub">{{ subTitle }}</text>
       </view>
 
       <view class="zx-section-header__slot-right">
@@ -22,7 +16,7 @@
       </view>
     </view>
 
-    <view class="zx-section-content" :style="{ padding: padding ? (typeof padding === 'string' ? padding : '10px') : '' }">
+    <view class="zx-section-content" :style="{ padding: contentPadding }">
       <slot />
     </view>
   </view>
@@ -41,56 +35,64 @@ import { computed } from 'vue';
  * @property {String} subTitle - 副标题
  * @property {String} subTitleFontSize - 副标题字体大小
  * @property {String} subTitleColor - 副标题字体颜色
- * @property {Boolean|String} padding - 默认插槽容器的padding值，传入类型为Boolean时，设置为10px或0
+ * @property {String} contentPadding - 默认插槽容器的padding值
+ * @property {String} borderRadius - 圆角值
+ * @example
+ * <zx-section title="标题">
+ *   <view>内容</view>
+ * </zx-section>
  */
 
-// 定义组件名称
-defineOptions({
-  name: 'ZxSection'
-});
-
 const props = defineProps({
+  // 标题装饰类型，可选值：line（竖线）、circle（圆形）、square（方形）
   type: {
     type: String,
     default: ''
   },
+  // 主标题
   title: {
     type: String,
     required: true,
     default: ''
   },
+  // 主标题字体大小
   titleFontSize: {
     type: String,
-    default: '14px'
+    default: '36rpx'
   },
+  // 主标题字体颜色
   titleColor: {
     type: String,
     default: '#333'
   },
+  // 副标题
   subTitle: {
     type: String,
     default: ''
   },
+  // 副标题字体大小
   subTitleFontSize: {
     type: String,
-    default: '12px'
+    default: '30rpx'
   },
+  // 副标题字体颜色
   subTitleColor: {
     type: String,
     default: '#999'
   },
-  padding: {
-    type: [Boolean, String],
-    default: false
+  // 插槽容器的padding值
+  contentPadding: {
+    type: String,
+    default: '30rpx'
+  },
+  // 圆角值
+  borderRadius: {
+    type: String,
+    default: '10rpx'
   }
 });
 
 const emit = defineEmits(['click']);
-
-// 监听标题变化，用于统计
-if (props.title && uni.report) {
-  uni.report('title', props.title);
-}
 
 // 点击事件处理
 const handleClick = () => {
@@ -98,12 +100,13 @@ const handleClick = () => {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 $zx-primary: #2979ff !default;
 
 .zx-section {
   background-color: #fff;
-  
+  margin-bottom: 20rpx;
+
   .zx-section-header {
     position: relative;
     /* #ifndef APP-NVUE */
@@ -111,28 +114,29 @@ $zx-primary: #2979ff !default;
     /* #endif */
     flex-direction: row;
     align-items: center;
-    padding: 12px 10px;
+    padding: 25rpx 20rpx;
     font-weight: normal;
+    border-bottom: 1rpx solid #ececec;
 
     &__decoration {
-      margin-right: 6px;
+      margin-right: 10rpx;
       background-color: $zx-primary;
-      
+
       &.line {
-        width: 4px;
-        height: 12px;
-        border-radius: 10px;
+        width: 8rpx;
+        height: 36rpx;
+        border-radius: 10rpx;
       }
 
       &.circle {
-        width: 8px;
-        height: 8px;
-        border-radius: 50px;
+        width: 16rpx;
+        height: 18rpx;
+        border-radius: 50rpx;
       }
 
       &.square {
-        width: 8px;
-        height: 8px;
+        width: 16rpx;
+        height: 16rpx;
       }
     }
 
@@ -151,16 +155,16 @@ $zx-primary: #2979ff !default;
     }
 
     &__content-sub {
-      margin-top: 2px;
+      margin-top: 5rpx;
     }
 
     &__slot-right {
-      font-size: 14px;
+      font-size: 28rpx;
     }
   }
 
   .zx-section-content {
-    font-size: 14px;
+    font-size: 28rpx;
   }
 }
 </style>

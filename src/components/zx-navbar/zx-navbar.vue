@@ -1,69 +1,40 @@
 <template>
-	<view class="zx-navbar" :class="[themeClass]">
+	<view class="zx-navbar" :class="[themeClass]" :style="{borderBottom:border?'1rpx solid '+borderColor:''}">
 		<!-- 固定在顶部时的占位 -->
-		<view 
-			v-if="fixed && placeholder" 
-			class="zx-navbar__placeholder" 
-			:style="{ height: barHeight + 'px', backgroundColor: bgColor }"
-		></view>
-		
-		<view 
-			:class="[
-				fixed && 'zx-navbar--fixed', 
-				transparent && 'zx-navbar--transparent',
-				shadow && 'zx-navbar--shadow'
-			]"
-			:style="{ zIndex: zIndex }"
-		>
-			<zx-status-bar 
-				v-if="safeAreaInsetTop" 
-				:backgroundColor="transparent ? 'transparent' : bgColor"
-			></zx-status-bar>
-			
-			<view 
-				class="zx-navbar__content" 
-				:class="[
-					border && 'zx-border-bottom',
-					immersive && 'zx-navbar__content--immersive'
-				]" 
-				:style="navbarStyle"
-			>
+		<view v-if="fixed && placeholder" class="zx-navbar__placeholder"
+			:style="{ height: barHeight + 'px', backgroundColor: bgColor }"></view>
+
+		<view :class="[
+			fixed && 'zx-navbar--fixed',
+			transparent && 'zx-navbar--transparent',
+			shadow && 'zx-navbar--shadow'
+		]" :style="{ zIndex: zIndex }">
+			<zx-status-bar v-if="safeAreaInsetTop"
+				:backgroundColor="transparent ? 'transparent' : bgColor"></zx-status-bar>
+
+			<view class="zx-navbar__content" :class="[
+				border && 'zx-border-bottom',
+				immersive && 'zx-navbar__content--immersive'
+			]" :style="navbarStyle">
 				<!-- 左侧区域 -->
-				<view 
-					v-if="showLeft"
-					class="zx-navbar__content__left" 
+				<view v-if="showLeft" class="zx-navbar__content__left"
 					:class="leftDisabled && 'zx-navbar__content__left--disabled'"
-					hover-class="zx-navbar__content__left--hover" 
-					:hover-start-time="hoverTime" 
-					@tap="handleLeftClick"
-					:aria-label="leftAriaLabel"
-					role="button"
-				>
+					hover-class="zx-navbar__content__left--hover" :hover-start-time="hoverTime" @tap="handleLeftClick"
+					:aria-label="leftAriaLabel" role="button">
 					<slot name="left">
-						<zx-icon 
-							v-if="leftIcon" 
-							:name="leftIcon" 
-							:size="leftIconSize" 
-							:color="leftIconColor"
-							:class="leftIconClass"
-						></zx-icon>
-						<text 
-							v-if="leftText" 
-							:style="{ color: leftIconColor }" 
-							class="zx-navbar__content__left__text"
-						>{{ leftText }}</text>
+						<zx-icon v-if="leftIcon" :name="leftIcon" :size="leftIconSize" :color="leftIconColor"
+							:class="leftIconClass"></zx-icon>
+						<text v-if="leftText" :style="{ color: leftIconColor }"
+							class="zx-navbar__content__left__text">{{ leftText }}</text>
 					</slot>
 				</view>
 
 				<!-- 中央标题区域 -->
 				<view class="zx-navbar__content__center" :style="centerStyle">
 					<slot name="center">
-						<text 
-							v-if="title"
-							class="zx-line-1 zx-navbar__content__title" 
-							:style="[{ width: titleWidth }, titleStyle]"
-							:aria-label="`页面标题：${title}`"
-						>{{ title }}</text>
+						<text v-if="title" class="zx-line-1 zx-navbar__content__title"
+							:style="[{ width: titleWidth }, titleStyle]" :aria-label="`页面标题：${title}`">{{ title
+							}}</text>
 						<view v-if="subtitle" class="zx-navbar__content__subtitle">
 							<text :style="subtitleStyle">{{ subtitle }}</text>
 						</view>
@@ -71,41 +42,24 @@
 				</view>
 
 				<!-- 右侧区域 -->
-				<view 
-					v-if="showRight"
-					class="zx-navbar__content__right" 
+				<view v-if="showRight" class="zx-navbar__content__right"
 					:class="rightDisabled && 'zx-navbar__content__right--disabled'"
-					hover-class="zx-navbar__content__right--hover"
-					:hover-start-time="hoverTime"
-					@tap="handleRightClick"
-					:aria-label="rightAriaLabel"
-					role="button"
-				>
+					hover-class="zx-navbar__content__right--hover" :hover-start-time="hoverTime" @tap="handleRightClick"
+					:aria-label="rightAriaLabel" role="button">
 					<slot name="right">
-						<zx-icon 
-							v-if="rightIcon" 
-							:name="rightIcon" 
-							:size="rightIconSize" 
-							:color="rightIconColor"
-							:class="rightIconClass"
-						></zx-icon>
-						<text 
-							v-if="rightText" 
-							class="zx-navbar__content__right__text"
-							:style="{ color: rightIconColor }"
-						>{{ rightText }}</text>
+						<zx-icon v-if="rightIcon" :name="rightIcon" :size="rightIconSize" :color="rightIconColor"
+							:class="rightIconClass"></zx-icon>
+						<text v-if="rightText" class="zx-navbar__content__right__text"
+							:style="{ color: rightIconColor }">{{ rightText }}</text>
 					</slot>
 				</view>
 
 				<!-- 加载状态 -->
 				<view v-if="loading" class="zx-navbar__loading">
-					<zx-loading-icon mode="circle" :size="16"></zx-loading-icon>
+					<zx-loading></zx-loading>
 				</view>
 			</view>
 		</view>
-		
-		<!-- 底部边框线 -->
-		<zx-line v-if="border" :color="borderColor"></zx-line>
 	</view>
 </template>
 
@@ -170,7 +124,7 @@ const props = defineProps({
 	// 是否显示下边框
 	border: {
 		type: Boolean,
-		default: false
+		default: true
 	},
 	// 边框颜色
 	borderColor: {
@@ -246,7 +200,7 @@ const props = defineProps({
 	// 导航栏高度
 	height: {
 		type: [String, Number],
-		default: '44px'
+		default: '50px'
 	},
 	// 左侧返回图标的大小
 	leftIconSize: {
@@ -326,12 +280,12 @@ const navbarStyle = computed(() => {
 		height: typeof props.height === 'number' ? `${props.height}px` : props.height,
 		backgroundColor: props.transparent ? 'transparent' : props.bgColor
 	};
-	
+
 	if (props.immersive) {
 		style.background = 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.2))';
 		style.backdropFilter = 'blur(10px)';
 	}
-	
+
 	return style;
 });
 
@@ -339,11 +293,11 @@ const navbarStyle = computed(() => {
 const centerStyle = computed(() => {
 	const hasLeft = showLeft.value;
 	const hasRight = showRight.value;
-	
+
 	if (!hasLeft && !hasRight) {
 		return { flex: 1 };
 	} else if (hasLeft && hasRight) {
-		return { 
+		return {
 			position: 'absolute',
 			left: '80rpx',
 			right: '80rpx',
@@ -353,7 +307,7 @@ const centerStyle = computed(() => {
 			justifyContent: 'center'
 		};
 	} else {
-		return { 
+		return {
 			flex: 1,
 			paddingLeft: hasLeft ? '80rpx' : '0',
 			paddingRight: hasRight ? '80rpx' : '0'
@@ -415,9 +369,9 @@ const getSystemInfo = () => {
 // 点击左侧区域
 const handleLeftClick = () => {
 	if (props.leftDisabled || props.loading) return;
-	
+
 	emit('leftClick');
-	
+
 	if (props.autoBack) {
 		try {
 			uni.navigateBack({
@@ -435,7 +389,7 @@ const handleLeftClick = () => {
 // 点击右侧区域
 const handleRightClick = () => {
 	if (props.rightDisabled || props.loading) return;
-	
+
 	emit('rightClick');
 };
 
@@ -450,23 +404,24 @@ watch(() => props.theme, (newTheme) => {
 
 <style lang="scss" scoped>
 .zx-navbar {
+
 	// 主题样式
 	&--light {
 		.zx-navbar__content__title {
 			color: #303133;
 		}
 	}
-	
+
 	&--dark {
 		.zx-navbar__content__title {
 			color: #ffffff;
 		}
-		
+
 		.zx-navbar__content {
 			background-color: #2c2c2c;
 		}
 	}
-	
+
 	// 固定定位
 	&--fixed {
 		position: fixed;
@@ -475,14 +430,14 @@ watch(() => props.theme, (newTheme) => {
 		top: 0;
 		z-index: 980;
 	}
-	
+
 	// 透明背景
 	&--transparent {
 		.zx-navbar__content {
 			background-color: transparent !important;
 		}
 	}
-	
+
 	// 阴影效果
 	&--shadow {
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -499,7 +454,7 @@ watch(() => props.theme, (newTheme) => {
 		min-height: 44px;
 		position: relative;
 		transition: all 0.3s ease;
-		
+
 		// 沉浸式模式
 		&--immersive {
 			backdrop-filter: blur(10px);
@@ -517,7 +472,7 @@ watch(() => props.theme, (newTheme) => {
 			align-items: center;
 			min-width: 80rpx;
 			transition: opacity 0.2s ease;
-			
+
 			&--disabled {
 				opacity: 0.4;
 				pointer-events: none;
@@ -538,7 +493,7 @@ watch(() => props.theme, (newTheme) => {
 				line-height: 1.2;
 			}
 		}
-		
+
 		&__center {
 			display: flex;
 			flex-direction: column;
@@ -555,10 +510,10 @@ watch(() => props.theme, (newTheme) => {
 			line-height: 1.2;
 			max-width: 100%;
 		}
-		
+
 		&__subtitle {
 			margin-top: 4rpx;
-			
+
 			text {
 				font-size: 24rpx;
 				color: #909399;
@@ -569,7 +524,7 @@ watch(() => props.theme, (newTheme) => {
 		&__right {
 			right: 0;
 			justify-content: flex-end;
-			
+
 			&--hover {
 				opacity: 0.6;
 			}
@@ -581,7 +536,7 @@ watch(() => props.theme, (newTheme) => {
 			}
 		}
 	}
-	
+
 	&__loading {
 		position: absolute;
 		right: 32rpx;
@@ -600,6 +555,7 @@ watch(() => props.theme, (newTheme) => {
 	from {
 		transform: rotate(0deg);
 	}
+
 	to {
 		transform: rotate(360deg);
 	}
@@ -608,17 +564,18 @@ watch(() => props.theme, (newTheme) => {
 // 响应式设计
 @media (max-width: 375px) {
 	.zx-navbar__content {
+
 		&__left,
 		&__right {
 			padding: 0 24rpx;
 			min-width: 60rpx;
 		}
-		
+
 		&__center {
 			padding-left: 60rpx;
 			padding-right: 60rpx;
 		}
-		
+
 		&__title {
 			font-size: 32rpx;
 		}
@@ -631,11 +588,11 @@ watch(() => props.theme, (newTheme) => {
 		.zx-navbar__content__title {
 			color: #ffffff;
 		}
-		
+
 		.zx-navbar__content {
 			background-color: #2c2c2c;
 		}
-		
+
 		.zx-navbar__content__subtitle text {
 			color: #a0a0a0;
 		}

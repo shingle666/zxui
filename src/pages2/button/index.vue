@@ -1,219 +1,197 @@
 <template>
-  <view class="container">
-    <view class="title">zx-button 按钮组件</view>
+  <view>
+    <zx-navbar title="zx-button 按钮组件"></zx-navbar>
+    <view class="container">
+      <zx-title title="zx-button 按钮组件" subtitle="多样式按钮组件，支持不同类型和状态"></zx-title>
 
-    <!-- 基础用法 -->
-    <view class="section">
-      <view class="section-title">基础用法</view>
-      <view class="button-group">
-        <view v-for="btn in basicButtons" :key="btn.label">
-          <zx-button :type="btn.type" @click="onClick(btn.label)">{{ btn.label }}</zx-button>
-        </view>
-      </view>
-    </view>
-
-    <!-- 镂空按钮 -->
-    <view class="section">
-      <view class="section-title">镂空按钮</view>
-      <view class="button-group">
-        <view v-for="btn in plainButtons" :key="btn.label">
-          <zx-button :type="btn.type" plain @click="onClick(btn.label)">{{ btn.label }}</zx-button>
-        </view>
-      </view>
-    </view>
-
-    <!-- 文本按钮 -->
-    <view class="section">
-      <view class="section-title">文本按钮</view>
-      <view class="button-group">
-        <view v-for="btn in textButtons" :key="btn.label">
-          <zx-button :type="btn.type" text @click="onClick(btn.label)">{{ btn.label }}</zx-button>
-        </view>
-      </view>
-      <view class="button-group" style="margin-top: 20rpx">
-        <view v-for="btn in textBgButtons" :key="btn.label">
-          <zx-button :type="btn.type" text bg @click="onClick(btn.label)">{{ btn.label }}</zx-button>
-        </view>
-      </view>
-    </view>
-
-    <!-- 链接按钮 -->
-    <view class="section">
-      <view class="section-title">链接按钮</view>
-      <view class="button-group">
-        <view v-for="btn in linkButtons" :key="btn.label">
-          <zx-button :type="btn.type" link @click="onClick(btn.label)">{{ btn.label }}</zx-button>
-        </view>
-      </view>
-    </view>
-
-    <!-- 禁用状态 -->
-    <view class="section">
-      <view class="section-title">禁用状态</view>
-      <view class="button-group">
-        <view v-for="btn in disabledButtons" :key="btn.label">
-          <zx-button :type="btn.type" :plain="btn.plain" :text="btn.text" :link="btn.link" disabled>{{ btn.label }}</zx-button>
-        </view>
-      </view>
-      <view class="button-group" style="margin-top: 20rpx">
-        <view v-for="btn in disabledExtraButtons" :key="btn.label">
-          <zx-button :type="btn.type" :text="btn.text" :link="btn.link" disabled>{{ btn.label }}</zx-button>
-        </view>
-      </view>
-    </view>
-
-    <!-- 加载状态 -->
-    <view class="section">
-      <view class="section-title">加载状态</view>
-      <view class="button-group">
-        <view v-for="btn in loadingButtons" :key="btn.id">
-          <zx-button :type="btn.type" loading>{{ btn.label }}</zx-button>
-        </view>
-      </view>
-      <view class="button-group" style="margin-top: 20rpx">
-        <view v-for="btn in loadingExtraButtons" :key="btn.id">
-          <zx-button :type="btn.type" :text="btn.text" loading>{{ btn.label }}</zx-button>
-        </view>
-      </view>
-    </view>
-
-    <!-- 按钮尺寸 -->
-    <view class="section">
-      <view class="section-title">按钮尺寸</view>
-      <view class="button-group">
-        <view v-for="btn in sizeButtons" :key="btn.label">
-          <zx-button :type="btn.type" :size="btn.size" :icon="btn.icon">{{ btn.label }}</zx-button>
-        </view>
-      </view>
-      <view class="button-group" style="margin-top: 20rpx">
-        <view v-for="btn in sizeIconButtons" :key="btn.label">
-          <zx-button :type="btn.type" :size="btn.size" :icon="btn.icon">{{ btn.label }}</zx-button>
-        </view>
-      </view>
-      <view class="button-group" style="margin-top: 20rpx">
-        <view v-for="btn in customSizeButtons" :key="btn.label">
-          <zx-button :type="btn.type" :size="btn.size">{{ btn.label }}</zx-button>
-        </view>
-      </view>
-    </view>
-
-    <!-- 按钮形状 -->
-    <view class="section">
-      <view class="section-title">按钮形状</view>
-      <view class="button-group">
-        <view v-for="btn in shapeButtons" :key="btn.label">
-          <zx-button :type="btn.type" :round="btn.round" :circle="btn.circle" :icon="btn.icon">{{ btn.label }}</zx-button>
-        </view>
-      </view>
-      <view class="button-group" style="margin-top: 20rpx">
-        <view v-for="btn in shapeExtraButtons" :key="btn.label">
-          <zx-button :type="btn.type" :round="btn.round">{{ btn.label }}</zx-button>
-        </view>
-      </view>
-      <view class="button-group" style="margin-top: 20rpx">
-        <view v-for="btn in shapeCircleButtons" :key="btn.label">
-          <zx-button :type="btn.type" circle :icon="btn.icon"></zx-button>
-        </view>
-      </view>
-    </view>
-
-    <!-- 带图标的按钮 -->
-    <view class="section">
-      <view class="section-title">带图标的按钮</view>
-      <view class="button-group">
-        <view v-for="btn in iconButtons" :key="btn.label">
-          <zx-button :type="btn.type" :icon="btn.icon">{{ btn.label }}</zx-button>
-        </view>
-      </view>
-      <view class="button-group" style="margin-top: 20rpx">
-        <view v-for="btn in iconTextButtons" :key="btn.label">
-          <zx-button :type="btn.type" :icon="btn.icon" text>{{ btn.label }}</zx-button>
-        </view>
-      </view>
-    </view>
-
-    <!-- 自定义样式 -->
-    <view class="section">
-      <view class="section-title">自定义样式</view>
-      <view class="button-group">
-        <view v-for="btn in customStyleButtons" :key="btn.label">
-          <zx-button
-            :color="btn.color"
-            :backgroundColor="btn.backgroundColor"
-            :style="btn.style"
-            :round="btn.round"
-            :plain="btn.plain"
-            @click="onClick(btn.label)"
-          >{{ btn.label }}</zx-button>
-        </view>
-      </view>
-      <view class="button-group" style="margin-top: 20rpx">
-        <view v-for="btn in customStyleExtraButtons" :key="btn.label">
-          <zx-button
-            :color="btn.color"
-            :style="btn.style"
-            :round="btn.round"
-            :plain="btn.plain"
-            @click="onClick(btn.label)"
-          >{{ btn.label }}</zx-button>
-        </view>
-      </view>
-    </view>
-
-    <!-- 使用插槽 -->
-    <view class="section">
-      <view class="section-title">使用插槽</view>
-      <view class="button-group">
-        <zx-button type="primary" @click="onClick('自定义内容')">
-          <template #icon>
-            <view class="custom-icon">🔍</view>
-          </template>
-          自定义内容
-        </zx-button>
-        <zx-button type="success" @click="onClick('自定义加载图标')">
-          <template #loading>
-            <view style="margin-right: 10rpx">🔄</view>
-          </template>
-          自定义加载图标
-        </zx-button>
-      </view>
-    </view>
-
-    <!-- 表单提交按钮 -->
-    <view class="section">
-      <view class="section-title">表单提交按钮</view>
-      <form @submit="onSubmit" @reset="onReset">
-        <view class="form-item">
-          <input name="username" placeholder="请输入用户名" />
-        </view>
+      <!-- 基础用法 -->
+      <zx-section title="基础用法" padding type="line">
         <view class="button-group">
-          <zx-button form-type="submit" type="primary">提交表单</zx-button>
-          <zx-button form-type="reset">重置表单</zx-button>
+          <view v-for="btn in basicButtons" :key="btn.label">
+            <zx-button :type="btn.type" @click="onClick(btn.label)">{{ btn.label }}</zx-button>
+          </view>
         </view>
-      </form>
-    </view>
+      </zx-section>
 
-    <!-- 开放能力按钮 -->
-    <view class="section">
-      <view class="section-title">开放能力按钮</view>
-      <view class="button-group">
-        <zx-button open-type="share" type="primary">分享</zx-button>
-        <zx-button open-type="contact" type="success" @contact="onContact"
-          >联系客服</zx-button
-        >
-        <!-- 注：部分开放能力在不同平台可能不支持 -->
-      </view>
-    </view>
+      <!-- 镂空按钮 -->
+      <zx-section title="镂空按钮" padding type="line">
+        <view class="button-group">
+          <view v-for="btn in plainButtons" :key="btn.label">
+            <zx-button :type="btn.type" plain @click="onClick(btn.label)">{{ btn.label }}</zx-button>
+          </view>
+        </view>
+      </zx-section>
 
-    <!-- 事件按钮 -->
-    <view class="section">
-      <view class="section-title">事件按钮</view>
-      <view class="button-group">
-        <zx-button type="primary" @click="onButtonClick('点击按钮')">点击按钮</zx-button>
-      </view>
-      <view v-if="clickInfo" class="event-info">
-        <text>上次点击：{{ clickInfo }}</text>
-      </view>
+      <!-- 文本按钮 -->
+      <zx-section title="文本按钮" padding type="line">
+        <view class="button-group">
+          <view v-for="btn in textButtons" :key="btn.label">
+            <zx-button :type="btn.type" text @click="onClick(btn.label)">{{ btn.label }}</zx-button>
+          </view>
+        </view>
+        <view class="button-group" style="margin-top: 20rpx">
+          <view v-for="btn in textBgButtons" :key="btn.label">
+            <zx-button :type="btn.type" text bg @click="onClick(btn.label)">{{ btn.label }}</zx-button>
+          </view>
+        </view>
+      </zx-section>
+
+      <!-- 链接按钮 -->
+      <zx-section title="链接按钮" padding type="line">
+        <view class="button-group">
+          <view v-for="btn in linkButtons" :key="btn.label">
+            <zx-button :type="btn.type" link @click="onClick(btn.label)">{{ btn.label }}</zx-button>
+          </view>
+        </view>
+      </zx-section>
+
+      <!-- 禁用状态 -->
+      <zx-section title="禁用状态" padding type="line">
+        <view class="button-group">
+          <view v-for="btn in disabledButtons" :key="btn.label">
+            <zx-button :type="btn.type" :plain="btn.plain" :text="btn.text" :link="btn.link" disabled>{{ btn.label
+              }}</zx-button>
+          </view>
+        </view>
+        <view class="button-group" style="margin-top: 20rpx">
+          <view v-for="btn in disabledExtraButtons" :key="btn.label">
+            <zx-button :type="btn.type" :text="btn.text" :link="btn.link" disabled>{{ btn.label }}</zx-button>
+          </view>
+        </view>
+      </zx-section>
+
+      <!-- 加载状态 -->
+      <zx-section title="加载状态" padding type="line">
+        <view class="button-group">
+          <view v-for="btn in loadingButtons" :key="btn.id">
+            <zx-button :type="btn.type" loading>{{ btn.label }}</zx-button>
+          </view>
+        </view>
+        <view class="button-group" style="margin-top: 20rpx">
+          <view v-for="btn in loadingExtraButtons" :key="btn.id">
+            <zx-button :type="btn.type" :text="btn.text" loading>{{ btn.label }}</zx-button>
+          </view>
+        </view>
+      </zx-section>
+
+      <!-- 按钮尺寸 -->
+      <zx-section title="按钮尺寸" padding type="line">
+        <view class="button-group">
+          <view v-for="btn in sizeButtons" :key="btn.label">
+            <zx-button :type="btn.type" :size="btn.size" :icon="btn.icon">{{ btn.label }}</zx-button>
+          </view>
+        </view>
+        <view class="button-group" style="margin-top: 20rpx">
+          <view v-for="btn in sizeIconButtons" :key="btn.label">
+            <zx-button :type="btn.type" :size="btn.size" :icon="btn.icon">{{ btn.label }}</zx-button>
+          </view>
+        </view>
+        <view class="button-group" style="margin-top: 20rpx">
+          <view v-for="btn in customSizeButtons" :key="btn.label">
+            <zx-button :type="btn.type" :size="btn.size">{{ btn.label }}</zx-button>
+          </view>
+        </view>
+      </zx-section>
+
+      <!-- 按钮形状 -->
+      <zx-section title="按钮形状" padding type="line">
+        <view class="button-group">
+          <view v-for="btn in shapeButtons" :key="btn.label">
+            <zx-button :type="btn.type" :round="btn.round" :circle="btn.circle" :icon="btn.icon">{{ btn.label
+              }}</zx-button>
+          </view>
+        </view>
+        <view class="button-group" style="margin-top: 20rpx">
+          <view v-for="btn in shapeExtraButtons" :key="btn.label">
+            <zx-button :type="btn.type" :round="btn.round">{{ btn.label }}</zx-button>
+          </view>
+        </view>
+        <view class="button-group" style="margin-top: 20rpx">
+          <view v-for="btn in shapeCircleButtons" :key="btn.label">
+            <zx-button :type="btn.type" circle :icon="btn.icon"></zx-button>
+          </view>
+        </view>
+      </zx-section>
+
+      <!-- 带图标的按钮 -->
+      <zx-section title="带图标的按钮" padding type="line">
+        <view class="button-group">
+          <view v-for="btn in iconButtons" :key="btn.label">
+            <zx-button :type="btn.type" :icon="btn.icon">{{ btn.label }}</zx-button>
+          </view>
+        </view>
+        <view class="button-group" style="margin-top: 20rpx">
+          <view v-for="btn in iconTextButtons" :key="btn.label">
+            <zx-button :type="btn.type" :icon="btn.icon" text>{{ btn.label }}</zx-button>
+          </view>
+        </view>
+      </zx-section>
+
+      <!-- 自定义样式 -->
+      <zx-section title="自定义样式" padding type="line">
+        <view class="button-group">
+          <view v-for="btn in customStyleButtons" :key="btn.label">
+            <zx-button :color="btn.color" :backgroundColor="btn.backgroundColor" :style="btn.style" :round="btn.round"
+              :plain="btn.plain" @click="onClick(btn.label)">{{ btn.label }}</zx-button>
+          </view>
+        </view>
+        <view class="button-group" style="margin-top: 20rpx">
+          <view v-for="btn in customStyleExtraButtons" :key="btn.label">
+            <zx-button :color="btn.color" :style="btn.style" :round="btn.round" :plain="btn.plain"
+              @click="onClick(btn.label)">{{ btn.label }}</zx-button>
+          </view>
+        </view>
+      </zx-section>
+
+      <!-- 使用插槽 -->
+      <zx-section title="使用插槽" padding type="line">
+        <view class="button-group">
+          <zx-button type="primary" @click="onClick('自定义内容')">
+            <template #icon>
+              <view class="custom-icon">🔍</view>
+            </template>
+            自定义内容
+          </zx-button>
+          <zx-button type="success" @click="onClick('自定义加载图标')">
+            <template #loading>
+              <view style="margin-right: 10rpx">🔄</view>
+            </template>
+            自定义加载图标
+          </zx-button>
+        </view>
+      </zx-section>
+
+      <!-- 表单提交按钮 -->
+      <zx-section title="表单提交按钮" padding type="line">
+        <form @submit="onSubmit" @reset="onReset">
+          <view class="form-item">
+            <input name="username" placeholder="请输入用户名" />
+          </view>
+          <view class="button-group">
+            <zx-button form-type="submit" type="primary">提交表单</zx-button>
+            <zx-button form-type="reset">重置表单</zx-button>
+          </view>
+        </form>
+      </zx-section>
+
+      <!-- 开放能力按钮 -->
+      <zx-section title="开放能力按钮" padding type="line">
+        <view class="button-group">
+          <zx-button open-type="share" type="primary">分享</zx-button>
+          <zx-button open-type="contact" type="success" @contact="onContact">联系客服</zx-button>
+          <!-- 注：部分开放能力在不同平台可能不支持 -->
+        </view>
+      </zx-section>
+
+      <!-- 事件按钮 -->
+      <zx-section title="事件按钮" padding type="line">
+        <view class="button-group">
+          <zx-button type="primary" @click="onButtonClick('点击按钮')">点击按钮</zx-button>
+        </view>
+        <view v-if="clickInfo" class="event-info">
+          <text>上次点击：{{ clickInfo }}</text>
+        </view>
+      </zx-section>
     </view>
   </view>
 </template>
@@ -368,6 +346,7 @@ const onContact = (e) => {
 
 <style lang="scss">
 .container {
+  background-color: #f1f1f1;
   padding: 20rpx;
 }
 

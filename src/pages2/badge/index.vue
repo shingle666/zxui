@@ -1,123 +1,120 @@
 <template>
-  <view class="container">
-    <view class="title">zx-badge 数字角标</view>
-    <view class="subtitle">数字角标一般和其它控件配合使用，用于数量提示</view>
+  <view>
+    <zx-navbar title="zx-badge 数字角标" border></zx-navbar>
+    <view class="container">
+      <zx-title title="zx-badge 数字角标" subtitle="数字角标一般和其它控件配合使用，用于数量提示"></zx-title>
 
-    <!-- 基础用法 -->
-    <view class="section">
-      <view class="section-title">基础用法</view>
-      <view class="section-content">
-        <zx-badge text="12" class="badge-item">
-          <button class="btn">评论</button>
-        </zx-badge>
-        <zx-badge text="3" class="badge-item">
-          <button class="btn">回复</button>
-        </zx-badge>
-        <zx-badge text="1" type="primary" class="badge-item">
-          <button class="btn">评论</button>
-        </zx-badge>
-        <zx-badge text="2" type="warning" class="badge-item">
-          <button class="btn">回复</button>
-        </zx-badge>
-        <zx-badge text="1" bgColor="green" class="badge-item">
-          <button class="btn">自定义背景色</button>
-        </zx-badge>
-      </view>
-    </view>
+      <!-- 基础用法 -->
+      <zx-section title="基础用法" padding type="line">
+        <view class="demo-row">
+          <zx-badge text="12" class="badge-item">
+            <zx-button size="small" type="default">评论</zx-button>
+          </zx-badge>
+          <zx-badge text="3" class="badge-item">
+            <zx-button size="small" type="default">回复</zx-button>
+          </zx-badge>
+          <zx-badge text="1" type="primary" class="badge-item">
+            <zx-button size="small" type="primary">评论</zx-button>
+          </zx-badge>
+          <zx-badge text="2" type="warning" class="badge-item">
+            <zx-button size="small" type="warning">回复</zx-button>
+          </zx-badge>
+        </view>
+        <view class="demo-row">
+          <zx-badge text="1" bgColor="green" class="badge-item">
+            <zx-button size="small" type="success">自定义背景色</zx-button>
+          </zx-badge>
+        </view>
+      </zx-section>
 
-    <!-- 最大值 -->
-    <view class="section">
-      <view class="section-title">最大值</view>
-      <view class="section-content">
-        <zx-badge text="200" :maxNum="99" class="badge-item">
-          <button class="btn">评论</button>
-        </zx-badge>
-        <zx-badge text="100" :maxNum="10" class="badge-item">
-          <button class="btn">回复</button>
-        </zx-badge>
-      </view>
-    </view>
+      <!-- 最大值 -->
+      <zx-section title="最大值" padding type="line">
+        <view class="demo-row">
+          <zx-badge text="200" :maxNum="99" class="badge-item">
+            <zx-button size="small" type="default">评论</zx-button>
+          </zx-badge>
+          <zx-badge text="100" :maxNum="10" class="badge-item">
+            <zx-button size="small" type="default">回复</zx-button>
+          </zx-badge>
+        </view>
+      </zx-section>
 
-    <!-- 自定义显示内容 -->
-    <view class="section">
-      <view class="section-title">自定义显示内容</view>
-      <view class="section-content">
-        <zx-badge text="new" class="badge-item">
-          <button class="btn">评论</button>
-        </zx-badge>
-        <zx-badge text="hot" class="badge-item">
-          <button class="btn">回复</button>
-        </zx-badge>
-        <zx-badge text="VIP" type="success" class="badge-item">
-          <button class="btn">会员</button>
-        </zx-badge>
-      </view>
-    </view>
+      <!-- 自定义显示内容 -->
+      <zx-section title="自定义显示内容" padding type="line">
+        <view class="demo-row">
+          <zx-badge text="new" class="badge-item">
+            <zx-button size="small" type="default">评论</zx-button>
+          </zx-badge>
+          <zx-badge text="hot" class="badge-item">
+            <zx-button size="small" type="default">回复</zx-button>
+          </zx-badge>
+          <zx-badge text="VIP" type="success" class="badge-item">
+            <zx-button size="small" type="success">会员</zx-button>
+          </zx-badge>
+        </view>
+      </zx-section>
 
-    <!-- 小红点 -->
-    <view class="section">
-      <view class="section-title">小红点</view>
-      <view class="section-content">
-        <zx-badge isDot class="badge-item">
-          <button class="btn">提醒</button>
-        </zx-badge>
-        <zx-badge isDot type="primary" class="badge-item">
-          <button class="btn">消息</button>
-        </zx-badge>
-        <zx-badge isDot type="success" class="badge-item">
-          <button class="btn">通知</button>
-        </zx-badge>
-      </view>
-    </view>
+      <!-- 小红点 -->
+      <zx-section title="小红点" padding type="line">
+        <view class="demo-row">
+          <zx-badge isDot class="badge-item">
+            <zx-button size="small" type="default">提醒</zx-button>
+          </zx-badge>
+          <zx-badge isDot type="primary" class="badge-item">
+            <zx-button size="small" type="primary">消息</zx-button>
+          </zx-badge>
+          <zx-badge isDot type="success" class="badge-item">
+            <zx-button size="small" type="success">通知</zx-button>
+          </zx-badge>
+        </view>
+      </zx-section>
 
-    <!-- 位置偏移 -->
-    <view class="section">
-      <view class="section-title">位置偏移</view>
-      <view class="section-content">
-        <zx-badge text="1" :offset="[10, 5]" class="badge-item">
-          <button class="btn">右上偏移</button>
-        </zx-badge>
-        <zx-badge text="2" absolute="rightBottom" class="badge-item">
-          <button class="btn">右下角</button>
-        </zx-badge>
-        <zx-badge text="3" absolute="leftTop" class="badge-item">
-          <button class="btn">左上角</button>
-        </zx-badge>
-        <zx-badge text="4" absolute="leftBottom" class="badge-item">
-          <button class="btn">左下角</button>
-        </zx-badge>
-      </view>
-    </view>
+      <!-- 位置偏移 -->
+      <zx-section title="位置偏移" padding type="line">
+        <view class="demo-row">
+          <zx-badge text="1" :offset="[10, 5]" class="badge-item">
+            <zx-button size="small" type="default">右上偏移</zx-button>
+          </zx-badge>
+          <zx-badge text="2" absolute="rightBottom" class="badge-item">
+            <zx-button size="small" type="default">右下角</zx-button>
+          </zx-badge>
+        </view>
+        <view class="demo-row">
+          <zx-badge text="3" absolute="leftTop" class="badge-item">
+            <zx-button size="small" type="default">左上角</zx-button>
+          </zx-badge>
+          <zx-badge text="4" absolute="leftBottom" class="badge-item">
+            <zx-button size="small" type="default">左下角</zx-button>
+          </zx-badge>
+        </view>
+      </zx-section>
 
-    <!-- 自定义样式 -->
-    <view class="section">
-      <view class="section-title">自定义样式</view>
-      <view class="section-content">
-        <zx-badge text="99+" :badgeStyle="{ backgroundColor: '#ff6600', padding: '0 15rpx' }" class="badge-item">
-          <button class="btn">自定义样式</button>
-        </zx-badge>
-        <zx-badge text="VIP" badgeClass="custom-badge" class="badge-item">
-          <button class="btn">自定义类名</button>
-        </zx-badge>
-      </view>
-    </view>
+      <!-- 自定义样式 -->
+      <zx-section title="自定义样式" padding type="line">
+        <view class="demo-row">
+          <zx-badge text="99+" :badgeStyle="{ backgroundColor: '#ff6600', padding: '0 15rpx' }" class="badge-item">
+            <zx-button size="small" type="default">自定义样式</zx-button>
+          </zx-badge>
+          <zx-badge text="VIP" badgeClass="custom-badge" class="badge-item">
+            <zx-button size="small" type="default">自定义类名</zx-button>
+          </zx-badge>
+        </view>
+      </zx-section>
 
-    <!-- 显示控制 -->
-    <view class="section">
-      <view class="section-title">显示控制</view>
-      <view class="section-content">
-        <zx-badge text="1" :hidden="isHidden" class="badge-item">
-          <button class="btn">显示/隐藏</button>
-        </zx-badge>
-        <button @click="toggleHidden" class="toggle-btn">切换显示状态</button>
-        
-        <zx-badge text="0" :showZero="false" class="badge-item">
-          <button class="btn">零值不显示</button>
-        </zx-badge>
-        <zx-badge text="0" :showZero="true" class="badge-item">
-          <button class="btn">零值显示</button>
-        </zx-badge>
-      </view>
+      <!-- 显示控制 -->
+      <zx-section title="显示控制" padding type="line">
+        <view class="demo-row">
+          <zx-badge text="1" :hidden="isHidden" class="badge-item">
+            <zx-button size="small" type="default" @click="toggleHidden"> {{ isHidden ? '显示角标' : '隐藏角标' }}</zx-button>
+          </zx-badge>
+          <zx-badge text="0" :showZero="false" class="badge-item">
+            <zx-button size="small" type="default">零值不显示</zx-button>
+          </zx-badge>
+          <zx-badge text="0" :showZero="true" class="badge-item">
+            <zx-button size="small" type="default">零值显示</zx-button>
+          </zx-badge>
+        </view>
+      </zx-section>
     </view>
   </view>
 </template>
@@ -134,77 +131,73 @@ const toggleHidden = () => {
 
 <style lang="scss" scoped>
 .container {
-  padding: 30rpx;
+  padding: 20rpx;
+  background-color: #f1f1f1;
+  min-height: 100vh;
 }
 
-.title {
-  font-size: 36rpx;
-  font-weight: bold;
-  margin-bottom: 20rpx;
-}
-
-.subtitle {
-  font-size: 28rpx;
-  color: #666;
-  margin-bottom: 40rpx;
-}
-
-.section {
-  margin-bottom: 60rpx;
-}
-
-.section-title {
-  font-size: 30rpx;
-  font-weight: bold;
-  margin-bottom: 30rpx;
-  position: relative;
-  padding-left: 20rpx;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 8rpx;
-    height: 30rpx;
-    background-color: #2979ff;
-    border-radius: 4rpx;
-  }
-}
-
-.section-content {
+.demo-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  gap: 30rpx;
+  margin-bottom: 20rpx;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .badge-item {
-  margin-right: 30rpx;
-  margin-bottom: 30rpx;
-}
-
-.btn {
-  padding: 16rpx 30rpx;
-  background-color: #f5f5f5;
-  border: none;
-  border-radius: 8rpx;
-  font-size: 28rpx;
-}
-
-.toggle-btn {
-  padding: 16rpx 30rpx;
-  background-color: #2979ff;
-  color: #fff;
-  border: none;
-  border-radius: 8rpx;
-  font-size: 28rpx;
-  margin: 0 30rpx;
+  flex-shrink: 0;
 }
 
 .custom-badge {
-  background: linear-gradient(to right, #ff9a9e, #fad0c4);
+  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
   font-weight: bold;
   padding: 0 15rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(255, 154, 158, 0.3);
+}
+
+// 优化按钮样式
+:deep(.zx-button) {
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2rpx);
+    box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+  }
+}
+
+// 活跃状态样式
+.active {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(41, 121, 255, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10rpx rgba(41, 121, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(41, 121, 255, 0);
+  }
+}
+
+// 响应式设计
+@media (max-width: 750rpx) {
+  .container {
+    padding: 15rpx;
+  }
+  
+  .demo-row {
+    gap: 25rpx;
+    margin-bottom: 15rpx;
+  }
 }
 </style>

@@ -62,7 +62,12 @@ const getStatusBarHeight = () => {
   // 修正高度为0的情况
   if (!statusBarHeight.value) {
     // 不同平台默认值
-    // #ifdef APP-PLUS || H5
+    
+    // #ifdef H5
+    statusBarHeight.value = 0;
+    // #endif
+
+    // #ifdef APP-PLUS
     statusBarHeight.value = 20;
     // #endif
     // #ifdef MP-WEIXIN
