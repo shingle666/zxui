@@ -6,41 +6,6 @@
 				"navigationBarTitleText": "首页",
 				"navigationStyle": "custom"
 			}
-		},
-		{
-			"path": "pages/ai/ai",
-			"style": {
-				"navigationBarTitleText": "AI",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/template/template",
-			"style": {
-				"navigationBarTitleText": "模板",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/topic/topic",
-			"style": {
-				"navigationBarTitleText": "专题",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/my/my",
-			"style": {
-				"navigationBarTitleText": "我的",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/login/login",
-			"style": {
-				"navigationBarTitleText": "用户登录",
-				"navigationStyle": "custom"
-			}
 		}
 	],
 	"subPackages": [
@@ -1661,6 +1626,46 @@
 					"path": "infinite-loading/index",
 					"style": {
 						"navigationBarTitleText": "zx-infinite-loading",
+						"navigationStyle": "custom"
+					}
+				}
+			]
+		},
+		{
+			"root": "pages4",
+			"pages": [
+				{
+					"path": "ai/ai",
+					"style": {
+						"navigationBarTitleText": "AI",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "template/template",
+					"style": {
+						"navigationBarTitleText": "模板",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "topic/topic",
+					"style": {
+						"navigationBarTitleText": "专题",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "my/my",
+					"style": {
+						"navigationBarTitleText": "我的",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "login/login",
+					"style": {
+						"navigationBarTitleText": "用户登录",
 						"navigationStyle": "custom"
 					}
 				}
