@@ -46,7 +46,7 @@
 import { computed, ref, getCurrentInstance, watch, onMounted } from "vue";
 // 静态导入CSS文件
 import './zx-icon.css';
-import './uni-icon.css';
+//import './uni-icon.css';
 
 const { proxy } = getCurrentInstance();
 

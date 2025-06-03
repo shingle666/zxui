@@ -210,7 +210,7 @@ import ZxIcon from '@/components/zx-icon/zx-icon.vue';
 使用top属性可以调整图标的垂直位置，解决对齐问题：
 
 ```vue
-<zx-icon name="align-center" top="2px"></zx-icon>
+<zx-icon name="align-center" top="2rpx"></zx-icon>
 ```
 
 ### 图标点击事件
