@@ -136,7 +136,7 @@ const handleClose = (index) => {
 <template>
   <view class="flex gap-2">
     <zx-tag text="图标标签" type="primary" icon="star" />
-    <zx-tag text="图片标签" type="success" icon="/static/logo.png" />
+    <zx-tag text="图片标签" type="success" icon="https://zxui.org/logo.png" />
   </view>
 </template>
 ```

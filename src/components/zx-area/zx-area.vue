@@ -23,7 +23,6 @@
 
 <script setup>
 import { ref, watch, computed, nextTick } from 'vue';
-import ZxPopup from '../zx-popup/zx-popup.vue'; // Assuming zx-popup is available
 
 const props = defineProps({
   show: {

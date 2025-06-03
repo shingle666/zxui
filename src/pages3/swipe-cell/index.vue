@@ -15,7 +15,7 @@
     <zx-title title="自定义内容 (商品卡片示例)"></zx-title>
     <zx-swipe-cell>
       <view class="goods-card">
-        <image class="goods-thumb" src="/static/logo.png" mode="aspectFill"></image>
+        <image class="goods-thumb" src="https://zxui.org/logo.png" mode="aspectFill"></image>
         <view class="goods-info">
           <view class="goods-title">商品标题</view>
           <view class="goods-desc">描述信息，这是一段描述信息</view>

@@ -69,7 +69,7 @@
       <text class="section-title">自定义内容</text>
       <view class="circle-container">
         <zx-circle v-model:currentRate="currentRate10" :rate="rate10" :speed="50">
-            <image style="width: 50rpx; height: 50rpx; border-radius: 50%;" src="/static/logo.png"></image>
+            <image style="width: 50rpx; height: 50rpx; border-radius: 50%;" src="https://zxui.org/logo.png"></image>
         </zx-circle>
       </view>
        <view class="controls">

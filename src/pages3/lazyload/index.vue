@@ -21,7 +21,7 @@
       <view class="image-container">
         <zx-lazyload
           :src="images.longLoading"
-          loading-src="/static/logo.png" 
+          loading-src="https://zxui.org/logo.png" 
           width="100%"
           height="300rpx"
           radius="16rpx"
@@ -109,52 +109,52 @@ const images = ref({
 const imageList = ref([
   {
     src: 'https://img.zxui.org/uniapp/images/grid/grid-1.png',
-    loading: '/static/logo.png',
+    loading: 'https://zxui.org/logo.png',
     error: '/static/images/error.png',
   },
   {
     src: 'https://img.zxui.org/uniapp/images/grid/grid-2.png',
-    loading: '/static/logo.png',
+    loading: 'https://zxui.org/logo.png',
     error: '/static/images/error.png',
   },
   {
     src: 'https://img.zxui.org/uniapp/images/grid/grid-3.png',
-    loading: '/static/logo.png',
+    loading: 'https://zxui.org/logo.png',
     error: '/static/images/error.png',
   },
   {
     src: 'https://img.zxui.org/uniapp/images/grid/grid-4.png',
-    loading: '/static/logo.png',
+    loading: 'https://zxui.org/logo.png',
     error: '/static/images/error.png',
   },
   {
     src: 'https://img.zxui.org/uniapp/images/grid/grid-5.png',
-    loading: '/static/logo.png',
+    loading: 'https://zxui.org/logo.png',
     error: '/static/images/error.png',
   },
   {
     src: 'https://img.zxui.org/uniapp/images/grid/grid-6.png',
-    loading: '/static/logo.png',
+    loading: 'https://zxui.org/logo.png',
     error: '/static/images/error.png',
   },
    {
     src: 'https://img.zxui.org/uniapp/images/album/1.jpg',
-    loading: '/static/logo.png',
+    loading: 'https://zxui.org/logo.png',
     error: '/static/images/error.png',
   },
   {
     src: 'https://img.zxui.org/uniapp/images/album/2.jpg',
-    loading: '/static/logo.png',
+    loading: 'https://zxui.org/logo.png',
     error: '/static/images/error.png',
   },
   {
     src: 'https://img.zxui.org/uniapp/images/album/3.jpg',
-    loading: '/static/logo.png',
+    loading: 'https://zxui.org/logo.png',
     error: '/static/images/error.png',
   },
   {
     src: 'https://img.zxui.org/uniapp/images/album/4.jpg',
-    loading: '/static/logo.png',
+    loading: 'https://zxui.org/logo.png',
     error: '/static/images/error.png',
   },
 ]);
@@ -176,7 +176,7 @@ const onImageError = (name) => {
 };
 
 // 模拟一些图片资源，确保/static/images/error.png存在，或者替换为你的实际图片
-// /static/logo.png 也需要存在
+// https://zxui.org/logo.png 也需要存在
 
 </script>
 

@@ -94,53 +94,32 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 
-// 导入数据 @vant/area-data 
-import { areaList as vantAreaData } from '@vant/area-data';
-
+// 从远程JSON加载数据
 const areaListData = ref({}); // Initialize as an empty object, will be populated
 
 // --- Data Loading --- 
-onMounted(() => {
-  if (vantAreaData && Object.keys(vantAreaData.province_list || {}).length > 0) {
-    areaListData.value = vantAreaData;
-    console.log('成功加载 @vant/area-data');
-  } else {
-    console.warn('加载 @vant/area-data 失败或数据为空，使用内置精简数据。');
+const loadAreaData = async () => {
+  try {
+    const response = await fetch('https://cdn.mp.ac.cn/json/area.json');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    areaListData.value = data;
+    console.log('成功加载远程区域数据');
+  } catch (error) {
+    console.error('加载远程区域数据失败:', error);
+    // 可以在这里设置默认数据或显示错误信息
     areaListData.value = {
-      province_list: {
-        110000: '北京市',
-        120000: '天津市',
-        310000: '上海市',
-        330000: '浙江省',
-        440000: '广东省',
-      },
-      city_list: {
-        110100: '北京市',
-        120100: '天津市',
-        310100: '上海市',
-        330100: '杭州市',
-        330200: '宁波市',
-        330300: '温州市',
-        440100: '广州市',
-        440300: '深圳市',
-      },
-      county_list: {
-        110101: '东城区',
-        110102: '西城区',
-        310101: '黄浦区',
-        330102: '上城区',
-        330103: '下城区',
-        330106: '西湖区',
-        330203: '海曙区',
-        330205: '江北区',
-        330302: '鹿城区',
-        440103: '荔湾区',
-        440104: '越秀区',
-        440303: '罗湖区',
-        440304: '福田区',
-      },
+      province_list: {},
+      city_list: {},
+      county_list: {}
     };
   }
+};
+
+onMounted(() => {
+  loadAreaData();
   // Re-initialize display values after data is loaded
   initDisplay();
 });

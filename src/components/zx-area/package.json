@@ -1,16 +1,13 @@
 {
-  "name": "zx-area",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-area",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "tanzhenxing",
   "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "@vant/area-data": "^2.0.0"
-  }
+  "type": "commonjs"
 }

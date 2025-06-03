@@ -165,7 +165,7 @@
       
       <view class="custom-content">
         <view class="achievement">
-          <image class="achievement-icon" src="/static/images/medal.png" mode="aspectFit" />
+          <image class="achievement-icon" src="https://cdn.mp.ac.cn/icon/medal.png" mode="aspectFit" />
           <text class="achievement-text">获得成就：连续签到7天</text>
         </view>
         <view class="reward">

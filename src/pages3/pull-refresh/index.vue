@@ -17,19 +17,19 @@
     <zx-pull-refresh v-model="loading3" :head-height="80" @refresh="onRefresh3" style="margin-top: 20px;">
       <template #pulling="props">
         <view class="custom-indicator">
-          <image class="doge-image" src="/static/logo.png" :style="{ transform: `scale(${props.distance / 80})` }" />
+          <image class="doge-image" src="https://zxui.org/logo.png" :style="{ transform: `scale(${props.distance / 80})` }" />
           <text>下拉看看...</text>
         </view>
       </template>
       <template #loosing>
         <view class="custom-indicator">
-          <image class="doge-image" src="/static/logo.png" />
+          <image class="doge-image" src="https://zxui.org/logo.png" />
           <text>松手吧！</text>
         </view>
       </template>
       <template #loading>
         <view class="custom-indicator">
-          <image class="doge-image animated-doge" src="/static/logo.png" />
+          <image class="doge-image animated-doge" src="https://zxui.org/logo.png" />
           <text>努力加载中...</text>
         </view>
       </template>

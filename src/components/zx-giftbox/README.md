@@ -187,7 +187,7 @@ const toggleDisabled = () => {
   >
     <template #prize>
       <view class="custom-prize">
-        <image class="prize-icon" src="/static/images/gift.png" />
+        <image class="prize-icon" src="https://cdn.mp.ac.cn/icon/gift.png" />
         <view class="prize-title">恭喜获得</view>
         <view class="prize-name">超级大奖</view>
         <view class="prize-value">￥10,000</view>

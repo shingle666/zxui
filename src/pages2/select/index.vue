@@ -221,19 +221,19 @@ const customOptions = ref([
 	{
 		text: '微信支付',
 		value: 'wxpay',
-		icon: '/static/logo.png',
+		icon: 'https://zxui.org/logo.png',
 		description: '微信安全支付'
 	},
 	{
 		text: '支付宝',
 		value: 'alipay',
-		icon: '/static/logo.png',
+		icon: 'https://zxui.org/logo.png',
 		description: '支付宝安全支付'
 	},
 	{
 		text: '银联支付',
 		value: 'unionpay',
-		icon: '/static/logo.png',
+		icon: 'https://zxui.org/logo.png',
 		description: '银联安全支付'
 	}
 ]);

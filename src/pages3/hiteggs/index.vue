@@ -155,22 +155,22 @@ const logs = ref([])
 
 // 奖品配置
 const prizes = reactive([
-  { text: '一等奖', image: '/static/logo.png' },
-  { text: '二等奖', image: '/static/logo.png' },
+  { text: '一等奖', image: 'https://zxui.org/logo.png' },
+  { text: '二等奖', image: 'https://zxui.org/logo.png' },
   { text: '三等奖' },
   { text: '谢谢参与' },
   null, // 空奖品
-  { text: '红包', image: '/static/logo.png' },
+  { text: '红包', image: 'https://zxui.org/logo.png' },
   { text: '优惠券' },
   { text: '积分+100' },
   { text: '再来一次' }
 ])
 
 const customPrizes = reactive([
-  { text: '大奖', image: '/static/logo.png' },
+  { text: '大奖', image: 'https://zxui.org/logo.png' },
   { text: '小奖' },
   null,
-  { text: '特等奖', image: '/static/logo.png' }
+  { text: '特等奖', image: 'https://zxui.org/logo.png' }
 ])
 
 const manualPrizes = reactive([

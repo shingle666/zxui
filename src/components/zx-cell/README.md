@@ -68,7 +68,7 @@
     </zx-cell>
     <zx-cell>
       <template #icon>
-        <image src="/static/logo.png" style="width: 30px; height: 30px;"></image>
+        <image src="https://zxui.org/logo.png" style="width: 30px; height: 30px;"></image>
       </template>
       <template #title>
         <text>自定义图标</text>

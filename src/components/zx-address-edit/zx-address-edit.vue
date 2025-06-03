@@ -73,16 +73,6 @@
 
 <script setup>
 import { ref, reactive, computed, watch, nextTick } from 'vue';
-import zxForm from '../zx-form/zx-form.vue';
-import zxFormItem from '../zx-form-item/zx-form-item.vue';
-import zxInput from '../zx-input/zx-input.vue';
-import zxTextarea from '../zx-textarea/zx-textarea.vue';
-import zxButton from '../zx-button/zx-button.vue';
-import zxSwitch from '../zx-switch/zx-switch.vue';
-import zxCell from '../zx-cell/zx-cell.vue';
-import zxPopup from '../zx-popup/zx-popup.vue';
-import zxArea from '../zx-area/zx-area.vue'; // 假设存在 zx-area 组件
-import zxIcon from '../zx-icon/zx-icon.vue'; // 假设存在 zx-icon 组件
 
 const props = defineProps({
   areaList: { // 省市区数据

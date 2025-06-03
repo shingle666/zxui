@@ -57,7 +57,7 @@ const handleProtocolClick = () => {
 <template>
   <zx-login
     :show-logo="true"
-    logo-url="/static/logo.png"
+    logo-url="https://zxui.org/logo.png"
     title="欢迎登录"
     :default-login-type="'sms'"
     :show-switch="true"

@@ -276,7 +276,7 @@
           <text class="close-btn" @click="showImagePreview = false">×</text>
         </view>
         <view class="preview-content">
-          <image class="preview-image" src="/static/demo-image.jpg" mode="aspectFit" />
+          <image class="preview-image" src="https://cdn.mp.ac.cn/icon/demo.png" mode="aspectFit" />
         </view>
         <view class="preview-footer">
           <text class="preview-info">1 / 1</text>

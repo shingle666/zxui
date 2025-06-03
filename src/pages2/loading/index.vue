@@ -70,7 +70,7 @@
 			<view class="loading-group">
 				<zx-loading vertical text="自定义图标">
           <template #icon>
-            <image style="width: 30px; height: 30px;" src="/static/logo.png" />
+            <image style="width: 30px; height: 30px;" src="https://zxui.org/logo.png" />
           </template>
         </zx-loading>
 			</view>
