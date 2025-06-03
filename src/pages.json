@@ -285,12 +285,6 @@
 					}
 				},
 				{
-					"path": "lucky/wheel",
-					"style": {
-						"navigationBarTitleText": "zx-lucky-wheel 组件"
-					}
-				},
-				{
 					"path": "pk/index",
 					"style": {
 						"navigationBarTitleText": "zx-pk 组件"
