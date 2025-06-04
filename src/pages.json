@@ -610,20 +610,6 @@
 					}
 				},
 				{
-					"path": "affix/test",
-					"style": {
-						"navigationBarTitleText": "zx-affix 测试页面",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "affix/example",
-					"style": {
-						"navigationBarTitleText": "zx-affix 示例页面",
-						"navigationStyle": "custom"
-					}
-				},
-				{
 					"path": "text/index",
 					"style": {
 						"navigationBarTitleText": "Text 文本组件",
@@ -695,13 +681,6 @@
 				},
 				{
 					"path": "sticky/index",
-					"style": {
-						"navigationBarTitleText": "zx-sticky 吸顶组件",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "sticky/demo",
 					"style": {
 						"navigationBarTitleText": "zx-sticky 吸顶组件",
 						"navigationStyle": "custom"
@@ -785,13 +764,6 @@
 					}
 				},
 				{
-					"path": "upload/test",
-					"style": {
-						"navigationBarTitleText": "Upload 测试页面",
-						"navigationStyle": "custom"
-					}
-				},
-				{
 					"path": "code/index",
 					"style": {
 						"navigationBarTitleText": "zx-code 源代码展示组件",
@@ -804,13 +776,6 @@
 						"navigationBarTitleText": "zx-file 文件操作组件",
 						"navigationStyle": "custom"
 					}
-				},
-				{
-					"path": "file/demo",
-					"style": {
-						"navigationBarTitleText": "zx-file 文件上传案例",
-						"navigationStyle": "custom"
-					}
 				}
 			]
 		},
@@ -818,19 +783,19 @@
 			"root": "pages3",
 			"pages": [
 				{
-				"path": "animate/index",
-				"style": {
-					"navigationBarTitleText": "zx-animate 动画组件",
-					"navigationStyle": "custom"
-				}
-			},
-			{
-				"path": "goods-price/index",
-				"style": {
-					"navigationBarTitleText": "zx-goods-price 商品价格",
-					"navigationStyle": "custom"
-				}
-			},
+					"path": "animate/index",
+					"style": {
+						"navigationBarTitleText": "zx-animate 动画组件",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "goods-price/index",
+					"style": {
+						"navigationBarTitleText": "zx-goods-price 商品价格",
+						"navigationStyle": "custom"
+					}
+				},
 				{
 					"path": "textarea/index",
 					"style": {
@@ -933,13 +898,6 @@
 					"path": "uploader/index",
 					"style": {
 						"navigationBarTitleText": "zx-uploader 上传器",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "floating-panel/index",
-					"style": {
-						"navigationBarTitleText": "zx-floating-panel 浮动面板",
 						"navigationStyle": "custom"
 					}
 				},
@@ -1098,13 +1056,6 @@
 					}
 				},
 				{
-					"path": "coupon2/index",
-					"style": {
-						"navigationBarTitleText": "zx-coupon2 优惠券2",
-						"navigationStyle": "custom"
-					}
-				},
-				{
 					"path": "goods-card2/index",
 					"style": {
 						"navigationBarTitleText": "zx-goods-card2 商品卡片2",
@@ -1115,13 +1066,6 @@
 					"path": "cart-bar/index",
 					"style": {
 						"navigationBarTitleText": "zx-cart-bar 购物车栏",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "cart-bar2/index",
-					"style": {
-						"navigationBarTitleText": "zx-cart-bar2 购物车栏2",
 						"navigationStyle": "custom"
 					}
 				},
@@ -1357,13 +1301,6 @@
 					}
 				},
 				{
-					"path": "watermark/base",
-					"style": {
-						"navigationBarTitleText": "zx-watermark 水印基础功能",
-						"navigationStyle": "custom"
-					}
-				},
-				{
 					"path": "pull-refresh/index",
 					"style": {
 						"navigationBarTitleText": "zx-pull-refresh 下拉刷新",
@@ -1416,13 +1353,6 @@
 					"path": "sidebar/index",
 					"style": {
 						"navigationBarTitleText": "zx-sidebar 侧边栏",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "tree-select/index",
-					"style": {
-						"navigationBarTitleText": "zx-tree-select 树形选择",
 						"navigationStyle": "custom"
 					}
 				},
@@ -1497,34 +1427,6 @@
 					}
 				},
 				{
-					"path": "square-nine/index",
-					"style": {
-						"navigationBarTitleText": "zx-square-nine 九宫格抽奖",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "dollmachine/index",
-					"style": {
-						"navigationBarTitleText": "zx-dollmachine 娃娃机",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "guessgift/index",
-					"style": {
-						"navigationBarTitleText": "zx-guessgift 你藏我猜",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "shakedice/index",
-					"style": {
-						"navigationBarTitleText": "zx-shakedice 摇骰子",
-						"navigationStyle": "custom"
-					}
-				},
-				{
 					"path": "transition/index",
 					"style": {
 						"navigationBarTitleText": "zx-transition 过渡动画",
@@ -1532,100 +1434,9 @@
 					}
 				},
 				{
-					"path": "delivery-time/index",
-					"style": {
-						"navigationBarTitleText": "zx-delivery-time 配送时间",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "invoice/index",
-					"style": {
-						"navigationBarTitleText": "zx-invoice 发票",
-						"navigationStyle": "custom"
-					}
-				},
-				{
 					"path": "login/index",
 					"style": {
 						"navigationBarTitleText": "zx-login 登录",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "horizontal-scrolling/index",
-					"style": {
-						"navigationBarTitleText": "zx-horizontal-scrolling 水平滚动",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "gap/index",
-					"style": {
-						"navigationBarTitleText": "zx-gap 间隙",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "goods-filter/index",
-					"style": {
-						"navigationBarTitleText": "zx-goods-filter 商品筛选",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "quick-enter/index",
-					"style": {
-						"navigationBarTitleText": "zx-quick-enter 快速入口",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "search-history/index",
-					"style": {
-						"navigationBarTitleText": "zx-search-history 搜索历史",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "settle-bar/index",
-					"style": {
-						"navigationBarTitleText": "zx-settle-bar 结算栏",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "goods/sku2",
-					"style": {
-						"navigationBarTitleText": "zx-goods-sku2 商品规格2",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "goods-menu/index",
-					"style": {
-						"navigationBarTitleText": "zx-goods-menu 商品菜单",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "side-navbar/index",
-					"style": {
-						"navigationBarTitleText": "zx-side-navbar",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "trend-arrow/index",
-					"style": {
-						"navigationBarTitleText": "zx-trend-arrow",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "infinite-loading/index",
-					"style": {
-						"navigationBarTitleText": "zx-infinite-loading",
 						"navigationStyle": "custom"
 					}
 				}
@@ -1666,6 +1477,13 @@
 					"path": "login/login",
 					"style": {
 						"navigationBarTitleText": "用户登录",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "ai/bubble",
+					"style": {
+						"navigationBarTitleText": "bubble 对话气泡",
 						"navigationStyle": "custom"
 					}
 				}

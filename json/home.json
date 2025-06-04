@@ -242,6 +242,14 @@
     ]
   },
   {
+    "title": "AI组件",
+    "lists": [
+      { "title": "Bubble 对话气泡", "path": "/pages4/ai/bubble" },
+      { "title": "Conversations 管理对话", "path": "/pages4/ai/conversations" },
+      { "title": "Welcome 欢迎", "path": "/pages4/ai/welcome" }
+    ]
+  },
+  {
     "title": "其他组件",
     "lists": [
       { "title": "Animate 动画组件", "path": "/pages3/animate/index" },

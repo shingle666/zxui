@@ -60,7 +60,7 @@
     "uview-ui": "^2.0.38",
     "validator": "^13.15.0",
     "vant": "^4.9.19",
-    "vue": "3.4.21",
+    "vue": "^3.4.21",
     "vuex": "^4.1.0"
   },
   "devDependencies": {

@@ -55,7 +55,7 @@ const loadData = async () => {
   try {
     loading.value = true;
     const response = await uni.request({
-      url: 'https://cdn.mp.ac.cn/json/home.json',
+      url: 'https://cdn.mp.ac.cn/json/home.json?t='+Date.now(),
       method: 'GET'
     });
     
