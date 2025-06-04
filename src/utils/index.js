@@ -1,4 +1,47 @@
-import deepMerge from './deepMerge';
+/**
+ * 深度合并对象
+ * @param {Object} target 目标对象
+ * @param {Object} source 源对象
+ * @returns {Object} 合并后的对象
+ */
+function deepMerge(target = {}, source = {}) {
+  if (typeof target !== 'object' || typeof source !== 'object') {
+    return source || target;
+  }
+  
+  const result = { ...target };
+  
+  for (const key in source) {
+    if (Object.prototype.hasOwnProperty.call(source, key)) {
+      if (typeof source[key] === 'object' && !Array.isArray(source[key])) {
+        result[key] = deepMerge(result[key], source[key]);
+      } else {
+        result[key] = source[key];
+      }
+    }
+  }
+  
+  return result;
+}
+
+/**
+ * 判断是否为图片URL
+ * @param {String} url URL地址
+ * @returns {Boolean} 是否为图片URL
+ */
+const isImageUrl = (url) => {
+  if (!url || typeof url !== 'string') return false;
+  return /\.(jpeg|jpg|gif|png|svg|webp|jfif|bmp|dpg|avif)$/i.test(url);
+};
+
+/**
+ * 判断是否为纯对象
+ * @param {*} val 待判断的值
+ * @returns {Boolean} 是否为纯对象
+ */
+export const isPlainObject = (val) => {
+  return val !== null && typeof val === 'object' && val.constructor === Object;
+};
 
 /**
  * 生成随机字符串
@@ -103,6 +146,28 @@ function createNamespace(name) {
   return [prefixedName, bem];
 }
 
+/**
+ * 格式化时间
+ * @param {Date|String|Number} date 时间对象、时间字符串或时间戳
+ * @returns {String} 格式化后的时间字符串
+ */
+function formatTime(date) {
+  if (!date) return '';
+  const now = new Date();
+  const target = new Date(date);
+  const diff = now - target;
+  
+  if (diff < 60000) { // 1分钟内
+    return '刚刚';
+  } else if (diff < 3600000) { // 1小时内
+    return Math.floor(diff / 60000) + '分钟前';
+  } else if (diff < 86400000) { // 24小时内
+    return Math.floor(diff / 3600000) + '小时前';
+  } else {
+    return target.toLocaleDateString() + ' ' + target.toLocaleTimeString();
+  }
+}
+
 // 工具函数集合
 const util = {
   deepMerge,
@@ -110,7 +175,10 @@ const util = {
   sleep,
   os,
   addUnit,
-  createNamespace
+  createNamespace,
+  formatTime,
+  isImageUrl,
+  isPlainObject
 };
 
 export default util;
@@ -121,5 +189,7 @@ export {
   sleep,
   os,
   addUnit,
-  createNamespace
+  createNamespace,
+  formatTime,
+  isImageUrl
 };

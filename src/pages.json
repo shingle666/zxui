@@ -1486,6 +1486,76 @@
 						"navigationBarTitleText": "bubble 对话气泡",
 						"navigationStyle": "custom"
 					}
+				},
+				{
+					"path": "ai/conversations",
+					"style": {
+						"navigationBarTitleText": "conversations AI对话管理",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "ai/prompts",
+					"style": {
+						"navigationBarTitleText": "prompts AI提示集",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "ai/sender",
+					"style": {
+						"navigationBarTitleText": "Sender 输入框",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "ai/suggestion",
+					"style": {
+						"navigationBarTitleText": "Suggestion 快捷指令",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "ai/attachments",
+					"style": {
+						"navigationBarTitleText": "Attachments 输入附件",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "ai/thought-chain",
+					"style": {
+						"navigationBarTitleText": "ThoughtChain 思维链",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "ai/use-x-agent",
+					"style": {
+						"navigationBarTitleText": "useXAgent 模型调度",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "ai/x-stream",
+					"style": {
+						"navigationBarTitleText": "XStream 流处理",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "ai/x-request",
+					"style": {
+						"navigationBarTitleText": "XRequest AI请求",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "ai/use-x-chat",
+					"style": {
+						"navigationBarTitleText": "use-x-chat",
+						"navigationStyle": "custom"
+					}
 				}
 			]
 		}
