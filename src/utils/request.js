@@ -2,12 +2,16 @@
  * uni-app网络请求封装
  */
 
+import store from '../store/index.js'
+
 // 基础配置
-const BASE_URL = ''; // 设置API基础URL
-const TIMEOUT = 60000; // 请求超时时间，单位ms
-const HEADER = {
-  'content-type': 'application/json;charset=UTF-8'
-};
+// 从 store.getters.aiConfig 获取配置
+const BASE_URL = () => store.getters.aiConfig.baseURL; // 设置API基础URL
+const TIMEOUT = () => store.getters.aiConfig.timeout || 60000; // 请求超时时间，单位ms
+const HEADER = () => ({
+  'content-type': 'application/json;charset=UTF-8',
+  'authorization': `Bearer ${store.getters.aiConfig.apiKey}`
+});
 
 /**
  * 请求拦截器
@@ -107,16 +111,16 @@ function request(options = {}) {
       url: options.url || '',
       data: options.data || {},
       method: options.method || 'GET',
-      header: options.header || HEADER,
+      header: options.header || HEADER(),
       dataType: options.dataType || 'json',
       responseType: options.responseType || 'text',
-      timeout: options.timeout || TIMEOUT,
+      timeout: options.timeout || TIMEOUT(),
       ...options
     };
     
     // 拼接完整URL
     if (options.baseUrl !== false) {
-      config.url = (options.baseUrl || BASE_URL) + config.url;
+      config.url = (options.baseUrl || BASE_URL()) + config.url;
     }
     
     // 应用请求拦截器
@@ -216,7 +220,7 @@ function upload(url, options = {}) {
     const header = token ? { 'Authorization': `Bearer ${token}` } : {};
     
     uni.uploadFile({
-      url: (options.baseUrl || BASE_URL) + url,
+      url: (options.baseUrl || BASE_URL()) + url,
       filePath: options.filePath,
       name: options.name || 'file',
       formData: options.formData || {},
@@ -244,6 +248,9 @@ function upload(url, options = {}) {
   });
 }
 
+// 导出配置函数
+export { BASE_URL, TIMEOUT, HEADER };
+
 // 导出方法
 export default {
   request,
@@ -252,4 +259,4 @@ export default {
   put,
   delete: del,
   upload
-}; 
+};

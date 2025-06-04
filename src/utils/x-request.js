@@ -76,7 +76,6 @@ class XRequestClass {
     const requestData = {
       model,
       stream,
-      messages,
       ...otherParams
     }
     
@@ -168,7 +167,8 @@ class XRequestClass {
    */
   async _handleH5Stream(requestData, callbacks, transformStream, abortController) {
     const { onSuccess, onError, onUpdate } = callbacks
-    
+    console.log('H5 环境流式请求处理',JSON.stringify(requestData))
+
     try {
       const response = await fetch(this.baseURL, {
         method: 'POST',
@@ -324,7 +324,7 @@ class XRequestClass {
 /**
  * 创建 XRequest 实例的工厂函数
  */
-const XRequest = XRequestClass.init
+const XRequest = XRequestClass
 
 /**
  * 使用 XRequest 的 Vue 3 Composition API Hook

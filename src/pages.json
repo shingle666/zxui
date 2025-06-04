@@ -1556,6 +1556,13 @@
 						"navigationBarTitleText": "use-x-chat",
 						"navigationStyle": "custom"
 					}
+				},
+				{
+					"path": "ai/index",
+					"style": {
+						"navigationBarTitleText": "ai chat",
+						"navigationStyle": "custom"
+					}
 				}
 			]
 		}

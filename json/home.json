@@ -882,6 +882,10 @@
       {
         "title": "use-x-chat",
         "path": "/pages4/ai/use-x-chat"
+      },
+      {
+        "title": "ai-chat",
+        "path": "/pages4/ai/index"
       }
     ]
   },

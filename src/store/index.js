@@ -113,7 +113,6 @@ const store = createStore({
     user: state => {
       return state.user
     },
-
     // AI 配置相关 getters
     aiConfig: state => {
       return state.aiConfig

@@ -27,11 +27,10 @@
       <view class="zx-no-network__retry">
         <zx-button
           size="mini"
-          text="重试"
           type="primary"
           plain
           @click="retry"
-        ></zx-button>
+        >重试</zx-button>
       </view>
     </view>
   </zx-overlay>

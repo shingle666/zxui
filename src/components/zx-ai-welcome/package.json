@@ -1,0 +1,13 @@
+{
+  "name": "zx-ai-welcome",
+  "version": "1.0.0",
+  "description": "清晰传达给用户可实现的意图范围和预期功能的欢迎组件。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
