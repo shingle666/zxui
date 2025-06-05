@@ -244,7 +244,7 @@ const priceStyle = computed(() => {
 	}
 	
 	&__symbol {
-		margin-right: 2rpx;
+		margin-right: 10rpx;
 	}
 	
 	&__decimal {

@@ -310,7 +310,7 @@ const centerStyle = computed(() => {
 		return {
 			flex: 1,
 			paddingLeft: hasLeft ? '80rpx' : '0',
-			paddingRight: hasRight ? '80rpx' : '0'
+			paddingRight: hasRight ? '80rpx' : '80rpx'
 		};
 	}
 });
