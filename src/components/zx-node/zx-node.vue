@@ -133,8 +133,9 @@ const instance = getCurrentInstance()
 // 响应式数据
 const ctrl = ref({})
 
+const isiOS = false
 // #ifdef MP-WEIXIN
-const isiOS = uni.getDeviceInfo().system.includes('iOS')
+isiOS = uni.getSystemInfoSync().system.includes('iOS')
 // #endif
 
 // 内部变量
@@ -434,14 +435,18 @@ onBeforeUnmount(() => {
 // 暴露给模板使用的数据和方法
 defineExpose({
   ctrl,
+  // #ifdef MP-WEIXIN
   isiOS,
+  // #endif
   play,
   imgTap,
   imgLongTap,
   imgLoad,
   linkTap,
   mediaError,
+  // #ifdef MP-WEIXIN
   toJSON
+  // #endif
 })
 </script>
 <style>

@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-html",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "基于 mp-html 封装的 Vue 3 富文本解析组件，支持全端渲染",
   "main": "zx-html.vue",
   "keywords": [
@@ -26,7 +26,9 @@
   },
   "files": [
     "zx-html.vue",
-    "README.md"
+    "README.md",
+    "parser.js",
+    "CHANGELOG.md"
   ],
   "dependencies": {
     "@tanzhenxing/zx-node": "^1.0.1"
