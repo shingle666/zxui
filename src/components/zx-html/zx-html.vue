@@ -38,7 +38,7 @@
  */
 import { ref, reactive, watch, onMounted, onBeforeUnmount, nextTick, getCurrentInstance } from 'vue'
 
-import Parser from './parser'
+import Parser from './parser.js'
 
 const plugins = []
 // #ifdef APP-PLUS-NVUE

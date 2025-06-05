@@ -6,7 +6,7 @@
 		<view class="example-section">
 			<view class="section-title">基础用法</view>
 			<view class="section-content">
-				<ZxCountdown :time="60" />
+				<zx-countdown :time="60" />
 			</view>
 			<view class="section-desc">默认显示时:分:秒格式</view>
 		</view>
@@ -15,7 +15,7 @@
 		<view class="example-section">
 			<view class="section-title">显示天数</view>
 			<view class="section-content">
-				<ZxCountdown :time="86400" :days="true" />
+				<zx-countdown :time="86400" :days="true" />
 			</view>
 			<view class="section-desc">时间超过24小时时，可以显示天数</view>
 		</view>
@@ -24,7 +24,7 @@
 		<view class="example-section">
 			<view class="section-title">使用文字单位</view>
 			<view class="section-content">
-				<ZxCountdown :time="3600" :isColon="false" />
+				<zx-countdown :time="3600" :isColon="false" />
 			</view>
 			<view class="section-desc">使用时分秒文字替代冒号</view>
 		</view>
@@ -33,7 +33,7 @@
 		<view class="example-section">
 			<view class="section-title">自定义样式</view>
 			<view class="section-content">
-				<ZxCountdown 
+				<zx-countdown 
 					:time="3600" 
 					backgroundColor="#ff4757" 
 					borderColor="#ff4757" 
@@ -51,30 +51,30 @@
 			<view class="section-content themes-showcase">
 				<view class="theme-item">
 					<view class="theme-label">默认</view>
-					<ZxCountdown :time="3600" />
+					<zx-countdown :time="3600" />
 				</view>
 				<view class="theme-item">
 					<view class="theme-label">深色</view>
 					<view class="zx-theme-dark">
-						<ZxCountdown :time="3600" />
+						<zx-countdown :time="3600" />
 					</view>
 				</view>
 				<view class="theme-item">
 					<view class="theme-label">主色</view>
 					<view class="zx-theme-primary">
-						<ZxCountdown :time="3600" />
+						<zx-countdown :time="3600" />
 					</view>
 				</view>
 				<view class="theme-item">
 					<view class="theme-label">危险色</view>
 					<view class="zx-theme-danger">
-						<ZxCountdown :time="3600" />
+						<zx-countdown :time="3600" />
 					</view>
 				</view>
 				<view class="theme-item">
 					<view class="theme-label">成功色</view>
 					<view class="zx-theme-success">
-						<ZxCountdown :time="3600" />
+						<zx-countdown :time="3600" />
 					</view>
 				</view>
 			</view>
@@ -88,25 +88,25 @@
 				<view class="theme-item">
 					<view class="theme-label">扁平化</view>
 					<view class="zx-theme-primary zx-flat">
-						<ZxCountdown :time="3600" />
+						<zx-countdown :time="3600" />
 					</view>
 				</view>
 				<view class="theme-item">
 					<view class="theme-label">圆角</view>
 					<view class="zx-theme-danger zx-rounded">
-						<ZxCountdown :time="3600" />
+						<zx-countdown :time="3600" />
 					</view>
 				</view>
 				<view class="theme-item">
 					<view class="theme-label">阴影</view>
 					<view class="zx-theme-success zx-shadowed">
-						<ZxCountdown :time="3600" />
+						<zx-countdown :time="3600" />
 					</view>
 				</view>
 				<view class="theme-item">
 					<view class="theme-label">复合效果</view>
 					<view class="zx-theme-dark zx-rounded zx-shadowed">
-						<ZxCountdown :time="3600" />
+						<zx-countdown :time="3600" />
 					</view>
 				</view>
 			</view>
@@ -117,7 +117,7 @@
 		<view class="example-section">
 			<view class="section-title">显示毫秒</view>
 			<view class="section-content">
-				<ZxCountdown :time="60" :isMs="true" />
+				<zx-countdown :time="60" :isMs="true" />
 			</view>
 			<view class="section-desc">支持显示毫秒动画效果</view>
 		</view>
@@ -126,7 +126,7 @@
 		<view class="example-section">
 			<view class="section-title">不显示前导零</view>
 			<view class="section-content">
-				<ZxCountdown :time="3661" :showZero="false" />
+				<zx-countdown :time="3661" :showZero="false" />
 			</view>
 			<view class="section-desc">设置showZero为false可以不显示前导零</view>
 		</view>
@@ -135,7 +135,7 @@
 		<view class="example-section">
 			<view class="section-title">使用时间戳</view>
 			<view class="section-content">
-				<ZxCountdown :timestamp="targetTimestamp" />
+				<zx-countdown :timestamp="targetTimestamp" />
 			</view>
 			<view class="section-desc">使用目标时间戳，自动计算倒计时</view>
 		</view>
@@ -144,7 +144,7 @@
 		<view class="example-section">
 			<view class="section-title">不同的更新间隔</view>
 			<view class="section-content">
-				<ZxCountdown :time="60" :interval="500" />
+				<zx-countdown :time="60" :interval="500" />
 			</view>
 			<view class="section-desc">设置不同的更新频率（例如500ms）</view>
 		</view>
@@ -154,7 +154,7 @@
 			<view class="section-title">暂停和恢复</view>
 			<view class="section-content control-panel">
 				<view class="zx-theme-primary zx-rounded zx-shadowed">
-					<ZxCountdown ref="countdownRef" :time="180" />
+					<zx-countdown ref="countdownRef" :time="180" />
 				</view>
 				<view class="btn-group">
 					<button class="btn" @click="handlePause">暂停</button>
@@ -171,7 +171,7 @@
 			<view class="section-title">自定义格式</view>
 			<view class="section-content">
 				<view class="zx-theme-dark zx-rounded">
-					<ZxCountdown 
+					<zx-countdown 
 						:time="36000" 
 						:isColon="false"
 						:format="{day:'D',hour:'H',minute:'M',second:'S'}" 
@@ -187,7 +187,7 @@
 			<view class="section-title">不自动开始</view>
 			<view class="section-content control-panel">
 				<view class="zx-theme-success zx-rounded">
-					<ZxCountdown :time="60" :autoStart="false" ref="manualStartRef" />
+					<zx-countdown :time="60" :autoStart="false" ref="manualStartRef" />
 				</view>
 				<button class="btn start-btn" @click="handleStart">开始</button>
 			</view>
@@ -199,7 +199,7 @@
 			<view class="section-title">事件回调</view>
 			<view class="section-content control-panel">
 				<view class="zx-theme-danger zx-rounded">
-					<ZxCountdown 
+					<zx-countdown 
 						:time="10" 
 						:returnTime="true" 
 						@time="onTimeChange" 
