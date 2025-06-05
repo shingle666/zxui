@@ -1,0 +1,22 @@
+{
+  "name": "@tanzhenxing/zx-footer-bar",
+  "version": "1.0.5",
+  "description": "zx-footer-bar 底部栏组件",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-footer-bar",
+    "uni-app",
+    "底部栏",
+    "底部栏组件",
+    "底部栏功能"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@tanzhenxing/zx-safe-bottom": "^1.0.5"
+  }
+}

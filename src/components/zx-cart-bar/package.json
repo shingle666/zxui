@@ -1,0 +1,13 @@
+{
+  "name": "zx-cart-bar",
+  "version": "1.0.0",
+  "description": "购物车底部栏组件，用于展示购物车商品信息、价格统计和结算功能。支持全选操作、商品数量显示、价格计算等功能。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
