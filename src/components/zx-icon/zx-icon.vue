@@ -240,7 +240,6 @@ const isSvg = computed(() => {
       const base64String = stringToBase64(props.name);
       if (base64String) {
         svgBase64.value = `data:image/svg+xml;base64,${base64String}`;
-        console.log('SVG字符串转换base64成功',svgBase64.value);
       } else {
         console.error('SVG字符串转换base64失败');
         svgBase64.value = '';
@@ -293,7 +292,7 @@ const onImageError = (e) => {
 
 // SVG加载成功事件
 const onSvgLoad = (e) => {
-  console.log('SVG加载成功');
+  //console.log('SVG加载成功');
   proxy.$emit("svgLoad", e);
 };
 
