@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-navbar",
-  "version": "1.1.2",
+  "version": "1.1.4",
   "description": "一个功能强大、高度可定制的 uni-app 导航栏组件，支持透明背景、沉浸式模式、主题切换等高级功能",
   "main": "zx-navbar.vue",
   "keywords": [
@@ -37,5 +37,10 @@
       "初始版本发布",
       "基础导航栏功能"
     ]
+  },
+  "dependencies": {
+    "@tanzhenxing/zx-icon": "^1.0.8",
+    "@tanzhenxing/zx-loading": "^1.0.2",
+    "@tanzhenxing/zx-status-bar": "^1.0.8"
   }
 }
