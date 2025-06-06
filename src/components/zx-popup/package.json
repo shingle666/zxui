@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-popup",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "zx-popup 是一个功能完善的弹出层组件，支持多种弹出方式和动画效果。组件兼容 H5、小程序、App 等多个平台。",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,6 @@
   "author": "tanzhenxing",
   "license": "ISC",
   "dependencies": {
-    "@tanzhenxing/zx-transition": "^1.0.6"
+    "@tanzhenxing/zx-transition": "^1.0.7"
   }
 }
