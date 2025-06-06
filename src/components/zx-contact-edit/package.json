@@ -1,0 +1,18 @@
+{
+  "name": "@tanzhenxing/zx-contact-edit",
+  "version": "1.0.2",
+  "description": "`zx-contact-edit` 联系人编辑组件用于编辑并保存联系人信息，支持添加和编辑两种模式。该组件支持H5、小程序和App多端平台，采用Vue3 setup语法糖实现。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-contact-edit",
+    "uni-app",
+    "联系人编辑",
+    "联系人编辑组件",
+    "联系人编辑功能"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@tanzhenxing/zx-contact-card",
+  "version": "1.0.2",
+  "description": "`zx-contact-card` 联系人卡片组件以卡片的形式展示联系人信息，支持添加和编辑两种模式。该组件支持H5、小程序和App多端平台，采用Vue3 setup语法糖实现。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-contact-card",
+    "uni-app",
+    "联系人卡片",
+    "联系人卡片组件",
+    "联系人卡片功能"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "dependencies": {
+    "@tanzhenxing/zx-icon": "^1.0.11"
+  }
+}

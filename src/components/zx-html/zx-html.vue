@@ -37,7 +37,7 @@
  * @event {Function} error 媒体加载出错时触发
  */
 import { ref, reactive, watch, onMounted, onBeforeUnmount, nextTick, getCurrentInstance } from 'vue'
-
+import zxNode from './zx-node.vue'
 import Parser from './parser.js'
 
 const plugins = []

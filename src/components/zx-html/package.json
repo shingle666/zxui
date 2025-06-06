@@ -28,7 +28,8 @@
     "zx-html.vue",
     "README.md",
     "parser.js",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "zx-node.vue"
   ],
   "dependencies": {
     "@tanzhenxing/zx-node": "^1.0.2"
