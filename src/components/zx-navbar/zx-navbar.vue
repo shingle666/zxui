@@ -1,5 +1,5 @@
 <template>
-	<view class="zx-navbar" :class="[themeClass]" :style="{borderBottom:border?'1rpx solid '+borderColor:''}">
+	<view class="zx-navbar" :class="[themeClass]" :style="{ borderBottom: border ? '1rpx solid ' + borderColor : '' }">
 		<!-- 固定在顶部时的占位 -->
 		<view v-if="fixed && placeholder" class="zx-navbar__placeholder"
 			:style="{ height: barHeight + 'px', backgroundColor: bgColor }"></view>
@@ -33,7 +33,7 @@
 				<view class="zx-navbar__content__center" :style="centerStyle">
 					<slot name="center">
 						<text v-if="title" class="zx-line-1 zx-navbar__content__title"
-							:style="[{ width: titleWidth }, titleStyle]" :aria-label="`页面标题：${title}`">{{ title
+							:style="[{ width: titleWidth }, titleStyle]">{{ title
 							}}</text>
 						<view v-if="subtitle" class="zx-navbar__content__subtitle">
 							<text :style="subtitleStyle">{{ subtitle }}</text>
@@ -242,6 +242,11 @@ const props = defineProps({
 		type: [String, Object],
 		default: null
 	},
+	// 标题的位置
+	titlePosition: {
+		type: String,
+		default: 'absolute'
+	},
 	// 副标题的样式，对象或字符串
 	subtitleStyle: {
 		type: [String, Object],
@@ -297,8 +302,7 @@ const centerStyle = computed(() => {
 	if (!hasLeft && !hasRight) {
 		return { flex: 1 };
 	} else if (hasLeft && hasRight) {
-		return {
-			position: 'absolute',
+		let styles = {
 			left: '80rpx',
 			right: '80rpx',
 			display: 'flex',
@@ -306,6 +310,21 @@ const centerStyle = computed(() => {
 			alignItems: 'center',
 			justifyContent: 'center'
 		};
+		switch (props.titlePosition) {
+			case 'absolute':
+			case 'center':
+				styles.position = props.titlePosition;
+				styles.textAlign = 'center';
+				break;
+				case 'left':
+				styles.marginLeft = '100rpx';
+				break;
+			default:
+				styles.position = props.titlePosition;
+				break;
+
+		}
+		return styles;
 	} else {
 		return {
 			flex: 1,
@@ -503,7 +522,6 @@ watch(() => props.theme, (newTheme) => {
 		}
 
 		&__title {
-			text-align: center;
 			font-size: 36rpx;
 			font-weight: 500;
 			color: #303133;

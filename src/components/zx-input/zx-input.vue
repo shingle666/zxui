@@ -6,59 +6,25 @@
     </view>
 
     <!-- 输入框 -->
-    <input
-      class="zx-input"
-      :style="getInputStyle"
-      :value="modelValue"
-      :type="type"
-      :name="name"
-      :disabled="disabled"
-      :password="showPassword"
-      :placeholder="placeholder"
-      :placeholderStyle="placeholderStyle"
-      :placeholderClass="placeholderClass"
-      :maxlength="maxlength"
-      :cursorSpacing="cursorSpacing"
-      :cursorColor="cursorColor"
-      :autoFocus="autoFocus"
-      :focus="focus"
-      :cursor="cursor"
-      :confirmType="confirmType"
-      :alwaysEmbed="alwaysEmbed"
-      :confirmHold="confirmHold"
-      :selectionStart="selectionStart"
-      :selectionEnd="selectionEnd"
-      :adjustPosition="adjustPosition"
-      :holdKeyboard="holdKeyboard"
-      :safePasswordCertPath="safePasswordCertPath"
-      :safePasswordLength="safePasswordLength"
-      :safePasswordTimeStamp="safePasswordTimeStamp"
-      :safePasswordNonce="safePasswordNonce"
-      :safePasswordSalt="safePasswordSalt"
-      :safePasswordCustomHash="safePasswordCustomHash"
-      @keyboardheightchange="keyBoardHeightChange"
-      @confirm="onConfirm"
-      @nicknamereview="nicknameReview"
-      @input="onInput"
-      @focus="onFocus"
-      @blur="onBlur"
-    />
+    <input class="zx-input" :style="getInputStyle" :value="modelValue" :type="type" :name="name" :disabled="disabled"
+      :password="showPassword" :placeholder="placeholder" :placeholderStyle="placeholderStyle"
+      :placeholderClass="placeholderClass" :maxlength="maxlength" :cursorSpacing="cursorSpacing"
+      :cursorColor="cursorColor" :autoFocus="autoFocus" :focus="focus" :cursor="cursor" :confirmType="confirmType"
+      :alwaysEmbed="alwaysEmbed" :confirmHold="confirmHold" :selectionStart="selectionStart"
+      :selectionEnd="selectionEnd" :adjustPosition="adjustPosition" :holdKeyboard="holdKeyboard"
+      :safePasswordCertPath="safePasswordCertPath" :safePasswordLength="safePasswordLength"
+      :safePasswordTimeStamp="safePasswordTimeStamp" :safePasswordNonce="safePasswordNonce"
+      :safePasswordSalt="safePasswordSalt" :safePasswordCustomHash="safePasswordCustomHash"
+      @keyboardheightchange="keyBoardHeightChange" @confirm="onConfirm" @nicknamereview="nicknameReview"
+      @input="onInput" @focus="onFocus" @blur="onBlur" />
 
     <!-- 清除按钮 -->
-    <view
-      class="zx-input-clear"
-      v-if="clearable && modelValue && !disabled && isFocused"
-      @click="onClear"
-    >
+    <view class="zx-input-clear" v-if="clearable && modelValue && !disabled && isFocused" @click="onClear">
       <zx-icon name="close" size="30rpx" />
     </view>
 
     <!-- 密码显示切换 -->
-    <view
-      class="zx-input-password-eye"
-      v-if="password && !disabled"
-      @click="togglePasswordVisible"
-    >
+    <view class="zx-input-password-eye" v-if="password && !disabled" @click="togglePasswordVisible">
       <zx-icon :name="showPassword ? 'eye-off' : 'eye'" :class="showPassword ? '' : 'uni-eye-active'" size="30rpx" />
     </view>
 
@@ -71,7 +37,6 @@
 
 <script setup>
 import { ref, getCurrentInstance, computed, watch } from "vue";
-import validator from "validator";
 
 const { proxy } = getCurrentInstance();
 
@@ -215,7 +180,7 @@ const props = defineProps({
     type: String,
     default: "",
   },
-  // 数据验证规则，使用validator库中的方法名
+  // 数据验证规则
   validate: {
     type: String,
     default: "",
@@ -361,17 +326,6 @@ function onBlur(e) {
   isActive.value = false;
   isFocused.value = false;
 
-  // 验证输入内容
-  if (
-    props.validate &&
-    props.validate in validator &&
-    !validator[props.validate](e.detail.value)
-  ) {
-    isError.value = true;
-  } else {
-    isError.value = false;
-  }
-
   emit("blur", e);
 }
 
@@ -412,7 +366,7 @@ function onClickSuffixIcon(e) {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .zx-input-container {
   position: relative;
   display: flex;

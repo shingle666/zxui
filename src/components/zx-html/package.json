@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-html",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "基于 mp-html 封装的 Vue 3 富文本解析组件，支持全端渲染",
   "main": "zx-html.vue",
   "keywords": [

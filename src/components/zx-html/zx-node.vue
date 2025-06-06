@@ -113,6 +113,7 @@ module.exports = {
 </script>
 <script setup>
 import { ref, reactive, onMounted, onBeforeUnmount, nextTick, getCurrentInstance } from 'vue'
+import zxNode from './zx-node.vue'
 
 // 定义 props
 const props = defineProps({
