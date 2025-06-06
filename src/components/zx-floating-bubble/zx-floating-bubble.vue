@@ -1,15 +1,6 @@
 <template>
-  <view
-    v-if="show"
-    ref="rootRef"
-    class="zx-floating-bubble"
-    :style="rootStyle"
-    @touchstart="onTouchStart"
-    @touchmove.stop.prevent="onTouchMove"
-    @touchend="onTouchEnd"
-    @touchcancel="onTouchEnd"
-    @click="onClick"
-  >
+  <view v-if="show" ref="rootRef" class="zx-floating-bubble" :style="rootStyle" @touchstart="onTouchStart"
+    @touchmove.stop.prevent="onTouchMove" @touchend="onTouchEnd" @touchcancel="onTouchEnd" @click="onClick">
     <slot>
       <zx-icon :name="icon" :custom-style="{ fontSize: '28px' }" />
     </slot>
@@ -18,7 +9,6 @@
 
 <script setup>
 import { ref, computed, onMounted, nextTick, watch, getCurrentInstance } from 'vue';
-import zxIcon from '../zx-icon/zx-icon.vue';
 
 const props = defineProps({
   // 控制气泡位置, v-model:offset
@@ -74,7 +64,7 @@ const show = computed({
 });
 
 const getWindowInfo = () => {
-  const info = uni.getSystemInfoSync();
+  const info = uni.getWindowInfo();
   return {
     windowWidth: info.windowWidth,
     windowHeight: info.windowHeight
@@ -113,17 +103,17 @@ const updateState = async () => {
   let rect = null;
   // #ifndef APP-NVUE
   rect = await new Promise(resolve => {
-      uni.createSelectorQuery().in(instance).select('.zx-floating-bubble').boundingClientRect(data => {
-          resolve(data)
-      }).exec();
+    uni.createSelectorQuery().in(instance).select('.zx-floating-bubble').boundingClientRect(data => {
+      resolve(data)
+    }).exec();
   })
   // #endif
   // #ifdef APP-NVUE
   // nvue 通过 ref 获取元素尺寸
   rect = await new Promise(resolve => {
-      dom.getComponentRect(rootRef.value, data => {
-          resolve(data.size);
-      });
+    dom.getComponentRect(rootRef.value, data => {
+      resolve(data.size);
+    });
   });
   // #endif
 
@@ -172,7 +162,7 @@ const onTouchMove = (e) => {
   touch.deltaY = touchInfo.clientY - touch.startY;
 
   if (Math.abs(touch.deltaX) > 5 || Math.abs(touch.deltaY) > 5) {
-      touch.isTap = false;
+    touch.isTap = false;
   }
 
   if (!touch.isTap) {
@@ -229,15 +219,15 @@ onMounted(() => {
     initialized = true;
   });
   uni.onWindowResize(() => {
-      windowInfo.value = getWindowInfo();
-      updateState();
+    windowInfo.value = getWindowInfo();
+    updateState();
   });
 });
 
 watch(() => [windowInfo.value.windowWidth, windowInfo.value.windowHeight, gapX.value, gapY.value, props.offset, props.modelValue], () => {
-    if(props.modelValue) {
-        updateState();
-    }
+  if (props.modelValue) {
+    updateState();
+  }
 }, {
   deep: true
 });
@@ -248,9 +238,9 @@ const dom = weex.requireModule('dom');
 // #endif
 
 defineExpose({
-    show: () => show.value = true,
-    hide: () => show.value = false,
-    toggle: () => show.value = !show.value
+  show: () => show.value = true,
+  hide: () => show.value = false,
+  toggle: () => show.value = !show.value
 })
 
 </script>
@@ -272,9 +262,9 @@ defineExpose({
   touch-action: none;
   background: var(--zx-primary-color, #007aff);
   color: var(--zx-white, #ffffff);
-  border-radius: 50%; // var(--zx-radius-max, 50%)
+  border-radius: 50%;
   z-index: 999;
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); // var(--zx-duration-base, 0.3s)
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 
   &:active {
     opacity: 0.8;

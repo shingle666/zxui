@@ -1,19 +1,19 @@
 {
-  "name": "@tanzhenxing/zx-fab",
-  "version": "1.0.2",
+  "name": "@tanzhenxing/zx-fixed-button",
+  "version": "1.0.4",
+  "description": "悬浮按钮组件，采用卡槽设计，支持自定义悬浮内容和位置。",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "悬浮按钮",
-    "fab",
-    "悬浮按钮组件",
-    "fab组件"
+    "vue",
+    "fixed",
+    "button"
   ],
   "author": "tanzhenxing",
   "license": "ISC",
-  "description": "悬浮按钮",
+  "type": "commonjs",
   "dependencies": {
     "@tanzhenxing/zx-icon": "^1.0.11"
   }

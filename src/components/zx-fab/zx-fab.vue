@@ -1,78 +1,69 @@
 <template>
 	<view class="zx-cursor-point">
-		<view v-if="isShow && popMenu && closeOnClickOutside" class="zx-fab__mask" :style="{ zIndex: props.zIndex - 1 }" @click="close"></view>
+		<view v-if="isShow && popMenu && closeOnClickOutside" class="zx-fab__mask" :style="{ zIndex: props.zIndex - 1 }"
+			@click="close"></view>
 		<view v-if="popMenu && (leftBottom || rightBottom || leftTop || rightTop) && content.length > 0"
-			:class="{'zx-fab--leftBottom': leftBottom,'zx-fab--rightBottom': rightBottom,'zx-fab--leftTop': leftTop,'zx-fab--rightTop': rightTop}"
-			class="zx-fab" 
-			:style="{ 
+			:class="{ 'zx-fab--leftBottom': leftBottom, 'zx-fab--rightBottom': rightBottom, 'zx-fab--leftTop': leftTop, 'zx-fab--rightTop': rightTop }"
+			class="zx-fab" :style="{
 				zIndex: props.zIndex,
 				borderRadius: borderRadiusSize,
 				boxShadow: props.shadow ? '0 1px 5px 2px rgba(0, 0, 0, 0.3)' : 'none',
 				...getPositionStyle
 			}">
 			<view :class="{
-					'zx-fab__content--left': horizontal === 'left',
-					'zx-fab__content--right': horizontal === 'right',
-					'zx-fab__content--flexDirection': direction === 'vertical',
-					'zx-fab__content--flexDirectionStart': flexDirectionStart,
-					'zx-fab__content--flexDirectionEnd': flexDirectionEnd,
-					'zx-fab__content--other-platform': !isAndroidNvue
-				}"
-				:style="{ 
-					width: boxWidth, 
-					height: boxHeight, 
+				'zx-fab__content--left': horizontal === 'left',
+				'zx-fab__content--right': horizontal === 'right',
+				'zx-fab__content--flexDirection': direction === 'vertical',
+				'zx-fab__content--flexDirectionStart': flexDirectionStart,
+				'zx-fab__content--flexDirectionEnd': flexDirectionEnd,
+				'zx-fab__content--other-platform': !isAndroidNvue
+			}" :style="{
+					width: boxWidth,
+					height: boxHeight,
 					backgroundColor: styles.backgroundColor,
 					borderRadius: borderRadiusSize,
 					boxShadow: !isAndroidNvue && props.shadow ? '0 1px 5px 2px rgba(0, 0, 0, 0.3)' : 'none',
-					transitionDuration: props.animationDuration/1000 + 's'
-				}"
-				class="zx-fab__content" elevation="5">
-				<view v-if="flexDirectionStart || horizontalLeft" class="zx-fab__item zx-fab__item--first" :style="{ width: mainButtonStyle.width }"/>
-				<view v-for="(item, index) in content" :key="index" 
-					:class="{ 
-						'zx-fab__item--active': isShow,
-						'zx-fab__item--scale': props.animationType === 'scale',
-						'zx-fab__item--fade': props.animationType === 'fade',
-						'zx-fab__item--slide-x': props.animationType === 'slide' && props.direction === 'horizontal',
-						'zx-fab__item--slide-y': props.animationType === 'slide' && props.direction === 'vertical'
-					}" 
-					class="zx-fab__item" 
-					@click="onItemClick(index, item)"
-					:style="{ 
+					transitionDuration: props.animationDuration / 1000 + 's'
+				}" class="zx-fab__content" elevation="5">
+				<view v-if="flexDirectionStart || horizontalLeft" class="zx-fab__item zx-fab__item--first"
+					:style="{ width: mainButtonStyle.width }" />
+				<view v-for="(item, index) in content" :key="index" :class="{
+					'zx-fab__item--active': isShow,
+					'zx-fab__item--scale': props.animationType === 'scale',
+					'zx-fab__item--fade': props.animationType === 'fade',
+					'zx-fab__item--slide-x': props.animationType === 'slide' && props.direction === 'horizontal',
+					'zx-fab__item--slide-y': props.animationType === 'slide' && props.direction === 'vertical'
+				}" class="zx-fab__item" @click="onItemClick(index, item)" :style="{
 						transitionDelay: isShow ? (index * 50) + 'ms' : '0ms',
 						width: mainButtonStyle.width,
 						height: props.itemButtonSize + 'px',
-						transitionDuration: props.animationDuration/1000 + 's'
+						transitionDuration: props.animationDuration / 1000 + 's'
 					}">
-					<zx-icon :name="item.active ? item.selectedIcon : item.icon" 
-					:size="item.iconSize || '55rpx'"
-					:color="item.active ? styles.selectedColor : styles.color"
-					:labelColor="item.active ? styles.selectedColor : styles.color"
-					:label="item.text" space="15rpx"></zx-icon>
+					<zx-icon :name="item.active ? item.selectedIcon : item.icon" :size="item.iconSize || '55rpx'"
+						:color="item.active ? styles.selectedColor : styles.color"
+						:labelColor="item.active ? styles.selectedColor : styles.color" :label="item.text"
+						space="15rpx"></zx-icon>
 				</view>
-				<view v-if="flexDirectionEnd || horizontalRight" class="zx-fab__item zx-fab__item--first" :style="{ width: mainButtonStyle.width }"/>
+				<view v-if="flexDirectionEnd || horizontalRight" class="zx-fab__item zx-fab__item--first"
+					:style="{ width: mainButtonStyle.width }" />
 			</view>
 		</view>
 		<view :class="{
-				'zx-fab__circle--leftBottom': leftBottom,
-				'zx-fab__circle--rightBottom': rightBottom,
-				'zx-fab__circle--leftTop': leftTop,
-				'zx-fab__circle--rightTop': rightTop,
-				'zx-fab__content--other-platform': !isAndroidNvue
-			}"
-			class="zx-fab__circle zx-fab__plus"
-			:style="{ 
-				...mainButtonStyle, 
+			'zx-fab__circle--leftBottom': leftBottom,
+			'zx-fab__circle--rightBottom': rightBottom,
+			'zx-fab__circle--leftTop': leftTop,
+			'zx-fab__circle--rightTop': rightTop,
+			'zx-fab__content--other-platform': !isAndroidNvue
+		}" class="zx-fab__circle zx-fab__plus" :style="{
+				...mainButtonStyle,
 				...getPositionStyle,
 				zIndex: props.zIndex + 1,
 				boxShadow: props.shadow ? '0 1px 5px 2px rgba(0, 0, 0, 0.3)' : 'none',
 				borderRadius: borderRadiusSize,
-				transitionDuration: props.animationDuration/1000 + 's'
-			}"
-			@click="onClick"
-		>
-			<zx-icon class="fab-circle-icon" :name="mainIcon" :color="styles.iconColor" size="30" 
-				:style="{ transitionDuration: props.animationDuration/1000 + 's' }"
+				transitionDuration: props.animationDuration / 1000 + 's'
+			}" @click="onClick">
+			<zx-icon class="fab-circle-icon" :name="mainIcon" :color="styles.iconColor" size="30"
+				:style="{ transitionDuration: props.animationDuration / 1000 + 's' }"
 				:class="{ 'zx-fab__plus--active': isShow && content.length > 0 }"></zx-icon>
 		</view>
 	</view>
@@ -128,7 +119,7 @@ const props = defineProps({
 		default: 55
 	},
 	itemButtonSize: {
-		type: [Number, String], 
+		type: [Number, String],
 		default: 45
 	},
 	shadow: {
@@ -304,10 +295,10 @@ const onClick = () => {
 	if (!props.popMenu || isAnimating.value) {
 		return;
 	}
-	
+
 	isAnimating.value = true;
 	isShow.value = !isShow.value;
-	
+
 	setTimeout(() => {
 		isAnimating.value = false;
 	}, props.animationDuration);
@@ -315,27 +306,27 @@ const onClick = () => {
 
 const open = () => {
 	if (isShow.value || isAnimating.value) return;
-	
+
 	isAnimating.value = true;
 	isShow.value = true;
-	
+
 	setTimeout(() => {
 		isAnimating.value = false;
 	}, props.animationDuration);
-	
+
 	emit('open');
 };
 
 const close = () => {
 	if (!isShow.value || isAnimating.value) return;
-	
+
 	isAnimating.value = true;
 	isShow.value = false;
-	
+
 	setTimeout(() => {
 		isAnimating.value = false;
 	}, props.animationDuration);
-	
+
 	emit('close');
 };
 

@@ -1439,6 +1439,13 @@
 						"navigationBarTitleText": "zx-login 登录",
 						"navigationStyle": "custom"
 					}
+				},
+				{
+					"path": "fixed-button/index",
+					"style": {
+						"navigationBarTitleText": "zx-fixed-button 悬浮按钮",
+						"navigationStyle": "custom"
+					}
 				}
 			]
 		},

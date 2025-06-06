@@ -1,13 +1,16 @@
 {
-  "name": "zx-fixed-nav",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-fixed-nav",
+  "version": "1.0.2",
   "description": "`zx-fixed-nav` 是一个悬浮导航组件，提供悬浮收起体验交互，用于快捷导航。支持 H5、小程序、App 多端。",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs"
+  "keywords": [
+    "悬浮",
+    "导航",
+    "悬浮导航"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC"
 }
