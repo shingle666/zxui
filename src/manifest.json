@@ -121,7 +121,8 @@
             "urlCheck" : true,
             "minified" : true
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+		"lazyCodeLoading": "requiredComponents"
     },
     "mp-alipay" : {
         "usingComponents" : true

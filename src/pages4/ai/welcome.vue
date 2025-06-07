@@ -162,6 +162,11 @@
 
 <script setup>
 import { ref } from 'vue'
+// 引入组件
+import ZxNavbar from '@/components/zx-navbar/zx-navbar.vue'
+import ZxBacktop from '@/components/zx-backtop/zx-backtop.vue'
+import ZxAiWelcome from '@/components/zx-ai-welcome/zx-ai-welcome.vue'
+
 
 // 定义页面选项
 defineOptions({

@@ -51,6 +51,10 @@
 import { ref, computed } from "vue";
 import { onLoad, onPageScroll } from "@dcloudio/uni-app";
 import { useStore } from 'vuex';
+import zxTabbar from '@tanzhenxing/zx-tabbar/zx-tabbar.vue';
+import zxBacktop from '@tanzhenxing/zx-backtop/zx-backtop.vue';
+import zxSearchBar from '@tanzhenxing/zx-search-bar/zx-search-bar.vue';
+
 
 const title = ref("AI智能组件");
 const scrollTop = ref(0);

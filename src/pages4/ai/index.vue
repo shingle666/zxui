@@ -250,6 +250,17 @@
 import { ref, computed, nextTick, onMounted, watch } from 'vue'
 import { onLoad, onShow, onHide } from '@dcloudio/uni-app'
 import aiAPI from '@/utils/ai-api.js'
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'
+import zxNoNetwork from '@tanzhenxing/zx-no-network/zx-no-network.vue'
+import zxLoading from '@tanzhenxing/zx-loading/zx-loading.vue'
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+import zxAiSender from '@tanzhenxing/zx-ai-sender/zx-ai-sender.vue'
+import zxAiWelcome from '@tanzhenxing/zx-ai-welcome/zx-ai-welcome.vue'
+import zxPopup from '@tanzhenxing/zx-popup/zx-popup.vue'
+import zxSelect from '@tanzhenxing/zx-select/zx-select.vue'
+import zxSlider from '@tanzhenxing/zx-slider/zx-slider.vue'
+import zxInputNumber from '@tanzhenxing/zx-input-number/zx-input-number.vue'
+import zxSwitch from '@tanzhenxing/zx-switch/zx-switch.vue'
 
 // 页面标题
 uni.setNavigationBarTitle({

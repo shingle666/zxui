@@ -63,6 +63,7 @@ import { ref, computed, nextTick, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useXChat } from '@/utils/use-x-chat.js'
 import XRequest from '@/utils/x-request.js'
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'
 
 // 获取store实例
 const store = useStore()

@@ -113,6 +113,8 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import useXAgent from '@/utils/use-x-agent.js'
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'
+
 
 // 基础用法
 const basicMessage = ref('')

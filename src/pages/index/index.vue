@@ -45,6 +45,10 @@
 import { ref, computed } from "vue";
 import { onLoad, onPageScroll } from "@dcloudio/uni-app";
 import { useStore } from 'vuex';
+import zxSearchBar from '@tanzhenxing/zx-search-bar/zx-search-bar.vue';
+import zxBacktop from '@tanzhenxing/zx-backtop/zx-backtop.vue';
+import zxTabbar from '@tanzhenxing/zx-tabbar/zx-tabbar.vue';
+
 
 const scrollTop = ref(0);
 const datalist = ref([]);

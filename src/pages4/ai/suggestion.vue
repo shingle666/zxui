@@ -156,6 +156,9 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+// 引入组件
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'
+import zxAiSuggestion from '@tanzhenxing/zx-ai-suggestion/zx-ai-suggestion.vue'
 
 // 基础用法
 const basicValue = ref('')

@@ -105,6 +105,11 @@
 
 <script setup>
 import { ref, h } from 'vue'
+import zxAiPrompts from '@tanzhenxing/zx-ai-prompts/zx-ai-prompts.vue'
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue'
+import zxPopup from '@tanzhenxing/zx-popup/zx-popup.vue'
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'
+
 
 // 页面状态
 const showResult = ref(false)

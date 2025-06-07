@@ -138,6 +138,8 @@
 <script setup>
 import { ref, computed, onUnmounted } from 'vue'
 import { useXStream } from '@/utils/x-stream.js'
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'
+
 
 // SSE 演示
 const sseDemo = useXStream()

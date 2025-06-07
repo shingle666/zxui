@@ -145,6 +145,7 @@
 import { ref, reactive } from 'vue';
 import ZxAiAttachments from '@tanzhenxing/zx-ai-attachments/zx-ai-attachments.vue';
 
+
 // 基础附件数据
 const basicItems = ref([
   {

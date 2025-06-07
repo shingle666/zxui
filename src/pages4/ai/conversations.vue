@@ -112,6 +112,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
+import zxAiConversations from '@tanzhenxing/zx-ai-conversations/zx-ai-conversations.vue'
 
 // 页面状态
 const activeKey1 = ref('conv1')

@@ -165,6 +165,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import zxAiBubble from '@tanzhenxing/zx-ai-bubble/zx-ai-bubble.vue'
 
 // 响应式数据
 const loading = ref(false)

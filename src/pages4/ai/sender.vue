@@ -226,6 +226,10 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
+import zxToast from '@tanzhenxing/zx-toast/zx-toast.vue'
+import zxAiSender from '@tanzhenxing/zx-ai-sender/zx-ai-sender.vue'
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'
+
 
 // 响应式数据
 const basicValue = ref('')
