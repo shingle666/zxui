@@ -1,0 +1,18 @@
+{
+  "name": "@tanzhenxing/zx-tab-pane",
+  "version": "1.0.1",
+  "description": "zx-tab-pane 标签页组件",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-tab-pane",
+    "uni-app",
+    "标签页",
+    "标签页组件",
+    "标签页功能"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC"
+}

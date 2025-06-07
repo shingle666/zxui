@@ -1,0 +1,87 @@
+{
+	"id": "byt-ai-agent-uni",
+	"displayName": "百业通AI对话组件",
+	"version": "2.1.30",
+	"description": "ant design x for uni-app，基于AI 对话大模型的对话组件，支持H5，小程序，APP平台，结合ChatGPT官网API接口实现智能对话、AI绘图等功能，组件可兼容v2,v3项目",
+	"keywords": [
+        "百业通",
+        "AI对话",
+        "ChatGPT",
+        "大模型"
+    ],
+	"repository": "",
+	"engines": {
+		"HBuilderX": "^4.0"
+	},
+	"dcloudext": {
+		"type": "component-vue",
+		"sale": {
+			"regular": {
+				"price": "0.00"
+			},
+			"sourcecode": {
+				"price": "0.00"
+			}
+		},
+		"contact": {
+			"qq": ""
+		},
+		"declaration": {
+			"ads": "无",
+			"data": "无",
+			"permissions": "开启语音识别输入框功能需要录音权限"
+		},
+		"npmurl": ""
+	},
+	"uni_modules": {
+		"dependencies": [],
+		"encrypt": [],
+		"platforms": {
+			"cloud": {
+				"tcb": "y",
+				"aliyun": "y",
+				"alipay": "y"
+			},
+			"client": {
+				"Vue": {
+					"vue2": "y",
+					"vue3": "y"
+				},
+				"App": {
+                    "app-vue": "y",
+                    "app-nvue": "u",
+                    "app-uvue": "u",
+                    "app-harmony": "u"
+                },
+				"H5-mobile": {
+					"Safari": "u",
+					"Android Browser": "y",
+					"微信浏览器(Android)": "y",
+					"QQ浏览器(Android)": "y"
+				},
+				"H5-pc": {
+					"Chrome": "y",
+					"IE": "y",
+					"Edge": "y",
+					"Firefox": "y",
+					"Safari": "u"
+				},
+				"小程序": {
+					"微信": "y",
+					"阿里": "y",
+					"百度": "y",
+					"字节跳动": "y",
+					"QQ": "y",
+					"钉钉": "y",
+					"快手": "y",
+					"飞书": "y",
+					"京东": "y"
+				},
+				"快应用": {
+					"华为": "y",
+					"联盟": "y"
+				}
+			}
+		}
+	}
+}

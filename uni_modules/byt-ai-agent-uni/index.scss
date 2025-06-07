@@ -1,0 +1,74 @@
+$namespace:'byt' !default;  
+$block-sel: "-" !default;
+$element-sel: "__" !default;
+$modifier-sel: "--" !default;
+// // 静态css(可忽略)
+// @mixin flex {
+//     display: flex;
+// }
+// @mixin flex($direction: row) {
+// 	flex-direction: $direction;
+// }
+// @mixin bfc {
+//     height: 100%;
+//     overflow: hidden;
+// }
+// 动态函数
+// 块级
+@mixin b($block) {
+   //变量
+   $B: $namespace + $block-sel + $block; 
+   .#{$B}{ //插值语法#{}
+     @content; //内容替换
+   }
+}
+// 元素级
+@mixin e($element) {
+    // 在SassScript中引用当前父选择器。这是一个逗号分隔的列表
+    $selector:&;
+    // @at-root表示不添加父级层级，直接作为根路径
+    // 比如：[.xm-wraps] .xm-wraps__right 去除[.xm-wraps]
+    @at-root {
+        #{$selector + $element-sel + $element} {
+            @content;
+        }
+    }
+    // // 或者
+    // @at-root {
+    //     &#{$element-sel + $element} {
+    //         @content;
+    //     }
+    // }
+}
+// 元素级
+@mixin eb($block) {
+    // 在SassScript中引用当前父选择器。这是一个逗号分隔的列表
+    $selector:&;
+    // @at-root表示不添加父级层级，直接作为根路径
+    // 比如：[.xm-wraps] .xm-wraps__right 去除[.xm-wraps]
+    @at-root {
+        #{$selector + $block-sel + $block} {
+            @content;
+        }
+    }
+    // // 或者
+    // @at-root {
+    //     &#{$element-sel + $element} {
+    //         @content;
+    //     }
+    // }
+}
+// 修饰符号
+@mixin m($modifier) {
+    $selector:&;
+    @at-root {
+        #{$selector + $modifier-sel + $modifier} {
+            @content;
+        }
+    }
+}
+
+// 苹果底部安全距离
+.safe-bottom {
+    height: env(safe-area-inset-bottom);
+}
