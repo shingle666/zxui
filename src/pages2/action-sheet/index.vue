@@ -111,6 +111,10 @@
 
 <script setup>
 import { ref } from 'vue';
+import zxActionSheet from '@tanzhenxing/zx-action-sheet/zx-action-sheet.vue';
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue';
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue';
+import zxSection from '@tanzhenxing/zx-section/zx-section.vue';
 
 // 基础用法
 const showBasic = ref(false);

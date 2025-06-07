@@ -1,14 +1,11 @@
 <template>
 	<view class="zx-affix-docs">
-		<view class="header">
-			<text class="title">zx-affix 固钉</text>
-			<text class="description">将页面元素固定在特定可视区域</text>
-			<!-- #ifdef MP-WEIXIN -->
-			<view class="mp-tip">
-				<text class="mp-tip-text">🔧 微信小程序优化版本</text>
-			</view>
-			<!-- #endif -->
+		<zx-navbar title="zx-affix 固钉" subtitle="将页面元素固定在特定可视区域" border />
+		<!-- #ifdef MP-WEIXIN -->
+		<view class="mp-tip">
+			<text class="mp-tip-text">🔧 微信小程序优化版本</text>
 		</view>
+		<!-- #endif -->
 
 		<!-- 状态信息 -->
 		<view class="status-panel">
@@ -18,7 +15,8 @@
 			</view>
 			<view class="status-item">
 				<text class="status-label">容器固钉:</text>
-				<text :class="['status-value', containerFixed ? 'active' : '']">{{ containerFixed ? '已固定' : '未固定' }}</text>
+				<text :class="['status-value', containerFixed ? 'active' : '']">{{ containerFixed ? '已固定' : '未固定'
+					}}</text>
 			</view>
 			<view class="status-item">
 				<text class="status-label">底部固钉:</text>
@@ -42,24 +40,17 @@
 				<text class="title-text">基础用法</text>
 				<text class="title-desc">固钉默认固定在页面顶部</text>
 			</view>
-			
+
 			<view class="demo-container">
 				<text class="demo-label">通过设置 offset 属性来改变吸顶距离，默认值为 0</text>
-				
+
 				<!-- 动态调整 offset -->
 				<view class="controls">
 					<text class="control-label">Offset: {{ basicOffset }}px</text>
-					<slider 
-						:value="basicOffset" 
-						min="0" 
-						max="200" 
-						step="10"
-						@change="handleOffsetChange"
-						class="offset-slider"
-						activeColor="#3b82f6"
-					/>
+					<slider :value="basicOffset" min="0" max="200" step="10" @change="handleOffsetChange"
+						class="offset-slider" activeColor="#3b82f6" />
 				</view>
-				
+
 				<zx-affix :offset="basicOffset" @change="handleBasicChange" @scroll="handleBasicScroll">
 					<view class="affix-button basic">
 						<text>Offset top {{ basicOffset }}px</text>
@@ -87,23 +78,16 @@
 				<text class="title-text">层级控制</text>
 				<text class="title-desc">通过 z-index 属性控制固钉的层级</text>
 			</view>
-			
+
 			<view class="demo-container">
 				<text class="demo-label">设置不同的 z-index 值</text>
-				
+
 				<view class="controls">
 					<text class="control-label">Z-Index: {{ zIndexValue }}</text>
-					<slider 
-						:value="zIndexValue" 
-						min="1" 
-						max="1000" 
-						step="10"
-						@change="handleZIndexChange"
-						class="zindex-slider"
-						activeColor="#10b981"
-					/>
+					<slider :value="zIndexValue" min="1" max="1000" step="10" @change="handleZIndexChange"
+						class="zindex-slider" activeColor="#10b981" />
 				</view>
-				
+
 				<zx-affix :offset="60" :z-index="zIndexValue" @change="handleZIndexAffixChange">
 					<view class="affix-button zindex">
 						<text>Z-Index: {{ zIndexValue }}</text>
@@ -126,10 +110,10 @@
 				<text class="title-text">指定容器</text>
 				<text class="title-desc">通过设置 target 属性，让固钉始终保持在容器内</text>
 			</view>
-			
+
 			<view class="demo-container">
 				<text class="demo-label">超过范围则隐藏，请注意容器避免出现滚动条</text>
-				
+
 				<view class="container-demo" id="containerDemo">
 					<zx-affix target="#containerDemo" :offset="80" @change="handleContainerChange">
 						<view class="affix-button container">
@@ -137,7 +121,7 @@
 							<text class="status-text">{{ containerFixed ? '容器内固定' : '正常状态' }}</text>
 						</view>
 					</zx-affix>
-					
+
 					<view v-for="i in 6" :key="`container-${i}`" class="container-content">
 						<text>容器内容 {{ i }}</text>
 					</view>
@@ -163,42 +147,31 @@
 				<text class="title-text">固定位置</text>
 				<text class="title-desc">Affix 组件提供 2 个固定的位置参数 top 和 bottom</text>
 			</view>
-			
+
 			<view class="demo-container">
 				<text class="demo-label">通过设置 position 属性来改变固定位置，默认值为 top</text>
-				
+
 				<!-- 位置切换 -->
 				<view class="controls">
 					<text class="control-label">Position:</text>
 					<view class="position-switch">
-						<view 
-							:class="['switch-item', bottomPosition === 'top' ? 'active' : '']"
-							@click="handlePositionChange('top')"
-						>
+						<view :class="['switch-item', bottomPosition === 'top' ? 'active' : '']"
+							@click="handlePositionChange('top')">
 							<text>Top</text>
 						</view>
-						<view 
-							:class="['switch-item', bottomPosition === 'bottom' ? 'active' : '']"
-							@click="handlePositionChange('bottom')"
-						>
+						<view :class="['switch-item', bottomPosition === 'bottom' ? 'active' : '']"
+							@click="handlePositionChange('bottom')">
 							<text>Bottom</text>
 						</view>
 					</view>
 				</view>
-				
+
 				<view class="controls">
 					<text class="control-label">Offset: {{ bottomOffset }}px</text>
-					<slider 
-						:value="bottomOffset" 
-						min="0" 
-						max="100" 
-						step="5"
-						@change="handleBottomOffsetChange"
-						class="offset-slider"
-						activeColor="#f59e0b"
-					/>
+					<slider :value="bottomOffset" min="0" max="100" step="5" @change="handleBottomOffsetChange"
+						class="offset-slider" activeColor="#f59e0b" />
 				</view>
-				
+
 				<zx-affix :position="bottomPosition" :offset="bottomOffset" @change="handleBottomChange">
 					<view class="affix-button bottom">
 						<text>{{ bottomPosition === 'top' ? 'Top' : 'Bottom' }} {{ bottomOffset }}px</text>
@@ -221,29 +194,19 @@
 				<text class="title-text">方法调用</text>
 				<text class="title-desc">手动调用组件方法</text>
 			</view>
-			
+
 			<view class="demo-container">
 				<text class="demo-label">点击按钮手动更新固钉状态</text>
-				
+
 				<view class="method-buttons">
-					<button 
-						class="method-btn"
-						@click="handleUpdate"
-						type="primary"
-						size="mini"
-					>
+					<button class="method-btn" @click="handleUpdate" type="primary" size="mini">
 						Update 更新状态
 					</button>
-					<button 
-						class="method-btn"
-						@click="handleUpdateRoot"
-						type="default"
-						size="mini"
-					>
+					<button class="method-btn" @click="handleUpdateRoot" type="default" size="mini">
 						UpdateRoot 更新盒模型
 					</button>
 				</view>
-				
+
 				<zx-affix ref="methodAffixRef" :offset="100" @change="handleMethodChange">
 					<view class="affix-button method">
 						<text>Method Demo</text>
@@ -372,11 +335,10 @@
 
 <script setup>
 import { ref, onMounted, nextTick } from 'vue';
-
-// #ifdef MP-WEIXIN
-// 微信小程序页面生命周期
 import { onShow, onPageScroll } from '@dcloudio/uni-app';
-// #endif
+import zxAffix from '@tanzhenxing/zx-affix/zx-affix.vue';
+import zxNavbar from '@/components/zx-navbar/zx-navbar.vue';
+
 
 // 响应式状态
 const basicFixed = ref(false);
@@ -427,11 +389,11 @@ const methodCode = ref(`&lt;template>  <zx-affix ref="affixRef" :offset="100">  
 const handleBasicChange = (fixed) => {
 	basicFixed.value = fixed;
 	console.log('基础固钉状态:', fixed);
-	
+
 	// #ifdef MP-WEIXIN
 	console.log('微信小程序环境 - 基础固钉状态:', fixed);
 	// #endif
-	
+
 	uni.showToast({
 		title: `基础固钉${fixed ? '已固定' : '已取消固定'}`,
 		icon: 'none',
@@ -441,7 +403,7 @@ const handleBasicChange = (fixed) => {
 
 const handleBasicScroll = (info) => {
 	scrollTop.value = Math.round(info.scrollTop);
-	
+
 	// #ifdef MP-WEIXIN
 	// 微信小程序滚动调试
 	console.log('微信小程序滚动事件:', info);
@@ -451,11 +413,11 @@ const handleBasicScroll = (info) => {
 const handleContainerChange = (fixed) => {
 	containerFixed.value = fixed;
 	console.log('容器固钉状态:', fixed);
-	
+
 	// #ifdef MP-WEIXIN
 	console.log('微信小程序环境 - 容器固钉状态:', fixed);
 	// #endif
-	
+
 	uni.showToast({
 		title: `容器固钉${fixed ? '已固定' : '已取消固定'}`,
 		icon: 'none',
@@ -466,11 +428,11 @@ const handleContainerChange = (fixed) => {
 const handleBottomChange = (fixed) => {
 	bottomFixed.value = fixed;
 	console.log('底部固钉状态:', fixed);
-	
+
 	// #ifdef MP-WEIXIN
 	console.log('微信小程序环境 - 底部固钉状态:', fixed);
 	// #endif
-	
+
 	uni.showToast({
 		title: `${bottomPosition.value === 'top' ? '顶部' : '底部'}固钉${fixed ? '已固定' : '已取消固定'}`,
 		icon: 'none',
@@ -528,7 +490,7 @@ const handleUpdateRoot = () => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .zx-affix-docs {
 	min-height: 300vh;
 	background-color: #f8f9fa;
@@ -586,6 +548,7 @@ const handleUpdateRoot = () => {
 	color: #07c160;
 	font-weight: 700;
 }
+
 /* #endif */
 
 .status-item {
@@ -895,15 +858,15 @@ const handleUpdateRoot = () => {
 	.status-panel {
 		flex-direction: column;
 	}
-	
+
 	.status-item {
 		min-width: 100%;
 	}
-	
+
 	.method-buttons {
 		flex-direction: column;
 	}
-	
+
 	.position-switch {
 		flex-direction: column;
 	}
@@ -944,13 +907,16 @@ const handleUpdateRoot = () => {
 }
 
 @keyframes pulse {
-	0%, 100% {
+
+	0%,
+	100% {
 		opacity: 1;
 		transform: translateY(-50%) scale(1);
 	}
+
 	50% {
 		opacity: 0.5;
 		transform: translateY(-50%) scale(1.2);
 	}
 }
-</style> 
+</style>

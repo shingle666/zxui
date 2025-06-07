@@ -332,7 +332,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import zxPopup from '@/components/zx-popup/zx-popup.vue'
+import zxPopup from '@tanzhenxing/zx-popup/zx-popup.vue'
 
 // 基础弹窗状态
 const showCenter = ref(false)

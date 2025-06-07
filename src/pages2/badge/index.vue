@@ -121,6 +121,12 @@
 
 <script setup>
 import { ref } from 'vue';
+import zxBadge from "@tanzhenxing/zx-badge/zx-badge.vue";
+import zxButton from "@tanzhenxing/zx-button/zx-button.vue";
+import zxNavbar from "@tanzhenxing/zx-navbar/zx-navbar.vue";
+import zxSection from "@tanzhenxing/zx-section/zx-section.vue";
+import zxTitle from "@tanzhenxing/zx-title/zx-title.vue";
+
 
 const isHidden = ref(false);
 

@@ -336,6 +336,9 @@
 
 <script setup>
 import { ref } from 'vue';
+// 引入组件
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
 
 // 响应式数据
 const isLoading = ref(false);

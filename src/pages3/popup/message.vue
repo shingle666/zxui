@@ -100,6 +100,10 @@
 
 <script setup>
 import { ref } from 'vue'
+// 引入组件
+import  zxPopupMessage  from '@tanzhenxing/zx-popup-message/zx-popup-message.vue'
+import  zxButton  from '@tanzhenxing/zx-button/zx-button.vue'
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'
 
 // 响应式数据
 const showBasic = ref(false)

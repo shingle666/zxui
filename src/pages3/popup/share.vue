@@ -122,6 +122,11 @@
 
 <script setup>
 import { ref } from 'vue';
+import zxCell from '@tanzhenxing/zx-cell/zx-cell.vue'
+import zxCellGroup from '@tanzhenxing/zx-cell-group/zx-cell-group.vue'
+import zxPopupShare from '@tanzhenxing/zx-popup-share/zx-popup-share.vue'
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue'
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'
 
 // 基础用法
 const showBasic = ref(false);

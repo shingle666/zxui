@@ -262,6 +262,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import zxText from '@tanzhenxing/zx-text/zx-text.vue';
 
 // 最后点击的文本
 const lastClickText = ref('');

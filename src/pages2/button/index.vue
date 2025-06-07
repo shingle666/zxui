@@ -198,6 +198,10 @@
 
 <script setup>
 import { ref } from "vue";
+import zxNavbar from "@tanzhenxing/zx-navbar/zx-navbar.vue";
+import zxTitle from "@tanzhenxing/zx-title/zx-title.vue";
+import zxSection from "@tanzhenxing/zx-section/zx-section.vue";
+import zxButton from "@tanzhenxing/zx-button/zx-button.vue";
 
 const clickInfo = ref("");
 

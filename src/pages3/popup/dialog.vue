@@ -225,6 +225,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import zxPopupDialog from '@tanzhenxing/zx-popup-dialog/zx-popup-dialog.vue'
 
 // 基础对话框
 const basicDialog = ref(false)
