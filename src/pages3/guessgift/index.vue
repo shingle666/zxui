@@ -154,7 +154,7 @@
 </template>
 
 <script>
-import ZxGuessgift from '@/components/zx-guessgift/zx-guessgift.vue'
+import ZxGuessgift from '@tanzhenxing/zx-guessgift/zx-guessgift.vue'
 
 export default {
   components: {

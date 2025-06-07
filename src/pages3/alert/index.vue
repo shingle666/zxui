@@ -283,6 +283,8 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
+import zxAlert from '@tanzhenxing/zx-alert/zx-alert.vue';
+
 
 // 控制alert显示状态
 const alerts = reactive({

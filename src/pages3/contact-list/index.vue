@@ -14,8 +14,8 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxContactList from '@/components/zx-contact-list/zx-contact-list.vue';
-import zxNavbar from '@/components/zx-navbar/zx-navbar.vue';
+import zxContactList from '@tanzhenxing/zx-contact-list/zx-contact-list.vue';
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue';
 
 const chosenContactId = ref('1');
 const list = ref([

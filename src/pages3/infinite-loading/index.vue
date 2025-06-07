@@ -151,7 +151,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import zxInfiniteLoading from '@/components/zx-infinite-loading/zx-infinite-loading.vue'
+import zxInfiniteLoading from '@tanzhenxing/zx-infinite-loading/zx-infinite-loading.vue'
 
 // 基础用法
 const basicList = ref([])

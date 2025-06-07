@@ -199,7 +199,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxTrendArrow from '@/components/zx-trend-arrow/zx-trend-arrow.vue'
+import zxTrendArrow from '@tanzhenxing/zx-trend-arrow/zx-trend-arrow.vue'
 
 // 点击计数
 const clickCount = ref(0)

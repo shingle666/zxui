@@ -89,9 +89,9 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxHighlight from '@/components/zx-highlight/zx-highlight.vue';
-import zxNavbar from '@/components/zx-navbar/zx-navbar.vue';
-import zxGroup from '@/components/zx-group/zx-group.vue';
+import zxHighlight from '@tanzhenxing/zx-highlight/zx-highlight.vue';
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue';
+import zxGroup from '@tanzhenxing/zx-group/zx-group.vue';
 
 const text1 = ref('欢迎使用 zxUI 组件库，zxUI 提供了丰富的组件。');
 const keyword1 = ref('zxUI');

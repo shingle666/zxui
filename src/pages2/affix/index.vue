@@ -337,7 +337,7 @@
 import { ref, onMounted, nextTick } from 'vue';
 import { onShow, onPageScroll } from '@dcloudio/uni-app';
 import zxAffix from '@tanzhenxing/zx-affix/zx-affix.vue';
-import zxNavbar from '@/components/zx-navbar/zx-navbar.vue';
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue';
 
 
 // 响应式状态

@@ -108,7 +108,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxLogin from '@/components/zx-login/zx-login.vue'
+import zxLogin from '@tanzhenxing/zx-login/zx-login.vue'
 
 // 操作日志
 const logs = ref([])

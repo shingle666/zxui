@@ -173,15 +173,15 @@
 
 <script setup>
 import { ref, reactive, computed, nextTick } from 'vue'
-import zxNavbar from '../../components/zx-navbar/zx-navbar.vue'
-import zxDelivery from '../../components/zx-delivery/zx-delivery.vue'
-import zxForm from '../../components/zx-form/zx-form.vue'
-import zxFormItem from '../../components/zx-form-item/zx-form-item.vue'
-import zxInput from '../../components/zx-input/zx-input.vue'
-import zxButton from '../../components/zx-button/zx-button.vue'
-import zxPopup from '../../components/zx-popup/zx-popup.vue'
-import zxIcon from '../../components/zx-icon/zx-icon.vue'
-import zxToast from '../../components/zx-toast/zx-toast.vue'
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'
+import zxDelivery from '@tanzhenxing/zx-delivery/zx-delivery.vue'
+import zxForm from '@tanzhenxing/zx-form/zx-form.vue'
+import zxFormItem from '@tanzhenxing/zx-form-item/zx-form-item.vue'
+import zxInput from '@tanzhenxing/zx-input/zx-input.vue'
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue'
+import zxPopup from '@tanzhenxing/zx-popup/zx-popup.vue'
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+import zxToast from '@tanzhenxing/zx-toast/zx-toast.vue'
 
 // 页面引用
 const formRef = ref()

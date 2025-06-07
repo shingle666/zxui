@@ -45,8 +45,8 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxPullRefresh from '@/components/zx-pull-refresh/zx-pull-refresh.vue';
-import zxNavbar from '@/components/zx-navbar/zx-navbar.vue'; // Assuming you have a navbar component
+import zxPullRefresh from '@tanzhenxing/zx-pull-refresh/zx-pull-refresh.vue';
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'; // Assuming you have a navbar component
 
 // Basic Usage
 const loading1 = ref(false);

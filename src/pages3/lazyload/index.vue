@@ -94,10 +94,10 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxLazyload from '@/components/zx-lazyload/zx-lazyload.vue';
-import zxNavbar from '@/components/zx-navbar/zx-navbar.vue';
-import zxTitle from '@/components/zx-title/zx-title.vue';
-import zxIcon from '@/components/zx-icon/zx-icon.vue';
+import zxLazyload from '@tanzhenxing/zx-lazyload/zx-lazyload.vue';
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue';
+import zxTitle from '@tanzhenxing/zx-title/zx-title.vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
 
 const images = ref({
   nature: 'https://img.zxui.org/uniapp/images/capsule-bg.png',

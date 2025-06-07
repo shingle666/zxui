@@ -94,8 +94,8 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import ZxNavbar from '@/components/zx-navbar/zx-navbar.vue'
-import ZxSignature from '@/components/zx-signature/zx-signature.vue'
+import ZxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'
+import ZxSignature from '@tanzhenxing/zx-signature/zx-signature.vue'
 
 // 引用
 const signatureRef1 = ref()

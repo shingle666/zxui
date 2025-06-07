@@ -191,8 +191,8 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import ZxSettleBar from '@/components/zx-settle-bar/zx-settle-bar.vue'
-import ZxCheckbox from '@/components/zx-checkbox/zx-checkbox.vue'
+import ZxSettleBar from '@tanzhenxing/zx-settle-bar/zx-settle-bar.vue'
+import ZxCheckbox from '@tanzhenxing/zx-checkbox/zx-checkbox.vue'
 
 // 复选框配置
 const checkboxColor = ref('#1989fa')

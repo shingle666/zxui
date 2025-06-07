@@ -188,9 +188,9 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxCouponList from '@/components/zx-coupon-list/zx-coupon-list.vue'
-import zxPopup from '@/components/zx-popup/zx-popup.vue'
-import zxTitle from '@/components/zx-title/zx-title.vue'
+import zxCouponList from '@tanzhenxing/zx-coupon-list/zx-coupon-list.vue'
+import zxPopup from '@tanzhenxing/zx-popup/zx-popup.vue'
+import zxTitle from '@tanzhenxing/zx-title/zx-title.vue'
 
 // 弹窗显示状态
 const showBasicList = ref(false)

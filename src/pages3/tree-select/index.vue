@@ -50,9 +50,9 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxTreeSelect from '@/components/zx-tree-select/zx-tree-select.vue';
-import zxNavbar from '@/components/zx-navbar/zx-navbar.vue';
-import zxTitle from '@/components/zx-title/zx-title.vue';
+import zxTreeSelect from '@tanzhenxing/zx-tree-select/zx-tree-select.vue';
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue';
+import zxTitle from '@tanzhenxing/zx-title/zx-title.vue';
 
 const activeIndex1 = ref(0);
 const activeId1 = ref(1);

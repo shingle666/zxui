@@ -129,9 +129,9 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxNavbar from '@/components/zx-navbar/zx-navbar.vue'
-import zxTitle from '@/components/zx-title/zx-title.vue'
-import zxContactCard from '@/components/zx-contact-card/zx-contact-card.vue'
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'
+import zxTitle from '@tanzhenxing/zx-title/zx-title.vue'
+import zxContactCard from '@tanzhenxing/zx-contact-card/zx-contact-card.vue'
 
 // 联系人列表数据
 const contactList = ref([

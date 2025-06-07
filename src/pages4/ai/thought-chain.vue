@@ -102,7 +102,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import ZxAiThoughtChain from '@/components/zx-ai-thought-chain/zx-ai-thought-chain.vue'
+import ZxAiThoughtChain from '@tanzhenxing/zx-ai-thought-chain/zx-ai-thought-chain.vue'
 
 // 基础示例数据
 const basicItems = ref([

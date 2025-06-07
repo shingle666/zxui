@@ -114,8 +114,8 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import zxNavbar from '@/components/zx-navbar/zx-navbar.vue'
-import zxDeliveryTime from '@/components/zx-delivery-time/zx-delivery-time.vue'
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'
+import zxDeliveryTime from '@tanzhenxing/zx-delivery-time/zx-delivery-time.vue'
 
 // 基础用法
 const showBasic = ref(false)

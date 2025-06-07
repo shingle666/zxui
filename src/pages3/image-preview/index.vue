@@ -56,10 +56,10 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxImagePreview from '@/components/zx-image-preview/zx-image-preview.vue';
-import zxButton from '@/components/zx-button/zx-button.vue';
-import zxTitle from '@/components/zx-title/zx-title.vue';
-import zxToast from '@/components/zx-toast/zx-toast.vue'; // Assuming zx-toast component exists
+import zxImagePreview from '@tanzhenxing/zx-image-preview/zx-image-preview.vue';
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue';
+import zxTitle from '@tanzhenxing/zx-title/zx-title.vue';
+import zxToast from '@tanzhenxing/zx-toast/zx-toast.vue'; // Assuming zx-toast component exists
 
 const imagePreviewRef = ref(null);
 const toastRef = ref(null);

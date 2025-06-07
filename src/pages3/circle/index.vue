@@ -83,7 +83,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import ZxCircle from '@/components/zx-circle/zx-circle.vue';
+import ZxCircle from '@tanzhenxing/zx-circle/zx-circle.vue';
 
 const currentRate1 = ref(10);
 const rate1 = ref(30);

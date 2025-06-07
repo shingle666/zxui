@@ -125,8 +125,8 @@
 
 <script setup>
 import { ref } from 'vue';
-import ZxSidebar from '../../components/zx-sidebar/zx-sidebar.vue';
-import ZxSidebarItem from '../../components/zx-sidebar-item/zx-sidebar-item.vue';
+import ZxSidebar from '@tanzhenxing/zx-sidebar/zx-sidebar.vue';
+import ZxSidebarItem from '@tanzhenxing/zx-sidebar-item/zx-sidebar-item.vue';
 
 // 基础用法
 const active1 = ref(0);

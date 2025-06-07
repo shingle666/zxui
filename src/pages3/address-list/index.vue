@@ -58,6 +58,11 @@
 
 <script setup>
 import { ref } from 'vue';
+import ZxAddressList from '@tanzhenxing/zx-address-list/zx-address-list.vue';
+import ZxTitle from '@tanzhenxing/zx-title/zx-title.vue';
+import ZxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue';
+import ZxTag from '@tanzhenxing/zx-tag/zx-tag.vue';
+
 
 const chosenAddressId = ref('1');
 const chosenAddressIds = ref(['1']);

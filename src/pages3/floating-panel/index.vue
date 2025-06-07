@@ -42,9 +42,9 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import zxFloatingPanel from '@/components/zx-floating-panel/zx-floating-panel.vue';
-import zxButton from '@/components/zx-button/zx-button.vue';
-import zxNavbar from '@/components/zx-navbar/zx-navbar.vue';
+import zxFloatingPanel from '@tanzhenxing/zx-floating-panel/zx-floating-panel.vue';
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue';
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue';
 
 const showDefault = ref(false);
 const showAnchors = ref(false);

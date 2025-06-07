@@ -233,7 +233,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import ZxLuckshake from '@/components/zx-luckshake/zx-luckshake.vue'
+import ZxLuckshake from '@tanzhenxing/zx-luckshake/zx-luckshake.vue'
 
 // 奖品配置
 const prizes = [

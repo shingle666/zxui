@@ -16,7 +16,7 @@
 
 <script setup>
 import { ref } from 'vue';
-// import { showToast } from 'vant'; // uni-app中没有vant的showToast，需要替换为uni.showToast
+import zxAddressEdit from '@tanzhenxing/zx-address-edit/zx-address-edit.vue';
 
 // 模拟省市区数据，实际项目中应从后端获取或使用静态数据
 const areaList = {

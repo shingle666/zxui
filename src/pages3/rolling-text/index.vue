@@ -86,10 +86,10 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxNavbar from '@/components/zx-navbar/zx-navbar.vue';
-import zxTitle from '@/components/zx-title/zx-title.vue';
-import zxButton from '@/components/zx-button/zx-button.vue';
-import zxRollingText from '@/components/zx-rolling-text/zx-rolling-text.vue';
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue';
+import zxTitle from '@tanzhenxing/zx-title/zx-title.vue';
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue';
+import zxRollingText from '@tanzhenxing/zx-rolling-text/zx-rolling-text.vue';
 
 const textList1 = ref([
   'AAAAA',

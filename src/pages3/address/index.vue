@@ -100,12 +100,12 @@
 
 <script setup>
 import { ref } from 'vue'
-import ZxNavbar from '@/components/zx-navbar/zx-navbar.vue'
-import ZxTitle from '@/components/zx-title/zx-title.vue'
-import ZxCellGroup from '@/components/zx-cell-group/zx-cell-group.vue'
-import ZxCell from '@/components/zx-cell/zx-cell.vue'
-import ZxIcon from '@/components/zx-icon/zx-icon.vue'
-import ZxAddress from '@/components/zx-address/zx-address.vue'
+import ZxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'
+import ZxTitle from '@tanzhenxing/zx-title/zx-title.vue'
+import ZxCellGroup from '@tanzhenxing/zx-cell-group/zx-cell-group.vue'
+import ZxCell from '@tanzhenxing/zx-cell/zx-cell.vue'
+import ZxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+import ZxAddress from '@tanzhenxing/zx-address/zx-address.vue'
 
 // 弹窗显示状态
 const showPopup1 = ref(false)

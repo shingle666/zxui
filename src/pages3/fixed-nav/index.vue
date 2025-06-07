@@ -227,7 +227,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import ZxFixedNav from '@/components/zx-fixed-nav/zx-fixed-nav.vue'
+import ZxFixedNav from '@tanzhenxing/zx-fixed-nav/zx-fixed-nav.vue'
 
 // 演示列表
 const demoList = ref([
