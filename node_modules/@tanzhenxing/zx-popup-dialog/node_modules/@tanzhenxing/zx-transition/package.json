@@ -1,0 +1,12 @@
+{
+  "name": "@tanzhenxing/zx-transition",
+  "version": "1.0.7",
+  "description": "一个功能强大的过渡动画组件，支持多种内置动画效果，同时兼容 H5、小程序和 App 平台。",
+  "license": "ISC",
+  "author": "tanzhenxing",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
