@@ -269,7 +269,7 @@
 </template>
 
 <script setup>
-import zxGoodsPrice from '@/components/zx-goods-price/zx-goods-price.vue'
+import zxGoodsPrice from '@tanzhenxing/zx-goods-price/zx-goods-price.vue'
 
 // 页面配置
 uni.setNavigationBarTitle({

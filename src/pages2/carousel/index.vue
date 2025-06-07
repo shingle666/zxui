@@ -131,6 +131,8 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
+import zxCarousel from '@tanzhenxing/zx-carousel/zx-carousel.vue';
+import zxCarouselItem from '@tanzhenxing/zx-carousel-item/zx-carousel-item.vue';
 
 // 轮播引用
 const carouselRef = ref(null);

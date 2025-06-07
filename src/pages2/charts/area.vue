@@ -28,6 +28,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import zxChartsArea from '@tanzhenxing/zx-charts-area/zx-charts-area.vue';
 
 const areaRef = ref();
 const xAxis = ['一月', '二月', '三月', '四月', '五月'];

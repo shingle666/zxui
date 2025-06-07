@@ -198,13 +198,13 @@
 
 <script setup>
 import { ref } from 'vue'
-import ZxNavbar from '@/components/zx-navbar/zx-navbar.vue'
-import ZxSection from '@/components/zx-section/zx-section.vue'
-import ZxAnimate from '@/components/zx-animate/zx-animate.vue'
-import ZxButton from '@/components/zx-button/zx-button.vue'
-import ZxBadge from '@/components/zx-badge/zx-badge.vue'
-import ZxIcon from '@/components/zx-icon/zx-icon.vue'
-import ZxAvatar from '@/components/zx-avatar/zx-avatar.vue'
+import ZxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'
+import ZxSection from '@tanzhenxing/zx-section/zx-section.vue'
+import ZxAnimate from '@tanzhenxing/zx-animate/zx-animate.vue'
+import ZxButton from '@tanzhenxing/zx-button/zx-button.vue'
+import ZxBadge from '@tanzhenxing/zx-badge/zx-badge.vue'
+import ZxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+import ZxAvatar from '@tanzhenxing/zx-avatar/zx-avatar.vue'
 
 // 控制动画的响应式变量
 const showShake = ref(false)

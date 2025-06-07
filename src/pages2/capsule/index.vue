@@ -73,10 +73,9 @@
 </template>
 
 <script setup>
-/**
- * zx-capsule 组件使用示例
- */
 import { ref } from 'vue';
+// 胶囊组件实例
+import zxCapsule from '@tanzhenxing/zx-capsule/zx-capsule.vue';
 
 // 胶囊信息
 const capsuleInfo = ref({});

@@ -107,6 +107,8 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
+// 引入组件
+import zxCalendar from '@tanzhenxing/zx-calendar/zx-calendar.vue';
 
 // 选项卡数据
 const tabs = [

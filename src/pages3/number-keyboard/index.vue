@@ -136,8 +136,8 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxNavbar from '@/components/zx-navbar/zx-navbar.vue'; // Adjust path as needed
-import zxNumberKeyboard from '@/components/zx-number-keyboard/zx-number-keyboard.vue'; // Adjust path as needed
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'; 
+import zxNumberKeyboard from '@tanzhenxing/zx-number-keyboard/zx-number-keyboard.vue';
 
 const showToast = (msg) => {
 	uni.showToast({

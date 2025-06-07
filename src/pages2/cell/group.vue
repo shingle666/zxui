@@ -65,6 +65,11 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import zxCellGroup from '@tanzhenxing/zx-cell-group/zx-cell-group.vue';
+import zxCell from '@tanzhenxing/zx-cell/zx-cell.vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
+
 const handleCellClick = (name) => {
 	uni.showToast({
 		title: `点击了 ${name}`,

@@ -153,7 +153,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import zxEllipsis from '@/components/zx-ellipsis/zx-ellipsis.vue'
+import zxEllipsis from '@tanzhenxing/zx-ellipsis/zx-ellipsis.vue'
 
 // 长文本内容
 const longText = ref(`

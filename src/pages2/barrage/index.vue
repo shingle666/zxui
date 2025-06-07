@@ -55,6 +55,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import zxGroup from '@tanzhenxing/zx-group/zx-group.vue';
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue';
+import zxBarrage from '@tanzhenxing/zx-barrage/zx-barrage.vue';
 
 const barrageRef1 = ref(null);
 const barrageRef2 = ref(null);

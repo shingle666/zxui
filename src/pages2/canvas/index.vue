@@ -81,6 +81,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import zxCanvas from '@tanzhenxing/zx-canvas/zx-canvas.vue'
 
 // 响应式数据
 const tabs = ref([

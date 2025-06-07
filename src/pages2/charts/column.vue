@@ -29,6 +29,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import zxChartsColumn from '@tanzhenxing/zx-charts-column/zx-charts-column.vue';
 
 const columnRef = ref();
 const xAxis = ['一月', '二月', '三月', '四月', '五月'];

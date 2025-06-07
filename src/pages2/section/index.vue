@@ -53,7 +53,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import ZxSection from '@/components/zx-section/zx-section.vue';
+import ZxSection from '@tanzhenxing/zx-section/zx-section.vue';
 
 const handleSectionClick = () => {
   uni.showToast({

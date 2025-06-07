@@ -86,6 +86,8 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
+// 引入组件
+import ZxAlbum from '@tanzhenxing/zx-album/zx-album.vue';
 
 // 基础图片列表
 const baseUrls = ref([

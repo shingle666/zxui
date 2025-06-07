@@ -29,6 +29,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import zxChartsBar from '@tanzhenxing/zx-charts-bar/zx-charts-bar.vue';
 
 const barRef = ref();
 const xAxis = ['一月', '二月', '三月', '四月', '五月'];

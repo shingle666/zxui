@@ -49,10 +49,10 @@
 
 <script setup>
 import { ref } from 'vue';
-import zxFloatingBubble from '@/components/zx-floating-bubble/zx-floating-bubble.vue';
-import zxNavbar from '@/components/zx-navbar/zx-navbar.vue';
-import zxGroup from '@/components/zx-group/zx-group.vue';
-import zxButton from '@/components/zx-button/zx-button.vue';
+import zxFloatingBubble from '@tanzhenxing/zx-floating-bubble/zx-floating-bubble.vue';
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue';
+import zxGroup from '@tanzhenxing/zx-group/zx-group.vue';
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue';
 
 const onClickBasic = () => {
   uni.showToast({

@@ -18,6 +18,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import zxChartsRadar from '@tanzhenxing/zx-charts-radar/zx-charts-radar.vue';
 
 const radarRef = ref();
 const indicator = [

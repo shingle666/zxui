@@ -127,6 +127,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import zxCascader from '@tanzhenxing/zx-cascader/zx-cascader.vue'
 
 // 显示状态
 const showDemo1 = ref(false)

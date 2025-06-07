@@ -70,6 +70,8 @@
 
 <script setup>
 import { ref } from 'vue';
+// 引入车牌输入组件
+import zxCarNumber from '@tanzhenxing/zx-car-number/zx-car-number.vue';
 
 // 响应式数据
 const carNumber = ref('');
