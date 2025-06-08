@@ -1,101 +1,40 @@
 <template>
 	<view class="zx-video">
-		<video
-			:ref="videoId"
-			:id="videoId"
-			:style="{ width: width, height: height }"
-			:title="title"
-			:src="src"
-			:poster="poster"
-			:duration="duration"
-			:initial-time="initialTime"
-			:controls="controls"
-			:danmu-list="danmuList"
-			:danmu-btn="danmuBtn"
-			:enable-danmu="enableDanmu"
-			:autoplay="autoplay"
-			:loop="loop"
-			:muted="muted"
-			:show-mute-btn="showMuteBtn"
-			:page-gesture="pageGesture"
-			:direction="direction"
-			:show-progress="showProgress"
-			:show-fullscreen-btn="showFullscreenBtn"
-			:show-play-btn="showPlayBtn"
-			:show-center-play-btn="showCenterPlayBtn"
-			:enable-progress-gesture="enableProgressGesture"
-			:object-fit="objectFit"
-			:play-btn-position="playBtnPosition"
-			:enable-play-gesture="enablePlayGesture"
-			:auto-pause-if-navigate="autoPauseIfNavigate"
-			:auto-pause-if-open-native="autoPauseIfOpenNative"
-			:vslide-gesture="vslideGesture"
-			:vslide-gesture-in-fullscreen="vslideGestureInFullscreen"
-			:show-bottom-progress="showBottomProgress"
-			:ad-unit-id="adUnitId"
-			:poster-for-crawler="posterForCrawler"
-			:show-casting-button="showCastingButton"
-			:picture-in-picture-mode="pictureInPictureMode"
+		<video :ref="videoId" :id="videoId" :style="{ width: width, height: height }" :title="title" :src="src"
+			:poster="poster" :duration="duration" :initial-time="initialTime" :controls="controls"
+			:danmu-list="danmuList" :danmu-btn="danmuBtn" :enable-danmu="enableDanmu" :autoplay="autoplay" :loop="loop"
+			:muted="muted" :show-mute-btn="showMuteBtn" :page-gesture="pageGesture" :direction="direction"
+			:show-progress="showProgress" :show-fullscreen-btn="showFullscreenBtn" :show-play-btn="showPlayBtn"
+			:show-center-play-btn="showCenterPlayBtn" :enable-progress-gesture="enableProgressGesture"
+			:object-fit="objectFit" :play-btn-position="playBtnPosition" :enable-play-gesture="enablePlayGesture"
+			:auto-pause-if-navigate="autoPauseIfNavigate" :auto-pause-if-open-native="autoPauseIfOpenNative"
+			:vslide-gesture="vslideGesture" :vslide-gesture-in-fullscreen="vslideGestureInFullscreen"
+			:show-bottom-progress="showBottomProgress" :ad-unit-id="adUnitId" :poster-for-crawler="posterForCrawler"
+			:show-casting-button="showCastingButton" :picture-in-picture-mode="pictureInPictureMode"
 			:picture-in-picture-show-progress="pictureInPictureShowProgress"
-			:picture-in-picture-init-position="pictureInPictureInitPosition"
-			:enable-auto-rotation="enableAutoRotation"
-			:show-screen-lock-button="showScreenLockButton"
-			:show-snapshot-button="showSnapshotButton"
-			:show-background-playback-button="showBackgroundPlaybackButton"
-			:background-poster="backgroundPoster"
-			:referrer-policy="referrerPolicy"
-			:is-drm="isDrm"
-			:is-live="isLive"
-			:provision-url="provisionUrl"
-			:certificate-url="certificateUrl"
-			:license-url="licenseUrl"
-			:preferred-peak-bit-rate="preferredPeakBitRate"
-			:codec="codec"
-			@bindplay="onPlay"
-			@bindpause="onPause"
-			@bindended="onEnded"
-			@bindtimeupdate="onTimeUpdate"
-			@bindfullscreenchange="onFullScreenChange"
-			@bindwaiting="onWaiting"
-			@binderror="onError"
-			@bindprogress="onProgress"
-			@bindloadedmetadata="onLoadedMetaData"
-			@bindcontrolstoggle="onControlsToggle"
-			@bindenterpictureinpicture="onEnterPictureInPicture"
-			@bindleavepictureinpicture="onLeavePictureInPicture"
-			@bindseekcomplete="onSeekComplete"
-			@bindcastinguserselect="onCastingUserSelect"
-			@bindcastingstatechange="onCastingStateChange"
-			@bindcastinginterrupt="onCastingInterrupt"
-			@play="onPlay"
-			@pause="onPause"
-			@ended="onEnded"
-			@timeupdate="onTimeUpdate"
-			@progress="onProgress"
-			@waiting="onWaiting"
-			@loadedmetadata="onLoadedMetaData"
-			@loadstart="onLoadStart"
-			@loadeddata="onLoadedData"
-			@seeked="onSeeked"
-			@seeking="onSeeking"
-			@fullscreenchange="onFullScreenChange"
-			@fullscreenclick="onFullScreenClick"
-			@controlstoggle="onControlsToggle"
-			@error="onError"
-		></video>
-		
+			:picture-in-picture-init-position="pictureInPictureInitPosition" :enable-auto-rotation="enableAutoRotation"
+			:show-screen-lock-button="showScreenLockButton" :show-snapshot-button="showSnapshotButton"
+			:show-background-playback-button="showBackgroundPlaybackButton" :background-poster="backgroundPoster"
+			:referrer-policy="referrerPolicy" :is-drm="isDrm" :is-live="isLive" :provision-url="provisionUrl"
+			:certificate-url="certificateUrl" :license-url="licenseUrl" :preferred-peak-bit-rate="preferredPeakBitRate"
+			:codec="codec" @bindplay="onPlay" @bindpause="onPause" @bindended="onEnded" @bindtimeupdate="onTimeUpdate"
+			@bindfullscreenchange="onFullScreenChange" @bindwaiting="onWaiting" @binderror="onError"
+			@bindprogress="onProgress" @bindloadedmetadata="onLoadedMetaData" @bindcontrolstoggle="onControlsToggle"
+			@bindenterpictureinpicture="onEnterPictureInPicture" @bindleavepictureinpicture="onLeavePictureInPicture"
+			@bindseekcomplete="onSeekComplete" @bindcastinguserselect="onCastingUserSelect"
+			@bindcastingstatechange="onCastingStateChange" @bindcastinginterrupt="onCastingInterrupt" @play="onPlay"
+			@pause="onPause" @ended="onEnded" @timeupdate="onTimeUpdate" @progress="onProgress" @waiting="onWaiting"
+			@loadedmetadata="onLoadedMetaData" @loadstart="onLoadStart" @loadeddata="onLoadedData" @seeked="onSeeked"
+			@seeking="onSeeking" @fullscreenchange="onFullScreenChange" @fullscreenclick="onFullScreenClick"
+			@controlstoggle="onControlsToggle" @error="onError"></video>
+
 		<!-- 截图专用canvas，默认隐藏 -->
-		<canvas 
-			v-show="false"
-			:canvas-id="canvasId" 
-			:id="canvasId" 
-			:style="{ 
-				position: 'absolute', 
-				left: '-9999px', 
-				width: snapshotWidth + 'px', 
-				height: snapshotHeight + 'px'
-			}"
-		></canvas>
+		<canvas v-show="false" :canvas-id="canvasId" :id="canvasId" :style="{
+			position: 'absolute',
+			left: '-9999px',
+			width: snapshotWidth + 'px',
+			height: snapshotHeight + 'px'
+		}"></canvas>
 	</view>
 </template>
 
@@ -441,7 +380,7 @@ const exitCasting = () => {
 const exitPictureInPicture = async () => {
 	return new Promise((resolve, reject) => {
 		if (!videoContext.value) return reject(new Error('视频上下文未创建'));
-		
+
 		videoContext.value.exitPictureInPicture({
 			success: (res) => {
 				resolve(res);
@@ -479,14 +418,14 @@ const snapshot = async () => {
 			if (!videoContext.value) {
 				return reject(new Error('视频上下文未创建'));
 			}
-			
+
 			// 暂停视频以获取清晰的截图
 			const isPlaying = !videoContext.value.paused;
-			
+
 			if (isPlaying) {
 				videoContext.value.pause();
 			}
-			
+
 			// 延迟一点让视频完全暂停
 			setTimeout(() => {
 				// 获取视频信息以设置canvas大小
@@ -498,12 +437,12 @@ const snapshot = async () => {
 							snapshotWidth.value = videoInfo.width;
 							snapshotHeight.value = videoInfo.height;
 						}
-						
+
 						// 确保canvas尺寸已更新
 						nextTick(() => {
 							// 创建canvas上下文
 							const context = uni.createCanvasContext(canvasId.value, proxy);
-							
+
 							// 将视频当前帧绘制到canvas上
 							context.drawImage(props.videoId, 0, 0, snapshotWidth.value, snapshotHeight.value);
 							context.draw(false, () => {
@@ -538,7 +477,7 @@ const snapshot = async () => {
 					fail: (err) => {
 						// 获取视频信息失败，使用默认尺寸
 						const context = uni.createCanvasContext(canvasId.value, proxy);
-						
+
 						context.drawImage(props.videoId, 0, 0, snapshotWidth.value, snapshotHeight.value);
 						context.draw(false, () => {
 							uni.canvasToTempFilePath({
