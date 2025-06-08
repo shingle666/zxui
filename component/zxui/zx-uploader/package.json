@@ -1,13 +1,24 @@
 {
-  "name": "zx-uploader",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@tanzhenxing/zx-uploader",
+  "version": "1.0.2",
+  "description": "uploader",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "uploader",
+    "upload",
+    "file",
+    "file-uploader",
+    "file-upload",
+    "file-upload-component"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "@tanzhenxing/zx-icon": "^1.0.13",
+    "@tanzhenxing/zx-loading": "^1.0.2"
+  }
 }

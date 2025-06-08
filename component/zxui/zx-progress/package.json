@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-progress",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "基于 uni-app 官方规范优化的进度条组件",
   "main": "index.ts",
   "keywords": [

@@ -5,80 +5,44 @@
 			<text class="title-text">{{ title }}</text>
 			<text v-if="required" class="required-mark">*</text>
 		</view>
-		
+
 		<!-- 输入区域 -->
 		<view class="remark-input-wrapper">
-			<textarea
-				class="remark-field"
-				:class="{ disabled: disabled, 'has-error': hasError }"
-				:value="innerValue"
-				:style="textareaFieldStyle"
-				:placeholder="placeholder"
-				:placeholder-style="computedPlaceholderStyle"
-				:placeholder-class="placeholderClass"
-				:disabled="disabled"
-				:focus="focus"
-				:auto-height="autoHeight"
-				:fixed="fixed"
-				:cursor-spacing="cursorSpacing"
-				:cursor="cursor"
-				:auto-focus="autoFocus"
-				:confirm-type="confirmType"
-				:confirm-hold="confirmHold"
-				:show-confirm-bar="showConfirmBar"
-				:selection-start="selectionStart"
-				:selection-end="selectionEnd"
-				:adjust-position="adjustPosition"
-				:disable-default-padding="disableDefaultPadding"
-				:hold-keyboard="holdKeyboard"
-				:auto-blur="autoBlur"
-				:maxlength="computedMaxlength"
-				:ignore-composition-event="ignoreCompositionEvent"
-				:inputmode="inputmode"
-				@focus="onFocus"
-				@blur="onBlur"
-				@linechange="onLinechange"
-				@input="onInput"
-				@confirm="onConfirm"
-				@keyboardheightchange="onKeyboardheightchange"
-			></textarea>
-			
+			<zx-textarea class="remark-field" :class="{ disabled: disabled, 'has-error': hasError }" :value="innerValue"
+				:style="textareaFieldStyle" :placeholder="placeholder" :placeholder-style="computedPlaceholderStyle"
+				:placeholder-class="placeholderClass" :disabled="disabled" :focus="focus" :auto-height="autoHeight"
+				:fixed="fixed" :cursor-spacing="cursorSpacing" :cursor="cursor" :auto-focus="autoFocus"
+				:confirm-type="confirmType" :confirm-hold="confirmHold" :show-confirm-bar="showConfirmBar"
+				:selection-start="selectionStart" :selection-end="selectionEnd" :adjust-position="adjustPosition"
+				:disable-default-padding="disableDefaultPadding" :hold-keyboard="holdKeyboard" :auto-blur="autoBlur"
+				:maxlength="computedMaxlength" :ignore-composition-event="ignoreCompositionEvent" :inputmode="inputmode"
+				@focus="onFocus" @blur="onBlur" @linechange="onLinechange" @input="onInput" @confirm="onConfirm"
+				@keyboardheightchange="onKeyboardheightchange"></zx-textarea>
+
 			<!-- 清除按钮 -->
-			<view 
-				v-if="clearable && innerValue && !disabled" 
-				class="clear-icon" 
-				@tap="onClear"
-			>
-				<text class="clear-text">×</text>
+			<view v-if="clearable && innerValue && !disabled" class="clear-icon" @tap="onClear">
+				<zx-icon name="close" class="clear-text"></zx-icon>
 			</view>
 		</view>
-		
+
 		<!-- 底部信息区域 -->
 		<view class="remark-footer">
 			<!-- 错误提示 -->
 			<text v-if="errorMessage" class="error-message">{{ errorMessage }}</text>
-			
+
 			<!-- 字数统计 -->
-			<text 
-				v-if="showCount" 
-				class="count-text" 
-				:class="{ 'count-exceed': isExceedMaxlength, 'count-disabled': disabled }"
-			>
+			<text v-if="showCount" class="count-text"
+				:class="{ 'count-exceed': isExceedMaxlength, 'count-disabled': disabled }">
 				{{ innerValue.length }}{{ showMaxlengthInCount ? `/${computedMaxlength}` : '' }}
 			</text>
 		</view>
-		
+
 		<!-- 快捷短语 -->
 		<view v-if="quickPhrases && quickPhrases.length > 0" class="quick-phrases">
 			<text class="phrases-title">{{ phrasesTitle }}</text>
 			<view class="phrases-list">
-				<view 
-					v-for="(phrase, index) in quickPhrases" 
-					:key="index"
-					class="phrase-item"
-					:class="{ disabled: disabled }"
-					@tap="selectPhrase(phrase)"
-				>
+				<view v-for="(phrase, index) in quickPhrases" :key="index" class="phrase-item"
+					:class="{ disabled: disabled }" @tap="selectPhrase(phrase)">
 					<text class="phrase-text">{{ phrase }}</text>
 				</view>
 			</view>
@@ -148,6 +112,8 @@
  */
 
 import { ref, getCurrentInstance, computed, watch, nextTick } from 'vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
+import zxTextarea from '@tanzhenxing/zx-textarea/zx-textarea.vue';
 
 // 获取组件实例
 const { proxy } = getCurrentInstance();
@@ -155,12 +121,12 @@ const { proxy } = getCurrentInstance();
 // 定义 emits
 const emit = defineEmits([
 	'update:value',
-	'input', 
-	'change', 
-	'focus', 
-	'blur', 
-	'linechange', 
-	'confirm', 
+	'input',
+	'change',
+	'focus',
+	'blur',
+	'linechange',
+	'confirm',
 	'keyboardheightchange',
 	'clear',
 	'phraseSelect',
@@ -480,12 +446,12 @@ const onLinechange = (e) => {
 // 方法：输入事件
 const onInput = (e) => {
 	let { value = '' } = e.detail || {};
-	
+
 	// 限制输入长度
 	if (props.maxlength !== -1 && value.length > Number(props.maxlength)) {
 		value = value.slice(0, Number(props.maxlength));
 	}
-	
+
 	innerValue.value = value;
 	hasError.value = false;
 	nextTick(() => {
@@ -528,7 +494,7 @@ const onClear = () => {
 // 方法：选择快捷短语
 const selectPhrase = (phrase) => {
 	if (props.disabled) return;
-	
+
 	innerValue.value = phrase;
 	hasError.value = false;
 	nextTick(() => {
@@ -542,33 +508,33 @@ const validateInput = () => {
 	const value = innerValue.value;
 	let isValid = true;
 	let message = '';
-	
+
 	// 必填验证
 	if (props.required && !value.trim()) {
 		isValid = false;
 		message = '请输入订单备注';
 	}
-	
+
 	// 最小长度验证
 	if (props.minLength > 0 && value.length < props.minLength) {
 		isValid = false;
 		message = `至少输入${props.minLength}个字符`;
 	}
-	
+
 	// 最大长度验证
 	if (props.maxlength !== -1 && value.length > Number(props.maxlength)) {
 		isValid = false;
 		message = `最多输入${props.maxlength}个字符`;
 	}
-	
+
 	hasError.value = !isValid;
-	
+
 	emit('validate', {
 		valid: isValid,
 		message: message,
 		value: value
 	});
-	
+
 	return isValid;
 };
 
@@ -659,7 +625,7 @@ defineExpose({
 	&.disabled {
 		background-color: #f5f7fa;
 		opacity: 0.6;
-		
+
 		.remark-field {
 			color: #c0c4cc;
 		}
@@ -677,13 +643,13 @@ defineExpose({
 		display: flex;
 		align-items: center;
 		margin-bottom: 16rpx;
-		
+
 		.title-text {
 			font-size: 28rpx;
 			font-weight: 500;
 			color: #303133;
 		}
-		
+
 		.required-mark {
 			color: #f56c6c;
 			font-size: 28rpx;
@@ -694,7 +660,7 @@ defineExpose({
 	.remark-input-wrapper {
 		position: relative;
 		flex: 1;
-		
+
 		.remark-field {
 			width: 100%;
 			height: 100%;
@@ -712,7 +678,7 @@ defineExpose({
 			&.disabled {
 				cursor: not-allowed;
 			}
-			
+
 			&.has-error {
 				color: #f56c6c;
 			}
@@ -735,6 +701,7 @@ defineExpose({
 			&::-webkit-scrollbar-thumb:hover {
 				background: #a8a8a8;
 			}
+
 			/* #endif */
 		}
 
@@ -771,22 +738,22 @@ defineExpose({
 		align-items: center;
 		margin-top: 16rpx;
 		min-height: 32rpx;
-		
+
 		.error-message {
 			font-size: 24rpx;
 			color: #f56c6c;
 			flex: 1;
 		}
-		
+
 		.count-text {
 			font-size: 24rpx;
 			color: #909193;
 			margin-left: auto;
-			
+
 			&.count-disabled {
 				color: #c0c4cc;
 			}
-			
+
 			&.count-exceed {
 				color: #f56c6c;
 			}
@@ -795,19 +762,19 @@ defineExpose({
 
 	.quick-phrases {
 		margin-top: 24rpx;
-		
+
 		.phrases-title {
 			font-size: 24rpx;
 			color: #909193;
 			margin-bottom: 16rpx;
 			display: block;
 		}
-		
+
 		.phrases-list {
 			display: flex;
 			flex-wrap: wrap;
 			gap: 16rpx;
-			
+
 			.phrase-item {
 				padding: 12rpx 24rpx;
 				background-color: #f8f9fa;
@@ -815,22 +782,22 @@ defineExpose({
 				border-radius: 32rpx;
 				cursor: pointer;
 				transition: all 0.2s ease;
-				
+
 				&:hover:not(.disabled) {
 					background-color: #ecf5ff;
 					border-color: #b3d8ff;
 					transform: translateY(-1px);
 				}
-				
+
 				&:active:not(.disabled) {
 					transform: translateY(0);
 				}
-				
+
 				&.disabled {
 					opacity: 0.5;
 					cursor: not-allowed;
 				}
-				
+
 				.phrase-text {
 					font-size: 24rpx;
 					color: #606266;
@@ -848,6 +815,7 @@ defineExpose({
 		word-break: break-word;
 	}
 }
+
 /* #endif */
 
 /* App-nvue 特殊样式 */
@@ -857,5 +825,6 @@ defineExpose({
 		word-wrap: normal;
 	}
 }
+
 /* #endif */
 </style>

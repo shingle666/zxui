@@ -1,12 +1,23 @@
 {
   "name": "@tanzhenxing/zx-upload",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "`zx-upload` 是一个功能强大的文件上传组件，可用于图片、视频及文件的选择、预览和上传。支持单选/多选、文件大小限制、自定义样式等功能。",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["upload", "文件上传", "文件上传组件", "文件上传组件", "文件上传组件", "文件上传组件"],
+  "keywords": [
+    "upload",
+    "文件上传",
+    "文件上传组件",
+    "文件上传组件",
+    "文件上传组件",
+    "文件上传组件"
+  ],
   "author": "tanzhenxing",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@tanzhenxing/zx-icon": "^1.0.13",
+    "@tanzhenxing/zx-loading": "^1.0.2"
+  }
 }

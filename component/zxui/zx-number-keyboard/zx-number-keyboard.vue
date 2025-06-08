@@ -9,15 +9,11 @@
 		<view class="zx-number-keyboard__body">
 			<view class="zx-number-keyboard__keys">
 				<template v-for="(key, index) in keys" :key="index">
-					<zx-number-keyboard-key
-						:text="key.text"
-						:type="key.type"
-						:wider="key.wider"
-						@press="onPress"
-					>
+					<zx-number-keyboard-key :text="key.text" :type="key.type" :wider="key.wider" @press="onPress">
 						<template v-if="key.type === 'delete'" #default>
 							<slot v-if="$slots.delete" name="delete"></slot>
-							<zx-icon v-else name="backspace-fill" size="28"></zx-icon> <!-- Reverted to backspace-fill -->
+							<zx-icon v-else name="backspace-fill" size="28"></zx-icon>
+							<!-- Reverted to backspace-fill -->
 						</template>
 						<template v-else-if="key.type === 'extra' && $slots['extra-key']" #default>
 							<slot name="extra-key"></slot>
@@ -32,13 +28,8 @@
 				</template>
 			</view>
 			<view class="zx-number-keyboard__sidebar" v-if="theme === 'custom'">
-				<zx-number-keyboard-key
-					v-if="showDeleteKey"
-					large
-					:text="deleteButtonText"
-					type="delete"
-					@press="onPress"
-				>
+				<zx-number-keyboard-key v-if="showDeleteKey" large :text="deleteButtonText" type="delete"
+					@press="onPress">
 					<template v-if="!$slots.delete" #default>
 						<zx-icon name="backspace-fill" size="28"></zx-icon>
 					</template>
@@ -46,14 +37,8 @@
 						<slot name="delete"></slot>
 					</template>
 				</zx-number-keyboard-key>
-				<zx-number-keyboard-key
-					large
-					:text="closeButtonText"
-					type="close"
-					color="blue"
-					:loading="closeButtonLoading"
-					@press="onPress"
-				/>
+				<zx-number-keyboard-key large :text="closeButtonText" type="close" color="blue"
+					:loading="closeButtonLoading" @press="onPress" />
 			</view>
 		</view>
 		<view v-if="safeAreaInsetBottom" class="zx-safe-area-inset-bottom"></view>
@@ -63,7 +48,7 @@
 <script setup>
 import { ref, computed, watch, getCurrentInstance } from 'vue';
 import zxNumberKeyboardKey from './zx-number-keyboard-key.vue';
-import zxIcon from '../zx-icon/zx-icon.vue'; // Assuming zx-icon component exists
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
 
 const props = defineProps({
 	show: {
@@ -229,13 +214,13 @@ const onPress = (text, type) => {
 // or by emitting an event and letting parent handle it.
 
 watch(() => props.show, (val) => {
-    emit(val ? 'show' : 'hide');
+	emit(val ? 'show' : 'hide');
 });
 
 const noop = (e) => {
-    // Stop touchmove to prevent scrolling while keyboard is open
-    e.preventDefault();
-    e.stopPropagation();
+	// Stop touchmove to prevent scrolling while keyboard is open
+	e.preventDefault();
+	e.stopPropagation();
 }
 
 </script>
@@ -248,8 +233,10 @@ const noop = (e) => {
 	width: 100%;
 	background-color: #f2f3f5;
 	user-select: none;
-	padding-bottom: constant(safe-area-inset-bottom); /* iOS < 11.2 */
-	padding-bottom: env(safe-area-inset-bottom); /* iOS >= 11.2 */
+	padding-bottom: constant(safe-area-inset-bottom);
+	/* iOS < 11.2 */
+	padding-bottom: env(safe-area-inset-bottom);
+	/* iOS >= 11.2 */
 
 	&__header {
 		position: relative;
@@ -299,8 +286,7 @@ const noop = (e) => {
 }
 
 .zx-safe-area-inset-bottom {
-  padding-bottom: constant(safe-area-inset-bottom);
-  padding-bottom: env(safe-area-inset-bottom);
+	padding-bottom: constant(safe-area-inset-bottom);
+	padding-bottom: env(safe-area-inset-bottom);
 }
-
 </style>

@@ -4,7 +4,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted,getCurrentInstance } from 'vue'
+import { ref, watch, onMounted, getCurrentInstance } from 'vue'
 const { proxy } = getCurrentInstance()
 
 const emit = defineEmits(['ready'])
@@ -423,7 +423,7 @@ async function judgePermissionPhotoLibrary(callback) {
 				showCancel: true,
 				success: res => {
 					if (res.confirm) {
-						wx.openSetting({ success() {} })
+						wx.openSetting({ success() { } })
 					}
 				}
 			})
@@ -619,9 +619,9 @@ defineExpose({
 </script>
 
 <style scoped>
-	.zx-poster__cv {
-		position: fixed;
-		left: -9999px;
-		bottom: 0;
-	}
+.zx-poster__cv {
+	position: fixed;
+	left: -9999px;
+	bottom: 0;
+}
 </style>

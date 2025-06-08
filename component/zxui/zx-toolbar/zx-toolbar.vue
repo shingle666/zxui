@@ -2,13 +2,9 @@
 	<view class="zx-toolbar" v-if="show" :style="[customStyle]">
 		<view class="zx-toolbar__left" hover-class="zx-hover" hover-stay-time="150">
 			<slot name="left">
-				<text
-					class="zx-toolbar__left__text"
-					@tap="cancel"
-					:style="{
-						color: cancelColor
-					}"
-				>
+				<text class="zx-toolbar__left__text" @tap="cancel" :style="{
+					color: cancelColor
+				}">
 					{{ cancelText }}
 				</text>
 			</slot>
@@ -20,13 +16,9 @@
 		</view>
 		<view class="zx-toolbar__right" hover-class="zx-hover" hover-stay-time="150">
 			<slot name="right">
-				<text
-					class="zx-toolbar__right__text"
-					@tap="confirm"
-					:style="{
-						color: confirmColor
-					}"
-				>
+				<text class="zx-toolbar__right__text" @tap="confirm" :style="{
+					color: confirmColor
+				}">
 					{{ confirmText }}
 				</text>
 			</slot>
@@ -124,8 +116,9 @@ $zx-main-color: #303133;
 	box-sizing: border-box;
 	position: relative;
 	padding: 0 4px;
-	
-	&__left, &__right {
+
+	&__left,
+	&__right {
 		min-width: 80rpx;
 		height: 100%;
 		display: flex;
@@ -134,13 +127,13 @@ $zx-main-color: #303133;
 		padding: 0 10px;
 		position: relative;
 		z-index: 1;
-		
+
 		&__text {
 			font-size: 15px;
 			line-height: 1;
 		}
 	}
-	
+
 	&__center {
 		flex: 1;
 		display: flex;
@@ -152,7 +145,7 @@ $zx-main-color: #303133;
 		height: 100%;
 		z-index: 0;
 	}
-	
+
 	&__title {
 		color: $zx-main-color;
 		font-size: 16px;

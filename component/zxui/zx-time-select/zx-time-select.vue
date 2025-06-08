@@ -1,14 +1,7 @@
 <template>
   <view class="zx-time-select">
-    <picker
-      :mode="'time'"
-      :value="innerValue"
-      :start="start"
-      :end="end"
-      :disabled="disabled"
-      @change="onPickerChange"
-      @cancel="onCancel"
-    >
+    <picker :mode="'time'" :value="innerValue" :start="start" :end="end" :disabled="disabled" @change="onPickerChange"
+      @cancel="onCancel">
       <view class="zx-time-select__input" :class="{ 'is-disabled': disabled }">
         <text v-if="innerValue">{{ displayValue }}</text>
         <text v-else class="placeholder">{{ placeholder }}</text>
@@ -55,7 +48,7 @@ function onPickerChange(e) {
   emit('update:modelValue', value)
   emit('change', value)
 }
-function onCancel() {}
+function onCancel() { }
 function clearValue() {
   innerValue.value = ''
   emit('update:modelValue', '')
@@ -67,6 +60,7 @@ function clearValue() {
 .zx-time-select {
   width: 100%;
 }
+
 .zx-time-select__input {
   display: flex;
   align-items: center;
@@ -79,16 +73,19 @@ function clearValue() {
   font-size: 30rpx;
   position: relative;
 }
+
 .zx-time-select__input.is-disabled {
   background: #f5f7fa;
   color: #bbb;
 }
+
 .zx-time-select__clear {
   margin-left: 10rpx;
   color: #bbb;
   font-size: 36rpx;
   cursor: pointer;
 }
+
 .placeholder {
   color: #bbb;
 }

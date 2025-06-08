@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-map",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "`zx-map` 是一个基于 uni-app 的地图组件，对原生地图组件进行了封装和增强，提供了更加便捷的地图展示功能。支持地址自动转换为坐标、多个标记点、自定义样式、线条绘制等功能。",
   "main": "index.js",
   "scripts": {
@@ -16,5 +16,8 @@
     "标记点"
   ],
   "author": "zhengxing",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@tanzhenxing/zx-text": "^1.0.18"
+  }
 }

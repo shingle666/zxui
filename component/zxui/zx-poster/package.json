@@ -1,20 +1,14 @@
 {
-  "name": "@tanzhenxing/zx-popup",
-  "version": "1.0.7",
+  "name": "@tanzhenxing/zx-poster",
+  "version": "1.0.8",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "uni-app",
-    "popup",
-    "弹窗",
-    "弹窗组件",
-    "弹窗层",
-    "弹窗层组件",
-    "弹窗层组件"
+    "海报"
   ],
   "author": "tanzhenxing",
   "license": "ISC",
-  "description": "uni-app 弹窗组件"
+  "description": "海报组件"
 }

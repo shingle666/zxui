@@ -11,12 +11,10 @@
         'zx-notice-bar__content--scrollable': scrollable,
         'zx-notice-bar__content--single': !scrollable && (single || moreText)
       }">
-        <text class="zx-notice-bar__content-text"
-          :class="{
-            'zx-notice-bar__content-text--scrollable': scrollable,
-            'zx-notice-bar__content-text--single': !scrollable && (single || showGetMore)
-          }"
-          :style="{
+        <text class="zx-notice-bar__content-text" :class="{
+          'zx-notice-bar__content-text--scrollable': scrollable,
+          'zx-notice-bar__content-text--single': !scrollable && (single || showGetMore)
+        }" :style="{
             color: color,
             fontSize: fontSize + 'px',
             lineHeight: fontSize * 1.5 + 'px',
@@ -24,8 +22,7 @@
             animationDuration: animationDuration,
             animationPlayState: animationPlayState,
             animationDelay: animationDelay
-          }"
-        >{{ text }}</text>
+          }">{{ text }}</text>
       </view>
     </view>
     <view v-if="isShowGetMore" class="zx-notice-bar__more" @click.stop="clickMore">
@@ -39,7 +36,9 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, nextTick,onMounted } from 'vue';
+import { ref, computed, watch, nextTick, onMounted } from 'vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
+
 
 const props = defineProps({
   text: { type: String, default: '' },
@@ -115,37 +114,45 @@ onMounted(() => {
   padding: 10px 12px;
   margin-bottom: 10px;
 }
+
 .zx-notice-bar-icon {
   margin-right: 5px;
 }
+
 .zx-notice-bar__content-wrapper {
   flex: 1;
   flex-direction: column;
   overflow: hidden;
 }
+
 .zx-notice-bar__content-wrapper--single {
   line-height: 18px;
 }
+
 .zx-notice-bar__content-wrapper--single,
 .zx-notice-bar__content-wrapper--scrollable {
   flex-direction: row;
 }
+
 .zx-notice-bar__content--scrollable {
   flex: 1;
   display: block;
   overflow: hidden;
 }
+
 .zx-notice-bar__content--single {
   display: flex;
   flex: none;
   width: 100%;
   justify-content: center;
 }
+
 .zx-notice-bar__content-text {
   font-size: 14px;
   line-height: 18px;
   word-break: break-all;
 }
+
 .zx-notice-bar__content-text--single {
   display: block;
   width: 100%;
@@ -153,6 +160,7 @@ onMounted(() => {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .zx-notice-bar__content-text--scrollable {
   position: relative;
   display: block;
@@ -165,6 +173,7 @@ onMounted(() => {
   animation-play-state: v-bind(animationPlayState);
   animation-delay: v-bind(animationDelay);
 }
+
 .zx-notice-bar__more {
   display: inline-flex;
   flex-direction: row;
@@ -172,10 +181,12 @@ onMounted(() => {
   align-items: center;
   padding-left: 5px;
 }
+
 .zx-notice-bar-close {
   margin-left: 8px;
   margin-right: 5px;
 }
+
 @keyframes zx-notice-scroll {
   100% {
     transform: translate3d(-100%, 0, 0);

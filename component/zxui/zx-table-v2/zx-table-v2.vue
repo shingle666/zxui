@@ -3,13 +3,9 @@
     <!-- Header -->
     <view class="zx-table-v2__header-wrapper" :style="headerWrapperStyle" v_if="columns.length > 0">
       <view class="zx-table-v2__header" :style="headerStyle">
-        <view
-          v-for="(column, colIndex) in columns"
-          :key="`header-${column.key || colIndex}`"
-          class="zx-table-v2__header-cell"
-          :style="getHeaderCellStyle(column)"
-          @click="handleHeaderClick(column, colIndex)"
-        >
+        <view v-for="(column, colIndex) in columns" :key="`header-${column.key || colIndex}`"
+          class="zx-table-v2__header-cell" :style="getHeaderCellStyle(column)"
+          @click="handleHeaderClick(column, colIndex)">
           <template v-if="column.renderHeader">
             <component :is="column.renderHeader({ column, columnIndex: colIndex })" />
           </template>
@@ -21,34 +17,19 @@
     </view>
 
     <!-- Body -->
-    <scroll-view
-      class="zx-table-v2__body-wrapper"
-      :scroll-y="true"
-      :scroll-x="true"
-      :style="bodyWrapperStyle"
-      @scroll="handleScroll"
-      :scroll-top="scrollTop"
-      :scroll-left="scrollLeft"
-    >
+    <scroll-view class="zx-table-v2__body-wrapper" :scroll-y="true" :scroll-x="true" :style="bodyWrapperStyle"
+      @scroll="handleScroll" :scroll-top="scrollTop" :scroll-left="scrollLeft">
       <view class="zx-table-v2__body" :style="bodyStyle">
         <view class="zx-table-v2__virtual-list-phantom" :style="phantomStyle"></view>
         <view class="zx-table-v2__virtual-list" :style="virtualListStyle">
-          <view
-            v-for="(item, rowIndex) in visibleData"
-            :key="item.originalIndex + rowIndex" 
-            class="zx-table-v2__row"
-            :class="getRowClass(item.originalIndex)"
-            :style="getRowStyle(item.originalIndex)"
-            @click="handleRowClick(item.rowData, item.originalIndex)"
-          >
-            <view
-              v-for="(column, colIndex) in columns"
-              :key="`cell-${item.originalIndex}-${column.key || colIndex}`"
-              class="zx-table-v2__cell"
-              :style="getCellStyle(column, item.rowData, item.originalIndex, colIndex)"
-            >
+          <view v-for="(item, rowIndex) in visibleData" :key="item.originalIndex + rowIndex" class="zx-table-v2__row"
+            :class="getRowClass(item.originalIndex)" :style="getRowStyle(item.originalIndex)"
+            @click="handleRowClick(item.rowData, item.originalIndex)">
+            <view v-for="(column, colIndex) in columns" :key="`cell-${item.originalIndex}-${column.key || colIndex}`"
+              class="zx-table-v2__cell" :style="getCellStyle(column, item.rowData, item.originalIndex, colIndex)">
               <template v-if="column.renderCell">
-                <component :is="column.renderCell({ row: item.rowData, column, rowIndex: item.originalIndex, columnIndex: colIndex })" />
+                <component
+                  :is="column.renderCell({ row: item.rowData, column, rowIndex: item.originalIndex, columnIndex: colIndex })" />
               </template>
               <template v-else>
                 {{ getCellValue(item.rowData, column) }}
@@ -57,7 +38,7 @@
           </view>
         </view>
       </view>
-      
+
       <view v-if="loading" class="zx-table-v2__loading">
         <view class="zx-table-v2__loading-indicator">加载中...</view>
       </view>
@@ -175,7 +156,7 @@ const visibleData = computed(() => {
 function updateVisibleRange(currentScrollTop) {
   const newStartIndex = Math.max(0, Math.floor(currentScrollTop / actualRowHeight.value) - bufferCount);
   const newEndIndex = Math.min(props.data.length, newStartIndex + visibleCount.value + bufferCount);
-  
+
   if (newStartIndex !== startIndex.value || newEndIndex !== endIndex.value) {
     startIndex.value = newStartIndex;
     endIndex.value = newEndIndex;
@@ -198,9 +179,9 @@ watch(() => props.data, () => {
 }, { deep: true });
 
 watch(() => [props.height, props.rowHeight], () => {
-    nextTick(() => {
-        updateVisibleRange(scrollTop.value);
-    });
+  nextTick(() => {
+    updateVisibleRange(scrollTop.value);
+  });
 });
 
 onMounted(() => {
@@ -240,7 +221,7 @@ const getCellStyle = (column, rowData, rowIndex, colIndex) => ({
   lineHeight: `${actualRowHeight.value}px`,
   padding: '0 8px',
   boxSizing: 'border-box',
-  borderRight: props.border && colIndex < props.columns.length -1 ? '1px solid #e8eaec' : 'none',
+  borderRight: props.border && colIndex < props.columns.length - 1 ? '1px solid #e8eaec' : 'none',
   borderBottom: '1px solid #e8eaec',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
@@ -285,6 +266,7 @@ const handleHeaderClick = (column, colIndex) => {
   }
 
   &__header-cell {
+
     // Shared styles in JS, specific overrides here if needed
     &:last-child {
       border-right: none; // Remove last cell's right border if global border is on
@@ -321,15 +303,16 @@ const handleHeaderClick = (column, colIndex) => {
       border-bottom: none;
     }
   }
-  
+
   &__row--stripe {
     // background-color is set by JS
   }
 
   &__cell {
+
     // Shared styles in JS, specific overrides here if needed
     &:last-child {
-       border-right: none; // Remove last cell's right border if global border is on
+      border-right: none; // Remove last cell's right border if global border is on
     }
   }
 
@@ -342,7 +325,7 @@ const handleHeaderClick = (column, colIndex) => {
     color: #909399;
     font-size: 14px;
   }
-  
+
   &__loading-indicator {
     // Basic loading text, can be replaced with a spinner component
   }
@@ -352,7 +335,7 @@ const handleHeaderClick = (column, colIndex) => {
 // Users can add ::-webkit-scrollbar { display: none; } in global style if needed for all platforms
 // Or we can make it conditional based on a prop
 .zx-table-v2__body-wrapper::-webkit-scrollbar {
-  width: 6px; 
+  width: 6px;
   height: 6px;
 }
 

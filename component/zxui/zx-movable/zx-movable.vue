@@ -1,30 +1,9 @@
 <template>
-  <movable-area 
-    :class="['zx-movable', customClass]"
-    :style="[containerStyle, customStyle]"
-    :scale-area="scaleArea"
-  >
-    <movable-view
-      :class="['zx-movable__view', viewClass]"
-      :style="[viewStyle, viewCustomStyle]"
-      :direction="direction"
-      :inertia="inertia"
-      :out-of-bounds="outOfBounds"
-      :x="innerX"
-      :y="innerY"
-      :damping="damping"
-      :friction="friction"
-      :disabled="disabled"
-      :scale="scale"
-      :scale-min="scaleMin"
-      :scale-max="scaleMax"
-      :scale-value="scaleValue"
-      :animation="animation"
-      @change="onChange"
-      @scale="onScale"
-      @htouchmove="onHTouchMove"
-      @vtouchmove="onVTouchMove"
-    >
+  <movable-area :class="['zx-movable', customClass]" :style="[containerStyle, customStyle]" :scale-area="scaleArea">
+    <movable-view :class="['zx-movable__view', viewClass]" :style="[viewStyle, viewCustomStyle]" :direction="direction"
+      :inertia="inertia" :out-of-bounds="outOfBounds" :x="innerX" :y="innerY" :damping="damping" :friction="friction"
+      :disabled="disabled" :scale="scale" :scale-min="scaleMin" :scale-max="scaleMax" :scale-value="scaleValue"
+      :animation="animation" @change="onChange" @scale="onScale" @htouchmove="onHTouchMove" @vtouchmove="onVTouchMove">
       <slot>
         <view class="zx-movable__default-content">
           {{ content || '可拖拽内容' }}
@@ -45,7 +24,7 @@ proxy.$options.name = 'zx-movable';
 
 const emit = defineEmits([
   'change',
-  'scale', 
+  'scale',
   'htouchmove',
   'vtouchmove',
   'update:x',
@@ -165,7 +144,7 @@ const props = defineProps({
   },
   // 自定义可拖拽元素样式
   viewCustomStyle: {
-    type: [Object, String], 
+    type: [Object, String],
     default: () => ({})
   },
   // 背景颜色
@@ -212,7 +191,7 @@ watch(() => props.y, (newVal) => {
 const containerStyle = computed(() => {
   const width = typeof props.width === 'number' ? `${props.width}rpx` : props.width;
   const height = typeof props.height === 'number' ? `${props.height}rpx` : props.height;
-  
+
   return {
     width,
     height,
@@ -227,7 +206,7 @@ const containerStyle = computed(() => {
 const viewStyle = computed(() => {
   const width = typeof props.viewWidth === 'number' ? `${props.viewWidth}rpx` : props.viewWidth;
   const height = typeof props.viewHeight === 'number' ? `${props.viewHeight}rpx` : props.viewHeight;
-  
+
   return {
     width,
     height,
@@ -244,7 +223,7 @@ const onChange = (e) => {
   const { x, y, source } = e.detail;
   innerX.value = x;
   innerY.value = y;
-  
+
   emit('update:x', x);
   emit('update:y', y);
   emit('change', e);
@@ -266,7 +245,7 @@ const onVTouchMove = (e) => {
 const moveTo = (x, y, animated = true) => {
   innerX.value = x;
   innerY.value = y;
-  
+
   nextTick(() => {
     emit('update:x', x);
     emit('update:y', y);
@@ -286,11 +265,11 @@ defineExpose({
 <style lang="scss" scoped>
 .zx-movable {
   position: relative;
-  
+
   &__view {
     position: relative;
   }
-  
+
   &__default-content {
     font-size: 24rpx;
     color: v-bind(textColor);

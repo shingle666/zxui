@@ -1,12 +1,20 @@
 {
   "name": "@tanzhenxing/zx-textarea",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["uniapp", "textarea", "文本框", "组件"],
+  "keywords": [
+    "uniapp",
+    "textarea",
+    "文本框",
+    "组件"
+  ],
   "author": "tanzhenxing",
   "license": "ISC",
-  "description": "一个基于uniapp的文本框组件"
+  "description": "一个基于uniapp的文本框组件",
+  "dependencies": {
+    "@tanzhenxing/zx-icon": "^1.0.13"
+  }
 }

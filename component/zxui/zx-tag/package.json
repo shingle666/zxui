@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-tag",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "index.js",
   "description": "一个功能丰富的标签组件，支持多种类型、主题、尺寸，参考 Element Plus Tag 组件设计",
   "keywords": [
@@ -20,5 +20,9 @@
     "*.vue",
     "*.js",
     "README.md"
-  ]
+  ],
+  "dependencies": {
+    "@tanzhenxing/zx-icon": "^1.0.13",
+    "@tanzhenxing/zx-transition": "^1.0.8"
+  }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-tabs",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "zx-tabs 标签页组件",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,6 @@
     "标签页功能"
   ],
   "dependencies": {
-    "@tanzhenxing/zx-tab-pane": "^1.0.1"
+    "@tanzhenxing/zx-tab-pane": "^1.0.2"
   }
 }

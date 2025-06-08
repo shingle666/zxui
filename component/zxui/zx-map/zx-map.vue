@@ -3,46 +3,30 @@
 		<view v-if="showInfo" class="map-info">
 			<view class="info-item" v-if="mapData.phone">
 				<view class="dot"></view>
-				<view class="info-content"><zx-text :text="'联系电话：' + mapData.phone" size="32rpx" color="#313131"></zx-text></view>
+				<view class="info-content"><zx-text :text="'联系电话：' + mapData.phone" size="32rpx"
+						color="#313131"></zx-text></view>
 			</view>
 			<view class="info-item" v-if="mapData.address">
 				<view class="dot"></view>
-				<view class="info-content"><zx-text :text="'地址：' + mapData.address" size="32rpx" color="#313131"></zx-text></view>
+				<view class="info-content"><zx-text :text="'地址：' + mapData.address" size="32rpx"
+						color="#313131"></zx-text></view>
 			</view>
 		</view>
-		<view :style="{'margin-top': showInfo ? '20rpx' : '0'}">
-			<map
-				:style="mapStyle"
-				:latitude="latitude"
-				:longitude="longitude"
-				:scale="scale"
-				:show-location="showLocation"
-				:markers="markers"
-				:polyline="polyline"
-				:circles="circles"
-				:enable-zoom="enableZoom"
-				:enable-scroll="enableScroll"
-				:enable-rotate="enableRotate"
-				:enable-satellite="enableSatellite"
-				:enable-traffic="enableTraffic"
-				:enable-poi="enablePoi"
-				:enable-building="enableBuilding"
-				:show-compass="showCompass"
-				:show-scale="showScale"
-				:min-scale="minScale"
-				:max-scale="maxScale"
-				@tap="mapTap"
-				@markertap="onMarkerTap"
-				@callouttap="onCalloutTap"
-				@regionchange="onRegionChange"
-				@updated="onMapUpdated"
-			></map>
+		<view :style="{ 'margin-top': showInfo ? '20rpx' : '0' }">
+			<map :style="mapStyle" :latitude="latitude" :longitude="longitude" :scale="scale"
+				:show-location="showLocation" :markers="markers" :polyline="polyline" :circles="circles"
+				:enable-zoom="enableZoom" :enable-scroll="enableScroll" :enable-rotate="enableRotate"
+				:enable-satellite="enableSatellite" :enable-traffic="enableTraffic" :enable-poi="enablePoi"
+				:enable-building="enableBuilding" :show-compass="showCompass" :show-scale="showScale"
+				:min-scale="minScale" :max-scale="maxScale" @tap="mapTap" @markertap="onMarkerTap"
+				@callouttap="onCalloutTap" @regionchange="onRegionChange" @updated="onMapUpdated"></map>
 		</view>
 	</view>
 </template>
 
 <script setup>
 import { ref, getCurrentInstance, computed, onMounted, watch } from 'vue';
+import zxText from '@tanzhenxing/zx-text/zx-text.vue';
 
 const { proxy } = getCurrentInstance();
 
@@ -187,7 +171,7 @@ const initMapData = () => {
 const updateMarkers = () => {
 	// 合并外部标记点和主标记点
 	let allMarkers = [...props.externalMarkers];
-	
+
 	// 如果有主要地点数据，添加到标记点中
 	if (props.mapData.name) {
 		const mainMarker = {
@@ -219,7 +203,7 @@ const updateMarkers = () => {
 		};
 		allMarkers.push(mainMarker);
 	}
-	
+
 	// 应用自定义图标
 	if (props.markerIcons.length > 0) {
 		allMarkers = allMarkers.map((marker, index) => {
@@ -229,7 +213,7 @@ const updateMarkers = () => {
 			return marker;
 		});
 	}
-	
+
 	markers.value = allMarkers;
 };
 
@@ -238,7 +222,7 @@ const geocodeAddress = async () => {
 	try {
 		const geocoder = uniCloud.importObject('geocoder');
 		const res = await geocoder.get(props.mapData.address);
-		
+
 		if (res.data && res.data.result && res.data.result.location) {
 			latitude.value = res.data.result.location.lat;
 			longitude.value = res.data.result.location.lng;
@@ -302,16 +286,16 @@ defineExpose({
 	font-size: 30rpx;
 	line-height: 50rpx;
 	text-align: justify;
-	
+
 	.map-info {
 		padding: 30rpx 30rpx 0 30rpx;
-		
+
 		.info-item {
 			display: flex;
 			flex-direction: row;
 			align-items: flex-start;
 			margin-bottom: 20rpx;
-			
+
 			.dot {
 				width: 10rpx;
 				height: 10rpx;
@@ -319,7 +303,7 @@ defineExpose({
 				margin-top: 20rpx;
 				margin-right: 20rpx;
 			}
-			
+
 			.info-content {
 				flex: 1;
 			}

@@ -1,12 +1,17 @@
 {
-  "name": "zx-time-select",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-time-select",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "time-select"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
-  "description": ""
+  "description": "time-select",
+  "dependencies": {
+    "dayjs": "^1.11.13"
+  }
 }

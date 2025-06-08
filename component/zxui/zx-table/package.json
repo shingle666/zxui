@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-table",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,5 +14,8 @@
   ],
   "author": "tanzhenxing",
   "license": "ISC",
-  "description": "zx-table 表格组件"
+  "description": "zx-table 表格组件",
+  "dependencies": {
+    "@tanzhenxing/zx-table-column": "^1.0.2"
+  }
 }

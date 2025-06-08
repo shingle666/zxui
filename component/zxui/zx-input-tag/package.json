@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-input-tag",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "main": "zx-input-tag.vue",
   "keywords": [
     "vue",
@@ -17,5 +17,9 @@
   "files": [
     "zx-input-tag.vue",
     "README.md"
-  ]
+  ],
+  "dependencies": {
+    "@tanzhenxing/zx-icon": "^1.0.13",
+    "@tanzhenxing/zx-input": "^1.0.10"
+  }
 }

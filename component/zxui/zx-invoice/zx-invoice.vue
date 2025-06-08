@@ -1,46 +1,25 @@
 <template>
   <view class="zx-invoice" :style="customStyle">
     <zx-form ref="formRef" :model="formValue" :rules="rules" :label-position="labelPosition">
-      <zx-form-item
-        v-for="(item, index) in dataList"
-        :key="index"
-        :label="item.label"
-        :required="item.required"
-        :rules="item.rules"
-        :prop="item.formItemProp"
-      >
+      <zx-form-item v-for="(item, index) in dataList" :key="index" :label="item.label" :required="item.required"
+        :rules="item.rules" :prop="item.formItemProp">
         <template v-if="item.type === 'radio'">
           <zx-radio-group v-model="formValue[item.formItemProp]">
-            <zx-radio
-              v-for="(radioItem, radioIndex) in item.radioLabel"
-              :key="radioIndex"
-              :label="radioItem.value"
-              :disabled="radioItem.disabled"
-            >
+            <zx-radio v-for="(radioItem, radioIndex) in item.radioLabel" :key="radioIndex" :label="radioItem.value"
+              :disabled="radioItem.disabled">
               {{ radioItem.label }}
             </zx-radio>
           </zx-radio-group>
         </template>
         <template v-else>
-          <zx-input
-            v-model="formValue[item.formItemProp]"
-            :placeholder="item.placeholder"
-            :disabled="item.disabled"
-            :type="item.inputType || 'text'"
-            :maxlength="item.maxlength"
-            :clearable="item.clearable"
-          />
+          <zx-input v-model="formValue[item.formItemProp]" :placeholder="item.placeholder" :disabled="item.disabled"
+            :type="item.inputType || 'text'" :maxlength="item.maxlength" :clearable="item.clearable" />
         </template>
       </zx-form-item>
     </zx-form>
-    
+
     <view v-if="submit" class="zx-invoice__submit">
-      <zx-button 
-        type="primary" 
-        :block="true" 
-        :loading="submitLoading"
-        @click="handleSubmit"
-      >
+      <zx-button type="primary" :block="true" :loading="submitLoading" @click="handleSubmit">
         {{ submitText }}
       </zx-button>
     </view>
@@ -49,6 +28,12 @@
 
 <script setup>
 import { ref, computed, watch, getCurrentInstance } from 'vue'
+import zxForm from '@tanzhenxing/zx-form/zx-form.vue'
+import zxFormItem from '@tanzhenxing/zx-form-item/zx-form-item.vue'
+import zxRadio from '@tanzhenxing/zx-radio/zx-radio.vue'
+import zxRadioGroup from '@tanzhenxing/zx-radio-group/zx-radio-group.vue'
+import zxInput from '@tanzhenxing/zx-input/zx-input.vue'
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue'
 
 const { proxy } = getCurrentInstance()
 
@@ -144,7 +129,7 @@ const handleSubmit = async () => {
     console.warn('表单引用不存在')
     return
   }
-  
+
   try {
     const valid = await formRef.value.validate()
     emit('submit', {
@@ -165,7 +150,7 @@ const validate = async () => {
   if (!formRef.value) {
     return Promise.reject('表单引用不存在')
   }
-  
+
   try {
     const result = await formRef.value.validate()
     emit('validate', { valid: true, values: formValue.value })
@@ -226,7 +211,7 @@ init()
 .zx-invoice {
   position: relative;
   width: 100%;
-  
+
   &__submit {
     position: fixed;
     bottom: 0;
@@ -243,7 +228,7 @@ init()
     padding: 20rpx;
     background: #fff;
     border-top: 1rpx solid #ebeef5;
-    
+
     // 适配深色模式
     @media (prefers-color-scheme: dark) {
       background: #1d1e1f;

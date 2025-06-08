@@ -1,12 +1,8 @@
 <template>
-  <view
-    class="zx-sidebar-item"
-    :class="{
-      'zx-sidebar-item--select': selected,
-      'zx-sidebar-item--disabled': disabled
-    }"
-    @click="onClick"
-  >
+  <view class="zx-sidebar-item" :class="{
+    'zx-sidebar-item--select': selected,
+    'zx-sidebar-item--disabled': disabled
+  }" @click="onClick">
     <view class="zx-sidebar-item__text">
       <view v-if="badge || dot" class="zx-badge">
         <slot name="title">
@@ -99,9 +95,9 @@ const onClick = () => {
   if (props.disabled) {
     return;
   }
-  
+
   emit('click', index.value);
-  
+
   if (parent) {
     parent.setActive(index.value);
   }

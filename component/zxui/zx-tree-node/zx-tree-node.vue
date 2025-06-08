@@ -13,9 +13,6 @@
           @click.stop="handleCheck"
         />
       </template>
-      <!-- <template v-if="$slots.default">
-        <slot :node="props.node" :level="props.level"></slot>
-      </template> -->
       <template v-else>
         <text class="zx-tree-node-label">{{ props.node[props.props.label] }}</text>
       </template>

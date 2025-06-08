@@ -1,3 +1,12 @@
+<template>
+  <!-- 占位用，实际渲染由父组件完成 -->
+  <template v-if="$slots.default">
+    <slot></slot>
+  </template>
+  <template v-if="$slots.header">
+    <slot name="header"></slot>
+  </template>
+</template>
 <script setup>
 import { computed, inject, onBeforeUnmount, onMounted, ref, useSlots } from 'vue';
 
@@ -170,13 +179,3 @@ defineExpose({
   }
 });
 </script>
-
-<template>
-  <!-- 占位用，实际渲染由父组件完成 -->
-  <template v-if="$slots.default">
-    <slot></slot>
-  </template>
-  <template v-if="$slots.header">
-    <slot name="header"></slot>
-  </template>
-</template> 

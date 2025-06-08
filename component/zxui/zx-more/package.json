@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-more",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "一个基于 uni-app、Vue3 <script setup> 语法开发的高兼容性更多组件，适配 H5、小程序、App。",
   "main": "index.js",
   "scripts": {
@@ -12,5 +12,8 @@
     "更多组件"
   ],
   "author": "tanzhenxing",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@tanzhenxing/zx-icon": "^1.0.13"
+  }
 }

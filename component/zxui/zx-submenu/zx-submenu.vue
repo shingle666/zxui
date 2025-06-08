@@ -4,21 +4,18 @@
     <view class="zx-submenu__title" @tap="handleClick" :style="titleStyle">
       <slot name="title"></slot>
       <view class="zx-submenu__icon-arrow" :style="{ transform: opened ? 'rotateZ(180deg)' : '' }">
-        <text class="uni-icons" :class="[isHorizontal ? 'uni-icons-bottom' : 'uni-icons-right']"></text>
+        <zx-icon :name="isHorizontal ? 'chevron-down' : 'chevron-right'"></zx-icon>
       </view>
     </view>
-    
+
     <!-- 垂直模式子菜单内容 -->
-    <view v-if="!isHorizontal" 
-      class="zx-menu zx-submenu__menu" 
+    <view v-if="!isHorizontal" class="zx-menu zx-submenu__menu"
       :style="{ height: opened ? contentHeight + 'px' : '0px' }">
       <slot></slot>
     </view>
-    
+
     <!-- 水平模式子菜单内容（弹出形式） -->
-    <view v-else-if="opened" 
-      class="zx-submenu__popup" 
-      :style="popupStyle">
+    <view v-else-if="opened" class="zx-submenu__popup" :style="popupStyle">
       <view class="zx-menu zx-submenu__menu">
         <slot></slot>
       </view>
@@ -28,6 +25,7 @@
 
 <script setup>
 import { computed, inject, onMounted, onBeforeUnmount, provide, ref, watch, nextTick } from 'vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
 
 // 组件名称
 const name = 'ZxSubmenu';
@@ -80,7 +78,7 @@ const isHorizontal = computed(() => {
 const active = computed(() => {
   const active = zxMenu.activeIndex.value;
   const items = Object.values(zxMenu.items || {});
-  
+
   return items.some(item => {
     if (item.index === active) {
       const path = item.parentPath || [];
@@ -111,7 +109,7 @@ const popupStyle = computed(() => {
 // 打开子菜单
 const open = () => {
   if (props.disabled) return;
-  
+
   const openTimer = setTimeout(() => {
     opened.value = true;
     // 子菜单打开后，计算内容高度（垂直模式）
@@ -133,11 +131,11 @@ const open = () => {
         }
       });
     }
-    
+
     // 通知父菜单子菜单已打开
     zxMenu.openMenu(props.index, indexPath.value);
   }, zxMenu.props.openDelay);
-  
+
   return openTimer;
 };
 
@@ -146,18 +144,18 @@ const close = () => {
   const closeTimer = setTimeout(() => {
     opened.value = false;
     contentHeight.value = 0;
-    
+
     // 通知父菜单子菜单已关闭
     zxMenu.closeMenu(props.index, indexPath.value);
   }, zxMenu.props.closeDelay);
-  
+
   return closeTimer;
 };
 
 // 处理点击事件
 const handleClick = () => {
   if (props.disabled) return;
-  
+
   if (opened.value) {
     close();
   } else {
@@ -180,7 +178,7 @@ onMounted(() => {
     close,
     opened
   });
-  
+
   // 如果默认激活的菜单在该子菜单内，则自动打开该子菜单
   if (active.value) {
     opened.value = true;
@@ -269,4 +267,4 @@ defineExpose({
   background-color: #fff;
   min-width: 200px;
 }
-</style> 
+</style>

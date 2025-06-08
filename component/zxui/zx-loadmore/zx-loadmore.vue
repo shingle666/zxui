@@ -1,38 +1,32 @@
 <template>
-	<view
-		class="zx-loadmore"
-		:style="[customStyle,
-			{
-				backgroundColor: bgColor,
-				marginBottom: marginBottom,
-				marginTop: marginTop,
-				height: height
-			}
-		]"
-	>
-		<zx-line v-if="line" length="140rpx" :color="lineColor" :hairline="false" :dashed="dashed"></zx-line>
-		<!-- 加载中和没有更多的状态才显示两边的横线 -->
-		<view :class="status == 'loadmore' || status == 'nomore' || status == 'failed' ? 'zx-more' : ''" class="zx-loadmore__content">
-			<view class="zx-loadmore__content__icon-wrap" v-if="(status === 'loading' || status === 'failed') && icon">
-				<zx-loading-icon v-if="status === 'loading'" :color="iconColor" :size="iconSize" :mode="loadingIcon"></zx-loading-icon>
-				<text v-else-if="status === 'failed'" class="zx-loadmore__content__icon-failed">!</text>
-			</view>
-			<!-- 如果没有更多的状态下，显示内容为dot（粗点），加载特定样式 -->
-			<text
-				class="zx-line-1"
-				:style="[loadTextStyle]"
-				:class="[
-					status == 'nomore' && isDot ? 'zx-loadmore__content__dot-text' : 'zx-loadmore__content__text',
-					status == 'failed' ? 'zx-loadmore__content__text--error' : '',
-					clickable && (status === 'loadmore' || status === 'failed') ? 'zx-loadmore__content__text--clickable' : ''
-				]"
-				@tap="loadMore"
-			>
-				{{ showText }}
-			</text>
-		</view>
-		<zx-line v-if="line" length="140rpx" :color="lineColor" :hairline="false" :dashed="dashed"></zx-line>
-	</view>
+    <view class="zx-loadmore" :style="[customStyle,
+        {
+            backgroundColor: bgColor,
+            marginBottom: marginBottom,
+            marginTop: marginTop,
+            height: height
+        }
+    ]">
+        <zx-line v-if="line" length="140rpx" :color="lineColor" :hairline="false" :dashed="dashed"></zx-line>
+        <!-- 加载中和没有更多的状态才显示两边的横线 -->
+        <view :class="status == 'loadmore' || status == 'nomore' || status == 'failed' ? 'zx-more' : ''"
+            class="zx-loadmore__content">
+            <view class="zx-loadmore__content__icon-wrap" v-if="(status === 'loading' || status === 'failed') && icon">
+                <zx-loading v-if="status === 'loading'" :color="iconColor" :size="iconSize"
+                    :type="loadingIcon === 'circle' ? 'circular' : 'spinner'" :show="true"></zx-loading>
+                <text v-else-if="status === 'failed'" class="zx-loadmore__content__icon-failed">!</text>
+            </view>
+            <!-- 如果没有更多的状态下，显示内容为dot（粗点），加载特定样式 -->
+            <text class="zx-line-1" :style="[loadTextStyle]" :class="[
+                status == 'nomore' && isDot ? 'zx-loadmore__content__dot-text' : 'zx-loadmore__content__text',
+                status == 'failed' ? 'zx-loadmore__content__text--error' : '',
+                clickable && (status === 'loadmore' || status === 'failed') ? 'zx-loadmore__content__text--clickable' : ''
+            ]" @tap="loadMore">
+                {{ showText }}
+            </text>
+        </view>
+        <zx-line v-if="line" length="140rpx" :color="lineColor" :hairline="false" :dashed="dashed"></zx-line>
+    </view>
 </template>
 
 <script setup>
@@ -65,6 +59,8 @@
  * @example <zx-loadmore :status="status" icon-type="iconType" load-text="loadText" />
  */
 import { computed, ref } from 'vue';
+import zxLine from '@tanzhenxing/zx-line/zx-line.vue';
+import zxLoading from '@tanzhenxing/zx-loading/zx-loading.vue';
 
 // 定义组件属性
 const props = defineProps({
@@ -232,80 +228,80 @@ $zx-tips-color: #909193;
 $zx-error-color: #ff6767;
 
 .zx-loadmore {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
 
-	&__content {
-		margin: 0 15px;
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: center;
+    &__content {
+        margin: 0 15px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
 
-		&__icon-wrap {
-			margin-right: 8px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
+        &__icon-wrap {
+            margin-right: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-		&__icon-failed {
-			color: $zx-error-color;
-			font-size: 24rpx;
-			font-weight: bold;
-			width: 32rpx;
-			height: 32rpx;
-			border-radius: 50%;
-			border: 2rpx solid $zx-error-color;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
+        &__icon-failed {
+            color: $zx-error-color;
+            font-size: 24rpx;
+            font-weight: bold;
+            width: 32rpx;
+            height: 32rpx;
+            border-radius: 50%;
+            border: 2rpx solid $zx-error-color;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-		&__text {
-			font-size: 14px;
-			color: $zx-content-color;
-			transition: color 0.2s;
+        &__text {
+            font-size: 14px;
+            color: $zx-content-color;
+            transition: color 0.2s;
 
-			&--error {
-				color: $zx-error-color;
-			}
+            &--error {
+                color: $zx-error-color;
+            }
 
-			&--clickable {
-				cursor: pointer;
+            &--clickable {
+                cursor: pointer;
 
-				&:hover {
-					opacity: 0.8;
-				}
+                &:hover {
+                    opacity: 0.8;
+                }
 
-				&:active {
-					opacity: 0.6;
-				}
-			}
-		}
+                &:active {
+                    opacity: 0.6;
+                }
+            }
+        }
 
-		&__dot-text {
-			font-size: 15px;
-			color: $zx-tips-color;
-		}
-	}
+        &__dot-text {
+            font-size: 15px;
+            color: $zx-tips-color;
+        }
+    }
 }
 
 // 适配暗黑模式
 @media (prefers-color-scheme: dark) {
-	.zx-loadmore {
-		&__content {
-			&__text {
-				color: #e5e5e5;
-			}
+    .zx-loadmore {
+        &__content {
+            &__text {
+                color: #e5e5e5;
+            }
 
-			&__dot-text {
-				color: #a2a2a2;
-			}
-		}
-	}
+            &__dot-text {
+                color: #a2a2a2;
+            }
+        }
+    }
 }
 </style>

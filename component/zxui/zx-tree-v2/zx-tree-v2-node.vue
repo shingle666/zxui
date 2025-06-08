@@ -7,12 +7,7 @@
         </text>
       </template>
       <template v-if="showCheckbox">
-        <checkbox
-          class="zx-tree-v2-node-checkbox"
-          :checked="checked"
-          :disabled="disabled"
-          @click.stop="handleCheck"
-        />
+        <checkbox class="zx-tree-v2-node-checkbox" :checked="checked" :disabled="disabled" @click.stop="handleCheck" />
       </template>
       <!-- <template v-if="renderContent">
         <view v-html="renderContent({ node, level })" />
@@ -22,22 +17,11 @@
       </template>
     </view>
     <view v-if="expanded && children && children.length > 0" class="zx-tree-v2-node-children">
-      <TreeNode
-        v-for="(child, idx) in children"
-        :key="child[props.value] || idx"
-        :node="child"
-        :props="props"
-        :level="level + 1"
-        :show-checkbox="showCheckbox"
-        :checked-keys="checkedKeys"
-        :disabled-keys="disabledKeys"
-        :expanded-keys="expandedKeys"
-        :render-content="renderContent"
-        @node-click="$emit('node-click', $event)"
-        @check-change="$emit('check-change', ...arguments)"
-        @toggle-expand="$emit('toggle-expand', $event)"
-        @toggle-check="$emit('toggle-check', $event)"
-      />
+      <TreeNode v-for="(child, idx) in children" :key="child[props.value] || idx" :node="child" :props="props"
+        :level="level + 1" :show-checkbox="showCheckbox" :checked-keys="checkedKeys" :disabled-keys="disabledKeys"
+        :expanded-keys="expandedKeys" :render-content="renderContent" @node-click="$emit('node-click', $event)"
+        @check-change="$emit('check-change', ...arguments)" @toggle-expand="$emit('toggle-expand', $event)"
+        @toggle-check="$emit('toggle-check', $event)" />
     </view>
   </view>
 </template>
@@ -81,22 +65,27 @@ function handleClick() {
 .zx-tree-v2-node {
   margin-left: 8px;
 }
+
 .zx-tree-v2-node-content {
   display: flex;
   align-items: center;
   padding: 4px 0;
 }
+
 .zx-tree-v2-node-expand {
   margin-right: 4px;
   cursor: pointer;
 }
+
 .zx-tree-v2-node-checkbox {
   margin-right: 4px;
 }
+
 .zx-tree-v2-node-label {
   margin-right: 4px;
 }
+
 .zx-tree-v2-node-children {
   margin-left: 16px;
 }
-</style> 
+</style>

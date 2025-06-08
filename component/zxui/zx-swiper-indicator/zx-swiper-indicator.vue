@@ -1,24 +1,16 @@
 <template>
 	<view class="zx-swiper-indicator">
-		<view
-			class="zx-swiper-indicator__wrapper"
-			v-if="indicatorMode === 'line'"
-			:class="[`zx-swiper-indicator__wrapper--${indicatorMode}`]"
-			:style="{
+		<view class="zx-swiper-indicator__wrapper" v-if="indicatorMode === 'line'"
+			:class="[`zx-swiper-indicator__wrapper--${indicatorMode}`]" :style="{
 				width: lineWidth * length,
 				backgroundColor: indicatorInactiveColor
-			}"
-		>
+			}">
 			<view class="zx-swiper-indicator__wrapper--line__bar" :style="[lineStyle]"></view>
 		</view>
 		<view class="zx-swiper-indicator__wrapper" v-if="indicatorMode === 'dot'">
-			<view
-				class="zx-swiper-indicator__wrapper__dot"
-				v-for="(item, index) in length"
-				:key="index"
-				:class="[index === current && 'zx-swiper-indicator__wrapper__dot--active']"
-				:style="[dotStyle(index)]"
-			></view>
+			<view class="zx-swiper-indicator__wrapper__dot" v-for="(item, index) in length" :key="index"
+				:class="[index === current && 'zx-swiper-indicator__wrapper__dot--active']" :style="[dotStyle(index)]">
+			</view>
 		</view>
 	</view>
 </template>
@@ -36,11 +28,6 @@
  * @example	<zx-swiper :list="list4" indicator keyName="url" :autoplay="false"></zx-swiper>
  */
 import { computed, ref } from 'vue';
-
-// 定义组件名称
-defineOptions({
-	name: 'zx-swiper-indicator'
-});
 
 // 定义props
 const props = defineProps({

@@ -1,23 +1,18 @@
 <template>
 	<zx-transition mode="fade" :show="show" :disabled="disableTransitions">
 		<view class="zx-tag-wrapper">
-			<view
-				class="zx-tag"
-				:class="[
-					`zx-tag--${shape}`,
-					`zx-tag--${normalizedType}`,
-					`zx-tag--${normalizedSize}`,
-					`zx-tag--${effect}`,
-					plain && `zx-tag--plain`,
-					plainFill && plain && `zx-tag--plain--fill`,
-					round && `zx-tag--round`,
-					hit && `zx-tag--hit`,
-					disabled && `zx-tag--disabled`,
-					closable && `zx-tag--closable`
-				]"
-				@tap.stop="clickHandler"
-				:style="[tagStyle]"
-			>
+			<view class="zx-tag" :class="[
+				`zx-tag--${shape}`,
+				`zx-tag--${normalizedType}`,
+				`zx-tag--${normalizedSize}`,
+				`zx-tag--${effect}`,
+				plain && `zx-tag--plain`,
+				plainFill && plain && `zx-tag--plain--fill`,
+				round && `zx-tag--round`,
+				hit && `zx-tag--hit`,
+				disabled && `zx-tag--disabled`,
+				closable && `zx-tag--closable`
+			]" @tap.stop="clickHandler" :style="[tagStyle]">
 				<slot name="icon">
 					<view class="zx-tag__icon" v-if="icon">
 						<image v-if="image(icon)" :src="icon" :style="[imgStyle]"></image>
@@ -26,7 +21,7 @@
 				</slot>
 				<slot>
 					<text class="zx-tag__text" :style="[textColor]" :class="[
-						`zx-tag__text--${normalizedType}`, 
+						`zx-tag__text--${normalizedType}`,
 						`zx-tag__text--${normalizedSize}`,
 						`zx-tag__text--${effect}`,
 						plain && `zx-tag__text--plain`
@@ -34,13 +29,8 @@
 						{{ text }}
 					</text>
 				</slot>
-				<view 
-					class="zx-tag__close" 
-					:class="[`zx-tag__close--${normalizedSize}`]" 
-					v-if="closable" 
-					@tap.stop="closeHandler" 
-					:style="{ backgroundColor: closeColor }"
-				>
+				<view class="zx-tag__close" :class="[`zx-tag__close--${normalizedSize}`]" v-if="closable"
+					@tap.stop="closeHandler" :style="{ backgroundColor: closeColor }">
 					<zx-icon name="close" :size="closeSize" color="#ffffff"></zx-icon>
 				</view>
 			</view>
@@ -78,6 +68,10 @@
  * @example <zx-tag text="标签" type="danger" effect="plain" round></zx-tag>
  */
 import { ref, getCurrentInstance, computed } from 'vue';
+import zxTransition from '@tanzhenxing/zx-transition/zx-transition.vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
+
+
 const { proxy } = getCurrentInstance();
 
 const props = defineProps({
@@ -253,7 +247,7 @@ const elIconColor = computed(() => {
 	if (props.iconColor) {
 		return props.iconColor;
 	}
-	
+
 	// 根据主题和类型确定图标颜色
 	if (props.effect === 'dark') {
 		return '#ffffff';
@@ -362,7 +356,7 @@ $zx-error: #fa3534 !default;
 		height: 24px;
 		line-height: 22px;
 		padding: 0 7px;
-		
+
 		&.zx-tag--closable {
 			padding-right: 20px;
 		}
@@ -372,7 +366,7 @@ $zx-error: #fa3534 !default;
 		height: 28px;
 		line-height: 26px;
 		padding: 0 10px;
-		
+
 		&.zx-tag--closable {
 			padding-right: 24px;
 		}
@@ -382,7 +376,7 @@ $zx-error: #fa3534 !default;
 		height: 32px;
 		line-height: 30px;
 		padding: 0 12px;
-		
+
 		&.zx-tag--closable {
 			padding-right: 28px;
 		}
@@ -395,18 +389,18 @@ $zx-error: #fa3534 !default;
 			border-color: $zx-primary;
 			color: #ffffff;
 		}
-		
+
 		&.zx-tag--light {
 			background-color: #ecf5ff;
 			border-color: #d9ecff;
 			color: $zx-primary;
 		}
-		
+
 		&.zx-tag--plain {
 			background-color: transparent;
 			border-color: $zx-primary;
 			color: $zx-primary;
-			
+
 			&.zx-tag--plain--fill {
 				background-color: #ecf5ff;
 			}
@@ -420,18 +414,18 @@ $zx-error: #fa3534 !default;
 			border-color: $zx-success;
 			color: #ffffff;
 		}
-		
+
 		&.zx-tag--light {
 			background-color: #f0f9ff;
 			border-color: #c2e7b0;
 			color: $zx-success;
 		}
-		
+
 		&.zx-tag--plain {
 			background-color: transparent;
 			border-color: $zx-success;
 			color: $zx-success;
-			
+
 			&.zx-tag--plain--fill {
 				background-color: #f0f9ff;
 			}
@@ -445,18 +439,18 @@ $zx-error: #fa3534 !default;
 			border-color: $zx-info;
 			color: #ffffff;
 		}
-		
+
 		&.zx-tag--light {
 			background-color: #f4f4f5;
 			border-color: #d3d4d6;
 			color: $zx-info;
 		}
-		
+
 		&.zx-tag--plain {
 			background-color: transparent;
 			border-color: $zx-info;
 			color: $zx-info;
-			
+
 			&.zx-tag--plain--fill {
 				background-color: #f4f4f5;
 			}
@@ -470,18 +464,18 @@ $zx-error: #fa3534 !default;
 			border-color: $zx-warning;
 			color: #ffffff;
 		}
-		
+
 		&.zx-tag--light {
 			background-color: #fdf6ec;
 			border-color: #f5dab1;
 			color: $zx-warning;
 		}
-		
+
 		&.zx-tag--plain {
 			background-color: transparent;
 			border-color: $zx-warning;
 			color: $zx-warning;
-			
+
 			&.zx-tag--plain--fill {
 				background-color: #fdf6ec;
 			}
@@ -495,18 +489,18 @@ $zx-error: #fa3534 !default;
 			border-color: $zx-error;
 			color: #ffffff;
 		}
-		
+
 		&.zx-tag--light {
 			background-color: #fef0f0;
 			border-color: #fbc4c4;
 			color: $zx-error;
 		}
-		
+
 		&.zx-tag--plain {
 			background-color: transparent;
 			border-color: $zx-error;
 			color: $zx-error;
-			
+
 			&.zx-tag--plain--fill {
 				background-color: #fef0f0;
 			}

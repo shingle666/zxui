@@ -92,23 +92,23 @@ const formatNumber = (value) => {
   if (props.formatter) {
     return props.formatter(value);
   }
-  
+
   const stringValue = value.toFixed(props.precision);
   const parts = stringValue.split('.');
-  
+
   // 处理整数部分，添加千分位分隔符
   let integerPart = parts[0];
   if (integerPart.length > 3) {
     const regex = new RegExp(`\\B(?=(\\d{3})+(?!\\d))`, 'g');
     integerPart = integerPart.replace(regex, props.groupSeparator);
   }
-  
+
   // 重新组合整数和小数部分
   let result = integerPart;
   if (parts.length > 1) {
     result += props.decimalSeparator + parts[1];
   }
-  
+
   return result;
 };
 
@@ -118,14 +118,14 @@ const formatTime = (time) => {
   if (seconds <= 0) {
     return '00:00:00';
   }
-  
+
   const [DD, HH, mm, ss] = [
     Math.floor(seconds / 86400), // 天数
     Math.floor(seconds / 3600) % 24, // 小时
     Math.floor(seconds / 60) % 60, // 分钟
     seconds % 60 // 秒
   ];
-  
+
   const formatMap = {
     'DD': DD.toString().padStart(2, '0'),
     'D': DD.toString(),
@@ -138,21 +138,21 @@ const formatTime = (time) => {
     // 支持 DD [days] HH:mm:ss 格式
     '[days]': '天'
   };
-  
+
   let result = props.format;
   Object.keys(formatMap).forEach(key => {
     if (result.includes(key)) {
       result = result.replace(key, formatMap[key]);
     }
   });
-  
+
   return result;
 };
 
 // 计算目标时间与当前时间的差值
 const calculateDiff = () => {
   let target = 0;
-  
+
   // 处理不同类型的值
   if (typeof props.value === 'number' || typeof props.value === 'string') {
     target = Number(props.value);
@@ -162,7 +162,7 @@ const calculateDiff = () => {
     // 处理 dayjs 等对象
     target = props.value.valueOf();
   }
-  
+
   const now = Date.now();
   return Math.max(target - now, 0);
 };
@@ -171,7 +171,7 @@ const calculateDiff = () => {
 const startCountdown = () => {
   clearInterval(timer.value);
   countdown();
-  
+
   timer.value = setInterval(() => {
     countdown();
   }, 1000);
@@ -182,9 +182,9 @@ const countdown = () => {
   const diff = calculateDiff();
   remainingTime.value = diff;
   countdownValue.value = formatTime(diff);
-  
+
   emit('change', remainingTime.value);
-  
+
   if (diff <= 0) {
     stopCountdown();
     emit('finish');
@@ -202,7 +202,7 @@ const displayValue = computed(() => {
   if (props.isCountdown) {
     return countdownValue.value;
   }
-  
+
   const value = Number(props.value);
   return formatNumber(value);
 });
@@ -235,7 +235,7 @@ defineExpose({
 });
 </script>
 
-<style>
+<style lang="scss" scoped>
 .zx-statistic {
   display: flex;
   flex-direction: column;

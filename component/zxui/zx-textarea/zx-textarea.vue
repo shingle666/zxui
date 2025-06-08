@@ -1,55 +1,23 @@
 <template>
 	<view class="zx-textarea" :class="textareaClass" :style="[textareaStyle]">
-		<textarea
-			class="field"
-			:class="{ disabled: disabled }"
-			:value="innerValue"
-			:style="textareaFieldStyle"
-			:placeholder="placeholder"
-			:placeholder-style="computedPlaceholderStyle"
-			:placeholder-class="placeholderClass"
-			:disabled="disabled"
-			:focus="focus"
-			:auto-height="autoHeight"
-			:fixed="fixed"
-			:cursor-spacing="cursorSpacing"
-			:cursor="cursor"
-			:auto-focus="autoFocus"
-			:confirm-type="confirmType"
-			:confirm-hold="confirmHold"
-			:show-confirm-bar="showConfirmBar"
-			:selection-start="selectionStart"
-			:selection-end="selectionEnd"
-			:adjust-position="adjustPosition"
-			:disable-default-padding="disableDefaultPadding"
-			:hold-keyboard="holdKeyboard"
-			:auto-blur="autoBlur"
-			:maxlength="computedMaxlength"
-			:ignore-composition-event="ignoreCompositionEvent"
-			:inputmode="inputmode"
-			@focus="onFocus"
-			@blur="onBlur"
-			@linechange="onLinechange"
-			@input="onInput"
-			@confirm="onConfirm"
-			@keyboardheightchange="onKeyboardheightchange"
-		></textarea>
+		<textarea class="field" :class="{ disabled: disabled }" :value="innerValue" :style="textareaFieldStyle"
+			:placeholder="placeholder" :placeholder-style="computedPlaceholderStyle"
+			:placeholder-class="placeholderClass" :disabled="disabled" :focus="focus" :auto-height="autoHeight"
+			:fixed="fixed" :cursor-spacing="cursorSpacing" :cursor="cursor" :auto-focus="autoFocus"
+			:confirm-type="confirmType" :confirm-hold="confirmHold" :show-confirm-bar="showConfirmBar"
+			:selection-start="selectionStart" :selection-end="selectionEnd" :adjust-position="adjustPosition"
+			:disable-default-padding="disableDefaultPadding" :hold-keyboard="holdKeyboard" :auto-blur="autoBlur"
+			:maxlength="computedMaxlength" :ignore-composition-event="ignoreCompositionEvent" :inputmode="inputmode"
+			@focus="onFocus" @blur="onBlur" @linechange="onLinechange" @input="onInput" @confirm="onConfirm"
+			@keyboardheightchange="onKeyboardheightchange"></textarea>
 		<!-- 字数统计 -->
-		<text 
-			v-if="count" 
-			class="count" 
-			:class="{ 'count-disabled': disabled, 'count-exceed': isExceedMaxlength }"
-			:style="{ 'background-color': disabled ? 'transparent' : '#ffffff' }"
-		>
+		<text v-if="count" class="count" :class="{ 'count-disabled': disabled, 'count-exceed': isExceedMaxlength }"
+			:style="{ 'background-color': disabled ? 'transparent' : '#ffffff' }">
 			{{ innerValue.length }}{{ showMaxlengthInCount ? `/${computedMaxlength}` : '' }}
 		</text>
 		<!-- 清除按钮 -->
-		<view 
-			v-if="clearable && innerValue && !disabled" 
-			class="clear-icon" 
-			@tap="onClear"
-		>
-			<text class="clear-text">×</text>
+		<view v-if="clearable && innerValue && !disabled" class="clear-icon" @tap="onClear">
+			<zx-icon name="times" class="clear-text" />
 		</view>
 	</view>
 </template>
@@ -107,6 +75,7 @@
  */
 
 import { ref, getCurrentInstance, computed, watch, nextTick } from 'vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
 
 // 获取组件实例
 const { proxy } = getCurrentInstance();
@@ -114,12 +83,12 @@ const { proxy } = getCurrentInstance();
 // 定义 emits
 const emit = defineEmits([
 	'update:value',
-	'input', 
-	'change', 
-	'focus', 
-	'blur', 
-	'linechange', 
-	'confirm', 
+	'input',
+	'change',
+	'focus',
+	'blur',
+	'linechange',
+	'confirm',
 	'keyboardheightchange',
 	'clear'
 ]);
@@ -416,12 +385,12 @@ const onLinechange = (e) => {
 // 方法：输入事件
 const onInput = (e) => {
 	let { value = '' } = e.detail || {};
-	
+
 	// 限制输入长度
 	if (props.maxlength !== -1 && value.length > Number(props.maxlength)) {
 		value = value.slice(0, Number(props.maxlength));
 	}
-	
+
 	innerValue.value = value;
 	nextTick(() => {
 		valueChange();
@@ -522,7 +491,7 @@ watch(
 	&.disabled {
 		background-color: #f5f7fa;
 		opacity: 0.6;
-		
+
 		.field {
 			color: #c0c4cc;
 		}
@@ -568,6 +537,7 @@ watch(
 		&::-webkit-scrollbar-thumb:hover {
 			background: #a8a8a8;
 		}
+
 		/* #endif */
 	}
 
@@ -626,6 +596,7 @@ watch(
 		word-break: break-word;
 	}
 }
+
 /* #endif */
 
 /* App-nvue 特殊样式 */
@@ -635,5 +606,6 @@ watch(
 		word-wrap: normal;
 	}
 }
+
 /* #endif */
 </style>

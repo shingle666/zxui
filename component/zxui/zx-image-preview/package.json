@@ -1,13 +1,20 @@
 {
-  "name": "zx-image-preview",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-image-preview",
+  "version": "1.0.2",
   "description": "图片放大预览组件，支持滑动切换、手势缩放、双击放大等功能。",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "image-preview",
+    "图片预览组件",
+    "图片预览"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "@tanzhenxing/zx-icon": "^1.0.13"
+  }
 }

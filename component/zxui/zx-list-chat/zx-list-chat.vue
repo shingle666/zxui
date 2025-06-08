@@ -2,43 +2,21 @@
   <!-- #ifdef APP-NVUE -->
   <cell>
     <!-- #endif -->
-    <view
-      :hover-class="!clickable && !link ? '' : 'zx-list-chat--hover'"
-      class="zx-list-chat"
-      @click.stop="onClick"
-    >
-      <view
-        :class="{ 'zx-list--border': border, 'zx-list-chat--first': isFirstChild }"
-      ></view>
+    <view :hover-class="!clickable && !link ? '' : 'zx-list-chat--hover'" class="zx-list-chat" @click.stop="onClick">
+      <view :class="{ 'zx-list--border': border, 'zx-list-chat--first': isFirstChild }"></view>
       <view class="zx-list-chat__container">
         <view class="zx-list-chat__header-warp">
-          <view
-            v-if="avatarCircle || avatarList.length === 0"
-            class="zx-list-chat__header"
-            :class="{ 'header--circle': avatarCircle }"
-          >
-            <image
-              class="zx-list-chat__header-image"
-              :class="{ 'header--circle': avatarCircle }"
-              :src="avatarUrl"
-              mode="aspectFill"
-            ></image>
+          <view v-if="avatarCircle || avatarList.length === 0" class="zx-list-chat__header"
+            :class="{ 'header--circle': avatarCircle }">
+            <image class="zx-list-chat__header-image" :class="{ 'header--circle': avatarCircle }" :src="avatarUrl"
+              mode="aspectFill"></image>
           </view>
           <!-- 头像组 -->
           <view v-else class="zx-list-chat__header">
-            <view
-              v-for="(item, index) in avatarList"
-              :key="index"
-              class="zx-list-chat__header-box"
-              :class="computedAvatar"
-              :style="{ width: imageWidth + 'px', height: imageWidth + 'px' }"
-            >
-              <image
-                class="zx-list-chat__header-image"
-                :style="{ width: imageWidth + 'px', height: imageWidth + 'px' }"
-                :src="item.url"
-                mode="aspectFill"
-              ></image>
+            <view v-for="(item, index) in avatarList" :key="index" class="zx-list-chat__header-box"
+              :class="computedAvatar" :style="{ width: imageWidth + 'px', height: imageWidth + 'px' }">
+              <image class="zx-list-chat__header-image" :style="{ width: imageWidth + 'px', height: imageWidth + 'px' }"
+                :src="item.url" mode="aspectFill"></image>
             </view>
           </view>
         </view>
@@ -49,11 +27,8 @@
           <!-- #ifndef APP -->
         </view>
         <!-- #endif -->
-        <view
-          v-if="badgeText && badgePositon === 'left'"
-          class="zx-list-chat__badge zx-list-chat__badge-pos"
-          :class="[isSingle]"
-        >
+        <view v-if="badgeText && badgePositon === 'left'" class="zx-list-chat__badge zx-list-chat__badge-pos"
+          :class="[isSingle]">
           <text class="zx-list-chat__badge-text">{{
             badgeText === "dot" ? "" : badgeText
           }}</text>
@@ -71,11 +46,8 @@
           <view class="zx-list-chat__content-extra">
             <slot>
               <text class="zx-list-chat__content-extra-text">{{ time }}</text>
-              <view
-                v-if="badgeText && badgePositon === 'right'"
-                class="zx-list-chat__badge"
-                :class="[isSingle, badgePositon === 'right' ? 'zx-list-chat--right' : '']"
-              >
+              <view v-if="badgeText && badgePositon === 'right'" class="zx-list-chat__badge"
+                :class="[isSingle, badgePositon === 'right' ? 'zx-list-chat--right' : '']">
                 <text class="zx-list-chat__badge-text">{{
                   badgeText === "dot" ? "" : badgeText
                 }}</text>
@@ -476,6 +448,7 @@ $zx-spacing-row-base: 10px;
   font-weight: $title-weight;
   overflow: hidden;
 }
+
 .draft {
   color: #eb3a41;
   /* #ifndef APP-NVUE */

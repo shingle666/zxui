@@ -3,8 +3,8 @@
 		<zx-overlay :show="isShow=true" :custom-style="overlayStyle">
 			<view class="zx-toast__content" :style="[contentStyle]"
 				:class="['zx-type-' + currentConfig.type, currentConfig.type === 'loading' || currentConfig.loading ? 'zx-toast__content--loading' : '']">
-				<zx-loading-icon v-if="currentConfig.type === 'loading'" mode="circle" color="rgb(255, 255, 255)"
-					inactiveColor="rgb(120, 120, 120)" size="25"></zx-loading-icon>
+				<zx-loading v-if="currentConfig.type === 'loading'" type="circular" color="rgb(255, 255, 255)"
+					size="25"></zx-loading>
 				<zx-icon v-if="currentConfig.type !== 'loading'" :name="currentConfig.icon" size="34rpx" :color="currentConfig.type"
 					:customStyle="iconStyle"></zx-icon>
 				<zx-gap v-if="currentConfig.type === 'loading' || currentConfig.loading" height="12" bgColor="transparent"></zx-gap>
@@ -46,6 +46,11 @@
 		defineProps,
 		defineExpose
 	} from 'vue';
+	import zxLoading from '@tanzhenxing/zx-loading/zx-loading.vue';
+	import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
+	import zxGap from '@tanzhenxing/zx-gap/zx-gap.vue';
+	import zxOverlay from '@tanzhenxing/zx-overlay/zx-overlay.vue';
+
 	const {
 		proxy
 	} = getCurrentInstance();

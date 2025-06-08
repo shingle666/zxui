@@ -24,6 +24,7 @@
 
 <script setup>
 import { ref, watch, computed, nextTick,onMounted } from 'vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
 
 const props = defineProps({
   options: {

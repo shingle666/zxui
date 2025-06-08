@@ -1,13 +1,15 @@
 {
-  "name": "zx-signature",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@tanzhenxing/zx-signature",
+  "version": "1.0.1",
+  "description": "signature",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "zx-signature"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
   "type": "commonjs"
 }

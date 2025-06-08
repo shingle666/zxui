@@ -1,37 +1,15 @@
 <template>
   <view v-if="visible" class="zx-image-preview" @touchmove.prevent="preventMove">
-    <swiper
-      class="zx-image-preview__swiper"
-      :current="currentIndex"
-      :circular="loop"
-      :indicator-dots="showIndicators"
-      :autoplay="false"
-      :duration="swipeDuration"
-      @change="onSwiperChange"
-    >
+    <swiper class="zx-image-preview__swiper" :current="currentIndex" :circular="loop" :indicator-dots="showIndicators"
+      :autoplay="false" :duration="swipeDuration" @change="onSwiperChange">
       <swiper-item v-for="(item, index) in images" :key="index" class="zx-image-preview__swiper-item">
         <movable-area class="zx-image-preview__movable-area">
-          <movable-view
-            class="zx-image-preview__movable-view"
-            direction="all"
-            :scale="true"
-            :scale-min="minZoom"
-            :scale-max="maxZoom"
-            :scale-value="currentScale[index] || 1"
-            @scale="(e) => onScale(e, index)"
-            @change="(e) => onMove(e, index)"
-            @touchstart="(e) => onTouchStart(e, index)"
-            @touchend="(e) => onTouchEnd(e, index)"
-          >
-            <image
-              :src="item"
-              class="zx-image-preview__image"
-              mode="widthFix"
-              @load="(e) => onImageLoad(e, index)"
-              @error="(e) => onImageError(e, index)"
-              @click="() => onImageClick(index)"
-              :style="getImageStyle(index)"
-            />
+          <movable-view class="zx-image-preview__movable-view" direction="all" :scale="true" :scale-min="minZoom"
+            :scale-max="maxZoom" :scale-value="currentScale[index] || 1" @scale="(e) => onScale(e, index)"
+            @change="(e) => onMove(e, index)" @touchstart="(e) => onTouchStart(e, index)"
+            @touchend="(e) => onTouchEnd(e, index)">
+            <image :src="item" class="zx-image-preview__image" mode="widthFix" @load="(e) => onImageLoad(e, index)"
+              @error="(e) => onImageError(e, index)" @click="() => onImageClick(index)" :style="getImageStyle(index)" />
           </movable-view>
         </movable-area>
       </swiper-item>
@@ -41,7 +19,8 @@
       {{ currentIndex + 1 }} / {{ images.length }}
     </view>
 
-    <view v-if="closeable" class="zx-image-preview__close-icon" :class="['zx-image-preview__close-icon--' + closeIconPosition]" @click="close">
+    <view v-if="closeable" class="zx-image-preview__close-icon"
+      :class="['zx-image-preview__close-icon--' + closeIconPosition]" @click="close">
       <zx-icon name="close" color="#fff" size="22px"></zx-icon>
     </view>
 
@@ -51,7 +30,7 @@
 
 <script setup>
 import { ref, watch, computed, nextTick, onMounted, onUnmounted } from 'vue';
-import zxIcon from '../zx-icon/zx-icon.vue'; // Assuming zx-icon component exists
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
 
 const props = defineProps({
   images: {
@@ -346,19 +325,23 @@ onMounted(() => {
   &__close-icon {
     position: absolute;
     z-index: 2;
+
     // Default is top-right
     &--top-right {
       top: 20px; // Adjust as per safe area considerations if needed
       right: 15px;
     }
+
     &--top-left {
       top: 20px;
       left: 15px;
     }
+
     &--bottom-left {
       bottom: 20px;
       left: 15px;
     }
+
     &--bottom-right {
       bottom: 20px;
       right: 15px;

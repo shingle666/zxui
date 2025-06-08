@@ -1,34 +1,16 @@
 <template>
-	<view class="zx-picker-view-container">
-		<picker-view
-			class="zx-picker-view"
-			:indicator-style="indicatorStyle"
-			:indicator-class="indicatorClass"
-			:mask-style="maskStyle"
-			:mask-class="maskClass"
-			:value="value"
-			:immediate-change="immediateChange"
-			@change="onChange"
-			@pickstart="onPickStart"
-			@pickend="onPickEnd"
-			:style="pickerViewStyle"
-		>
-			<picker-view-column
-				v-for="(column, columnIndex) in columns"
-				:key="columnIndex"
-				class="zx-picker-view__column"
-			>
-				<view
-					v-for="(item, itemIndex) in column"
-					:key="itemIndex"
-					class="zx-picker-view__column-item"
-					:style="itemStyle"
-				>
-					{{ getItemText(item) }}
-				</view>
-			</picker-view-column>
-		</picker-view>
-	</view>
+  <view class="zx-picker-view-container">
+    <picker-view class="zx-picker-view" :indicator-style="indicatorStyle" :indicator-class="indicatorClass"
+      :mask-style="maskStyle" :mask-class="maskClass" :value="value" :immediate-change="immediateChange"
+      @change="onChange" @pickstart="onPickStart" @pickend="onPickEnd" :style="pickerViewStyle">
+      <picker-view-column v-for="(column, columnIndex) in columns" :key="columnIndex" class="zx-picker-view__column">
+        <view v-for="(item, itemIndex) in column" :key="itemIndex" class="zx-picker-view__column-item"
+          :style="itemStyle">
+          {{ getItemText(item) }}
+        </view>
+      </picker-view-column>
+    </picker-view>
+  </view>
 </template>
 
 <script setup>

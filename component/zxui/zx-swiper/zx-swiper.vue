@@ -1,93 +1,58 @@
 <template>
-	<view class="zx-swiper" :style="{backgroundColor: bgColor, height: imageHeight, borderRadius: radius}">
+	<view class="zx-swiper" :style="{ backgroundColor: bgColor, height: imageHeight, borderRadius: radius }">
 		<view v-if="loading" class="zx-swiper__loading">
-			<zx-loading-icon mode="circle"></zx-loading-icon>
+			<zx-loading type="circular"></zx-loading>
 		</view>
-		<swiper v-else
-			class="zx-swiper__wrapper"
-			:style="{height: imageHeight}"
-			:circular="circular"
-			:interval="interval"
-			:duration="duration"
-			:autoplay="autoplay"
-			:current="current"
-			:current-item-id="currentItemId"
-			:previous-margin="previousMargin"
-			:next-margin="nextMargin"
-			:acceleration="acceleration"
-			:display-multiple-items="displayMultipleItems"
-			:easing-function="easingFunction"
-			:vertical="vertical"
-			:disable-touch="disableTouch"
-			:touchable="touchable"
-			:indicator-dots="false"
-			@change="change"
-			@transition="transition"
-			@animationfinish="animationfinish">
-			<swiper-item class="zx-swiper__wrapper__item" v-for="(item, index) in list" :key="index" :item-id="getItemId(item, index)">
+		<swiper v-else class="zx-swiper__wrapper" :style="{ height: imageHeight }" :circular="circular"
+			:interval="interval" :duration="duration" :autoplay="autoplay" :current="current"
+			:current-item-id="currentItemId" :previous-margin="previousMargin" :next-margin="nextMargin"
+			:acceleration="acceleration" :display-multiple-items="displayMultipleItems"
+			:easing-function="easingFunction" :vertical="vertical" :disable-touch="disableTouch" :touchable="touchable"
+			:indicator-dots="false" @change="change" @transition="transition" @animationfinish="animationfinish">
+			<swiper-item class="zx-swiper__wrapper__item" v-for="(item, index) in list" :key="index"
+				:item-id="getItemId(item, index)">
 				<view class="zx-swiper__wrapper__item__wrapper" :style="[itemStyle(index)]" @tap="clickHandler(index)">
 					<!-- 图片展示 -->
-					<image v-if="getItemType(item) === 'image'"
-						class="zx-swiper__wrapper__item__wrapper__image"
-						:src="getSource(item)"
-						:mode="imgMode"
-						:style="{height: imageHeight, borderRadius: radius, width: '100%'}"
-						:lazy-load="lazyLoad"
-						@load="imageLoad"
-						@error="imageError"
-					/>
-					
+					<image v-if="getItemType(item) === 'image'" class="zx-swiper__wrapper__item__wrapper__image"
+						:src="getSource(item)" :mode="imgMode"
+						:style="{ height: imageHeight, borderRadius: radius, width: '100%' }" :lazy-load="lazyLoad"
+						@load="imageLoad" @error="imageError" />
+
 					<!-- 视频展示 -->
-					<video v-else-if="getItemType(item) === 'video'"
-						class="zx-swiper__wrapper__item__wrapper__video"
-						:id="`zx-video-${index}`"
-						:enable-progress-gesture="false"
-						:src="getSource(item)"
-						:poster="getPoster(item)"
-						:title="showTitle && item.title ? item.title : ''"
-						:style="{height: imageHeight, borderRadius: radius}"
-						:controls="videoControls"
-						:autoplay="videoAutoplay"
-						:loop="videoLoop"
-						:muted="videoMuted"
-						@play="videoPlay"
-						@pause="videoPause"
-						@ended="videoEnded"
-						@error="videoError"
-					/>
-					
+					<video v-else-if="getItemType(item) === 'video'" class="zx-swiper__wrapper__item__wrapper__video"
+						:id="`zx-video-${index}`" :enable-progress-gesture="false" :src="getSource(item)"
+						:poster="getPoster(item)" :title="showTitle && item.title ? item.title : ''"
+						:style="{ height: imageHeight, borderRadius: radius }" :controls="videoControls"
+						:autoplay="videoAutoplay" :loop="videoLoop" :muted="videoMuted" @play="videoPlay"
+						@pause="videoPause" @ended="videoEnded" @error="videoError" />
+
 					<!-- 自定义内容插槽 -->
 					<slot v-else :item="item" :index="index" name="item">
 						<view class="zx-swiper__wrapper__item__wrapper__custom">
 							{{ item }}
 						</view>
 					</slot>
-					
+
 					<!-- 标题显示 -->
 					<text v-if="showTitle && item.title" class="zx-swiper__wrapper__item__wrapper__title zx-line-1">
 						{{ item.title }}
 					</text>
-					
+
 					<!-- 遮罩层 -->
 					<view v-if="showMask" class="zx-swiper__wrapper__item__wrapper__mask" :style="maskStyle"></view>
 				</view>
 			</swiper-item>
 		</swiper>
-		
+
 		<!-- 指示器 -->
 		<view v-if="!loading && indicator" class="zx-swiper__indicator" :style="[indicatorStyle]">
 			<slot name="indicator" :current="currentIndex" :total="list.length">
-				<zx-swiper-indicator
-					v-if="!showTitle"
-					:indicatorActiveColor="indicatorActiveColor"
-					:indicatorInactiveColor="indicatorInactiveColor"
-					:length="list.length"
-					:current="currentIndex"
-					:indicatorMode="indicatorMode"
-				/>
+				<zx-swiper-indicator v-if="!showTitle" :indicatorActiveColor="indicatorActiveColor"
+					:indicatorInactiveColor="indicatorInactiveColor" :length="list.length" :current="currentIndex"
+					:indicatorMode="indicatorMode" />
 			</slot>
 		</view>
-		
+
 		<!-- 自定义覆盖层 -->
 		<slot name="overlay" :current="currentIndex" :total="list.length"></slot>
 	</view>
@@ -100,6 +65,14 @@
  * @tutorial https://zxui.org/components/swiper
  */
 import { ref, computed, watch, onMounted, nextTick } from 'vue';
+import zxLoading from '@tanzhenxing/zx-loading/zx-loading.vue';
+import zxSwiperIndicator from '@tanzhenxing/zx-swiper-indicator/zx-swiper-indicator.vue';
+
+/**
+ * 获取项目的类型
+ * @param {Object} item - 项目对象
+ * @returns {String} 项目的类型，可能是 'image'、'video' 或 'custom'
+*/
 
 // 定义属性
 const props = defineProps({
@@ -313,7 +286,7 @@ watch(() => props.list, (val) => {
 	} else if (currentIndex.value >= val.length) {
 		currentIndex.value = val.length - 1;
 	}
-	
+
 	// 获取最大的图片高度
 	if (props.autoHeight && val.length > 0) {
 		nextTick(() => {
@@ -345,9 +318,9 @@ function updateImageHeight(list) {
 	let maxHeight = 0;
 	let loadedCount = 0;
 	const totalImages = list.filter(item => getItemType(item) === 'image').length;
-	
+
 	if (totalImages === 0) return;
-	
+
 	list.forEach((item, index) => {
 		if (getItemType(item) === 'image') {
 			const imgUrl = getSource(item);
@@ -359,7 +332,7 @@ function updateImageHeight(list) {
 						const height = res.height * rate;
 						maxHeight = Math.max(maxHeight, height);
 						loadedCount++;
-						
+
 						if (loadedCount === totalImages) {
 							imageHeight.value = maxHeight + 'rpx';
 						}
@@ -384,7 +357,7 @@ function getItemType(item) {
 		const isVideo = videoExts.some(ext => item.toLowerCase().includes(ext));
 		return isVideo ? 'video' : 'image';
 	}
-	
+
 	if (typeof item === 'object' && item !== null) {
 		if (item.type) {
 			return ['image', 'video', 'custom'].includes(item.type) ? item.type : 'image';
@@ -427,13 +400,13 @@ function getSource(item) {
 // 轮播切换事件
 function change(e) {
 	const { current, source } = e.detail;
-	
+
 	// 暂停之前的视频
 	pauseVideo(currentIndex.value);
-	
+
 	// 更新当前索引
 	currentIndex.value = current;
-	
+
 	emit('change', { current, source, currentItem: props.list[current] });
 }
 

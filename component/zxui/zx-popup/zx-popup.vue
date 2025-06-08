@@ -2,23 +2,12 @@
   <view v-if="showPopup" class="zx-popup" :class="[popupStyle, isDesktop ? 'fixforpc-z-index' : '']">
     <view @touchstart="touchstart">
       <!-- 遮罩层 -->
-      <zx-transition 
-        v-if="maskShow" 
-        :show="showTrans" 
-        mode-class="fade" 
-        :duration="duration"
-        @click="onMaskClick"
-      >
+      <zx-transition v-if="maskShow" :show="showTrans" mode-class="fade" :duration="duration" @click="onMaskClick">
         <view class="zx-popup__mask" :style="maskStyles"></view>
       </zx-transition>
-      
+
       <!-- 内容区域 -->
-      <zx-transition 
-        :show="showTrans" 
-        :mode-class="animationMode" 
-        :duration="duration"
-        @click="onContentClick"
-      >
+      <zx-transition :show="showTrans" :mode-class="animationMode" :duration="duration" @click="onContentClick">
         <view class="zx-popup__wrapper" :style="contentStyles" :class="[popupStyle]" @click="clear">
           <slot />
           <!-- 底部安全区适配 -->
@@ -26,10 +15,11 @@
         </view>
       </zx-transition>
     </view>
-    
+
     <!-- H5 键盘事件处理 -->
     <!-- #ifdef H5 -->
-    <view v-if="maskShow" @keyup.esc="onMaskClick" style="position: fixed; top: -9999px; left: -9999px;" tabindex="0" ref="keyHandler"></view>
+    <view v-if="maskShow" @keyup.esc="onMaskClick" style="position: fixed; top: -9999px; left: -9999px;" tabindex="0"
+      ref="keyHandler"></view>
     <!-- #endif -->
   </view>
 </template>
@@ -130,7 +120,7 @@ const popupStyle = computed(() => {
 const animationMode = computed(() => {
   const modeMap = {
     top: 'slide-top',
-    bottom: 'slide-bottom', 
+    bottom: 'slide-bottom',
     center: ['zoom-out', 'fade'],
     left: 'slide-left',
     right: 'slide-right'
@@ -161,7 +151,7 @@ const contentStyles = computed(() => {
     position: 'fixed',
     zIndex: props.zIndex + 1
   }
-  
+
   // 根据类型设置位置样式
   switch (props.type) {
     case 'top':
@@ -223,10 +213,10 @@ const getSystemInfo = () => {
       screenHeight,
       safeAreaInsets: sai
     } = uni.getSystemInfoSync()
-    
+
     popupWidth.value = windowWidth
     popupHeight.value = windowHeight + (windowTop || 0)
-    
+
     if (safeArea && props.safeArea) {
       safeAreaInsets.value = sai ? sai.bottom : 0
     } else {
@@ -239,13 +229,13 @@ const getSystemInfo = () => {
 
 const open = () => {
   if (showPopup.value) return
-  
+
   emit('open')
   showPopup.value = true
-  
+
   nextTick(() => {
     showTrans.value = true
-    
+
     // #ifdef H5
     // 设置焦点以便监听键盘事件
     if (keyHandler.value && typeof keyHandler.value.focus === 'function') {
@@ -256,9 +246,9 @@ const open = () => {
       }
     }
     // #endif
-    
+
     emit('change', { show: true, type: props.type })
-    
+
     // 动画完成后触发 opened 事件
     setTimeout(() => {
       emit('opened')
@@ -268,11 +258,11 @@ const open = () => {
 
 const close = () => {
   if (!showPopup.value) return
-  
+
   emit('close')
   showTrans.value = false
   emit('change', { show: false, type: props.type })
-  
+
   setTimeout(() => {
     showPopup.value = false
     emit('closed')
@@ -302,9 +292,9 @@ const onMaskClick = () => {
     clearPropagation.value = false
     return
   }
-  
+
   emit('maskClick')
-  
+
   if (props.maskClick) {
     emit('update:show', false)
     close()
@@ -354,7 +344,7 @@ defineExpose({
   /* #ifndef APP-NVUE */
   z-index: 99;
   /* #endif */
-  
+
   &.top,
   &.left,
   &.right {
@@ -365,18 +355,18 @@ defineExpose({
     top: 0;
     /* #endif */
   }
-  
+
   .zx-popup__mask {
     width: 100%;
     height: 100%;
   }
-  
+
   .zx-popup__wrapper {
     /* #ifndef APP-NVUE */
     display: block;
     /* #endif */
     position: relative;
-    
+
     &.left,
     &.right {
       /* #ifdef H5 */

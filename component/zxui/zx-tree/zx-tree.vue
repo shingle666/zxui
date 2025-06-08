@@ -22,6 +22,7 @@
 
 <script setup>
 import { ref, computed, watch, getCurrentInstance } from 'vue'
+import zxTreeNode from '@tanzhenxing/zx-tree-node/zx-tree-node.vue'
 
 // 组件属性
 const props = defineProps({

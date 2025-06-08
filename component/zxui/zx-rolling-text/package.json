@@ -1,13 +1,15 @@
 {
-  "name": "zx-rolling-text",
-  "version": "1.0.0",
-  "description": "`zx-rolling-text` 是一个为 UniApp 设计的文本翻滚动效组件，可以用于数字的动态翻滚效果，也支持非数字文本内容的列表翻转。它旨在提供一种视觉上吸引人的方式来展示变化的数值或文本。",
+  "name": "@tanzhenxing/zx-rolling-text",
+  "version": "1.0.1",
+  "description": "`zx-rolling-text` 文本翻滚动效组件，可以用于数字的动态翻滚效果，也支持非数字文本内容的列表翻转。它旨在提供一种视觉上吸引人的方式来展示变化的数值或文本。",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "文本翻滚动效组件"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
   "type": "commonjs"
 }

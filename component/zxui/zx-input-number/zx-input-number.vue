@@ -1,94 +1,59 @@
 <template>
-  <div
-    class="zx-input-number"
-    :class="[
-      `zx-input-number--${size}`,
-      {
-        'is-disabled': disabled,
-        'is-readonly': readonly,
-        'is-controls-right': controlsPosition === 'right'
-      }
-    ]"
-  >
-    <span
-      v-if="controls && controlsPosition !== 'right'"
-      class="zx-input-number__decrease"
-      :class="{ 'is-disabled': minDisabled }"
-      @click="decrease"
-    >
+  <view class="zx-input-number" :class="[
+    `zx-input-number--${size}`,
+    {
+      'is-disabled': disabled,
+      'is-readonly': readonly,
+      'is-controls-right': controlsPosition === 'right'
+    }
+  ]">
+    <view v-if="controls && controlsPosition !== 'right'" class="zx-input-number__decrease"
+      :class="{ 'is-disabled': minDisabled }" @click="decrease">
       <slot name="decrease-icon">
-        <i class="zx-icon-minus"></i>
+        <zx-icon name="minus"></zx-icon>
       </slot>
-    </span>
-    
-    <span
-      v-if="controls && controlsPosition !== 'right'"
-      class="zx-input-number__increase"
-      :class="{ 'is-disabled': maxDisabled }"
-      @click="increase"
-    >
+    </view>
+
+    <view v-if="controls && controlsPosition !== 'right'" class="zx-input-number__increase"
+      :class="{ 'is-disabled': maxDisabled }" @click="increase">
       <slot name="increase-icon">
-        <i class="zx-icon-plus"></i>
+        <zx-icon name="plus"></zx-icon>
       </slot>
-    </span>
+    </view>
 
-    <div class="zx-input-number__input">
-      <div v-if="$slots.prefix" class="zx-input-number__prefix">
+    <view class="zx-input-number__input">
+      <view v-if="$slots.prefix" class="zx-input-number__prefix">
         <slot name="prefix"></slot>
-      </div>
-      
-      <input
-        ref="inputRef"
-        v-model="displayValue"
-        type="text"
-        :placeholder="placeholder"
-        :readonly="readonly"
-        :disabled="disabled"
-        :name="name"
-        :id="id"
-        :aria-label="ariaLabel || label"
-        class="zx-input-number__inner"
-        @focus="handleFocus"
-        @blur="handleBlur"
-        @input="handleInput"
-        @change="handleChange"
-        @keydown="handleKeydown"
-      />
-      
-      <div v-if="$slots.suffix" class="zx-input-number__suffix">
-        <slot name="suffix"></slot>
-      </div>
-    </div>
+      </view>
 
-    <div v-if="controls && controlsPosition === 'right'" class="zx-input-number__controls">
-      <span
-        class="zx-input-number__increase"
-        :class="{ 'is-disabled': maxDisabled }"
-        @click="increase"
-      >
+      <zx-input ref="inputRef" v-model="displayValue" type="text" :placeholder="placeholder" :readonly="readonly"
+        :disabled="disabled" :name="name" :id="id" :aria-label="ariaLabel || label" class="zx-input-number__inner"
+        @focus="handleFocus" @blur="handleBlur" @input="handleInput" @change="handleChange" @keydown="handleKeydown" />
+
+      <view v-if="$slots.suffix" class="zx-input-number__suffix">
+        <slot name="suffix"></slot>
+      </view>
+    </view>
+
+    <view v-if="controls && controlsPosition === 'right'" class="zx-input-number__controls">
+      <view class="zx-input-number__increase" :class="{ 'is-disabled': maxDisabled }" @click="increase">
         <slot name="increase-icon">
-          <i class="zx-icon-arrow-up"></i>
+          <zx-icon name="arrow-up"></zx-icon>
         </slot>
-      </span>
-      <span
-        class="zx-input-number__decrease"
-        :class="{ 'is-disabled': minDisabled }"
-        @click="decrease"
-      >
+      </view>
+      <view class="zx-input-number__decrease" :class="{ 'is-disabled': minDisabled }" @click="decrease">
         <slot name="decrease-icon">
-          <i class="zx-icon-arrow-down"></i>
+          <zx-icon name="arrow-down"></zx-icon>
         </slot>
-      </span>
-    </div>
-  </div>
+      </view>
+    </view>
+  </view>
 </template>
 
 <script setup>
 import { ref, computed, nextTick, watch } from 'vue'
-
-defineOptions({
-  name: 'ZxInputNumber'
-})
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+import zxInput from '@tanzhenxing/zx-input/zx-input.vue'
 
 const props = defineProps({
   modelValue: {
@@ -231,21 +196,21 @@ function ensureBoundary(value) {
 
 function setCurrentValue(value, emitChange = true) {
   const oldVal = currentValue.value
-  
+
   if (typeof value === 'number' && props.precision !== undefined) {
     value = toPrecision(value, props.precision)
   }
-  
+
   if (value !== undefined && value !== null) {
     value = ensureBoundary(value)
   }
-  
+
   if (oldVal === value) return
-  
+
   userInput.value = null
   currentValue.value = value
   emit('update:modelValue', value)
-  
+
   if (emitChange) {
     emit('change', value, oldVal)
   }
@@ -254,7 +219,7 @@ function setCurrentValue(value, emitChange = true) {
 // 增加数值
 function increase() {
   if (props.disabled || props.readonly || maxDisabled.value) return
-  
+
   const value = (currentValue.value || 0) + props.step
   setCurrentValue(value)
 }
@@ -262,7 +227,7 @@ function increase() {
 // 减少数值
 function decrease() {
   if (props.disabled || props.readonly || minDisabled.value) return
-  
+
   const value = (currentValue.value || 0) - props.step
   setCurrentValue(value)
 }
@@ -276,7 +241,7 @@ function handleInput(event) {
 function handleChange(event) {
   const value = event.target.value
   const parsedValue = value === '' ? undefined : Number(value)
-  
+
   if (!isNaN(parsedValue) || value === '') {
     if (props.stepStrictly) {
       const stepPrecision = getPrecision(props.step)

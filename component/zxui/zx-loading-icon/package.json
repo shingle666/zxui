@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-loading-icon",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,5 +14,5 @@
   ],
   "author": "zhengxing",
   "license": "ISC",
-  "description": ""
+  "description": "加载动画"
 }

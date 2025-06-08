@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-notify",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "props.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,5 +13,10 @@
   ],
   "author": "tanzhenxing",
   "license": "ISC",
-  "description": "一个基于 uni-app、Vue3 <script setup> 语法开发的高兼容性通知组件，适配 H5、小程序、App。"
+  "description": "一个基于 uni-app、Vue3 <script setup> 语法开发的高兼容性通知组件，适配 H5、小程序、App。",
+  "dependencies": {
+    "@tanzhenxing/zx-icon": "^1.0.13",
+    "@tanzhenxing/zx-status-bar": "^1.0.8",
+    "@tanzhenxing/zx-transition": "^1.0.8"
+  }
 }

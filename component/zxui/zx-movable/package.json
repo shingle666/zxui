@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-movable",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "基于uni-app官方movable-area和movable-view封装的高性能可拖拽组件，支持多种拖拽方向、双指缩放、惯性滑动等功能",
   "main": "zx-movable.vue",
   "keywords": [
@@ -22,4 +22,3 @@
   "license": "MIT",
   "homepage": "https://zxui.org/components/movable"
 }
-

@@ -4,7 +4,7 @@
 		<view v-if="$slots.breadcrumb" class="zx-page-header__breadcrumb">
 			<slot name="breadcrumb"></slot>
 		</view>
-		
+
 		<!-- 标题区域 -->
 		<view class="zx-page-header__header">
 			<!-- 返回按钮/图标 -->
@@ -15,7 +15,7 @@
 				</slot>
 				<text v-if="title" class="zx-page-header__title">{{ title }}</text>
 			</view>
-			
+
 			<!-- 内容区域 -->
 			<view class="zx-page-header__content">
 				<template v-if="$slots.content">
@@ -25,13 +25,13 @@
 					<text>{{ content }}</text>
 				</template>
 			</view>
-			
+
 			<!-- 额外操作区域 -->
 			<view v-if="$slots.extra" class="zx-page-header__extra">
 				<slot name="extra"></slot>
 			</view>
 		</view>
-		
+
 		<!-- 主体内容区域 -->
 		<view v-if="$slots.default" class="zx-page-header__main">
 			<slot></slot>
@@ -57,6 +57,7 @@
  * @example <zx-page-header @back="goBack"><template #content><text>标题</text></template></zx-page-header>
  */
 import { computed } from 'vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
 
 const emit = defineEmits(['back']);
 
@@ -94,33 +95,33 @@ const handleBack = () => {
 .zx-page-header {
 	padding: 24rpx;
 	background-color: #fff;
-	
+
 	&__breadcrumb {
 		margin-bottom: 16rpx;
 	}
-	
+
 	&__header {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 	}
-	
+
 	&__back {
 		display: flex;
 		align-items: center;
 		cursor: pointer;
-		
+
 		&:active {
 			opacity: 0.8;
 		}
 	}
-	
+
 	&__title {
 		margin-left: 8rpx;
 		font-size: 28rpx;
 		color: #606266;
 	}
-	
+
 	&__content {
 		flex: 1;
 		display: flex;
@@ -131,41 +132,41 @@ const handleBack = () => {
 		font-weight: bold;
 		color: #303133;
 	}
-	
+
 	&__extra {
 		display: flex;
 		align-items: center;
 	}
-	
+
 	&__main {
 		margin-top: 24rpx;
 	}
-	
+
 	&--small {
 		.zx-page-header__title {
 			font-size: 24rpx;
 		}
-		
+
 		.zx-page-header__content {
 			font-size: 28rpx;
 		}
 	}
-	
+
 	&--default {
 		.zx-page-header__title {
 			font-size: 28rpx;
 		}
-		
+
 		.zx-page-header__content {
 			font-size: 32rpx;
 		}
 	}
-	
+
 	&--large {
 		.zx-page-header__title {
 			font-size: 32rpx;
 		}
-		
+
 		.zx-page-header__content {
 			font-size: 36rpx;
 		}

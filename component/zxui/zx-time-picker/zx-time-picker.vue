@@ -12,7 +12,8 @@
           <text v-if="displayValue" class="zx-time-picker__text">{{ displayValue }}</text>
           <text v-else class="zx-time-picker__placeholder">{{ placeholder }}</text>
         </view>
-        <view v-if="clearable && displayValue && !disabled" class="zx-time-picker__clear-icon" @click.stop="handleClear">
+        <view v-if="clearable && displayValue && !disabled" class="zx-time-picker__clear-icon"
+          @click.stop="handleClear">
           <slot name="clear-icon">
             <zx-icon :name="clearIcon" />
           </slot>
@@ -41,30 +42,42 @@
       </view>
       <view class="zx-time-picker__main">
         <!-- 单时间点选择 -->
-        <picker-view v-if="!isRange" :value="pickerValue" @change="handlePickerChange" class="zx-time-picker__picker-view">
+        <picker-view v-if="!isRange" :value="pickerValue" @change="handlePickerChange"
+          class="zx-time-picker__picker-view">
           <picker-view-column>
-            <view v-for="hour in hours" :key="hour" class="zx-time-picker__item" :class="{ 'is-disabled': isHourDisabled(hour) }">{{ hour.toString().padStart(2, '0') }}</view>
+            <view v-for="hour in hours" :key="hour" class="zx-time-picker__item"
+              :class="{ 'is-disabled': isHourDisabled(hour) }">{{ hour.toString().padStart(2, '0') }}</view>
           </picker-view-column>
           <picker-view-column>
-            <view v-for="minute in minutes" :key="minute" class="zx-time-picker__item" :class="{ 'is-disabled': isMinuteDisabled(selectedHour, minute) }">{{ minute.toString().padStart(2, '0') }}</view>
+            <view v-for="minute in minutes" :key="minute" class="zx-time-picker__item"
+              :class="{ 'is-disabled': isMinuteDisabled(selectedHour, minute) }">{{ minute.toString().padStart(2, '0')
+              }}</view>
           </picker-view-column>
           <picker-view-column v-if="showSeconds">
-            <view v-for="second in seconds" :key="second" class="zx-time-picker__item" :class="{ 'is-disabled': isSecondDisabled(selectedHour, selectedMinute, second) }">{{ second.toString().padStart(2, '0') }}</view>
+            <view v-for="second in seconds" :key="second" class="zx-time-picker__item"
+              :class="{ 'is-disabled': isSecondDisabled(selectedHour, selectedMinute, second) }">{{
+                second.toString().padStart(2, '0') }}</view>
           </picker-view-column>
         </picker-view>
         <!-- 时间范围选择 -->
         <view v-else class="zx-time-picker__range">
           <view class="zx-time-picker__range-panel">
             <text class="zx-time-picker__range-title">{{ startPlaceholder }}</text>
-            <picker-view :value="startPickerValue" @change="handleStartPickerChange" class="zx-time-picker__picker-view">
+            <picker-view :value="startPickerValue" @change="handleStartPickerChange"
+              class="zx-time-picker__picker-view">
               <picker-view-column>
-                <view v-for="hour in hours" :key="hour" class="zx-time-picker__item" :class="{ 'is-disabled': isHourDisabled(hour) }">{{ hour.toString().padStart(2, '0') }}</view>
+                <view v-for="hour in hours" :key="hour" class="zx-time-picker__item"
+                  :class="{ 'is-disabled': isHourDisabled(hour) }">{{ hour.toString().padStart(2, '0') }}</view>
               </picker-view-column>
               <picker-view-column>
-                <view v-for="minute in minutes" :key="minute" class="zx-time-picker__item" :class="{ 'is-disabled': isMinuteDisabled(startSelectedHour, minute) }">{{ minute.toString().padStart(2, '0') }}</view>
+                <view v-for="minute in minutes" :key="minute" class="zx-time-picker__item"
+                  :class="{ 'is-disabled': isMinuteDisabled(startSelectedHour, minute) }">{{
+                    minute.toString().padStart(2, '0') }}</view>
               </picker-view-column>
               <picker-view-column v-if="showSeconds">
-                <view v-for="second in seconds" :key="second" class="zx-time-picker__item" :class="{ 'is-disabled': isSecondDisabled(startSelectedHour, startSelectedMinute, second) }">{{ second.toString().padStart(2, '0') }}</view>
+                <view v-for="second in seconds" :key="second" class="zx-time-picker__item"
+                  :class="{ 'is-disabled': isSecondDisabled(startSelectedHour, startSelectedMinute, second) }">{{
+                    second.toString().padStart(2, '0') }}</view>
               </picker-view-column>
             </picker-view>
           </view>
@@ -73,13 +86,18 @@
             <text class="zx-time-picker__range-title">{{ endPlaceholder }}</text>
             <picker-view :value="endPickerValue" @change="handleEndPickerChange" class="zx-time-picker__picker-view">
               <picker-view-column>
-                <view v-for="hour in hours" :key="hour" class="zx-time-picker__item" :class="{ 'is-disabled': isHourDisabled(hour) }">{{ hour.toString().padStart(2, '0') }}</view>
+                <view v-for="hour in hours" :key="hour" class="zx-time-picker__item"
+                  :class="{ 'is-disabled': isHourDisabled(hour) }">{{ hour.toString().padStart(2, '0') }}</view>
               </picker-view-column>
               <picker-view-column>
-                <view v-for="minute in minutes" :key="minute" class="zx-time-picker__item" :class="{ 'is-disabled': isMinuteDisabled(endSelectedHour, minute) }">{{ minute.toString().padStart(2, '0') }}</view>
+                <view v-for="minute in minutes" :key="minute" class="zx-time-picker__item"
+                  :class="{ 'is-disabled': isMinuteDisabled(endSelectedHour, minute) }">{{ minute.toString().padStart(2,
+                  '0') }}</view>
               </picker-view-column>
               <picker-view-column v-if="showSeconds">
-                <view v-for="second in seconds" :key="second" class="zx-time-picker__item" :class="{ 'is-disabled': isSecondDisabled(endSelectedHour, endSelectedMinute, second) }">{{ second.toString().padStart(2, '0') }}</view>
+                <view v-for="second in seconds" :key="second" class="zx-time-picker__item"
+                  :class="{ 'is-disabled': isSecondDisabled(endSelectedHour, endSelectedMinute, second) }">{{
+                    second.toString().padStart(2, '0') }}</view>
               </picker-view-column>
             </picker-view>
           </view>
@@ -91,6 +109,7 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
 
 const emit = defineEmits(['update:modelValue', 'change', 'blur', 'focus', 'clear', 'visible-change'])
 
@@ -235,9 +254,11 @@ function joinTime(arr) {
   width: 100%;
   position: relative;
 }
+
 .zx-time-picker__input-wrapper {
   width: 100%;
 }
+
 .zx-time-picker__input {
   display: flex;
   align-items: center;
@@ -247,21 +268,26 @@ function joinTime(arr) {
   background: #fff;
   min-height: 40rpx;
 }
+
 .zx-time-picker__input--focus {
   border-color: #409eff;
 }
+
 .zx-time-picker__input--readonly {
   background: #f5f7fa;
   color: #c0c4cc;
 }
+
 .zx-time-picker__text {
   color: #303133;
   font-size: 28rpx;
 }
+
 .zx-time-picker__placeholder {
   color: #c0c4cc;
   font-size: 28rpx;
 }
+
 .zx-time-picker__prefix-icon,
 .zx-time-picker__suffix-icon,
 .zx-time-picker__clear-icon {
@@ -269,47 +295,61 @@ function joinTime(arr) {
   font-size: 32rpx;
   color: #909399;
 }
+
 .zx-time-picker__clear-icon {
   color: #c0c4cc;
 }
+
 .zx-time-picker__mask {
   position: fixed;
-  left: 0; top: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.3);
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
   z-index: 1000;
 }
+
 .zx-time-picker__popup {
   position: fixed;
-  left: 0; right: 0; bottom: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: #fff;
   z-index: 1001;
   border-top-left-radius: 16rpx;
   border-top-right-radius: 16rpx;
-  box-shadow: 0 -2rpx 16rpx rgba(0,0,0,0.08);
+  box-shadow: 0 -2rpx 16rpx rgba(0, 0, 0, 0.08);
   padding-bottom: env(safe-area-inset-bottom);
 }
+
 .zx-time-picker__toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 24rpx 32rpx 0 32rpx;
 }
+
 .zx-time-picker__toolbar__cancel,
 .zx-time-picker__toolbar__confirm {
   color: #409eff;
   font-size: 28rpx;
 }
+
 .zx-time-picker__toolbar__title {
   font-size: 30rpx;
   color: #303133;
   font-weight: 500;
 }
+
 .zx-time-picker__main {
   padding: 24rpx 0 0 0;
 }
+
 .zx-time-picker__picker-view {
   height: 300rpx;
 }
+
 .zx-time-picker__item {
   display: flex;
   align-items: center;
@@ -318,26 +358,31 @@ function joinTime(arr) {
   font-size: 28rpx;
   color: #606266;
 }
+
 .zx-time-picker__item.is-disabled {
   color: #c0c4cc;
 }
+
 .zx-time-picker__range {
   display: flex;
   align-items: flex-start;
   justify-content: center;
   gap: 32rpx;
 }
+
 .zx-time-picker__range-panel {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .zx-time-picker__range-title {
   font-size: 24rpx;
   color: #909399;
   margin-bottom: 8rpx;
 }
+
 .zx-time-picker__range-separator {
   font-size: 28rpx;
   color: #606266;

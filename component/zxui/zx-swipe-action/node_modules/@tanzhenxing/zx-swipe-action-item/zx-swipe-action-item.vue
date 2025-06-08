@@ -1,3 +1,45 @@
+<template>
+  <view class="zx-swipe">
+    <view class="zx-swipe-box" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend"
+      :style="transformStyle">
+      <!-- 左侧按钮组 -->
+      <view class="zx-swipe-button-group button-group--left" :style="leftButtonStyle">
+        <slot name="left">
+          <view v-for="(item, index) in leftOptions" :key="index" class="zx-swipe-button"
+            @click.stop="onClick(index, item, 'left')" :style="{
+              backgroundColor: item.style && item.style.backgroundColor ? item.style.backgroundColor : '#C7C6CD'
+            }">
+            <text class="zx-swipe-button-text" :style="{
+              color: item.style && item.style.color ? item.style.color : '#FFFFFF',
+              fontSize: item.style && item.style.fontSize ? item.style.fontSize : '16px'
+            }">{{ item.text }}</text>
+          </view>
+        </slot>
+      </view>
+
+      <!-- 内容 -->
+      <view class="zx-swipe-content">
+        <slot></slot>
+      </view>
+
+      <!-- 右侧按钮组 -->
+      <view class="zx-swipe-button-group button-group--right" :style="rightButtonStyle">
+        <slot name="right">
+          <view v-for="(item, index) in rightOptions" :key="index" class="zx-swipe-button"
+            @click.stop="onClick(index, item, 'right')" :style="{
+              backgroundColor: item.style && item.style.backgroundColor ? item.style.backgroundColor : '#C7C6CD'
+            }">
+            <text class="zx-swipe-button-text" :style="{
+              color: item.style && item.style.color ? item.style.color : '#FFFFFF',
+              fontSize: item.style && item.style.fontSize ? item.style.fontSize : '16px'
+            }">{{ item.text }}</text>
+          </view>
+        </slot>
+      </view>
+    </view>
+  </view>
+</template>
+
 <script setup>
 import { ref, inject, onMounted, onBeforeUnmount, watch, computed } from 'vue'
 
@@ -89,7 +131,7 @@ onMounted(() => {
       open
     })
   }
-  
+
   // 初始化状态
   if (props.show !== 'none') {
     openState(props.show)
@@ -143,11 +185,11 @@ function getButtonSize() {
 // 触摸开始
 function touchstart(e) {
   if (props.disabled) return
-  
+
   // 记录初始位置
   position.value.x = e.touches[0].pageX
   position.value.y = e.touches[0].pageY
-  
+
   isMoving.value = true
   ani.value = false
 }
@@ -155,18 +197,18 @@ function touchstart(e) {
 // 触摸移动
 function touchmove(e) {
   if (props.disabled || !isMoving.value) return
-  
+
   const touchX = e.touches[0].pageX
   const touchY = e.touches[0].pageY
   const moveX = touchX - position.value.x
   const moveY = touchY - position.value.y
-  
+
   // 纵向滑动距离大于横向时，不进行操作（防止页面上下滚动冲突）
   if (Math.abs(moveY) > Math.abs(moveX)) return
-  
+
   // 计算新的移动距离
   let newMoveX = 0
-  
+
   if (isShow.value === 'none') {
     // 未打开状态，直接使用移动距离
     newMoveX = moveX
@@ -177,16 +219,16 @@ function touchmove(e) {
     // 右侧打开，减去右侧按钮宽度
     newMoveX = moveX - rightWidth.value
   }
-  
+
   // 限制移动范围
   if (newMoveX > leftWidth.value) {
     newMoveX = leftWidth.value
   } else if (newMoveX < -rightWidth.value) {
     newMoveX = -rightWidth.value
   }
-  
+
   moveX.value = newMoveX
-  
+
   // 阻止页面滚动
   e.preventDefault && e.preventDefault()
   e.stopPropagation && e.stopPropagation()
@@ -195,10 +237,10 @@ function touchmove(e) {
 // 触摸结束
 function touchend(e) {
   if (props.disabled || !isMoving.value) return
-  
+
   isMoving.value = false
   ani.value = true
-  
+
   // 判断滑动方向和距离，决定是否打开
   if (moveX.value > props.threshold) {
     open('left')
@@ -217,7 +259,7 @@ function open(type) {
       open
     })
   }
-  
+
   if (type === 'left') {
     moveX.value = leftWidth.value
     isShow.value = 'left'
@@ -225,7 +267,7 @@ function open(type) {
     moveX.value = -rightWidth.value
     isShow.value = 'right'
   }
-  
+
   emit('change', isShow.value)
 }
 
@@ -255,7 +297,7 @@ function onClick(index, item, position) {
     index,
     position
   })
-  
+
   // 触发后关闭
   close()
 }
@@ -267,80 +309,24 @@ defineExpose({
 })
 </script>
 
-<template>
-  <view class="zx-swipe">
-    <view class="zx-swipe-box" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend" :style="transformStyle">
-      <!-- 左侧按钮组 -->
-      <view class="zx-swipe-button-group button-group--left" :style="leftButtonStyle">
-        <slot name="left">
-          <view 
-            v-for="(item, index) in leftOptions" 
-            :key="index" 
-            class="zx-swipe-button" 
-            @click.stop="onClick(index, item, 'left')"
-            :style="{ 
-              backgroundColor: item.style && item.style.backgroundColor ? item.style.backgroundColor : '#C7C6CD' 
-            }"
-          >
-            <text 
-              class="zx-swipe-button-text"
-              :style="{ 
-                color: item.style && item.style.color ? item.style.color : '#FFFFFF',
-                fontSize: item.style && item.style.fontSize ? item.style.fontSize : '16px'
-              }"
-            >{{ item.text }}</text>
-          </view>
-        </slot>
-      </view>
-      
-      <!-- 内容 -->
-      <view class="zx-swipe-content">
-        <slot></slot>
-      </view>
-      
-      <!-- 右侧按钮组 -->
-      <view class="zx-swipe-button-group button-group--right" :style="rightButtonStyle">
-        <slot name="right">
-          <view 
-            v-for="(item, index) in rightOptions" 
-            :key="index" 
-            class="zx-swipe-button" 
-            @click.stop="onClick(index, item, 'right')"
-            :style="{ 
-              backgroundColor: item.style && item.style.backgroundColor ? item.style.backgroundColor : '#C7C6CD'
-            }"
-          >
-            <text 
-              class="zx-swipe-button-text"
-              :style="{ 
-                color: item.style && item.style.color ? item.style.color : '#FFFFFF',
-                fontSize: item.style && item.style.fontSize ? item.style.fontSize : '16px'
-              }"
-            >{{ item.text }}</text>
-          </view>
-        </slot>
-      </view>
-    </view>
-  </view>
-</template>
 
 <style lang="scss">
 .zx-swipe {
   position: relative;
   overflow: hidden;
-  
+
   &-box {
     position: relative;
     display: flex;
     flex-direction: row;
     width: 100%;
   }
-  
+
   &-content {
     width: 100%;
     flex: 1;
   }
-  
+
   &-button-group {
     display: flex;
     flex-direction: row;
@@ -348,14 +334,14 @@ defineExpose({
     top: 0;
     bottom: 0;
   }
-  
+
   &-button {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 0 20px;
-    
+
     &-text {
       flex-shrink: 0;
       font-size: 14px;
@@ -372,4 +358,4 @@ defineExpose({
   right: 0;
   transform: translateX(100%);
 }
-</style> 
+</style>

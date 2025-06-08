@@ -1,18 +1,9 @@
 <template>
   <view :class="indicatorClass" :style="indicatorStyle">
     <template v-for="item in size" :key="item">
-      <view 
-        v-if="item === current" 
-        :class="numberClass"
-        :style="numberStyle"
-      >
-        {{ fillZero && item < 10 ? '0' + item : item }}
-      </view>
-      <view 
-        v-else 
-        :class="dotClass"
-        :style="dotStyle"
-      />
+      <view v-if="item === current" :class="numberClass" :style="numberStyle">
+        {{ fillZero && item < 10 ? '0' + item : item }} </view>
+          <view v-else :class="dotClass" :style="dotStyle" />
     </template>
   </view>
 </template>
@@ -126,40 +117,40 @@ const dotStyle = computed(() => {
   --zx-indicator-dot-size: calc(var(--zx-indicator-size) / 3);
   --zx-indicator-border-size: calc(var(--zx-indicator-size) + 2px);
   --zx-indicator-number-font-size: 10px;
-  
+
   display: inline-flex;
   align-items: center;
-  
+
   &--block {
     display: flex;
     width: 100%;
   }
-  
+
   &--align-left {
     justify-content: flex-start;
   }
-  
+
   &--align-center {
     justify-content: center;
   }
-  
+
   &--align-right {
     justify-content: flex-end;
   }
-  
+
   &__dot,
   &__number {
     margin: 0 4px;
-    
+
     &:first-child {
       margin-left: 0;
     }
-    
+
     &:last-child {
       margin-right: 0;
     }
   }
-  
+
   &__dot {
     width: var(--zx-indicator-dot-size);
     height: var(--zx-indicator-dot-size);
@@ -167,7 +158,7 @@ const dotStyle = computed(() => {
     border-radius: 50%;
     flex-shrink: 0;
   }
-  
+
   &__number {
     position: relative;
     display: flex;

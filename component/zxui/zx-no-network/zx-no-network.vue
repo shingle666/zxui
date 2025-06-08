@@ -1,21 +1,11 @@
 <template>
-  <zx-overlay
-    :show="!isConnected"
-    :zIndex="zIndex"
-    @touchmove.stop.prevent="noop"
-    :customStyle="{
-      backgroundColor: '#fff',
-      display: 'flex',
-      justifyContent: 'center',
-    }"
-  >
+  <zx-overlay :show="!isConnected" :zIndex="zIndex" @touchmove.stop.prevent="noop" :customStyle="{
+    backgroundColor: '#fff',
+    display: 'flex',
+    justifyContent: 'center',
+  }">
     <view class="zx-no-network">
-      <zx-icon
-        :name="image"
-        size="150"
-        imgMode="widthFit"
-        class="zx-no-network__error-icon"
-      ></zx-icon>
+      <zx-icon :name="image" size="150" imgMode="widthFit" class="zx-no-network__error-icon"></zx-icon>
       <text class="zx-no-network__tips">{{ tips }}</text>
       <!-- 只有APP平台，才能跳转设置页，因为需要调用plus环境 -->
       <!-- #ifdef APP-PLUS -->
@@ -25,12 +15,7 @@
       </view>
       <!-- #endif -->
       <view class="zx-no-network__retry">
-        <zx-button
-          size="mini"
-          type="primary"
-          plain
-          @click="retry"
-        >重试</zx-button>
+        <zx-button size="mini" type="primary" plain @click="retry">重试</zx-button>
       </view>
     </view>
   </zx-overlay>
@@ -49,6 +34,9 @@
  */
 
 import { ref, onMounted } from "vue";
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue';
+import zxOverlay from '@tanzhenxing/zx-overlay/zx-overlay.vue';
 
 const props = defineProps({
   // 页面文字提示
@@ -101,7 +89,7 @@ function retry() {
   emit("retry");
 }
 
-function noop() {}
+function noop() { }
 
 function openSettings() {
   if (networkType.value === "none") {
@@ -151,7 +139,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-
 $zx-tips-color: #666;
 $zx-light-color: #999;
 $zx-primary: #409eff;

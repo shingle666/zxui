@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-pagination",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,5 +14,10 @@
   ],
   "author": "tanzhenxing",
   "license": "ISC",
-  "description": "zx-pagination 分页组件"
+  "description": "zx-pagination 分页组件",
+  "dependencies": {
+    "@tanzhenxing/zx-button": "^1.0.6",
+    "@tanzhenxing/zx-icon": "^1.0.13",
+    "@tanzhenxing/zx-input": "^1.0.10"
+  }
 }

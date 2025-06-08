@@ -1,3 +1,64 @@
+<template>
+  <view class="zx-table" :class="[{ 'zx-table--border': border, 'zx-table--stripe': stripe }, tableClass]"
+    :style="tableStyle" ref="tableRef">
+    <!-- 表头 -->
+    <view v-if="showHeader" class="zx-table__header">
+      <view class="zx-table__header-row">
+        <view v-for="(column, columnIndex) in columns" :key="column.id || columnIndex" class="zx-table__header-cell"
+          :class="[
+            { 'zx-table__cell--border': border },
+            column.headerClass
+          ]" :style="{ width: column.width || 'auto', textAlign: column.align || 'left' }"
+          @tap="handleHeaderClick(column, columnIndex, $event)">
+          <slot :name="`header-${column.prop}`" :column="column">
+            {{ column.label }}
+          </slot>
+        </view>
+      </view>
+    </view>
+
+    <!-- 表格主体 -->
+    <view class="zx-table__body">
+      <!-- 加载状态 -->
+      <view v-if="loading" class="zx-table__loading">
+        <view class="zx-table__loading-text">{{ loadingText }}</view>
+      </view>
+
+      <!-- 数据为空状态 -->
+      <view v-else-if="!data || data.length === 0" class="zx-table__empty">
+        <view class="zx-table__empty-text">{{ emptyText }}</view>
+      </view>
+
+      <!-- 表格数据 -->
+      <block v-else>
+        <view v-for="(row, rowIndex) in data" :key="getRowKey(row, rowIndex)" class="zx-table__row"
+          :class="{ 'zx-table__row--stripe': stripe && rowIndex % 2 !== 0 }"
+          @tap="handleRowClick(row, rowIndex, $event)">
+          <view v-for="(column, columnIndex) in columns" :key="column.id || columnIndex" class="zx-table__cell" :class="[
+            { 'zx-table__cell--border': border },
+            column.cellClass
+          ]" :style="{ width: column.width || 'auto', textAlign: column.align || 'left' }"
+            @tap.stop="handleCellClick(row, column, rowIndex, columnIndex, $event)">
+            <!-- 渲染单元格内容 -->
+            <template v-if="column.slots && column.slots.default">
+              <!-- 自定义列模板 -->
+              <slot :name="`col-${column.id}`" :row="row" :column="column" :$index="rowIndex">
+                <!-- 保持默认插槽的向后兼容性 -->
+                <slot :name="column.prop" :row="row" :column="column" :$index="rowIndex"
+                  :scope="{ row, column, $index: rowIndex }"></slot>
+              </slot>
+            </template>
+            <template v-else>
+              <!-- 使用默认渲染方式 -->
+              {{ column.renderCell ? column.renderCell(row, column, rowIndex) : row[column.prop] }}
+            </template>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</template>
+
 <script setup>
 import { computed, provide, ref, toRefs } from 'vue';
 
@@ -60,8 +121,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits([
-  'row-click', 
-  'cell-click', 
+  'row-click',
+  'cell-click',
   'header-click',
   'sort-change',
   'selection-change'
@@ -94,11 +155,11 @@ const getRowKey = (row, rowIndex) => {
 // 计算表格样式
 const tableStyle = computed(() => {
   const style = {};
-  
+
   if (props.height) {
     style.height = typeof props.height === 'number' ? `${props.height}px` : props.height;
   }
-  
+
   return style;
 });
 
@@ -144,91 +205,6 @@ defineExpose({
 });
 </script>
 
-<template>
-  <view class="zx-table" :class="[{ 'zx-table--border': border, 'zx-table--stripe': stripe }, tableClass]" :style="tableStyle" ref="tableRef">
-    <!-- 表头 -->
-    <view v-if="showHeader" class="zx-table__header">
-      <view class="zx-table__header-row">
-        <view 
-          v-for="(column, columnIndex) in columns" 
-          :key="column.id || columnIndex"
-          class="zx-table__header-cell"
-          :class="[
-            { 'zx-table__cell--border': border },
-            column.headerClass
-          ]"
-          :style="{ width: column.width || 'auto', textAlign: column.align || 'left' }"
-          @tap="handleHeaderClick(column, columnIndex, $event)"
-        >
-          <slot :name="`header-${column.prop}`" :column="column">
-            {{ column.label }}
-          </slot>
-        </view>
-      </view>
-    </view>
-    
-    <!-- 表格主体 -->
-    <view class="zx-table__body">
-      <!-- 加载状态 -->
-      <view v-if="loading" class="zx-table__loading">
-        <view class="zx-table__loading-text">{{ loadingText }}</view>
-      </view>
-      
-      <!-- 数据为空状态 -->
-      <view v-else-if="!data || data.length === 0" class="zx-table__empty">
-        <view class="zx-table__empty-text">{{ emptyText }}</view>
-      </view>
-      
-      <!-- 表格数据 -->
-      <block v-else>
-        <view 
-          v-for="(row, rowIndex) in data" 
-          :key="getRowKey(row, rowIndex)"
-          class="zx-table__row"
-          :class="{ 'zx-table__row--stripe': stripe && rowIndex % 2 !== 0 }"
-          @tap="handleRowClick(row, rowIndex, $event)"
-        >
-          <view 
-            v-for="(column, columnIndex) in columns" 
-            :key="column.id || columnIndex"
-            class="zx-table__cell"
-            :class="[
-              { 'zx-table__cell--border': border },
-              column.cellClass
-            ]"
-            :style="{ width: column.width || 'auto', textAlign: column.align || 'left' }"
-            @tap.stop="handleCellClick(row, column, rowIndex, columnIndex, $event)"
-          >
-            <!-- 渲染单元格内容 -->
-            <template v-if="column.slots && column.slots.default">
-              <!-- 自定义列模板 -->
-              <slot 
-                :name="`col-${column.id}`" 
-                :row="row" 
-                :column="column" 
-                :$index="rowIndex"
-              >
-                <!-- 保持默认插槽的向后兼容性 -->
-                <slot 
-                  :name="column.prop" 
-                  :row="row" 
-                  :column="column" 
-                  :$index="rowIndex" 
-                  :scope="{ row, column, $index: rowIndex }"
-                ></slot>
-              </slot>
-            </template>
-            <template v-else>
-              <!-- 使用默认渲染方式 -->
-              {{ column.renderCell ? column.renderCell(row, column, rowIndex) : row[column.prop] }}
-            </template>
-          </view>
-        </view>
-      </block>
-    </view>
-  </view>
-</template>
-
 <style>
 .zx-table {
   width: 100%;
@@ -249,12 +225,14 @@ defineExpose({
   background-color: #f5f7fa;
 }
 
-.zx-table__header-row, .zx-table__row {
+.zx-table__header-row,
+.zx-table__row {
   display: flex;
   width: 100%;
 }
 
-.zx-table__header-cell, .zx-table__cell {
+.zx-table__header-cell,
+.zx-table__cell {
   flex: 1;
   padding: 24rpx 20rpx;
   overflow: hidden;
@@ -268,7 +246,8 @@ defineExpose({
   color: #909399;
 }
 
-.zx-table__cell--border, .zx-table__header-cell.zx-table__cell--border {
+.zx-table__cell--border,
+.zx-table__header-cell.zx-table__cell--border {
   border-right: 2rpx solid #ebeef5;
   border-bottom: 2rpx solid #ebeef5;
 }
@@ -285,7 +264,8 @@ defineExpose({
   background-color: #f5f7fa;
 }
 
-.zx-table__empty, .zx-table__loading {
+.zx-table__empty,
+.zx-table__loading {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -293,7 +273,8 @@ defineExpose({
   color: #909399;
 }
 
-.zx-table__empty-text, .zx-table__loading-text {
+.zx-table__empty-text,
+.zx-table__loading-text {
   font-size: 28rpx;
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-tree-v2",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "树组件",
   "main": "index.js",
   "scripts": {

@@ -1,11 +1,5 @@
 <template>
-	<view 
-		v-if="shouldRender" 
-		v-show="isActive"
-		class="zx-tab-pane" 
-		:class="paneClass"
-		:style="paneStyle"
-	>
+	<view v-if="shouldRender" v-show="isActive" class="zx-tab-pane" :class="paneClass" :style="paneStyle">
 		<slot></slot>
 	</view>
 </template>

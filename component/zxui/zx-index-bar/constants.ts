@@ -1,1 +1,0 @@
-export const INDEX_BAR_KEY = Symbol('zx-index-bar');

@@ -1,0 +1,26 @@
+{
+  "name": "@tanzhenxing/zx-invoice",
+  "version": "1.0.2",
+  "description": "`zx-invoice` 是一个用于展示和处理发票申请页面的组件，支持多种表单项类型，包括输入框和单选按钮组。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "invoice",
+    "application",
+    "form",
+    "component"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@tanzhenxing/zx-button": "^1.0.6",
+    "@tanzhenxing/zx-form": "^1.0.5",
+    "@tanzhenxing/zx-form-item": "^1.0.2",
+    "@tanzhenxing/zx-input": "^1.0.10",
+    "@tanzhenxing/zx-radio": "^1.0.3",
+    "@tanzhenxing/zx-radio-group": "^1.0.2"
+  }
+}

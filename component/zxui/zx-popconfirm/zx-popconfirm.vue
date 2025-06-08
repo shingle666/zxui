@@ -3,7 +3,7 @@
     <view ref="referenceRef" class="zx-popconfirm__reference" @click="togglePopover">
       <slot name="reference"></slot>
     </view>
-    
+
     <view v-if="visible" class="zx-popconfirm__popper" :class="[`zx-popconfirm__popper--${placement}`]">
       <view class="zx-popconfirm__arrow" :class="[`zx-popconfirm__arrow--${placement}`]"></view>
       <view class="zx-popconfirm__content">
@@ -13,23 +13,15 @@
           </view>
           <text>{{ title }}</text>
         </view>
-        
+
         <view class="zx-popconfirm__action">
           <slot name="actions" :confirm="confirmHandler" :cancel="cancelHandler">
-            <button 
-              class="zx-popconfirm__button zx-popconfirm__button--cancel" 
-              :class="[`zx-popconfirm__button--${cancelButtonType}`]" 
-              @click="cancelHandler"
-            >
+            <zx-button type="danger" @click="cancelHandler">
               {{ cancelButtonText || '取消' }}
-            </button>
-            <button 
-              class="zx-popconfirm__button zx-popconfirm__button--confirm" 
-              :class="[`zx-popconfirm__button--${confirmButtonType}`]" 
-              @click="confirmHandler"
-            >
+            </zx-button>
+            <zx-button type="primary" @click="confirmHandler">
               {{ confirmButtonText || '确认' }}
-            </button>
+            </zx-button>
           </slot>
         </view>
       </view>
@@ -39,6 +31,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue';
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue';
 
 // 定义组件属性
 const props = defineProps({
@@ -87,9 +80,9 @@ const props = defineProps({
     default: 'top',
     validator: (value) => {
       return [
-        'top', 'top-start', 'top-end', 
-        'bottom', 'bottom-start', 'bottom-end', 
-        'left', 'left-start', 'left-end', 
+        'top', 'top-start', 'top-end',
+        'bottom', 'bottom-start', 'bottom-end',
+        'left', 'left-start', 'left-end',
         'right', 'right-start', 'right-end'
       ].includes(value);
     }
@@ -118,7 +111,7 @@ const iconUnicode = computed(() => {
     'warning-filled': '\ue64f',
     'error-filled': '\ue64d'
   };
-  
+
   return iconMap[props.icon] || '\ue67c'; // 默认使用问号图标
 });
 
@@ -139,7 +132,7 @@ const cancelHandler = () => {
 
 const close = () => {
   if (hideTimer) clearTimeout(hideTimer);
-  
+
   hideTimer = setTimeout(() => {
     visible.value = false;
   }, props.hideAfter);
@@ -152,24 +145,24 @@ const handleClickOutside = (event) => {
     // 使用延时确保视图已更新
     setTimeout(() => {
       const query = uni.createSelectorQuery();
-      
+
       // 分别获取参考元素和弹出框的位置信息
       query.select('.zx-popconfirm__reference').boundingClientRect(refData => {
         query.select('.zx-popconfirm__popper').boundingClientRect(popperData => {
           if (refData && popperData) {
             // 根据不同平台获取点击坐标
             let x, y;
-            
+
             // H5环境
             if (event.clientX !== undefined && event.clientY !== undefined) {
               x = event.clientX;
               y = event.clientY;
-            } 
+            }
             // 小程序环境 - changedTouches
             else if (event.changedTouches && event.changedTouches[0]) {
               x = event.changedTouches[0].clientX || event.changedTouches[0].x;
               y = event.changedTouches[0].clientY || event.changedTouches[0].y;
-            } 
+            }
             // 小程序环境 - touches
             else if (event.touches && event.touches[0]) {
               x = event.touches[0].clientX || event.touches[0].x;
@@ -179,14 +172,14 @@ const handleClickOutside = (event) => {
             else {
               return;
             }
-            
+
             // 检查点击是否在参考元素和弹出框外部
-            const isClickInRef = x >= refData.left && x <= refData.right && 
-                                y >= refData.top && y <= refData.bottom;
-            
-            const isClickInPopper = x >= popperData.left && x <= popperData.right && 
-                                   y >= popperData.top && y <= popperData.bottom;
-            
+            const isClickInRef = x >= refData.left && x <= refData.right &&
+              y >= refData.top && y <= refData.bottom;
+
+            const isClickInPopper = x >= popperData.left && x <= popperData.right &&
+              y >= popperData.top && y <= popperData.bottom;
+
             // 如果点击既不在参考元素内也不在弹出框内，则关闭弹出框
             if (!isClickInRef && !isClickInPopper) {
               close();
@@ -204,12 +197,12 @@ onMounted(() => {
   // #ifdef H5
   document.addEventListener('click', handleClickOutside);
   // #endif
-  
+
   // #ifdef MP
   // 小程序环境统一使用uni.$on，因为Vue3中页面实例不再支持$on方法
   uni.$on('touchstart', handleClickOutside);
   // #endif
-  
+
   // #ifndef H5 || MP
   // 其他平台的兜底方案
   uni.$on('touchstart', handleClickOutside);
@@ -221,17 +214,17 @@ onBeforeUnmount(() => {
   // #ifdef H5
   document.removeEventListener('click', handleClickOutside);
   // #endif
-  
+
   // #ifdef MP
   // 小程序环境统一使用uni.$off
   uni.$off('touchstart', handleClickOutside);
   // #endif
-  
+
   // #ifndef H5 || MP
   // 其他平台的兜底方案
   uni.$off('touchstart', handleClickOutside);
   // #endif
-  
+
   if (hideTimer) clearTimeout(hideTimer);
 });
 

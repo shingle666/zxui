@@ -9,7 +9,7 @@
       <view class="zx-horizontal-scrolling__mask-box">
         <slot name="maskContent" v-if="$slots.maskContent"></slot>
         <template v-else-if="maskContent">
-          <view v-html="maskContent"></view>
+          <zx-html :content="maskContent"></zx-html>
         </template>
         <template v-else>
           <zx-icon v-if="iconProps" v-bind="iconProps" />
@@ -35,7 +35,7 @@
       <view class="zx-horizontal-scrolling__mask-box">
         <slot name="maskContent" v-if="$slots.maskContent"></slot>
         <template v-else-if="maskContent">
-          <view v-html="maskContent"></view>
+          <zx-html :content="maskContent"></zx-html>
         </template>
         <template v-else>
           <zx-icon v-if="iconProps" v-bind="iconProps" />
@@ -48,6 +48,8 @@
 
 <script setup>
 import { ref, computed, nextTick } from 'vue'
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+import zxHtml from '@tanzhenxing/zx-html/zx-html.vue'
 
 // Props定义
 const props = defineProps({

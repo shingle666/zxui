@@ -1,13 +1,15 @@
 {
-  "name": "zx-password-input",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-password-input",
+  "version": "1.0.1",
   "description": "带网格的输入框组件，可以用于输入密码、短信验证码等场景，通常与数字键盘组件 (`zx-number-keyboard`) 配合使用。",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "zx-password-input"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
   "type": "commonjs"
 }

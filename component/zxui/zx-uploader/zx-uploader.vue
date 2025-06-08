@@ -2,22 +2,12 @@
   <view class="zx-uploader">
     <view class="zx-uploader__wrapper">
       <!-- 预览列表 -->
-      <view
-        v-for="(item, index) in innerFileList"
-        :key="item.id || item.url || index"
-        class="zx-uploader__preview"
-        :style="previewStyle"
-        @click="onClickPreview(item, index)"
-      >
+      <view v-for="(item, index) in innerFileList" :key="item.id || item.url || index" class="zx-uploader__preview"
+        :style="previewStyle" @click="onClickPreview(item, index)">
         <!-- 图片预览 -->
-        <image
-          v-if="item.isImage || (item.type && item.type.indexOf('image') === 0) || isImageUrl(item.url)"
-          :src="item.url || item.tempFilePath"
-          :mode="imageFit"
-          class="zx-uploader__preview-image"
-          :style="previewStyle"
-          @error="(e) => onPreviewImageError(item, index, e)"
-        />
+        <image v-if="item.isImage || (item.type && item.type.indexOf('image') === 0) || isImageUrl(item.url)"
+          :src="item.url || item.tempFilePath" :mode="imageFit" class="zx-uploader__preview-image" :style="previewStyle"
+          @error="(e) => onPreviewImageError(item, index, e)" />
         <!-- 文件预览 -->
         <view v-else class="zx-uploader__file" :style="previewStyle">
           <zx-icon name="file-text-o" class="zx-uploader__file-icon" />
@@ -32,11 +22,8 @@
         </view>
 
         <!-- 删除按钮 -->
-        <view
-          v-if="deletable && !disabled && !readonly && item.status !== 'uploading'"
-          class="zx-uploader__preview-delete"
-          @click.stop="deleteFile(item, index)"
-        >
+        <view v-if="deletable && !disabled && !readonly && item.status !== 'uploading'"
+          class="zx-uploader__preview-delete" @click.stop="deleteFile(item, index)">
           <slot name="preview-delete" :file="item" :index="index">
             <view class="zx-uploader__preview-delete--shadow">
               <zx-icon name="close" class="zx-uploader__preview-delete-icon" />
@@ -51,12 +38,8 @@
       <!-- 上传按钮 -->
       <template v-if="showUploadButton">
         <slot>
-          <view
-            class="zx-uploader__upload"
-            :style="previewStyle"
-            :class="{ 'zx-uploader__upload--disabled': disabled }"
-            @click="onClickUpload"
-          >
+          <view class="zx-uploader__upload" :style="previewStyle" :class="{ 'zx-uploader__upload--disabled': disabled }"
+            @click="onClickUpload">
             <zx-icon :name="uploadIcon" class="zx-uploader__upload-icon" />
             <text v-if="uploadText" class="zx-uploader__upload-text">{{ uploadText }}</text>
           </view>
@@ -68,9 +51,9 @@
 
 <script setup>
 import { ref, computed, watch, getCurrentInstance } from 'vue';
-import zxIcon from '../zx-icon/zx-icon.vue';
-import zxLoading from '../zx-loading/zx-loading.vue';
-import {isImageUrl, isPlainObject} from '@/utils/utils.js'; // 假设有这个工具函数
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
+import zxLoading from '@tanzhenxing/zx-loading/zx-loading.vue';
+import { isImageUrl, isPlainObject } from '@/utils/utils.js'; // 假设有这个工具函数
 
 const props = defineProps({
   modelValue: {
@@ -170,7 +153,7 @@ const getUniqueId = () => `zxupload_${Date.now()}_${uniqueIdCounter++}`;
 const formatFileList = (list) => {
   return list.map(item => {
     if (!isPlainObject(item)) {
-        item = { url: item }; // 简单字符串url转为对象
+      item = { url: item }; // 简单字符串url转为对象
     }
     return {
       ...item,
@@ -190,7 +173,7 @@ watch(
     // 避免不必要的更新，只有在实际内容变化时才更新
     // 简单比较长度和url，更复杂的比较可能需要深比较或比较id
     if (newList.length !== innerFileList.value.length || newList.some((newItem, i) => newItem.url !== (innerFileList.value[i] || {}).url)) {
-        innerFileList.value = formatFileList(newList);
+      innerFileList.value = formatFileList(newList);
     }
   },
   { immediate: true, deep: true }
@@ -220,13 +203,13 @@ const getDetail = (index) => ({
 });
 
 const onPreviewImageError = (item, index, event) => {
-    emit('error', { type: 'preview', error: event, file: item, ...getDetail(index) });
+  emit('error', { type: 'preview', error: event, file: item, ...getDetail(index) });
 }
 
 const getFileName = (url) => {
-    if (!url) return '';
-    const segments = url.split('/');
-    return segments[segments.length - 1];
+  if (!url) return '';
+  const segments = url.split('/');
+  return segments[segments.length - 1];
 }
 
 // --- 选择文件逻辑 ---
@@ -264,8 +247,8 @@ const chooseFile = () => {
       }
     };
     input.oncancel = () => { // H5 input 没有标准 oncancel，但可以模拟
-        document.body.removeChild(input);
-        reject({ errMsg: 'chooseFile:fail cancel' });
+      document.body.removeChild(input);
+      reject({ errMsg: 'chooseFile:fail cancel' });
     }
     input.click();
   });
@@ -280,14 +263,14 @@ const chooseFile = () => {
   };
   let mediaType = mediaTypeMap[props.accept] || ['image']; // 默认图片
   if (props.accept === 'all') {
-      // uni.chooseFile 对 sourceType 的支持有限，优先使用 chooseMedia
-      // 如果需要严格的 'all' (包括任意文件)，可能需要条件编译或特定API
-      // 这里简化为优先图片和视频
-      if (uni.chooseMedia) {
-          mediaType = ['image', 'video'];
-      } else {
-          mediaType = ['image']; // 降级
-      }
+    // uni.chooseFile 对 sourceType 的支持有限，优先使用 chooseMedia
+    // 如果需要严格的 'all' (包括任意文件)，可能需要条件编译或特定API
+    // 这里简化为优先图片和视频
+    if (uni.chooseMedia) {
+      mediaType = ['image', 'video'];
+    } else {
+      mediaType = ['image']; // 降级
+    }
   }
 
   if (uni.chooseMedia && (props.accept === 'media' || props.accept === 'video' || (props.accept === 'image' && props.multiple))) {
@@ -306,28 +289,28 @@ const chooseFile = () => {
       sourceType: props.capture,
     });
   } else if (props.accept === 'video' && uni.chooseVideo) {
-     chooseFilePromise = uni.chooseVideo({
-        count: count, // chooseVideo 通常只选一个
-        sourceType: props.capture,
-        compressed: true, // 建议压缩
-        maxDuration: 60,
-     });
+    chooseFilePromise = uni.chooseVideo({
+      count: count, // chooseVideo 通常只选一个
+      sourceType: props.capture,
+      compressed: true, // 建议压缩
+      maxDuration: 60,
+    });
   } else {
     // 对于其他文件类型或不支持 chooseMedia 的情况，尝试 chooseFile (仅 App 和 H5 支持 filePath)
     // #ifdef APP-PLUS || H5
     if (uni.chooseFile) {
-        chooseFilePromise = uni.chooseFile({
-            count: count,
-            type: props.accept === 'all' ? 'all' : props.accept, // 'all', 'image', 'video', 'audio', 'file'
-            // extension: [] // 可指定后缀名
-        });
+      chooseFilePromise = uni.chooseFile({
+        count: count,
+        type: props.accept === 'all' ? 'all' : props.accept, // 'all', 'image', 'video', 'audio', 'file'
+        // extension: [] // 可指定后缀名
+      });
     } else {
-        chooseFilePromise = Promise.reject({errMsg: 'API uni.chooseFile not supported or accept type not image/video'});
+      chooseFilePromise = Promise.reject({ errMsg: 'API uni.chooseFile not supported or accept type not image/video' });
     }
     // #endif
     // #ifdef MP
     // 小程序 chooseFile 仅支持聊天记录，不适用于此场景
-    chooseFilePromise = Promise.reject({errMsg: 'File type not supported in Mini Program for general selection, try image or video.'});
+    chooseFilePromise = Promise.reject({ errMsg: 'File type not supported in Mini Program for general selection, try image or video.' });
     // #endif
   }
   // #endif
@@ -352,13 +335,13 @@ const chooseFile = () => {
       // res.tempFilePaths 仅在 chooseImage 时是字符串数组
       let tempFiles = res.tempFiles || [];
       if (typeof res.tempFilePaths === 'string' && !res.tempFiles) { // chooseVideo 返回 tempFilePath
-          tempFiles = [{ tempFilePath: res.tempFilePath, size: res.size, name: res.name, type: res.type }];
+        tempFiles = [{ tempFilePath: res.tempFilePath, size: res.size, name: res.name, type: res.type }];
       } else if (Array.isArray(res.tempFilePaths) && !res.tempFiles) { // chooseImage 返回 tempFilePaths
-          tempFiles = res.tempFilePaths.map(path => ({ tempFilePath: path }));
-          // chooseImage 不直接返回size, name, type, 需要通过 uni.getFileInfo 获取
-          // 为了简化，这里暂时不获取，可在 afterRead 后由用户获取
+        tempFiles = res.tempFilePaths.map(path => ({ tempFilePath: path }));
+        // chooseImage 不直接返回size, name, type, 需要通过 uni.getFileInfo 获取
+        // 为了简化，这里暂时不获取，可在 afterRead 后由用户获取
       }
-      
+
       filesToProcess = tempFiles.map(file => ({
         file: file, // 保留原始 file 对象
         url: file.tempFilePath, // 预览用本地路径
@@ -397,11 +380,11 @@ const chooseFile = () => {
           validFiles = Array.isArray(result) ? result : [result];
         }
       }
-      
+
       // 更新 v-model
-      const newFileEntries = formatFileList(validFiles.map(f => ({...f, status: 'uploading', message: '等待上传'})));
+      const newFileEntries = formatFileList(validFiles.map(f => ({ ...f, status: 'uploading', message: '等待上传' })));
       const updatedList = [...innerFileList.value, ...newFileEntries];
-      emit('update:modelValue', updatedList.map(f => ({...f}))); // 传回纯净数据
+      emit('update:modelValue', updatedList.map(f => ({ ...f }))); // 传回纯净数据
 
       emit('after-read', { file: props.multiple ? newFileEntries : newFileEntries[0], ...getDetail() });
     })
@@ -433,7 +416,7 @@ const deleteFile = async (file, index) => {
 
   const newList = innerFileList.value.slice();
   newList.splice(index, 1);
-  emit('update:modelValue', newList.map(f => ({...f}))); // 传回纯净数据
+  emit('update:modelValue', newList.map(f => ({ ...f }))); // 传回纯净数据
   emit('delete', { file, ...getDetail(index) });
 };
 
@@ -558,6 +541,7 @@ defineExpose({
     font-size: var(--van-uploader-mask-icon-size) !important;
     color: var(--van-uploader-mask-text-color);
   }
+
   &__loading-icon {
     // zx-loading 可能需要调整大小和颜色
     // font-size: var(--van-uploader-loading-icon-size);
@@ -586,13 +570,13 @@ defineExpose({
     z-index: 1;
 
     &--shadow {
-        background: var(--van-uploader-delete-background);
-        border-radius: 0 0 0 var(--van-uploader-border-radius); // 左下角圆角
-        width: auto;
-        height: auto;
-        min-width: 32rpx;
-        min-height: 32rpx;
-        padding: 4rpx;
+      background: var(--van-uploader-delete-background);
+      border-radius: 0 0 0 var(--van-uploader-border-radius); // 左下角圆角
+      width: auto;
+      height: auto;
+      min-width: 32rpx;
+      min-height: 32rpx;
+      padding: 4rpx;
     }
   }
 
@@ -620,7 +604,8 @@ defineExpose({
     &--disabled {
       opacity: var(--van-uploader-disabled-opacity);
       cursor: not-allowed;
-       &:active {
+
+      &:active {
         background-color: var(--van-uploader-upload-background);
       }
     }

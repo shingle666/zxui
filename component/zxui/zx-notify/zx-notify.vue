@@ -1,29 +1,16 @@
 <template>
   <zx-transition mode="slide-down" :customStyle="containerStyle" :show="open">
-    <view
-      class="zx-notify"
-      :class="[`zx-notify--${tmpConfig.type}`]"
-      :style="[backgroundColor, addStyle(customStyle)]"
-    >
+    <view class="zx-notify" :class="[`zx-notify--${tmpConfig.type}`]" :style="[backgroundColor, addStyle(customStyle)]">
       <zx-status-bar v-if="tmpConfig.safeAreaInsetTop"></zx-status-bar>
       <view class="zx-notify__warpper">
         <slot name="icon">
-          <zx-icon
-            v-if="['success', 'warning', 'error'].includes(tmpConfig.type)"
-            :name="icon"
-            :color="tmpConfig.color"
-            :size="1.3 * tmpConfig.fontSize"
-            :customStyle="{ marginRight: '4px' }"
-          ></zx-icon>
+          <zx-icon v-if="['success', 'warning', 'error'].includes(tmpConfig.type)" :name="icon" :color="tmpConfig.color"
+            :size="1.3 * tmpConfig.fontSize" :customStyle="{ marginRight: '4px' }"></zx-icon>
         </slot>
-        <text
-          class="zx-notify__warpper__text"
-          :style="{
-            fontSize: addUnit(tmpConfig.fontSize),
-            color: tmpConfig.color,
-          }"
-          >{{ tmpConfig.message }}</text
-        >
+        <text class="zx-notify__warpper__text" :style="{
+          fontSize: addUnit(tmpConfig.fontSize),
+          color: tmpConfig.color,
+        }">{{ tmpConfig.message }}</text>
       </view>
     </view>
   </zx-transition>
@@ -31,7 +18,9 @@
 
 <script setup>
 import { ref, computed, watch, nextTick } from "vue";
-import deepMerge from "@/utils/deepMerge.js";
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
+import zxTransition from '@tanzhenxing/zx-transition/zx-transition.vue';
+import zxStatusBar from '@tanzhenxing/zx-status-bar/zx-status-bar.vue';
 
 const props = defineProps({
   // 到顶部的距离
@@ -106,6 +95,32 @@ const config = ref({
   safeAreaInsetTop: props.safeAreaInsetTop,
 });
 const tmpConfig = ref({ ...config.value });
+
+/**
+ * 深度合并对象
+ * @param {Object} target 目标对象
+ * @param {Object} source 源对象
+ * @returns {Object} 合并后的对象
+ */
+ function deepMerge(target = {}, source = {}) {
+  if (typeof target !== 'object' || typeof source !== 'object') {
+    return source || target;
+  }
+  
+  const result = { ...target };
+  
+  for (const key in source) {
+    if (Object.prototype.hasOwnProperty.call(source, key)) {
+      if (typeof source[key] === 'object' && !Array.isArray(source[key])) {
+        result[key] = deepMerge(result[key], source[key]);
+      } else {
+        result[key] = source[key];
+      }
+    }
+  }
+  
+  return result;
+}
 
 function addUnit(val) {
   if (val == null) return "";
@@ -188,7 +203,6 @@ defineExpose({ show, close });
 </script>
 
 <style lang="scss" scoped>
-
 $zx-notify-padding: 8px 10px !default;
 $zx-notify-text-font-size: 15px !default;
 $zx-notify-primary-bgColor: #2979ff !default;

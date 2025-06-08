@@ -1,18 +1,11 @@
 <template>
 	<view class="zx-sticky-container">
 		<!-- 占位元素，防止吸顶时页面跳动 -->
-		<view 
-			v-if="isSticky" 
-			class="zx-sticky-placeholder" 
-			:style="placeholderStyles"
-		></view>
+		<view v-if="isSticky" class="zx-sticky-placeholder" :style="placeholderStyles"></view>
 
 		<!-- 吸顶内容 -->
-		<view 
-			class="zx-sticky" 
-			:class="{ 'is-sticky': isSticky, 'with-transition': enableTransition }"
-			:style="stickyStyles"
-		>
+		<view class="zx-sticky" :class="{ 'is-sticky': isSticky, 'with-transition': enableTransition }"
+			:style="stickyStyles">
 			<slot></slot>
 		</view>
 	</view>
@@ -116,16 +109,16 @@ const stickyStyles = computed(() => {
 		width: props.width,
 		height: props.height
 	};
-	
+
 	// 如果禁用或未准备就绪，返回基础样式
 	if (props.disabled || !isReady.value) {
 		return baseStyles;
 	}
-	
+
 	// 如果需要吸顶，添加固定定位样式
 	if (isSticky.value) {
 		let topOffset = props.offsetTop;
-		
+
 		// 根据配置添加状态栏和胶囊高度
 		if (props.includeStatusBar) {
 			topOffset += statusBarHeight.value;
@@ -133,7 +126,7 @@ const stickyStyles = computed(() => {
 		if (props.includeCapsule) {
 			topOffset += capsuleHeight.value;
 		}
-		
+
 		return {
 			...baseStyles,
 			position: 'fixed',
@@ -142,7 +135,7 @@ const stickyStyles = computed(() => {
 			width: '100%'
 		};
 	}
-	
+
 	return baseStyles;
 });
 
@@ -184,18 +177,18 @@ const initComponent = async () => {
 	try {
 		// 等待下一个 tick 确保 DOM 渲染完成
 		await nextTick();
-		
+
 		// 获取组件位置信息
 		const elementInfo = await getRect('.zx-sticky');
 		if (elementInfo) {
 			topHeight.value = elementInfo.top;
 			elementHeight.value = elementInfo.height;
 		}
-		
+
 		// 获取系统窗口信息
 		const systemInfo = uni.getWindowInfo();
 		statusBarHeight.value = systemInfo.statusBarHeight || 0;
-		
+
 		// 获取胶囊信息（仅在微信小程序中有效）
 		try {
 			const capsuleInfo = uni.getMenuButtonBoundingClientRect();
@@ -206,7 +199,7 @@ const initComponent = async () => {
 			// 非微信小程序环境，忽略胶囊高度
 			capsuleHeight.value = 0;
 		}
-		
+
 		isReady.value = true;
 		emit('ready', {
 			topHeight: topHeight.value,
@@ -214,7 +207,7 @@ const initComponent = async () => {
 			statusBarHeight: statusBarHeight.value,
 			capsuleHeight: capsuleHeight.value
 		});
-		
+
 	} catch (error) {
 		console.error('zx-sticky 组件初始化失败:', error);
 		emit('error', error);
@@ -226,11 +219,11 @@ const updateStickyState = debounce((scrollTop) => {
 	if (!isReady.value || props.disabled) {
 		return;
 	}
-	
+
 	// 计算触发吸顶的阈值
 	const triggerPoint = topHeight.value + props.threshold;
 	const shouldSticky = scrollTop > triggerPoint;
-	
+
 	// 如果状态发生变化，更新并触发事件
 	if (shouldSticky !== isSticky.value) {
 		isSticky.value = shouldSticky;
@@ -324,6 +317,7 @@ defineExpose({
 		opacity: 0;
 		transform: translateY(-100%);
 	}
+
 	to {
 		opacity: 1;
 		transform: translateY(0);

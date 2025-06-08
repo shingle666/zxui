@@ -1,17 +1,8 @@
 <template>
   <view class="zx-rolling-text" :style="rootStyle">
-    <zx-rolling-text-item
-      v-for="(itemFigures, index) in figuresMatrix"
-      :key="index"
-      :figure-arr="itemFigures"
-      :duration="duration"
-      :direction="direction"
-      :is-start="isAnimating"
-      :height="itemHeightPx"
-      :delay="getDelay(index, figuresMatrix.length)"
-      :random-offset="randomOffset"
-      :style="getItemStyle(index)"
-    />
+    <zx-rolling-text-item v-for="(itemFigures, index) in figuresMatrix" :key="index" :figure-arr="itemFigures"
+      :duration="duration" :direction="direction" :is-start="isAnimating" :height="itemHeightPx"
+      :delay="getDelay(index, figuresMatrix.length)" :random-offset="randomOffset" :style="getItemStyle(index)" />
   </view>
 </template>
 
@@ -169,7 +160,7 @@ const generateFigures = () => {
       matrix.push(columnFigures);
     }
   } else {
-      // console.warn('[zx-rolling-text] Either targetNum or textList must be provided.');
+    // console.warn('[zx-rolling-text] Either targetNum or textList must be provided.');
   }
   figuresMatrix.value = matrix;
 };
@@ -199,7 +190,7 @@ const reset = () => {
     // autoStart 为 true 时，reset 后自动开始
     // 需要一个延迟以确保 reset 的状态先生效
     setTimeout(() => {
-        start();
+      start();
     }, 50);
   }
 };
@@ -238,7 +229,8 @@ defineExpose({
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden; /* 确保子项动画不溢出 */
+  overflow: hidden;
+  /* 确保子项动画不溢出 */
   position: relative;
   // marginRight is now handled by itemContainerStyle for each item.
   // If specific :not(:last-child) behavior is absolutely needed without v-bind,
@@ -249,5 +241,4 @@ defineExpose({
 // To ensure the last item doesn't have a margin-right, the parent of zx-rolling-text
 // or a direct style on the last zx-rolling-text-item (if accessible) would be needed.
 // e.g., .parent-of-zx-rolling-text > .zx-rolling-text > .zx-rolling-text-item:last-child { margin-right: 0 !important; }
-// Or, if zx-rolling-text-item itself could receive an isLast prop, it could conditionally apply the margin.
-</style>
+// Or, if zx-rolling-text-item itself could receive an isLast prop, it could conditionally apply the margin.</style>

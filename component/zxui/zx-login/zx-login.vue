@@ -20,14 +20,8 @@
         <!-- 账号输入框 -->
         <view class="zx-login__input-wrap" :class="{ 'error': accountError }">
           <view class="zx-login__input-item">
-            <input
-              v-model="formData.account"
-              :placeholder="accountPlaceholder"
-              class="zx-login__input"
-              :maxlength="50"
-              @input="onAccountInput"
-              @blur="validateAccount"
-            />
+            <zx-input v-model="formData.account" :placeholder="accountPlaceholder" class="zx-login__input" :maxlength="50"
+              @input="onAccountInput" @blur="validateAccount" />
           </view>
           <text v-if="accountError" class="zx-login__error-msg">{{ accountError }}</text>
         </view>
@@ -35,15 +29,8 @@
         <!-- 密码输入框 -->
         <view class="zx-login__input-wrap" :class="{ 'error': passwordError }">
           <view class="zx-login__input-item">
-            <input
-              v-model="formData.password"
-              :placeholder="passwordPlaceholder"
-              :password="!showPassword"
-              class="zx-login__input"
-              :maxlength="20"
-              @input="onPasswordInput"
-              @blur="validatePassword"
-            />
+            <zx-input v-model="formData.password" :placeholder="passwordPlaceholder" :password="!showPassword"
+              class="zx-login__input" :maxlength="20" @input="onPasswordInput" @blur="validatePassword" />
             <view class="zx-login__hide-icon" @tap="togglePassword">
               <text class="zx-login__icon">{{ showPassword ? '👁️' : '🙈' }}</text>
             </view>
@@ -62,15 +49,8 @@
         <!-- 手机号输入框 -->
         <view class="zx-login__input-wrap" :class="{ 'error': phoneError }">
           <view class="zx-login__input-item">
-            <input
-              v-model="formData.phone"
-              :placeholder="phonePlaceholder"
-              class="zx-login__input"
-              type="number"
-              :maxlength="11"
-              @input="onPhoneInput"
-              @blur="validatePhone"
-            />
+            <zx-input v-model="formData.phone" :placeholder="phonePlaceholder" class="zx-login__input" type="number"
+              :maxlength="11" @input="onPhoneInput" @blur="validatePhone" />
           </view>
           <text v-if="phoneError" class="zx-login__error-msg">{{ phoneError }}</text>
         </view>
@@ -78,15 +58,8 @@
         <!-- 验证码输入框 -->
         <view class="zx-login__input-wrap" :class="{ 'error': codeError }">
           <view class="zx-login__input-item">
-            <input
-              v-model="formData.code"
-              :placeholder="codePlaceholder"
-              class="zx-login__input"
-              type="number"
-              :maxlength="6"
-              @input="onCodeInput"
-              @blur="validateCode"
-            />
+            <zx-input v-model="formData.code" :placeholder="codePlaceholder" class="zx-login__input" type="number"
+              :maxlength="6" @input="onCodeInput" @blur="validateCode" />
             <view class="zx-login__code-box" :class="{ 'disabled': codeDisabled }" @tap="getCode">
               <text class="zx-login__code-text">{{ codeButtonText }}</text>
             </view>
@@ -108,14 +81,9 @@
 
       <!-- 登录按钮 -->
       <view class="zx-login__btn">
-        <button
-          class="zx-login__btn-primary"
-          :class="{ 'disabled': !canLogin }"
-          :disabled="!canLogin"
-          @tap="onLogin"
-        >
+        <zx-button type="primary" :disabled="!canLogin" @click="onLogin">
           {{ loginButtonText }}
-        </button>
+        </zx-button>
       </view>
 
       <!-- 切换登录方式 -->
@@ -130,6 +98,8 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
+import zxInput from '@tanzhenxing/zx-input/zx-input.vue'
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue'
 
 // Props定义
 const props = defineProps({
@@ -142,7 +112,7 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   },
-  
+
   // Logo配置
   showLogo: {
     type: Boolean,
@@ -156,20 +126,20 @@ const props = defineProps({
     type: String,
     default: 'LOGO'
   },
-  
+
   // 标题配置
   title: {
     type: String,
     default: '用户登录'
   },
-  
+
   // 登录方式
   defaultLoginType: {
     type: String,
     default: 'password', // password | sms
     validator: (value) => ['password', 'sms'].includes(value)
   },
-  
+
   // 功能开关
   showSwitch: {
     type: Boolean,
@@ -183,7 +153,7 @@ const props = defineProps({
     type: Boolean,
     default: true
   },
-  
+
   // 文案配置
   accountPlaceholder: {
     type: String,
@@ -221,7 +191,7 @@ const props = defineProps({
     type: String,
     default: '《用户协议》和《隐私政策》'
   },
-  
+
   // 验证码配置
   codeCountdown: {
     type: Number,
@@ -272,7 +242,7 @@ const canLogin = computed(() => {
   if (props.showProtocol && !protocolChecked.value) {
     return false
   }
-  
+
   if (loginType.value === 'password') {
     return formData.value.account && formData.value.password && !accountError.value && !passwordError.value
   } else {
@@ -379,14 +349,14 @@ const switchLoginType = () => {
   passwordError.value = ''
   phoneError.value = ''
   codeError.value = ''
-  
+
   emit('switchType', loginType.value)
 }
 
 const startCountdown = () => {
   countdown.value = props.codeCountdown
   codeDisabled.value = true
-  
+
   const timer = setInterval(() => {
     countdown.value--
     if (countdown.value <= 0) {
@@ -398,9 +368,9 @@ const startCountdown = () => {
 
 const getCode = () => {
   if (codeDisabled.value) return
-  
+
   if (!validatePhone()) return
-  
+
   emit('getCode', {
     phone: formData.value.phone,
     callback: (success) => {
@@ -413,24 +383,24 @@ const getCode = () => {
 
 const onLogin = () => {
   if (!canLogin.value) return
-  
+
   let isValid = true
-  
+
   if (loginType.value === 'password') {
     isValid = validateAccount() && validatePassword()
   } else {
     isValid = validatePhone() && validateCode()
   }
-  
+
   if (!isValid) return
-  
+
   const loginData = {
     type: loginType.value,
-    data: loginType.value === 'password' 
+    data: loginType.value === 'password'
       ? { account: formData.value.account, password: formData.value.password }
       : { phone: formData.value.phone, code: formData.value.code }
   }
-  
+
   emit('login', loginData)
 }
 

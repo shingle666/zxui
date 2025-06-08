@@ -6,13 +6,14 @@
 		</text>
 		<slot name="suffix">
 			<zx-icon v-if="!loading" :name="iconName" :color="color" size="32rpx"></zx-icon>
-			<zx-icon v-else name="loading" :color="color" size="32rpx" class="loading-icon"></zx-icon>
+			<zx-icon v-else name="loading" :color="color" size="32rpx"></zx-icon>
 		</slot>
 	</view>
 </template>
 
 <script setup>
 import { computed } from 'vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
 
 const props = defineProps({
 	color: { type: String, default: '#555555' },
@@ -60,19 +61,28 @@ function handleClick() {
 	user-select: none;
 	transition: opacity 0.2s;
 }
+
 .zx-more.disabled {
 	opacity: 0.5;
 	pointer-events: none;
 	cursor: not-allowed;
 }
+
 .zx-more.loading {
 	pointer-events: none;
 }
+
 .loading-icon {
 	animation: zx-spin 1s linear infinite;
 }
+
 @keyframes zx-spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
 }
 </style>

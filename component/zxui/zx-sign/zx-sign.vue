@@ -3,16 +3,17 @@
 		<view class="canvas-box">
 			<!-- 画布 -->
 			<view :style="getStyle">
-				<canvas :id="canvasId" :canvas-id="canvasId" :style="getStyle" @touchstart="tstart" @touchmove="tmove"></canvas>
+				<canvas :id="canvasId" :canvas-id="canvasId" :style="getStyle" @touchstart="tstart"
+					@touchmove="tmove"></canvas>
 			</view>
 			<!-- 操作按钮 -->
 			<slot name="actions">
 				<view class="sign-actions-default">
-					<view class="sign-desc" :style="{bottom:canvasHeight*0.4+'px'}">
+					<view class="sign-desc" :style="{ bottom: canvasHeight * 0.4 + 'px' }">
 						<text class="rotated-desc">请在下方手写签名</text>
 					</view>
-					<view class="sign-button" :class="{disabled:!isDrawed}" @click="confirm">
-						<text class="rotated-text" :style="{backgroundColor: isDrawed?'#19be6b':'#71d5a1'}">确认签名</text>
+					<view class="sign-button" :class="{ disabled: !isDrawed }" @click="confirm">
+						<text class="rotated-text" :style="{ backgroundColor: isDrawed ? '#19be6b' : '#71d5a1' }">确认签名</text>
 					</view>
 					<view class="re-button" @click="canvasInit">
 						<text class="rotated-text" style="background-color: #ff9900">重新签名</text>
@@ -87,7 +88,7 @@ onMounted(() => {
 	} else {
 		canvasHeight.value = systemInfo.windowHeight;
 	}
-	setTimeout(()=> {
+	setTimeout(() => {
 		ctx.value = uni.createCanvasContext(props.canvasId);
 		canvasInit();
 	}, 300);
@@ -152,7 +153,7 @@ function saveImg() {
 }
 // 确认签名
 function confirm() {
-	if(!isDrawed.value){
+	if (!isDrawed.value) {
 		return;
 	}
 	emits('confirm', signImg.value);
@@ -167,13 +168,15 @@ defineExpose({ confirm, canvasInit });
 	align-items: center;
 	justify-content: center;
 	position: relative;
-	flex:1;
+	flex: 1;
 }
+
 .canvas-box {
 	position: absolute;
 	top: 0;
 	left: 0;
 }
+
 .sign-actions-default {
 	position: absolute;
 	left: 0;
@@ -182,15 +185,18 @@ defineExpose({ confirm, canvasInit });
 	height: 100%;
 	pointer-events: none;
 }
-.sign-actions-default > .sign-desc,
-.sign-actions-default > .sign-button,
-.sign-actions-default > .re-button {
+
+.sign-actions-default>.sign-desc,
+.sign-actions-default>.sign-button,
+.sign-actions-default>.re-button {
 	pointer-events: auto;
 }
+
 .sign-desc {
 	position: absolute;
 	left: 10rpx;
 }
+
 .sign-button {
 	position: absolute;
 	top: 300rpx;
@@ -198,27 +204,35 @@ defineExpose({ confirm, canvasInit });
 	opacity: 1;
 	transition: opacity 0.2s;
 }
+
 .sign-button.disabled {
 	opacity: 0.5;
 	pointer-events: none;
 }
+
 .re-button {
 	position: absolute;
 	bottom: 100rpx;
 	right: -80rpx;
 }
+
 .rotated-desc {
-	transform: rotate(-90deg); /* 逆时针旋转90度 */
+	transform: rotate(-90deg);
+	/* 逆时针旋转90度 */
 	display: inline-block;
 	white-space: nowrap;
-	transform-origin: left top 0; /* 设置旋转的基点 */
+	transform-origin: left top 0;
+	/* 设置旋转的基点 */
 	color: #666666;
 }
+
 .rotated-text {
-	transform: rotate(-90deg); /* 逆时针旋转90度 */
+	transform: rotate(-90deg);
+	/* 逆时针旋转90度 */
 	display: inline-block;
 	white-space: nowrap;
-	transform-origin: left top 0; /* 设置旋转的基点 */
+	transform-origin: left top 0;
+	/* 设置旋转的基点 */
 	color: #ffffff;
 	padding: 10rpx 20rpx;
 	border-radius: 10rpx;

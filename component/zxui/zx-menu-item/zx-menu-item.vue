@@ -1,15 +1,11 @@
 <template>
-  <view 
-    :class="[
-      'zx-menu-item', 
-      { 
-        'is-active': active,
-        'is-disabled': disabled
-      }
-    ]"
-    :style="itemStyle"
-    @tap="handleClick"
-  >
+  <view :class="[
+    'zx-menu-item',
+    {
+      'is-active': active,
+      'is-disabled': disabled
+    }
+  ]" :style="itemStyle" @tap="handleClick">
     <slot></slot>
   </view>
 </template>
@@ -67,17 +63,17 @@ const itemStyle = computed(() => {
 // 处理点击事件
 const handleClick = () => {
   if (props.disabled) return;
-  
+
   // 设置激活菜单
   zxMenu.setActiveItem(props.index);
-  
+
   // 触发点击事件
   emit('click', {
     index: props.index,
     indexPath: [...parentPath.value, props.index],
     route: props.route
   });
-  
+
   // 如果有路由配置，则进行跳转
   if (props.route) {
     let routeObj = props.route;
@@ -160,4 +156,4 @@ defineExpose({
 .zx-menu-item:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
-</style> 
+</style>

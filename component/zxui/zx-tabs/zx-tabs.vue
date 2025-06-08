@@ -3,67 +3,47 @@
 		<!-- 标签导航区域 -->
 		<view class="zx-tabs__header" :class="headerClass">
 			<slot name="left"></slot>
-			
+
 			<!-- 标签容器 -->
 			<view class="zx-tabs__nav-wrap" :class="navWrapClass">
-				<scroll-view 
-					class="zx-tabs__nav-scroll" 
-					:scroll-x="isHorizontal" 
-					:scroll-y="!isHorizontal"
-					:scroll-left="scrollLeft" 
-					:scroll-top="scrollTop"
-					:scroll-with-animation="true"
-				>
+				<scroll-view class="zx-tabs__nav-scroll" :scroll-x="isHorizontal" :scroll-y="!isHorizontal"
+					:scroll-left="scrollLeft" :scroll-top="scrollTop" :scroll-with-animation="true">
 					<view class="zx-tabs__nav" :class="navClass">
 						<!-- 标签项 -->
-						<view 
-							v-for="(item, index) in tabList" 
-							:key="item.name || index"
+						<view v-for="(item, index) in tabList" :key="item.name || index"
 							:class="['zx-tabs__item', getTabItemClass(item, index)]"
-							:style="getTabItemStyle(item, index)"
-							@click="handleTabClick(item, index)"
-						>
+							:style="getTabItemStyle(item, index)" @click="handleTabClick(item, index)">
 							<!-- 自定义标签内容插槽 -->
 							<view class="zx-tabs__item-content">
 								<slot :name="`tab-${item.name || index}`" :tab="item" :index="index">
 									<text class="zx-tabs__item-text">{{ item[labelKey] }}</text>
 								</slot>
-								
+
 								<!-- 关闭按钮 -->
-								<view 
-									v-if="(item.closable !== false && closable) || item.closable"
-									class="zx-tabs__close"
-									@click.stop="handleTabRemove(item, index)"
-								>
+								<view v-if="(item.closable !== false && closable) || item.closable"
+									class="zx-tabs__close" @click.stop="handleTabRemove(item, index)">
 									<text class="zx-tabs__close-icon">×</text>
 								</view>
 							</view>
 						</view>
-						
+
 						<!-- 新增按钮 -->
-						<view 
-							v-if="addable || editable"
-							class="zx-tabs__new-tab"
-							@click="handleTabAdd"
-						>
+						<view v-if="addable || editable" class="zx-tabs__new-tab" @click="handleTabAdd">
 							<slot name="add-icon">
 								<text class="zx-tabs__add-icon">+</text>
 							</slot>
 						</view>
-						
+
 						<!-- 指示线/背景 -->
-						<view 
-							v-if="type === '' && showIndicator"
-							class="zx-tabs__active-bar"
-							:style="activeBarStyle"
-						></view>
+						<view v-if="type === '' && showIndicator" class="zx-tabs__active-bar" :style="activeBarStyle">
+						</view>
 					</view>
 				</scroll-view>
 			</view>
-			
+
 			<slot name="right"></slot>
 		</view>
-		
+
 		<!-- 内容区域 -->
 		<view class="zx-tabs__content" :class="contentClass" :style="contentStyle">
 			<slot></slot>
@@ -167,7 +147,7 @@ const props = defineProps({
 const emits = defineEmits([
 	'update:modelValue',
 	'tab-click',
-	'tab-change', 
+	'tab-change',
 	'tab-remove',
 	'tab-add',
 	'edit'
@@ -251,17 +231,17 @@ const initTabs = () => {
 		// 否则使用从 panes 收集的数据
 		tabList.value = Array.from(panes.value.values());
 	}
-	
+
 	// 设置初始选中项
 	if (!currentName.value && tabList.value.length > 0) {
 		currentName.value = tabList.value[0].name;
 	}
-	
+
 	// 添加初始选中项到已渲染列表
 	if (currentName.value && !renderedPanes.value.has(currentName.value)) {
 		renderedPanes.value.add(currentName.value);
 	}
-	
+
 	nextTick(() => {
 		updateActiveBar();
 	});
@@ -277,7 +257,7 @@ const getTabItemClass = (item, index) => {
 
 const getTabItemStyle = (item, index) => {
 	const style = {};
-	
+
 	if (item.disabled) {
 		style.color = props.disabledColor;
 	} else if (currentName.value === item.name) {
@@ -285,26 +265,26 @@ const getTabItemStyle = (item, index) => {
 	} else {
 		style.color = props.inactiveColor;
 	}
-	
+
 	return style;
 };
 
 const handleTabClick = async (item, index) => {
 	if (item.disabled) return;
-	
+
 	// 执行 before-leave 钩子
 	const beforeLeaveResult = await props.beforeLeave(item.name, currentName.value);
 	if (beforeLeaveResult === false) return;
-	
+
 	const oldName = currentName.value;
 	currentName.value = item.name;
-	
+
 	emits('tab-click', {
 		tab: item,
 		index,
 		name: item.name
 	});
-	
+
 	// 滚动到当前标签
 	scrollToActiveTab(index);
 };
@@ -321,14 +301,14 @@ const handleTabAdd = () => {
 
 const scrollToActiveTab = async (index) => {
 	await nextTick();
-	
+
 	try {
 		const tabItemSelector = `.zx-tabs__item:nth-child(${index + 1})`;
 		const tabRect = await getRect(tabItemSelector);
 		const navRect = await getRect('.zx-tabs__nav-scroll');
-		
+
 		if (!tabRect || !navRect) return;
-		
+
 		if (isHorizontal.value) {
 			const tabCenter = tabRect.left + tabRect.width / 2;
 			const navCenter = navRect.width / 2;
@@ -345,21 +325,21 @@ const scrollToActiveTab = async (index) => {
 
 const updateActiveBar = async () => {
 	if (!showIndicator.value) return;
-	
+
 	await nextTick();
-	
+
 	try {
 		const activeIndex = tabList.value.findIndex(tab => tab.name === currentName.value);
 		if (activeIndex === -1) return;
-		
+
 		const activeTabSelector = `.zx-tabs__item:nth-child(${activeIndex + 1})`;
 		const tabRect = await getRect(activeTabSelector);
 		const navRect = await getRect('.zx-tabs__nav');
-		
+
 		if (!tabRect || !navRect) return;
-		
+
 		const style = {};
-		
+
 		if (isHorizontal.value) {
 			style.width = `${tabRect.width}px`;
 			style.height = '2px';
@@ -371,10 +351,10 @@ const updateActiveBar = async () => {
 			style.transform = `translateY(${tabRect.top - navRect.top}px)`;
 			style.right = '0';
 		}
-		
+
 		style.backgroundColor = props.activeColor;
 		style.transition = 'all 0.3s ease';
-		
+
 		activeBarStyle.value = style;
 	} catch (error) {
 		console.warn('更新指示器失败:', error);
@@ -399,9 +379,9 @@ const registerPane = (paneInfo) => {
 	if (!paneInfo.name) {
 		paneInfo.name = `tab-pane-${tabPaneIndex.value++}`;
 	}
-	
+
 	panes.value.set(paneInfo.name, paneInfo);
-	
+
 	// 如果没有外部传入的 tabs 数据，则重新初始化
 	if (!props.tabs || props.tabs.length === 0) {
 		initTabs();
@@ -412,7 +392,7 @@ const registerPane = (paneInfo) => {
 const unregisterPane = (paneName) => {
 	panes.value.delete(paneName);
 	renderedPanes.value.delete(paneName);
-	
+
 	// 如果删除的是当前选中的标签页，切换到其他标签页
 	if (currentName.value === paneName) {
 		const remainingPanes = Array.from(panes.value.keys());
@@ -422,7 +402,7 @@ const unregisterPane = (paneName) => {
 			currentName.value = '';
 		}
 	}
-	
+
 	// 如果没有外部传入的 tabs 数据，则重新初始化
 	if (!props.tabs || props.tabs.length === 0) {
 		initTabs();

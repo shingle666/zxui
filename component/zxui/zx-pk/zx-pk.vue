@@ -1,23 +1,16 @@
 <template>
-  <view
-    class="zx-pk-wrap"
-    :style="{ width: width, height: height, borderRadius: borderRadius }"
-  >
+  <view class="zx-pk-wrap" :style="{ width: width, height: height, borderRadius: borderRadius }">
     <!-- 背景 -->
     <image :src="bgImg" class="zx-pk-bg" mode="aspectFill" style="width: 690rpx"></image>
     <!-- pk 图标 -->
-    <view
-      class="zx-pk-icon-wrap zx-flex zx-rows zx-justify-content-center zx-align-items-center"
-      :style="{ width: width, height: height, borderRadius: borderRadius }"
-    >
+    <view class="zx-pk-icon-wrap zx-flex zx-rows zx-justify-content-center zx-align-items-center"
+      :style="{ width: width, height: height, borderRadius: borderRadius }">
       <view class="zx-pk-icon zx-border-box">
         <image :src="pkIcon" mode="widthFix" style="width: 80rpx; height: 80rpx"></image>
       </view>
     </view>
-    <view
-      class="zx-pk zx-flex zx-rows zx-space-between zx-align-items-center"
-      :style="{ width: width, height: height, borderRadius: borderRadius }"
-    >
+    <view class="zx-pk zx-flex zx-rows zx-space-between zx-align-items-center"
+      :style="{ width: width, height: height, borderRadius: borderRadius }">
       <view class="zx-pk-item zx-flex zx-columns">
         <text class="zx-pk-title zx-block-text">{{ title[0] }}</text>
         <view class="zx-pk-btn-wrap" hover-class="zx-tap" v-if="status == 'button'">
@@ -26,14 +19,8 @@
           }}</text>
         </view>
         <view class="zx-pk-btn-wrap" v-if="status == 'progress'">
-          <progress
-            :percent="progress[0]"
-            activeColor="#FFFFFF"
-            :active="active"
-            stroke-width="3"
-            class="zx-pk-progress"
-            backgroundColor="#3699ff"
-          />
+          <progress :percent="progress[0]" activeColor="#FFFFFF" :active="active" stroke-width="3"
+            class="zx-pk-progress" backgroundColor="#3699ff" />
         </view>
         <text class="zx-pk-text zx-block-text" v-if="status == 'progress'">{{
           progress[2]
@@ -43,40 +30,17 @@
         <text class="zx-pk-title zx-block-text" style="text-align: right">{{
           title[1]
         }}</text>
-        <view
-          class="zx-pk-btn-wrap zx-flex zx-rows"
-          hover-class="zx-tap"
-          style="justify-content: flex-end"
-          v-if="status == 'button'"
-        >
-          <text
-            class="zx-pk-btn zx-block-text"
-            style="color: #ff0036"
-            data-index="right"
-            @tap="choose"
-            >{{ btnName }}</text
-          >
+        <view class="zx-pk-btn-wrap zx-flex zx-rows" hover-class="zx-tap" style="justify-content: flex-end"
+          v-if="status == 'button'">
+          <text class="zx-pk-btn zx-block-text" style="color: #ff0036" data-index="right" @tap="choose">{{ btnName
+            }}</text>
         </view>
-        <view
-          class="zx-pk-btn-wrap"
-          style="justify-content: flex-end"
-          v-if="status == 'progress'"
-        >
-          <progress
-            :percent="progress[1]"
-            stroke-width="3"
-            class="zx-pk-progress"
-            :active="active"
-            activeColor="#FFFFFF"
-            backgroundColor="#FF6666"
-          />
+        <view class="zx-pk-btn-wrap" style="justify-content: flex-end" v-if="status == 'progress'">
+          <progress :percent="progress[1]" stroke-width="3" class="zx-pk-progress" :active="active"
+            activeColor="#FFFFFF" backgroundColor="#FF6666" />
         </view>
-        <text
-          class="zx-pk-text zx-block-text"
-          style="text-align: right"
-          v-if="status == 'progress'"
-          >{{ progress[3] }}</text
-        >
+        <text class="zx-pk-text zx-block-text" style="text-align: right" v-if="status == 'progress'">{{ progress[3]
+          }}</text>
       </view>
     </view>
   </view>
@@ -120,11 +84,12 @@ const props = defineProps({
   },
 });
 
-// #ifndef APP-NVUE
 const active = ref(true);
+// #ifndef APP-NVUE
+active = ref(true);
 // #endif
 // #ifdef APP-NVUE
-const active = ref(false);
+active = ref(false);
 // #endif
 
 const bgImg = ref(
@@ -145,37 +110,44 @@ const choose = (e) => {
   overflow: hidden;
   position: relative;
 }
+
 .zx-pk-bg {
   position: absolute;
   left: 0;
   top: 0;
   z-index: 1;
 }
+
 .zx-pk {
   position: absolute;
   left: 0;
   top: 0;
   z-index: 3;
 }
+
 .zx-pk-item {
   width: 220rpx;
   overflow: hidden;
   padding-left: 35rpx;
   padding-right: 35rpx;
 }
+
 /* #ifndef APP-PLUS */
 .zx-pk-item {
   box-sizing: border-box;
 }
+
 /* #endif */
 .zx-pk-title {
   color: #ffffff;
   font-size: 50rpx;
   line-height: 60rpx;
 }
+
 .zx-pk-btn-wrap {
   margin-top: 32rpx;
 }
+
 .zx-pk-btn {
   width: 120rpx;
   height: 50rpx;
@@ -186,24 +158,29 @@ const choose = (e) => {
   border-radius: 100rpx;
   color: #3687ff;
 }
+
 .zx-pk-btn-hv {
   font-weight: bold;
 }
+
 .zx-pk-progress {
   width: 150rpx;
 }
+
 .zx-pk-text {
   font-size: 22rpx;
   color: #ffffff;
   line-height: 50rpx;
   margin-top: 2px;
 }
+
 .zx-pk-icon-wrap {
   position: absolute;
   top: 0px;
   left: 0px;
   z-index: 2;
 }
+
 .zx-pk-icon {
   width: 120rpx;
   height: 120rpx;
@@ -220,13 +197,16 @@ const choose = (e) => {
 .zx-flex {
   display: flex;
 }
+
 .zx-border-box {
   box-sizing: border-box;
 }
+
 .zx-body {
   width: 750rpx;
   box-sizing: border-box;
 }
+
 /* #endif */
 
 /* flex 布局 */
@@ -234,57 +214,73 @@ const choose = (e) => {
 .zx-row {
   flex-direction: row !important;
 }
+
 .zx-columns,
 .zx-column {
   flex-direction: column !important;
 }
+
 .zx-wrap {
   flex-direction: row !important;
   flex-wrap: wrap !important;
 }
+
 .zx-nowrap {
   flex-direction: row !important;
   flex-wrap: nowrap !important;
 }
+
 .zx-space-around {
   justify-content: space-around !important;
 }
+
 .zx-space-between {
   justify-content: space-between !important;
 }
+
 .zx-justify-content-start {
   justify-content: flex-start !important;
 }
+
 .zx-justify-content-center {
   justify-content: center !important;
 }
+
 .zx-justify-content-end {
   justify-content: flex-end !important;
 }
+
 .zx-align-items-start {
   align-items: flex-start !important;
 }
+
 .zx-align-items-center {
   align-items: center !important;
 }
+
 .zx-align-items-end {
   align-items: flex-end !important;
 }
+
 .zx-flex1 {
   flex: 1 !important;
 }
+
 /* #ifndef APP-NVUE */
 .zx-flex-shrink0 {
   flex-shrink: 0 !important;
 }
+
 .zx-flex-shrink1 {
   flex-shrink: 1 !important;
 }
+
 /* #endif */
 .zx-block-text,
 .zx-block {
   display: block;
 }
+
 /* 点击元素 */
 .zx-tap {
   opacity: 0.88;

@@ -1,3 +1,9 @@
+<template>
+  <view class="zx-swipe-action">
+    <slot></slot>
+  </view>
+</template>
+
 <script setup>
 import { ref, provide } from 'vue'
 
@@ -44,7 +50,7 @@ defineExpose({
     })
     // #endif
   },
-  
+
   // 关闭全部已打开的组件
   closeAll() {
     children.value.forEach(vm => {
@@ -54,11 +60,7 @@ defineExpose({
 })
 </script>
 
-<template>
-  <view class="zx-swipe-action">
-    <slot></slot>
-  </view>
-</template>
+
 
 <style>
 .zx-swipe-action {

@@ -1,19 +1,15 @@
 <template>
-  <view
-    v-if="!hideOnSinglePage || pageCount > 1"
-    class="zx-pagination"
-    :class="{
-      'zx-pagination--background': background,
-      'zx-pagination--small': size === 'small',
-      'zx-pagination--large': size === 'large',
-      'is-disabled': disabled
-    }"
-  >
+  <view v-if="!hideOnSinglePage || pageCount > 1" class="zx-pagination" :class="{
+    'zx-pagination--background': background,
+    'zx-pagination--small': size === 'small',
+    'zx-pagination--large': size === 'large',
+    'is-disabled': disabled
+  }">
     <!-- 总数 -->
     <view v-if="layout.includes('total')" class="zx-pagination__total">
       {{ `共 ${total} 条` }}
     </view>
-    
+
     <!-- 每页条数选择器 -->
     <!-- <view v-if="layout.includes('sizes')" class="zx-pagination__sizes">
       <zx-select
@@ -34,15 +30,10 @@
 
     <!-- 上一页按钮 -->
     <view v-if="layout.includes('prev')" class="zx-pagination__btn-prev">
-      <zx-button
-        :disabled="disabled || innerCurrentPage <= 1"
-        :size="size"
-        :class="[
-          'zx-pagination__btn',
-          { 'is-disabled': disabled || innerCurrentPage <= 1 }
-        ]"
-        @click="prevPage"
-      >
+      <zx-button :disabled="disabled || innerCurrentPage <= 1" :size="size" :class="[
+        'zx-pagination__btn',
+        { 'is-disabled': disabled || innerCurrentPage <= 1 }
+      ]" @click="prevPage">
         <zx-icon name="arrow-left" :size="size === 'small' ? 12 : 14" />
         <text v-if="prevText">{{ prevText }}</text>
       </zx-button>
@@ -51,76 +42,48 @@
     <!-- 页码列表 -->
     <view v-if="layout.includes('pager')" class="zx-pagination__pager">
       <!-- 第一页 -->
-      <view
-        class="zx-pagination__number"
-        :class="{
-          'is-active': innerCurrentPage === 1,
-          'is-disabled': disabled
-        }"
-        @click="!disabled && changePage(1)"
-      >
+      <view class="zx-pagination__number" :class="{
+        'is-active': innerCurrentPage === 1,
+        'is-disabled': disabled
+      }" @click="!disabled && changePage(1)">
         1
       </view>
 
       <!-- 向前省略号 -->
-      <view
-        v-if="showPrevMore"
-        class="zx-pagination__more zx-pagination__more-prev"
-        :class="{ 'is-disabled': disabled }"
-        @click="!disabled && onPrevMore"
-      >
+      <view v-if="showPrevMore" class="zx-pagination__more zx-pagination__more-prev"
+        :class="{ 'is-disabled': disabled }" @click="!disabled && onPrevMore">
         <zx-icon name="more" :size="size === 'small' ? 12 : 14" />
       </view>
 
       <!-- 中间页码 -->
-      <view
-        v-for="pager in pagers"
-        :key="pager"
-        class="zx-pagination__number"
-        :class="{
-          'is-active': innerCurrentPage === pager,
-          'is-disabled': disabled
-        }"
-        @click="!disabled && changePage(pager)"
-      >
+      <view v-for="pager in pagers" :key="pager" class="zx-pagination__number" :class="{
+        'is-active': innerCurrentPage === pager,
+        'is-disabled': disabled
+      }" @click="!disabled && changePage(pager)">
         {{ pager }}
       </view>
 
       <!-- 向后省略号 -->
-      <view
-        v-if="showNextMore"
-        class="zx-pagination__more zx-pagination__more-next"
-        :class="{ 'is-disabled': disabled }"
-        @click="!disabled && onNextMore"
-      >
+      <view v-if="showNextMore" class="zx-pagination__more zx-pagination__more-next"
+        :class="{ 'is-disabled': disabled }" @click="!disabled && onNextMore">
         <zx-icon name="more" :size="size === 'small' ? 12 : 14" />
       </view>
 
       <!-- 最后一页 -->
-      <view
-        v-if="pageCount > 1"
-        class="zx-pagination__number"
-        :class="{
-          'is-active': innerCurrentPage === pageCount,
-          'is-disabled': disabled
-        }"
-        @click="!disabled && changePage(pageCount)"
-      >
+      <view v-if="pageCount > 1" class="zx-pagination__number" :class="{
+        'is-active': innerCurrentPage === pageCount,
+        'is-disabled': disabled
+      }" @click="!disabled && changePage(pageCount)">
         {{ pageCount }}
       </view>
     </view>
 
     <!-- 下一页按钮 -->
     <view v-if="layout.includes('next')" class="zx-pagination__btn-next">
-      <zx-button
-        :disabled="disabled || innerCurrentPage >= pageCount"
-        :size="size"
-        :class="[
-          'zx-pagination__btn',
-          { 'is-disabled': disabled || innerCurrentPage >= pageCount }
-        ]"
-        @click="nextPage"
-      >
+      <zx-button :disabled="disabled || innerCurrentPage >= pageCount" :size="size" :class="[
+        'zx-pagination__btn',
+        { 'is-disabled': disabled || innerCurrentPage >= pageCount }
+      ]" @click="nextPage">
         <text v-if="nextText">{{ nextText }}</text>
         <zx-icon name="arrow-right" :size="size === 'small' ? 12 : 14" />
       </zx-button>
@@ -129,15 +92,8 @@
     <!-- 跳转 -->
     <view v-if="layout.includes('jumper')" class="zx-pagination__jumper">
       <text>前往</text>
-      <zx-input
-        v-model="jumpPage"
-        type="number"
-        :size="size"
-        :disabled="disabled"
-        class="zx-pagination__jump-input"
-        @blur="handleJumpPage"
-        @confirm="handleJumpPage"
-      />
+      <zx-input v-model="jumpPage" type="number" :size="size" :disabled="disabled" class="zx-pagination__jump-input"
+        @blur="handleJumpPage" @confirm="handleJumpPage" />
       <text>页</text>
     </view>
 
@@ -151,10 +107,9 @@
 
 <script setup>
 import { getCurrentInstance, ref, computed, watch } from 'vue'
-import ZxInput from '../zx-input/zx-input.vue'
-import ZxButton from '../zx-button/zx-button.vue'
-import ZxIcon from '../zx-icon/zx-icon.vue'
-import ZxSelect from '../zx-select/zx-select.vue'
+import ZxInput from '@tanzhenxing/zx-input/zx-input.vue'
+import ZxButton from '@tanzhenxing/zx-button/zx-button.vue'
+import ZxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
 
 const { proxy } = getCurrentInstance()
 
@@ -164,7 +119,7 @@ proxy.$options.name = 'zx-pagination'
 
 const emit = defineEmits([
   'update:currentPage',
-  'update:pageSize', 
+  'update:pageSize',
   'size-change',
   'current-change',
   'prev-click',
@@ -343,10 +298,10 @@ watch(() => props.pageSize, (newVal) => {
 // 方法
 const changePage = (page) => {
   if (page === innerCurrentPage.value) return
-  
+
   const oldPage = innerCurrentPage.value
   innerCurrentPage.value = page
-  
+
   emit('update:currentPage', page)
   emit('current-change', page)
   emit('change', page, innerPageSize.value)
@@ -354,7 +309,7 @@ const changePage = (page) => {
 
 const prevPage = () => {
   if (innerCurrentPage.value <= 1) return
-  
+
   const newPage = innerCurrentPage.value - 1
   changePage(newPage)
   emit('prev-click', newPage)
@@ -362,7 +317,7 @@ const prevPage = () => {
 
 const nextPage = () => {
   if (innerCurrentPage.value >= pageCount.value) return
-  
+
   const newPage = innerCurrentPage.value + 1
   changePage(newPage)
   emit('next-click', newPage)
@@ -380,22 +335,22 @@ const onNextMore = () => {
 
 const handleSizeChange = (newSize) => {
   if (newSize === innerPageSize.value) return
-  
+
   const oldPageSize = innerPageSize.value
   innerPageSize.value = newSize
-  
+
   // 计算新的当前页数
   const newCurrentPage = Math.ceil((innerCurrentPage.value - 1) * oldPageSize / newSize) + 1
-  
+
   emit('update:pageSize', newSize)
   emit('size-change', newSize)
-  
+
   if (newCurrentPage !== innerCurrentPage.value) {
     innerCurrentPage.value = newCurrentPage
     emit('update:currentPage', newCurrentPage)
     emit('current-change', newCurrentPage)
   }
-  
+
   emit('change', innerCurrentPage.value, newSize)
 }
 
@@ -404,18 +359,18 @@ const handleJumpPage = (e) => {
   if (!jumpPage || jumpPage.value === undefined || jumpPage.value === null) {
     return
   }
-  
+
   // 如果输入为空，直接返回
   if (jumpPage.value === '') {
     return
   }
-  
+
   const page = parseInt(jumpPage.value)
   if (isNaN(page) || page < 1 || page > pageCount.value) {
     jumpPage.value = ''
     return
   }
-  
+
   changePage(page)
   jumpPage.value = ''
 }
@@ -463,7 +418,7 @@ const handleJumpPage = (e) => {
   &--background {
     .zx-pagination__number {
       background-color: #f4f4f5;
-      
+
       &.is-active {
         background-color: #409eff;
         color: #fff;
@@ -489,7 +444,7 @@ const handleJumpPage = (e) => {
   &__btn {
     min-width: auto;
     padding: 0 16rpx;
-    
+
     &.is-disabled {
       opacity: 0.6;
       cursor: not-allowed;

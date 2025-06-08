@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-tab-pane",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "zx-tab-pane 标签页组件",
   "main": "index.js",
   "scripts": {

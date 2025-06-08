@@ -1,17 +1,11 @@
 <template>
-  <view class="zx-tooltip-wrapper" @touchstart.stop="onTriggerStart" @touchend.stop="onTriggerEnd" @mouseenter.stop="onTriggerStart" @mouseleave.stop="onTriggerEnd" @click.stop="onClickTrigger">
+  <view class="zx-tooltip-wrapper" @touchstart.stop="onTriggerStart" @touchend.stop="onTriggerEnd"
+    @mouseenter.stop="onTriggerStart" @mouseleave.stop="onTriggerEnd" @click.stop="onClickTrigger">
     <slot />
-    <view
-      v-if="visible"
-      class="zx-tooltip-popper"
-      :class="[`zx-tooltip--${effect}`, `zx-tooltip--${placement}`]"
-      :style="popperStyle"
-      @touchstart.stop
-      @mouseenter.stop="onPopperEnter"
-      @mouseleave.stop="onPopperLeave"
-    >
+    <view v-if="visible" class="zx-tooltip-popper" :class="[`zx-tooltip--${effect}`, `zx-tooltip--${placement}`]"
+      :style="popperStyle" @touchstart.stop @mouseenter.stop="onPopperEnter" @mouseleave.stop="onPopperLeave">
       <slot name="content">
-        <text v-if="rawContent" v-html="content"></text>
+        <zx-html v-if="rawContent" :content="content"></zx-html>
         <text v-else>{{ content }}</text>
       </slot>
       <view v-if="showArrow" class="zx-tooltip-arrow"></view>
@@ -20,8 +14,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, nextTick } from 'vue';
-import { onLoad, onUnload } from '@dcloudio/uni-app';
+import { ref, computed, watch, nextTick,onMounted,onUnmounted } from 'vue';
 
 const props = defineProps({
   content: { type: String, default: '' },
@@ -96,10 +89,10 @@ watch(() => props.modelValue, (val) => {
   if (typeof val === 'boolean') visible.value = val;
 });
 
-onLoad(() => {
+onMounted(() => {
   if (props.modelValue) visible.value = true;
 });
-onUnload(() => {
+onUnmounted(() => {
   clearTimers();
 });
 
@@ -119,6 +112,7 @@ const popperStyle = computed(() => {
   display: inline-block;
   position: relative;
 }
+
 .zx-tooltip-popper {
   min-width: 80rpx;
   max-width: 400rpx;
@@ -131,33 +125,40 @@ const popperStyle = computed(() => {
   pointer-events: none;
   transition: opacity 0.2s;
 }
+
 .zx-tooltip--dark {
-  background: rgba(0,0,0,0.8);
+  background: rgba(0, 0, 0, 0.8);
   color: #fff;
 }
+
 .zx-tooltip--light {
   background: #fff;
   color: #333;
   border: 1rpx solid #eee;
 }
+
 .zx-tooltip--top {
   left: 50%;
   transform: translateX(-50%) translateY(-100%);
 }
+
 .zx-tooltip--bottom {
   left: 50%;
   transform: translateX(-50%) translateY(100%);
 }
+
 .zx-tooltip--left {
   top: 50%;
   right: 100%;
   transform: translateY(-50%) translateX(-12rpx);
 }
+
 .zx-tooltip--right {
   top: 50%;
   left: 100%;
   transform: translateY(-50%) translateX(12rpx);
 }
+
 .zx-tooltip-popper[style*="bottom"],
 .zx-tooltip-popper[style*="top"],
 .zx-tooltip-popper[style*="left"],
@@ -165,6 +166,7 @@ const popperStyle = computed(() => {
   opacity: 1;
   pointer-events: auto;
 }
+
 .zx-tooltip-arrow {
   width: 24rpx;
   height: 24rpx;

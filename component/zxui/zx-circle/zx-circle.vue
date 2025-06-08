@@ -3,21 +3,11 @@
     <svg :viewBox="`0 0 ${viewBoxSize} ${viewBoxSize}`" :style="svgStyle">
       <defs v-if="isGradient">
         <linearGradient :id="gradientId" x1="100%" y1="0%" x2="0%" y2="0%">
-          <stop
-            v-for="(item, index) in gradientColors"
-            :key="index"
-            :offset="item.offset"
-            :stop-color="item.color"
-          />
+          <stop v-for="(item, index) in gradientColors" :key="index" :offset="item.offset" :stop-color="item.color" />
         </linearGradient>
       </defs>
       <path :class="bem('layer')" :style="layerStyle" :d="path" />
-      <path
-        :class="bem('hover')"
-        :style="hoverStyle"
-        :d="path"
-        :stroke="currentColor"
-      />
+      <path :class="bem('hover')" :style="hoverStyle" :d="path" :stroke="currentColor" />
     </svg>
     <view v-if="!slots.default && text" :class="bem('text')">
       {{ text }}
@@ -32,53 +22,53 @@ import { ref, computed, watch, onMounted, onUnmounted, getCurrentInstance, useSl
 // Props definition (merged from utils.js)
 const props = defineProps(
   {
-  modelValue: Number, // vue 3 v-model
-  currentRate: {
-    type: Number,
-    default: 0,
-  },
-  rate: {
-    type: [Number, String],
-    default: 100,
-  },
-  size: {
-    type: [Number, String],
-    default: 100, // 默认100rpx
-  },
-  color: {
-    type: [String, Object],
-    default: '#007aff', // 对应设计稿中的默认进度条颜色
-  },
-  layerColor: {
-    type: String,
-    default: '#ebedf0', // 对应设计稿中的轨道颜色
-  },
-  fill: {
-    type: String,
-    default: 'none',
-  },
-  speed: {
-    type: [Number, String],
-    default: 0, // 0 表示无动画
-  },
-  text: String,
-  strokeWidth: {
-    type: [Number, String],
-    default: 40, // SVG中的stroke-width，非px, 恢复Vant原始默认值
-  },
-  strokeLinecap: {
-    type: String,
-    default: 'round', // 'square', 'butt'
-  },
-  clockwise: {
-    type: Boolean,
-    default: true,
-  },
-  startPosition: {
-    type: String,
-    default: 'top', // 'left', 'right', 'bottom'
-  },
-}
+    modelValue: Number, // vue 3 v-model
+    currentRate: {
+      type: Number,
+      default: 0,
+    },
+    rate: {
+      type: [Number, String],
+      default: 100,
+    },
+    size: {
+      type: [Number, String],
+      default: 100, // 默认100rpx
+    },
+    color: {
+      type: [String, Object],
+      default: '#007aff', // 对应设计稿中的默认进度条颜色
+    },
+    layerColor: {
+      type: String,
+      default: '#ebedf0', // 对应设计稿中的轨道颜色
+    },
+    fill: {
+      type: String,
+      default: 'none',
+    },
+    speed: {
+      type: [Number, String],
+      default: 0, // 0 表示无动画
+    },
+    text: String,
+    strokeWidth: {
+      type: [Number, String],
+      default: 40, // SVG中的stroke-width，非px, 恢复Vant原始默认值
+    },
+    strokeLinecap: {
+      type: String,
+      default: 'round', // 'square', 'butt'
+    },
+    clockwise: {
+      type: Boolean,
+      default: true,
+    },
+    startPosition: {
+      type: String,
+      default: 'top', // 'left', 'right', 'bottom'
+    },
+  }
 );
 
 
@@ -195,9 +185,9 @@ watch(() => props.rate, (newRate) => {
 }, { immediate: true });
 
 watch(() => props.currentRate, (newVal) => {
-    if (newVal !== currentRateInner.value) {
-        currentRateInner.value = format(newVal);
-    }
+  if (newVal !== currentRateInner.value) {
+    currentRateInner.value = format(newVal);
+  }
 });
 
 const isGradient = computed(() => typeof props.color === 'object' && props.color !== null);
@@ -247,8 +237,10 @@ onUnmounted(() => {
   display: inline-block;
   text-align: center;
   /* Default size, will be overridden by size prop. Using rpx for consistency with uniapp */
-  width: 100rpx; /* Default size in rpx, will be overridden by size prop via rootStyle */
-  height: 100rpx; /* Default size in rpx, will be overridden by size prop via rootStyle */
+  width: 100rpx;
+  /* Default size in rpx, will be overridden by size prop via rootStyle */
+  height: 100rpx;
+  /* Default size in rpx, will be overridden by size prop via rootStyle */
 
   svg {
     position: absolute;
@@ -279,9 +271,12 @@ onUnmounted(() => {
     box-sizing: border-box;
     width: 100%;
     padding: 0 5px;
-    color: var(--zx-circle-text-color, #333); /* Darker text color */
-    font-weight: var(--zx-circle-text-font-weight, normal); /* Normal font weight */
-    font-size: var(--zx-circle-text-font-size, 28rpx); /* Adjusted font size */
+    color: var(--zx-circle-text-color, #333);
+    /* Darker text color */
+    font-weight: var(--zx-circle-text-font-weight, normal);
+    /* Normal font weight */
+    font-size: var(--zx-circle-text-font-size, 28rpx);
+    /* Adjusted font size */
     line-height: var(--zx-circle-text-line-height, 1.2);
     word-wrap: break-word;
     overflow-wrap: break-word;

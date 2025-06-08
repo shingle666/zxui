@@ -2,98 +2,50 @@
   <!-- #ifdef APP-NVUE -->
   <cell :keep-scroll-position="keepScrollPosition">
     <!-- #endif -->
-    <view
-      :class="{ 'zx-list-item--disabled': disabled }"
-      :style="{ 'background-color': customStyle.backgroundColor }"
-      :hover-class="
-        (!clickable && !link) || disabled || showSwitch ? '' : 'zx-list-item--hover'
-      "
-      class="zx-list-item"
-      @click="onClick"
-    >
-      <view
-        v-if="!isFirstChild"
-        class="border--left"
-        :class="{ 'zx-list--border': border }"
-      ></view>
-      <view
-        class="zx-list-item__container"
-        :class="{
-          'container--right': showArrow || link,
-          'flex--direction': direction === 'column',
-        }"
-        :style="{
+    <view :class="{ 'zx-list-item--disabled': disabled }" :style="{ 'background-color': customStyle.backgroundColor }"
+      :hover-class="(!clickable && !link) || disabled || showSwitch ? '' : 'zx-list-item--hover'
+        " class="zx-list-item" @click="onClick">
+      <view v-if="!isFirstChild" class="border--left" :class="{ 'zx-list--border': border }"></view>
+      <view class="zx-list-item__container" :class="{
+        'container--right': showArrow || link,
+        'flex--direction': direction === 'column',
+      }" :style="{
           paddingTop: padding.top,
           paddingLeft: padding.left,
           paddingRight: padding.right,
           paddingBottom: padding.bottom,
-        }"
-      >
+        }">
         <slot name="header">
           <view class="zx-list-item__header">
             <view v-if="thumb" class="zx-list-item__icon">
-              <image
-                :src="thumb"
-                class="zx-list-item__icon-img"
-                :class="['zx-list--' + thumbSize]"
-              />
+              <image :src="thumb" class="zx-list-item__icon-img" :class="['zx-list--' + thumbSize]" />
             </view>
             <view v-else-if="showExtraIcon" class="zx-list-item__icon">
-              <zx-icon
-                :customPrefix="extraIcon.customPrefix"
-                :color="extraIcon.color"
-                :size="extraIcon.size"
-                :type="extraIcon.type"
-              />
+              <zx-icon :customPrefix="extraIcon.customPrefix" :color="extraIcon.color" :size="extraIcon.size"
+                :type="extraIcon.type" />
             </view>
           </view>
         </slot>
         <slot name="body">
-          <view
-            class="zx-list-item__content"
-            :class="{
-              'zx-list-item__content--center':
-                thumb || showExtraIcon || showBadge || showSwitch,
-            }"
-          >
-            <text
-              v-if="title"
-              class="zx-list-item__content-title"
-              :class="[ellipsis !== 0 && ellipsis <= 2 ? 'zx-ellipsis-' + ellipsis : '']"
-              >{{ title }}</text
-            >
+          <view class="zx-list-item__content" :class="{
+            'zx-list-item__content--center':
+              thumb || showExtraIcon || showBadge || showSwitch,
+          }">
+            <text v-if="title" class="zx-list-item__content-title"
+              :class="[ellipsis !== 0 && ellipsis <= 2 ? 'zx-ellipsis-' + ellipsis : '']">{{ title }}</text>
             <text v-if="note" class="zx-list-item__content-note">{{ note }}</text>
           </view>
         </slot>
         <slot name="footer">
-          <view
-            v-if="rightText || showBadge || showSwitch"
-            class="zx-list-item__extra"
-            :class="{ 'flex--justify': direction === 'column' }"
-          >
+          <view v-if="rightText || showBadge || showSwitch" class="zx-list-item__extra"
+            :class="{ 'flex--justify': direction === 'column' }">
             <text v-if="rightText" class="zx-list-item__extra-text">{{ rightText }}</text>
-            <zx-badge
-              v-if="showBadge"
-              :type="badgeType"
-              :text="badgeText"
-              :custom-style="badgeStyle"
-            />
-            <switch
-              v-if="showSwitch"
-              :disabled="disabled"
-              :checked="switchChecked"
-              @change="onSwitchChange"
-            />
+            <zx-badge v-if="showBadge" :type="badgeType" :text="badgeText" :custom-style="badgeStyle" />
+            <zx-switch v-if="showSwitch" :disabled="disabled" :model-value="switchChecked" @update:modelValue="onSwitchChange" />
           </view>
         </slot>
       </view>
-      <zx-icon
-        v-if="showArrow || link"
-        :size="16"
-        class="zx-icon-wrapper"
-        color="#bbb"
-        type="arrowright"
-      />
+      <zx-icon v-if="showArrow || link" :size="16" class="zx-icon-wrapper" color="#bbb" type="arrowright" />
     </view>
     <!-- #ifdef APP-NVUE -->
   </cell>
@@ -110,6 +62,10 @@ import {
   defineEmits,
   getCurrentInstance,
 } from "vue";
+
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+import zxBadge from '@tanzhenxing/zx-badge/zx-badge.vue'
+import zxSwitch from '@tanzhenxing/zx-switch/zx-switch.vue'
 
 const props = defineProps({
   direction: { type: String, default: "row" },

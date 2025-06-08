@@ -1,24 +1,13 @@
 <template>
-	<view
-		class="zx-lazyload__box"
+	<view class="zx-lazyload__box"
 		:style="{ backgroundColor: placeholder ? 'transparent' : backgroundColor, width: width, height: height ? height : 'auto', borderRadius: radius, paddingLeft: padding }"
-		@tap="handleClick"
-	>
-		<image
-			class="zx-lazyload__img"
+		@tap="handleClick">
+		<image class="zx-lazyload__img"
 			:class="{ 'zx-img__hidden': !placeholder && fadeShow && !show, 'zx-img__appear': show && !placeholder && fadeShow }"
 			:style="{ height: height === 'auto' ? false : height, borderRadius: radius }"
-			:src="show ? src + srcParams : placeholder"
-			:mode="mode"
-			:lazy-load="nativeLazyLoad"
-			:fade-show="fadeShow"
-			:webp="webp"
-			:show-menu-by-longpress="showMenuByLongpress"
-			:draggable="draggable"
-			@load="load"
-			@error="error"
-			:id="elId"
-		></image>
+			:src="show ? src + srcParams : placeholder" :mode="mode" :lazy-load="nativeLazyLoad" :fade-show="fadeShow"
+			:webp="webp" :show-menu-by-longpress="showMenuByLongpress" :draggable="draggable" @load="load"
+			@error="error" :id="elId"></image>
 		<slot></slot>
 	</view>
 </template>
@@ -216,7 +205,7 @@ const initObserver = () => {
 			observeAll: true,
 			nativeMode: true
 		});
-		
+
 		observer.value.relativeToViewport({
 			bottom: Number(props.bottom) || 50
 		}).observe(element, (res) => {

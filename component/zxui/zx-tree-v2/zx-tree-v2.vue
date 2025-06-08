@@ -1,25 +1,11 @@
 <template>
-  <scroll-view
-    :scroll-y="virtual"
-    :style="{ maxHeight: height ? height + 'px' : 'auto', overflow: 'auto' }"
-    @scroll="onScroll"
-    class="zx-tree-v2"
-  >
+  <scroll-view :scroll-y="virtual" :style="{ maxHeight: height ? height + 'px' : 'auto', overflow: 'auto' }"
+    @scroll="onScroll" class="zx-tree-v2">
     <template v-for="(node, index) in visibleData" :key="getNodeKey(node, index)">
-      <TreeNode
-        :node="node"
-        :props="props"
-        :level="1"
-        :show-checkbox="showCheckbox"
-        :checked-keys="checkedKeys"
-        :disabled-keys="disabledKeys"
-        :expanded-keys="expandedKeys"
-        :render-content="renderContent"
-        @node-click="onNodeClick"
-        @check-change="onCheckChange"
-        @toggle-expand="toggleExpand"
-        @toggle-check="toggleCheck"
-      />
+      <TreeNode :node="node" :props="props" :level="1" :show-checkbox="showCheckbox" :checked-keys="checkedKeys"
+        :disabled-keys="disabledKeys" :expanded-keys="expandedKeys" :render-content="renderContent"
+        @node-click="onNodeClick" @check-change="onCheckChange" @toggle-expand="toggleExpand"
+        @toggle-check="toggleCheck" />
     </template>
   </scroll-view>
 </template>

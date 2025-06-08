@@ -1,97 +1,56 @@
 <template>
-  <div
-    :class="[
-      'zx-input-tag',
-      `zx-input-tag--${size}`,
-      {
-        'zx-input-tag--disabled': disabled,
-        'zx-input-tag--readonly': readonly,
-        'zx-input-tag--focus': focused
-      }
-    ]"
-    @click="focusInput"
-  >
+  <view :class="[
+    'zx-input-tag',
+    `zx-input-tag--${size}`,
+    {
+      'zx-input-tag--disabled': disabled,
+      'zx-input-tag--readonly': readonly,
+      'zx-input-tag--focus': focused
+    }
+  ]" @click="focusInput">
     <!-- 前缀插槽 -->
-    <div v-if="$slots.prefix" class="zx-input-tag__prefix">
+    <view v-if="$slots.prefix" class="zx-input-tag__prefix">
       <slot name="prefix" />
-    </div>
+    </view>
 
     <!-- 标签容器 -->
-    <div class="zx-input-tag__tags" ref="tagsContainer">
-      <div
-        v-for="(tag, index) in modelValue"
-        :key="`tag-${index}`"
-        :class="[
-          'zx-input-tag__tag',
-          `zx-input-tag__tag--${tagType}`,
-          `zx-input-tag__tag--${tagEffect}`,
-          {
-            'zx-input-tag__tag--dragging': dragging === index
-          }
-        ]"
-        :draggable="draggable && !disabled && !readonly"
-        @dragstart="handleDragStart(index, $event)"
-        @dragover.prevent
-        @drop="handleDrop(index, $event)"
-        @dragend="handleDragEnd"
-      >
+    <view class="zx-input-tag__tags" ref="tagsContainer">
+      <view v-for="(tag, index) in modelValue" :key="`tag-${index}`" :class="[
+        'zx-input-tag__tag',
+        `zx-input-tag__tag--${tagType}`,
+        `zx-input-tag__tag--${tagEffect}`,
+        {
+          'zx-input-tag__tag--dragging': dragging === index
+        }
+      ]" :draggable="draggable && !disabled && !readonly" @dragstart="handleDragStart(index, $event)" @dragover.prevent
+        @drop="handleDrop(index, $event)" @dragend="handleDragEnd">
         <slot name="tag" :value="tag" :index="index">
-          <span class="zx-input-tag__tag-text">{{ tag }}</span>
+          <text class="zx-input-tag__tag-text">{{ tag }}</text>
         </slot>
-        <span
-          v-if="!disabled && !readonly"
-          class="zx-input-tag__tag-close"
-          @click.stop="removeTag(index)"
-        >
-          ×
-        </span>
-      </div>
+        <zx-icon v-if="!disabled && !readonly" name="close" class="zx-input-tag__tag-close"
+          @click.stop="removeTag(index)" />
+      </view>
 
       <!-- 输入框 -->
-      <input
-        ref="inputRef"
-        v-model="inputValue"
-        :class="['zx-input-tag__input']"
-        :disabled="disabled"
-        :readonly="readonly"
-        :placeholder="shouldShowPlaceholder ? placeholder : ''"
-        :maxlength="maxlength"
-        :minlength="minlength"
-        :autocomplete="autocomplete"
-        :aria-label="ariaLabel"
-        :id="id"
-        :tabindex="tabindex"
-        :autofocus="autofocus"
-        @input="handleInput"
-        @keydown="handleKeydown"
-        @focus="handleFocus"
-        @blur="handleBlur"
-        @compositionstart="handleCompositionStart"
-        @compositionend="handleCompositionEnd"
-      />
-    </div>
+      <zx-input ref="inputRef" v-model="inputValue" :class="['zx-input-tag__input']" :disabled="disabled"
+        :readonly="readonly" :placeholder="shouldShowPlaceholder ? placeholder : ''" :maxlength="maxlength"
+        :minlength="minlength" :autocomplete="autocomplete" :aria-label="ariaLabel" :id="id" :tabindex="tabindex"
+        :autofocus="autofocus" @input="handleInput" @keydown="handleKeydown" @focus="handleFocus" @blur="handleBlur"
+        @compositionstart="handleCompositionStart" @compositionend="handleCompositionEnd" />
+    </view>
 
     <!-- 后缀插槽和清除按钮 -->
-    <div v-if="$slots.suffix || showClearButton" class="zx-input-tag__suffix">
-      <span
-        v-if="showClearButton"
-        class="zx-input-tag__clear"
-        @click="handleClear"
-      >
-        ×
-      </span>
+    <view v-if="$slots.suffix || showClearButton" class="zx-input-tag__suffix">
+      <zx-icon v-if="showClearButton" name="close" class="zx-input-tag__clear" @click="handleClear" />
       <slot name="suffix" />
-    </div>
-  </div>
+    </view>
+  </view>
 </template>
 
 <script setup>
 import { ref, computed, nextTick } from 'vue'
-
-// 定义组件名称
-defineOptions({
-  name: 'ZxInputTag'
-})
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+import zxInput from '@tanzhenxing/zx-input/zx-input.vue'
 
 // 定义 props
 const props = defineProps({
@@ -242,7 +201,7 @@ const canAddTag = computed(() => {
 // 添加标签
 const addTag = (value) => {
   if (!value || !value.trim()) return
-  
+
   const trimmedValue = value.trim()
   if (props.modelValue.includes(trimmedValue)) return
   if (!canAddTag.value) return
@@ -257,7 +216,7 @@ const addTag = (value) => {
 // 移除标签
 const removeTag = (index) => {
   if (props.disabled || props.readonly) return
-  
+
   const removedTag = props.modelValue[index]
   const newTags = props.modelValue.filter((_, i) => i !== index)
   emit('update:modelValue', newTags)
@@ -270,7 +229,7 @@ const handleInput = (event) => {
   const value = event.target.value
   inputValue.value = value
   emit('input', value)
-  
+
   // 检查分隔符
   if (props.delimiter && !isComposing.value) {
     checkDelimiter(value)
@@ -283,7 +242,7 @@ const checkDelimiter = (value) => {
   if (typeof delimiter === 'string') {
     delimiter = new RegExp(delimiter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
   }
-  
+
   if (delimiter.test(value)) {
     const parts = value.split(delimiter)
     if (parts.length > 1) {
@@ -298,9 +257,9 @@ const checkDelimiter = (value) => {
 // 处理按键
 const handleKeydown = (event) => {
   if (isComposing.value) return
-  
+
   const { key } = event
-  
+
   // 触发添加标签
   if (key === props.trigger) {
     event.preventDefault()
@@ -309,7 +268,7 @@ const handleKeydown = (event) => {
     }
     return
   }
-  
+
   // 退格删除最后一个标签
   if (key === 'Backspace' && !inputValue.value && props.modelValue.length > 0) {
     removeTag(props.modelValue.length - 1)
@@ -326,11 +285,11 @@ const handleFocus = (event) => {
 // 处理失去焦点
 const handleBlur = (event) => {
   focused.value = false
-  
+
   if (props.saveOnBlur && inputValue.value.trim()) {
     addTag(inputValue.value)
   }
-  
+
   emit('blur', event)
 }
 
@@ -364,7 +323,7 @@ const focusInput = () => {
 // 拖拽处理
 const handleDragStart = (index, event) => {
   if (!props.draggable || props.disabled || props.readonly) return
-  
+
   dragging.value = index
   event.dataTransfer.setData('text/plain', index.toString())
 }
@@ -372,13 +331,13 @@ const handleDragStart = (index, event) => {
 const handleDrop = (targetIndex, event) => {
   event.preventDefault()
   const sourceIndex = parseInt(event.dataTransfer.getData('text/plain'))
-  
+
   if (sourceIndex === targetIndex) return
-  
+
   const newTags = [...props.modelValue]
   const draggedTag = newTags.splice(sourceIndex, 1)[0]
   newTags.splice(targetIndex, 0, draggedTag)
-  
+
   emit('update:modelValue', newTags)
   emit('change', newTags)
 }

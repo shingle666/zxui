@@ -2,23 +2,13 @@
   <view class="zx-lottoroll" :style="containerStyle">
     <!-- 老虎机滚轮容器 -->
     <view class="zx-lottoroll__container">
-      <view 
-        v-for="(item, index) in prizeList" 
-        :key="index"
-        class="zx-lottoroll__item"
-        :class="{ 'zx-lottoroll__item--active': currentIndex === index }"
-        :style="getItemStyle(index)"
-      >
-        <image 
-          v-if="item.imagePath" 
-          :src="item.imagePath" 
-          class="zx-lottoroll__image"
-          mode="aspectFit"
-        />
+      <view v-for="(item, index) in prizeList" :key="index" class="zx-lottoroll__item"
+        :class="{ 'zx-lottoroll__item--active': currentIndex === index }" :style="getItemStyle(index)">
+        <image v-if="item.imagePath" :src="item.imagePath" class="zx-lottoroll__image" mode="aspectFit" />
         <view v-if="item.text" class="zx-lottoroll__text">{{ item.text }}</view>
       </view>
     </view>
-    
+
     <!-- 指示器 -->
     <view class="zx-lottoroll__indicator" :style="indicatorStyle"></view>
   </view>
@@ -26,11 +16,6 @@
 
 <script setup>
 import { ref, computed, watch, nextTick } from 'vue'
-
-// 组件名称
-defineOptions({
-  name: 'zx-lottoroll'
-})
 
 // Props定义
 const props = defineProps({
@@ -112,7 +97,7 @@ const indicatorStyle = computed(() => ({
 const getItemStyle = (index) => {
   const itemHeightNum = parseInt(props.itemHeight)
   const transform = `translateY(${translateY.value}px)`
-  
+
   return {
     height: props.itemHeight,
     transform,
@@ -123,38 +108,38 @@ const getItemStyle = (index) => {
 // 开始转动
 const start = () => {
   if (isRolling.value || props.prizeList.length === 0) return
-  
+
   isRolling.value = true
   emit('start-turns')
-  
+
   // 计算目标索引
   let targetIndex = props.prizeIndex
   if (targetIndex < 0 || targetIndex >= props.prizeList.length) {
     targetIndex = Math.floor(Math.random() * props.prizeList.length)
   }
-  
+
   // 计算转动距离
   const itemHeightNum = parseInt(props.itemHeight)
   const containerHeightNum = parseInt(props.height)
   const visibleItems = Math.floor(containerHeightNum / itemHeightNum)
   const centerOffset = Math.floor(visibleItems / 2)
-  
+
   // 计算总转动距离：基础圈数 + 目标位置
   const totalItems = props.prizeList.length
   const baseDistance = props.turnsNumber * totalItems * itemHeightNum
   const targetDistance = (targetIndex + centerOffset) * itemHeightNum
   const finalDistance = baseDistance + targetDistance
-  
+
   // 设置动画
   animationDuration.value = props.turnsTime
   translateY.value = -finalDistance
-  
+
   // 动画结束后的处理
   setTimeout(() => {
     currentIndex.value = targetIndex
     isRolling.value = false
     animationDuration.value = 0
-    
+
     // 重置位置到目标位置（无动画）
     nextTick(() => {
       translateY.value = -(targetIndex + centerOffset) * itemHeightNum
@@ -166,7 +151,7 @@ const start = () => {
 // 重置
 const reset = () => {
   if (isRolling.value) return
-  
+
   isRolling.value = false
   currentIndex.value = 0
   translateY.value = 0
@@ -185,42 +170,42 @@ defineExpose({
   position: relative;
   border-radius: 8px;
   overflow: hidden;
-  
+
   &__container {
     position: relative;
     height: 100%;
     overflow: hidden;
   }
-  
+
   &__item {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid #f0f0f0;
-    
+
     &:last-child {
       border-bottom: none;
     }
-    
+
     &--active {
       background-color: rgba(255, 107, 107, 0.1);
     }
   }
-  
+
   &__image {
     width: 40px;
     height: 40px;
     margin-bottom: 4px;
   }
-  
+
   &__text {
     font-size: 12px;
     color: #333;
     text-align: center;
     line-height: 1.2;
   }
-  
+
   &__indicator {
     position: absolute;
     top: 50%;
@@ -232,7 +217,7 @@ defineExpose({
     border-left: 12px solid #ff6b6b;
     transform: translateY(-50%);
     z-index: 10;
-    
+
     &::after {
       content: '';
       position: absolute;

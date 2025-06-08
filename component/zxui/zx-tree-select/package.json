@@ -1,0 +1,18 @@
+{
+  "name": "@tanzhenxing/zx-tree-select",
+  "version": "1.0.1",
+  "description": "用于从一组相关联的数据集合中进行选择。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "树形",
+    "选择",
+    "数据",
+    "集合"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "type": "commonjs"
+}

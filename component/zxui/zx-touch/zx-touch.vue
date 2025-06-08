@@ -1,11 +1,6 @@
 <template>
-	<view
-		@touchstart="onTouchStart"
-		@touchmove="onTouchMove"
-		@touchend="onTouchEnd"
-		@touchcancel="onTouchCancel"
-		:style="{ width: '100%', height: '100%' }"
-	>
+	<view @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd" @touchcancel="onTouchCancel"
+		:style="{ width: '100%', height: '100%' }">
 		<slot></slot>
 	</view>
 </template>

@@ -1,20 +1,20 @@
 <template>
 	<view class="zx-landscape__box">
-		<view class="zx-landscape__inner" :style="{zIndex:zIndex}" v-if="show">
+		<view class="zx-landscape__inner" :style="{ zIndex: zIndex }" v-if="show">
 			<slot></slot>
-			<view class="zx-icon__close"
-				:style="iconStyle"
-				:class="{'zx-icon__bottom':positionNum===1}" v-if="closeIcon" @tap.stop="onClose">
-				<icon type="clear" :color="iconColor" :size="iconSize"></icon>
+			<view class="zx-icon__close" :style="iconStyle" :class="{ 'zx-icon__bottom': positionNum === 1 }"
+				v-if="closeIcon" @tap.stop="onClose">
+				<zx-icon name="close" :color="iconColor" :size="iconSize"></zx-icon>
 			</view>
 		</view>
-		<view :style="{backgroundColor:maskBgColor,zIndex:maskZIndex}" @tap.stop="onMaskClose" class="zx-landscape__mask"
-			:class="{'zx-mask_hidden':!show}" v-if="mask"></view>
+		<view :style="{ backgroundColor: maskBgColor, zIndex: maskZIndex }" @tap.stop="onMaskClose"
+			class="zx-landscape__mask" :class="{ 'zx-mask_hidden': !show }" v-if="mask"></view>
 	</view>
 </template>
 
 <script setup>
 import { computed } from 'vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
 
 const props = defineProps({
 	//是否显示
@@ -106,8 +106,8 @@ const iconStyle = computed(() => {
 			positionNum.value === 3
 				? props.iconLeft
 				: positionNum.value === 1
-				? '50%'
-				: 'auto',
+					? '50%'
+					: 'auto',
 		right: positionNum.value === 2 ? props.iconRight : 'auto',
 	};
 });
@@ -123,53 +123,53 @@ function onMaskClose() {
 </script>
 
 <style scoped>
-	.zx-landscape__box {
-		width: 100%;
-		box-sizing: border-box;
-		overflow: hidden;
-	}
+.zx-landscape__box {
+	width: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+}
 
-	.zx-landscape__inner {
-		max-width: 100%;
-		position: fixed;
-		box-sizing: border-box;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		flex-direction: column;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
-	}
+.zx-landscape__inner {
+	max-width: 100%;
+	position: fixed;
+	box-sizing: border-box;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
 
-	.zx-icon__close {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		position: absolute;
-		z-index: 10;
-	}
+.zx-icon__close {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	position: absolute;
+	z-index: 10;
+}
 
-	.zx-icon__bottom {
-		left: 50% !important;
-		transform: translateX(-50%);
-	}
+.zx-icon__bottom {
+	left: 50% !important;
+	transform: translateX(-50%);
+}
 
-	.zx-landscape__mask {
-		position: fixed;
-		z-index: 1000;
-		top: 0;
-		right: 0;
-		left: 0;
-		bottom: 0;
-		opacity: 1;
-		transform: scale3d(1, 1, 1);
-		transition: all .2s ease-in
-	}
+.zx-landscape__mask {
+	position: fixed;
+	z-index: 1000;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	opacity: 1;
+	transform: scale3d(1, 1, 1);
+	transition: all .2s ease-in
+}
 
-	.zx-mask_hidden {
-		opacity: 0 !important;
-		transform: scale3d(1, 1, 0) !important;
-	}
+.zx-mask_hidden {
+	opacity: 0 !important;
+	transform: scale3d(1, 1, 0) !important;
+}
 </style>

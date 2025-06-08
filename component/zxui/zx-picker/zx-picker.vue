@@ -1,146 +1,76 @@
 <template>
 	<view class="zx-picker-container">
 		<!-- 普通选择器 -->
-		<picker
-			v-if="mode === 'selector'"
-			:value="value"
-			:range="range"
-			:range-key="rangeKey"
-			:disabled="disabled"
-			:selector-type="selectorType"
-			@change="onChange"
-			@cancel="onCancel"
-		>
+		<picker v-if="mode === 'selector'" :value="value" :range="range" :range-key="rangeKey" :disabled="disabled"
+			:selector-type="selectorType" @change="onChange" @cancel="onCancel">
 			<slot></slot>
 		</picker>
-		
+
 		<!-- 多列选择器 -->
-		<picker
-			v-else-if="mode === 'multiSelector'"
-			:value="value"
-			:range="range"
-			:range-key="rangeKey"
-			:disabled="disabled"
-			mode="multiSelector"
-			@change="onChange"
-			@columnchange="onColumnChange"
-			@cancel="onCancel"
-		>
+		<picker v-else-if="mode === 'multiSelector'" :value="value" :range="range" :range-key="rangeKey"
+			:disabled="disabled" mode="multiSelector" @change="onChange" @columnchange="onColumnChange"
+			@cancel="onCancel">
 			<slot></slot>
 		</picker>
-		
+
 		<!-- 时间选择器 -->
-		<picker
-			v-else-if="mode === 'time'"
-			mode="time"
-			:value="value"
-			:start="start"
-			:end="end"
-			:disabled="disabled"
-			@change="onChange"
-			@cancel="onCancel"
-		>
+		<picker v-else-if="mode === 'time'" mode="time" :value="value" :start="start" :end="end" :disabled="disabled"
+			@change="onChange" @cancel="onCancel">
 			<slot></slot>
 		</picker>
-		
+
 		<!-- 日期选择器 -->
-		<picker
-			v-else-if="mode === 'date'"
-			mode="date"
-			:value="value"
-			:start="start"
-			:end="end"
-			:fields="fields"
-			:disabled="disabled"
-			@change="onChange"
-			@cancel="onCancel"
-		>
+		<picker v-else-if="mode === 'date'" mode="date" :value="value" :start="start" :end="end" :fields="fields"
+			:disabled="disabled" @change="onChange" @cancel="onCancel">
 			<slot></slot>
 		</picker>
-		
+
 		<!-- 省市区选择器 -->
-		<picker
-			v-else-if="mode === 'region'"
-			mode="region"
-			:value="value"
-			:custom-item="customItem"
-			:disabled="disabled"
-			@change="onChange"
-			@cancel="onCancel"
-		>
+		<picker v-else-if="mode === 'region'" mode="region" :value="value" :custom-item="customItem"
+			:disabled="disabled" @change="onChange" @cancel="onCancel">
 			<slot></slot>
 		</picker>
-		
+
 		<!-- 自定义选择器弹窗 -->
-		<view 
-			v-if="customMode && displayCustomPicker"
-			class="zx-picker-mask" 
-			:class="{ 'zx-picker-mask--show': displayCustomPicker }" 
-			@click="onClickMask"
-		></view>
-		<view 
-			v-if="customMode && displayCustomPicker"
-			class="zx-picker" 
-			:class="{ 'zx-picker--show': displayCustomPicker }" 
-			:style="{ bottom: displayCustomPicker ? 0 : `-${pickerHeight}px` }"
-		>
+		<view v-if="customMode && displayCustomPicker" class="zx-picker-mask"
+			:class="{ 'zx-picker-mask--show': displayCustomPicker }" @click="onClickMask"></view>
+		<view v-if="customMode && displayCustomPicker" class="zx-picker"
+			:class="{ 'zx-picker--show': displayCustomPicker }"
+			:style="{ bottom: displayCustomPicker ? 0 : `-${pickerHeight}px` }">
 			<!-- 工具栏 -->
 			<view v-if="showToolbar" class="zx-picker__toolbar">
-				<view 
-					class="zx-picker__toolbar__cancel" 
-					:style="{ color: cancelColor }" 
-					@click="onCancelCustom"
-				>{{ cancelText }}</view>
+				<view class="zx-picker__toolbar__cancel" :style="{ color: cancelColor }" @click="onCancelCustom">{{
+					cancelText }}</view>
 				<view class="zx-picker__toolbar__title">{{ title }}</view>
-				<view 
-					class="zx-picker__toolbar__confirm" 
-					:style="{ color: confirmColor }" 
-					@click="onConfirmCustom"
-				>{{ confirmText }}</view>
+				<view class="zx-picker__toolbar__confirm" :style="{ color: confirmColor }" @click="onConfirmCustom">{{
+					confirmText }}</view>
 			</view>
-			
+
 			<!-- 自定义选择器视图 -->
-			<picker-view
-				class="zx-picker__view"
-				:value="customPickerValue"
-				:indicator-style="indicatorStyle"
-				:mask-style="maskStyle"
-				@change="onCustomPickerChange"
-				:immediate-change="immediateChange"
-			>
+			<picker-view class="zx-picker__view" :value="customPickerValue" :indicator-style="indicatorStyle"
+				:mask-style="maskStyle" @change="onCustomPickerChange" :immediate-change="immediateChange">
 				<block v-if="mode === 'customSelector'">
 					<picker-view-column>
-						<view
-							v-for="(item, index) in customRange"
-							:key="index"
-							class="zx-picker__item"
-						>
+						<view v-for="(item, index) in customRange" :key="index" class="zx-picker__item">
 							{{ getDisplayValue(item, rangeKey) }}
 						</view>
 					</picker-view-column>
 				</block>
-				
+
 				<block v-else-if="mode === 'customTime'">
 					<picker-view-column>
-						<view
-							v-for="(hour, index) in hours"
-							:key="index"
-							class="zx-picker__item"
-						>{{ hour }}时</view>
+						<view v-for="(hour, index) in hours" :key="index" class="zx-picker__item">{{ hour }}时</view>
 					</picker-view-column>
 					<picker-view-column>
-						<view
-							v-for="(minute, index) in minutes"
-							:key="index"
-							class="zx-picker__item"
-						>{{ minute }}分</view>
+						<view v-for="(minute, index) in minutes" :key="index" class="zx-picker__item">{{ minute }}分
+						</view>
 					</picker-view-column>
 				</block>
 			</picker-view>
-			
+
 			<!-- 加载中 -->
 			<view v-if="loading" class="zx-picker__loading">
-				<view class="zx-picker__loading-icon"></view>
+				<zx-loading :show="true" type="circular" size="30px" color="#999"></zx-loading>
 			</view>
 		</view>
 	</view>
@@ -167,6 +97,7 @@
  * @event {Function} cancel - 取消选择时触发
  */
 import { ref, computed, watch, onMounted } from 'vue';
+import zxLoading from '@tanzhenxing/zx-loading/zx-loading.vue';
 
 // Props 定义
 const props = defineProps({
@@ -203,7 +134,7 @@ const props = defineProps({
 		type: String,
 		default: 'auto'
 	},
-	
+
 	// 自定义模式下是否显示
 	show: {
 		type: Boolean,
@@ -254,7 +185,7 @@ const props = defineProps({
 		type: Boolean,
 		default: false
 	},
-	
+
 	// 时间选择器相关
 	start: {
 		type: String,
@@ -264,7 +195,7 @@ const props = defineProps({
 		type: String,
 		default: ''
 	},
-	
+
 	// 日期选择器相关
 	fields: {
 		type: String,
@@ -273,7 +204,7 @@ const props = defineProps({
 			return ['year', 'month', 'day'].includes(value);
 		}
 	},
-	
+
 	// 省市区选择器相关
 	customItem: {
 		type: String,
@@ -338,13 +269,13 @@ const initCustomPicker = () => {
 // 初始化自定义时间选择器
 const initCustomTime = () => {
 	// 生成小时和分钟数据
-	hours.value = Array.from({length: 24}, (_, i) => i < 10 ? `0${i}` : String(i));
-	minutes.value = Array.from({length: 60}, (_, i) => i < 10 ? `0${i}` : String(i));
-	
+	hours.value = Array.from({ length: 24 }, (_, i) => i < 10 ? `0${i}` : String(i));
+	minutes.value = Array.from({ length: 60 }, (_, i) => i < 10 ? `0${i}` : String(i));
+
 	// 设置默认值
 	let hourIndex = 0;
 	let minuteIndex = 0;
-	
+
 	if (typeof props.value === 'string' && props.value) {
 		const [hour, minute] = props.value.split(':');
 		hourIndex = parseInt(hour) || 0;
@@ -354,7 +285,7 @@ const initCustomTime = () => {
 		hourIndex = now.getHours();
 		minuteIndex = now.getMinutes();
 	}
-	
+
 	customPickerValue.value = [hourIndex, minuteIndex];
 };
 
@@ -374,14 +305,14 @@ const onChange = (e) => {
 			value: e.detail.value
 		}
 	};
-	
+
 	// 针对不同模式进行处理
 	if (props.mode === 'selector') {
 		// 记录当前选中项的值
 		const selectedIndex = e.detail.value;
 		const selectedValue = props.range[selectedIndex];
 		eventObj.detail.selectedValue = selectedValue;
-		
+
 		if (props.rangeKey && typeof selectedValue === 'object') {
 			eventObj.detail.selectedLabel = selectedValue[props.rangeKey];
 		} else {
@@ -393,19 +324,19 @@ const onChange = (e) => {
 		const selectedValues = valueArray.map((value, index) => props.range[index][value]);
 		eventObj.detail.selectedValues = selectedValues;
 	}
-	
+
 	emit('change', eventObj);
 };
 
 // 多列选择器某一列变化
 const onColumnChange = (e) => {
 	const { column, value } = e.detail;
-	
+
 	// 更新多列选择器值记录
 	if (Array.isArray(props.range) && Array.isArray(props.range[column])) {
 		multiSelectorValues.value[column] = props.range[column][value];
 	}
-	
+
 	emit('columnchange', e);
 };
 
@@ -430,7 +361,7 @@ const onCancelCustom = () => {
 // 自定义选择器确认
 const onConfirmCustom = () => {
 	let result;
-	
+
 	if (props.mode === 'customSelector') {
 		const index = customPickerValue.value[0];
 		result = {
@@ -439,7 +370,7 @@ const onConfirmCustom = () => {
 				value: index
 			}
 		};
-		
+
 		// 添加选中项的值
 		const selectedValue = customRange.value[index];
 		if (props.rangeKey && typeof selectedValue === 'object') {
@@ -452,7 +383,7 @@ const onConfirmCustom = () => {
 		const hour = hours.value[customPickerValue.value[0]];
 		const minute = minutes.value[customPickerValue.value[1]];
 		const timeStr = `${hour}:${minute}`;
-		
+
 		result = {
 			value: timeStr,
 			detail: {
@@ -460,7 +391,7 @@ const onConfirmCustom = () => {
 			}
 		};
 	}
-	
+
 	displayCustomPicker.value = false;
 	emit('change', result);
 };
@@ -468,15 +399,15 @@ const onConfirmCustom = () => {
 // 自定义选择器值变化
 const onCustomPickerChange = (e) => {
 	customPickerValue.value = e.detail.value;
-	
+
 	let result = { detail: { value: customPickerValue.value } };
-	
+
 	if (props.mode === 'customTime') {
 		const hour = hours.value[customPickerValue.value[0]];
 		const minute = minutes.value[customPickerValue.value[1]];
 		result.detail.time = `${hour}:${minute}`;
 	}
-	
+
 	emit('pickerchange', result);
 };
 </script>
@@ -498,7 +429,7 @@ const onCustomPickerChange = (e) => {
 	opacity: 0;
 	visibility: hidden;
 	transition: all 0.3s;
-	
+
 	&--show {
 		opacity: 1;
 		visibility: visible;
@@ -514,11 +445,11 @@ const onCustomPickerChange = (e) => {
 	z-index: 1000;
 	transition: all 0.3s;
 	transform: translateY(100%);
-	
+
 	&--show {
 		transform: translateY(0);
 	}
-	
+
 	&__toolbar {
 		display: flex;
 		justify-content: space-between;
@@ -527,7 +458,7 @@ const onCustomPickerChange = (e) => {
 		padding: 0 15px;
 		background-color: #f8f8f8;
 		position: relative;
-		
+
 		&::after {
 			content: '';
 			position: absolute;
@@ -538,24 +469,25 @@ const onCustomPickerChange = (e) => {
 			background-color: #eaeaea;
 			transform: scaleY(0.5);
 		}
-		
-		&__cancel, &__confirm {
+
+		&__cancel,
+		&__confirm {
 			font-size: 14px;
 			padding: 8px;
 		}
-		
+
 		&__title {
 			font-size: 16px;
 			font-weight: 500;
 			color: #333;
 		}
 	}
-	
+
 	&__view {
 		width: 100%;
 		height: 220px;
 	}
-	
+
 	&__item {
 		display: flex;
 		justify-content: center;
@@ -565,7 +497,7 @@ const onCustomPickerChange = (e) => {
 		font-size: 16px;
 		color: #333;
 	}
-	
+
 	&__loading {
 		position: absolute;
 		top: 0;
@@ -576,7 +508,7 @@ const onCustomPickerChange = (e) => {
 		justify-content: center;
 		align-items: center;
 		background-color: rgba(255, 255, 255, 0.8);
-		
+
 		&-icon {
 			width: 30px;
 			height: 30px;
@@ -592,6 +524,7 @@ const onCustomPickerChange = (e) => {
 	from {
 		transform: rotate(0deg);
 	}
+
 	to {
 		transform: rotate(360deg);
 	}

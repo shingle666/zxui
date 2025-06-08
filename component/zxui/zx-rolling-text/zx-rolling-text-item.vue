@@ -1,16 +1,9 @@
 <template>
   <view class="zx-rolling-text-item" :style="rootStyle">
-    <view
-      class="zx-rolling-text-item__box"
-      :class="{ 'zx-rolling-text-item__box--animate': isStart }"
-      :style="boxStyle"
-    >
-      <view
-        v-for="(figure, index) in displayFigureArr"
-        :key="index"
-        class="zx-rolling-text-item__item"
-        :style="itemStyleArr[index]"
-      >
+    <view class="zx-rolling-text-item__box" :class="{ 'zx-rolling-text-item__box--animate': isStart }"
+      :style="boxStyle">
+      <view v-for="(figure, index) in displayFigureArr" :key="index" class="zx-rolling-text-item__item"
+        :style="itemStyleArr[index]">
         {{ figure }}
       </view>
     </view>
@@ -79,15 +72,15 @@ const boxStyle = computed(() => {
   let initialTranslateY = 0;
   let targetTranslateY = 0;
 
-  const totalHeight = itemHeightPx.value * (displayFigureArr.value.length -1) ; // 总滚动高度
+  const totalHeight = itemHeightPx.value * (displayFigureArr.value.length - 1); // 总滚动高度
 
   if (props.direction === 'down') {
     // 向下滚动：初始在顶部 (0)，目标在底部 (负值，因为是向上移动容器内容)
-    initialTranslateY = props.randomOffset ? `-${Math.floor(Math.random() * (displayFigureArr.value.length -1 )) * itemHeightPx.value}px` : '0px';
+    initialTranslateY = props.randomOffset ? `-${Math.floor(Math.random() * (displayFigureArr.value.length - 1)) * itemHeightPx.value}px` : '0px';
     targetTranslateY = `-${totalHeight}px`;
   } else {
     // 向上滚动：初始在底部，目标在顶部
-    initialTranslateY = props.randomOffset ? `-${Math.floor(Math.random() * (displayFigureArr.value.length -1 )) * itemHeightPx.value}px` :`-${totalHeight}px`;
+    initialTranslateY = props.randomOffset ? `-${Math.floor(Math.random() * (displayFigureArr.value.length - 1)) * itemHeightPx.value}px` : `-${totalHeight}px`;
     targetTranslateY = '0px';
   }
 

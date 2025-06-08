@@ -1,26 +1,16 @@
 <template>
 	<view class="zx-turntable" :animation="animationData">
-		<view 
-            class="zx-turntable-item" 
-            v-for="(item, index) in rewardNames" 
-            :key="index" 
-            :style="{ transform: 'rotate(' + (initialRotation - averageRotate * index) + 'deg)' }"
-        >
-			<view 
-                class="zx-turntable-inner" 
-                :style="{ 
-                    transform: 'translateX(-300rpx) rotate(' + averageRotate + 'deg)', 
-                    background: safeRewardBGColors[index] 
-                }"
-            >
-				<text
-					class="zx-turntable-text"
-					:style="{ 
-                        transform: 'translateY(120rpx) translateX(' + textTrX + ') rotate(' + textRotate + ')', 
-                        fontSize: fontSize, 
-                        color: safeRewardColors[index] 
-                    }"
-				>
+		<view class="zx-turntable-item" v-for="(item, index) in rewardNames" :key="index"
+			:style="{ transform: 'rotate(' + (initialRotation - averageRotate * index) + 'deg)' }">
+			<view class="zx-turntable-inner" :style="{
+				transform: 'translateX(-300rpx) rotate(' + averageRotate + 'deg)',
+				background: safeRewardBGColors[index]
+			}">
+				<text class="zx-turntable-text" :style="{
+					transform: 'translateY(120rpx) translateX(' + textTrX + ') rotate(' + textRotate + ')',
+					fontSize: fontSize,
+					color: safeRewardColors[index]
+				}">
 					{{ item }}
 				</text>
 			</view>
@@ -51,16 +41,16 @@ const props = defineProps({
 		type: String,
 		default: '32rpx'
 	},
-    // 转动圈数
-    turns: {
-        type: Number,
-        default: 6
-    },
-    // 转动时间 (ms)
-    duration: {
-        type: Number,
-        default: 5000
-    }
+	// 转动圈数
+	turns: {
+		type: Number,
+		default: 6
+	},
+	// 转动时间 (ms)
+	duration: {
+		type: Number,
+		default: 5000
+	}
 });
 
 const emit = defineEmits(['end']);
@@ -104,26 +94,26 @@ const textRotate = computed(() => textPosition.value.rotation);
 
 // Default colors if not provided or insufficient
 const getSafeColor = (colorsArray, index, defaultColor) => {
-    return colorsArray && colorsArray.length > index ? colorsArray[index] : defaultColor;
+	return colorsArray && colorsArray.length > index ? colorsArray[index] : defaultColor;
 };
 
 const safeRewardBGColors = computed(() => {
-    const defaultColors = ['#FFDF88', '#FFF1C4', '#FFDF88', '#FFF1C4', '#FFDF88', '#FFF1C4', '#FFDF88', '#FFF1C4'];
-    if (numRewards.value === 0) return [];
-    return props.rewardNames.map((_, i) => getSafeColor(props.rewardBGColors, i, defaultColors[i % defaultColors.length]));
+	const defaultColors = ['#FFDF88', '#FFF1C4', '#FFDF88', '#FFF1C4', '#FFDF88', '#FFF1C4', '#FFDF88', '#FFF1C4'];
+	if (numRewards.value === 0) return [];
+	return props.rewardNames.map((_, i) => getSafeColor(props.rewardBGColors, i, defaultColors[i % defaultColors.length]));
 });
 
 const safeRewardColors = computed(() => {
-    const defaultColors = ['#C70000', '#8C0000', '#C70000', '#8C0000', '#C70000', '#8C0000', '#C70000', '#8C0000'];
-    if (numRewards.value === 0) return [];
-    return props.rewardNames.map((_, i) => getSafeColor(props.rewardColors, i, defaultColors[i % defaultColors.length]));
+	const defaultColors = ['#C70000', '#8C0000', '#C70000', '#8C0000', '#C70000', '#8C0000', '#C70000', '#8C0000'];
+	if (numRewards.value === 0) return [];
+	return props.rewardNames.map((_, i) => getSafeColor(props.rewardColors, i, defaultColors[i % defaultColors.length]));
 });
 
 const initTurntable = () => {
 	if (numRewards.value === 0) {
-        animationData.value = {}; // Clear animation if no rewards
-        return;
-    }
+		animationData.value = {}; // Clear animation if no rewards
+		return;
+	}
 
 	const animation = uni.createAnimation({
 		duration: 0,
@@ -143,7 +133,7 @@ const spinTo = (targetIndex) => {
 	}
 
 	isSpinning.value = true;
-	
+
 	let resetAnimation = uni.createAnimation({
 		duration: 0,
 		timingFunction: 'ease'
@@ -175,7 +165,7 @@ onMounted(() => {
 defineExpose({
 	init: initTurntable,
 	spinTo,
-    isSpinning
+	isSpinning
 });
 </script>
 
@@ -186,6 +176,7 @@ defineExpose({
 	width: 600rpx;
 	height: 600rpx;
 }
+
 .zx-turntable-item {
 	position: absolute;
 	left: 50%;

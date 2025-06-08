@@ -1,21 +1,10 @@
 <template>
 	<view class="zx-progress__box">
-		<view 
-			class="zx-progressbar__bg"
-			:style="progressBarBgStyle"
-		>
-			<view 
-				class="zx-progress__bar"
-				:class="{ 'zx-progress__bar--active': active }"
-				:style="progressBarStyle"
-			>
+		<view class="zx-progressbar__bg" :style="progressBarBgStyle">
+			<view class="zx-progress__bar" :class="{ 'zx-progress__bar--active': active }" :style="progressBarStyle">
 			</view>
 		</view>
-		<view 
-			class="zx-progress__percent"
-			:style="percentStyle" 
-			v-if="showInfo"
-		>
+		<view class="zx-progress__percent" :style="percentStyle" v-if="showInfo">
 			{{ displayPercent }}%
 		</view>
 	</view>
@@ -150,7 +139,7 @@ const animateProgress = async () => {
 
 	const targetPercent = normalizedPercent.value;
 	const startPercent = props.activeMode === 'backwards' ? 0 : currentPercent.value;
-	
+
 	if (!props.active) {
 		// 没有动画，直接设置
 		currentPercent.value = targetPercent;
@@ -172,7 +161,7 @@ const animateProgress = async () => {
 	// 开始动画
 	animating.value = true;
 	const duration = getAnimationDuration();
-	
+
 	// 设置目标值
 	await nextTick();
 	currentPercent.value = targetPercent;

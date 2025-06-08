@@ -5,12 +5,7 @@
       <!-- 发票类型选择 -->
       <zx-form-item label="发票类型" prop="type" required>
         <zx-radio-group v-model="formData.type" direction="horizontal">
-          <zx-radio 
-            v-for="item in invoiceTypes" 
-            :key="item.value" 
-            :label="item.value"
-            :disabled="item.disabled"
-          >
+          <zx-radio v-for="item in invoiceTypes" :key="item.value" :label="item.value" :disabled="item.disabled">
             {{ item.label }}
           </zx-radio>
         </zx-radio-group>
@@ -18,79 +13,32 @@
 
       <!-- 发票抬头 -->
       <zx-form-item label="发票抬头" prop="title" required>
-        <zx-input
-          v-model="formData.title"
-          placeholder="请输入发票抬头"
-          :maxlength="100"
-          clearable
-          show-word-limit
-        />
+        <zx-input v-model="formData.title" placeholder="请输入发票抬头" :maxlength="100" clearable show-word-limit />
       </zx-form-item>
 
       <!-- 纳税人识别号 -->
       <zx-form-item label="纳税人识别号" prop="taxNumber" :required="isCompanyInvoice">
-        <zx-input
-          v-model="formData.taxNumber"
-          placeholder="请输入纳税人识别号"
-          :maxlength="20"
-          clearable
-        />
+        <zx-input v-model="formData.taxNumber" placeholder="请输入纳税人识别号" :maxlength="20" clearable />
       </zx-form-item>
 
       <!-- 注册地址（企业发票时显示） -->
-      <zx-form-item 
-        v-if="isCompanyInvoice" 
-        label="注册地址" 
-        prop="address"
-      >
-        <zx-input
-          v-model="formData.address"
-          placeholder="请输入注册地址"
-          :maxlength="200"
-          clearable
-        />
+      <zx-form-item v-if="isCompanyInvoice" label="注册地址" prop="address">
+        <zx-input v-model="formData.address" placeholder="请输入注册地址" :maxlength="200" clearable />
       </zx-form-item>
 
       <!-- 注册电话（企业发票时显示） -->
-      <zx-form-item 
-        v-if="isCompanyInvoice" 
-        label="注册电话" 
-        prop="phone"
-      >
-        <zx-input
-          v-model="formData.phone"
-          placeholder="请输入注册电话"
-          :maxlength="20"
-          clearable
-        />
+      <zx-form-item v-if="isCompanyInvoice" label="注册电话" prop="phone">
+        <zx-input v-model="formData.phone" placeholder="请输入注册电话" :maxlength="20" clearable />
       </zx-form-item>
 
       <!-- 开户银行（企业发票时显示） -->
-      <zx-form-item 
-        v-if="isCompanyInvoice" 
-        label="开户银行" 
-        prop="bankName"
-      >
-        <zx-input
-          v-model="formData.bankName"
-          placeholder="请输入开户银行"
-          :maxlength="100"
-          clearable
-        />
+      <zx-form-item v-if="isCompanyInvoice" label="开户银行" prop="bankName">
+        <zx-input v-model="formData.bankName" placeholder="请输入开户银行" :maxlength="100" clearable />
       </zx-form-item>
 
       <!-- 银行账号（企业发票时显示） -->
-      <zx-form-item 
-        v-if="isCompanyInvoice" 
-        label="银行账号" 
-        prop="bankAccount"
-      >
-        <zx-input
-          v-model="formData.bankAccount"
-          placeholder="请输入银行账号"
-          :maxlength="30"
-          clearable
-        />
+      <zx-form-item v-if="isCompanyInvoice" label="银行账号" prop="bankAccount">
+        <zx-input v-model="formData.bankAccount" placeholder="请输入银行账号" :maxlength="30" clearable />
       </zx-form-item>
 
       <!-- 设为默认 -->
@@ -101,20 +49,10 @@
 
     <!-- 底部按钮 -->
     <view class="zx-invoice-title-edit__footer" v-if="!hideFooter">
-      <zx-button 
-        v-if="!hideCancel"
-        :block="true" 
-        @click="handleCancel"
-        :style="{ marginBottom: '24rpx' }"
-      >
+      <zx-button v-if="!hideCancel" :block="true" @click="handleCancel" :style="{ marginBottom: '24rpx' }">
         {{ cancelText }}
       </zx-button>
-      <zx-button 
-        type="primary" 
-        :block="true" 
-        :loading="submitLoading"
-        @click="handleSubmit"
-      >
+      <zx-button type="primary" :block="true" :loading="submitLoading" @click="handleSubmit">
         {{ submitText }}
       </zx-button>
     </view>
@@ -123,6 +61,14 @@
 
 <script setup>
 import { ref, computed, watch, getCurrentInstance } from 'vue'
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue'
+import zxForm from '@tanzhenxing/zx-form/zx-form.vue'
+import zxFormItem from '@tanzhenxing/zx-form-item/zx-form-item.vue'
+import zxRadioGroup from '@tanzhenxing/zx-radio-group/zx-radio-group.vue'
+import zxRadio from '@tanzhenxing/zx-radio/zx-radio.vue'
+import zxSwitch from '@tanzhenxing/zx-switch/zx-switch.vue'
+import zxInput from '@tanzhenxing/zx-input/zx-input.vue'
+
 
 const { proxy } = getCurrentInstance()
 
@@ -219,9 +165,9 @@ const formRules = computed(() => {
   if (isCompanyInvoice.value) {
     rules.taxNumber = [
       { required: true, message: '请输入纳税人识别号' },
-      { 
-        pattern: /^[A-Z0-9]{15,20}$/, 
-        message: '纳税人识别号格式不正确' 
+      {
+        pattern: /^[A-Z0-9]{15,20}$/,
+        message: '纳税人识别号格式不正确'
       }
     ]
   }
@@ -326,7 +272,7 @@ defineExpose({
 <style lang="scss" scoped>
 .zx-invoice-title-edit {
   background-color: #fff;
-  
+
   &__footer {
     padding: 32rpx;
     background-color: #fff;
@@ -337,30 +283,30 @@ defineExpose({
 // 表单项样式调整
 :deep(.zx-form-item) {
   margin-bottom: 32rpx;
-  
+
   .zx-form-item__label {
     font-size: 28rpx;
     font-weight: 500;
     color: #323233;
     margin-bottom: 16rpx;
   }
-  
+
   .zx-form-item__content {
     .zx-input {
       border: 1px solid #ebedf0;
       border-radius: 12rpx;
       background-color: #fafafa;
-      
+
       &.zx-input--focus {
         border-color: #1989fa;
         background-color: #fff;
       }
     }
-    
+
     .zx-radio-group {
       .zx-radio {
         margin-right: 32rpx;
-        
+
         &:last-child {
           margin-right: 0;
         }

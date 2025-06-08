@@ -7,18 +7,9 @@
   </view>
   <!-- #endif -->
   <!-- #ifdef APP-NVUE -->
-  <list
-    :bounce="false"
-    :scrollable="true"
-    show-scrollbar
-    :render-reverse="renderReverse"
-    @scroll="onScroll"
-    class="zx-list"
-    :class="{ 'zx-list--border': border }"
-    :enableBackToTop="enableBackToTop"
-    loadmoreoffset="15"
-    @loadmore="onScrollToLower"
-  >
+  <list :bounce="false" :scrollable="true" show-scrollbar :render-reverse="renderReverse" @scroll="onScroll"
+    class="zx-list" :class="{ 'zx-list--border': border }" :enableBackToTop="enableBackToTop" loadmoreoffset="15"
+    @loadmore="onScrollToLower">
     <slot />
   </list>
   <!-- #endif -->
@@ -60,7 +51,7 @@ function onScrollToLower(e) {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 $zx-bg-color: #ffffff;
 $zx-border-color: #e5e5e5;
 

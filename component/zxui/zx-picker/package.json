@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-picker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "基于 uni-app 的选择器组件，完全兼容官方 picker 组件API，支持五种选择器模式并具有更好的跨平台一致性",
   "main": "zx-picker.vue",
   "keywords": [

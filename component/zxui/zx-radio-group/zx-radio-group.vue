@@ -1,11 +1,6 @@
 <template>
-	<view
-		class="zx-radio-group"
-		:class="radioGroupClass"
-		:style="customStyle"
-		:role="'radiogroup'"
-		:aria-label="ariaLabel"
-	>
+	<view class="zx-radio-group" :class="radioGroupClass" :style="customStyle" :role="'radiogroup'"
+		:aria-label="ariaLabel">
 		<slot></slot>
 	</view>
 </template>
@@ -92,10 +87,10 @@ const removeChild = (child) => {
 const changeValue = (value) => {
 	// 更新modelValue
 	emit('update:modelValue', value);
-	
+
 	// 触发change事件，符合uni-app官方规范
 	emit('change', { value });
-	
+
 	// 触发表单验证
 	if (props.validateEvent) {
 		// 可以在这里添加表单验证逻辑
@@ -140,7 +135,7 @@ onBeforeMount(() => {
 	align-items: center;
 }
 
-.zx-radio-group--row > :global(.zx-radio-container:not(:last-child)) {
+.zx-radio-group--row> :global(.zx-radio-container:not(:last-child)) {
 	margin-right: 16px;
 }
 
@@ -148,7 +143,7 @@ onBeforeMount(() => {
 	flex-direction: column;
 }
 
-.zx-radio-group--column > :global(.zx-radio-container:not(:last-child)) {
+.zx-radio-group--column> :global(.zx-radio-container:not(:last-child)) {
 	margin-bottom: 12px;
 }
 </style>

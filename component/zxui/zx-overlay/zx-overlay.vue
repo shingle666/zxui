@@ -1,14 +1,6 @@
 <template>
-	<zx-transition 
-		:show="show" 
-		custom-class="zx-overlay" 
-		:duration="duration" 
-		:mode="mode"
-		:custom-style="overlayStyle" 
-		@click="clickHandler"
-		@afterEnter="afterEnterHandler"
-		@afterLeave="afterLeaveHandler"
-	>
+	<zx-transition :show="show" custom-class="zx-overlay" :duration="duration" :mode="mode" :custom-style="overlayStyle"
+		@click="clickHandler" @afterEnter="afterEnterHandler" @afterLeave="afterLeaveHandler">
 		<slot></slot>
 	</zx-transition>
 </template>
@@ -31,6 +23,7 @@
  * @example <zx-overlay :show="show" @click="show = false"></zx-overlay>
  */
 import { computed, watch, nextTick } from 'vue';
+import zxTransition from '@tanzhenxing/zx-transition/zx-transition.vue';
 
 // 定义属性
 const props = defineProps({
@@ -140,13 +133,13 @@ const afterLeaveHandler = () => {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	
+
 	// 确保内容可以居中显示
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	
+
 	// 确保子内容正常显示
 	&__content {
 		position: relative;

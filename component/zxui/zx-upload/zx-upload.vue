@@ -3,21 +3,12 @@
 		<view class="zx-upload__wrap">
 			<!-- 文件预览列表 -->
 			<template v-if="previewImage">
-				<view 
-					class="zx-upload__item" 
-					v-for="(item, index) in fileList" 
-					:key="item.uid || index"
-					:style="itemStyle"
-				>
+				<view class="zx-upload__item" v-for="(item, index) in fileList" :key="item.uid || index"
+					:style="itemStyle">
 					<!-- 图片预览 -->
 					<view v-if="isImageFile(item)" class="zx-upload__preview">
-						<image
-							:src="item.thumb || item.url"
-							:mode="imageMode"
-							class="zx-upload__image"
-							@tap="onPreviewImage(index)"
-							@error="onImageError(index)"
-						/>
+						<image :src="item.thumb || item.url" :mode="imageMode" class="zx-upload__image"
+							@tap="onPreviewImage(index)" @error="onImageError(index)" />
 						<!-- 图片加载失败占位 -->
 						<view v-if="item.loadError" class="zx-upload__error">
 							<zx-icon name="image-off" size="20" color="#ccc"></zx-icon>
@@ -27,13 +18,8 @@
 
 					<!-- 视频预览 -->
 					<view v-else-if="isVideoFile(item)" class="zx-upload__preview">
-						<image
-							v-if="item.thumb"
-							:src="item.thumb"
-							:mode="imageMode"
-							class="zx-upload__image"
-							@tap="onPreviewVideo(index)"
-						/>
+						<image v-if="item.thumb" :src="item.thumb" :mode="imageMode" class="zx-upload__image"
+							@tap="onPreviewVideo(index)" />
 						<view v-else class="zx-upload__file-icon" @tap="onPreviewVideo(index)">
 							<zx-icon name="movie" size="24" color="#409EFF"></zx-icon>
 							<text class="zx-upload__file-name">视频</text>
@@ -51,31 +37,17 @@
 					</view>
 
 					<!-- 上传状态覆盖层 -->
-					<view 
-						class="zx-upload__status" 
-						v-if="item.status === 'uploading' || item.status === 'error'"
-					>
+					<view class="zx-upload__status" v-if="item.status === 'uploading' || item.status === 'error'">
 						<view class="zx-upload__status-content">
-							<zx-loading-icon 
-								v-if="item.status === 'uploading'" 
-								size="20" 
-								mode="circle" 
-								color="#ffffff" 
-							/>
-							<zx-icon 
-								v-else 
-								name="close-circle" 
-								color="#ffffff" 
-								size="20" 
-							/>
-							
+							<zx-loading v-if="item.status === 'uploading'" size="20" mode="circle"
+								color="#ffffff" />
+							<zx-icon v-else name="close-circle" color="#ffffff" size="20" />
+
 							<!-- 上传进度 -->
 							<view v-if="item.status === 'uploading' && showProgress" class="zx-upload__progress">
 								<view class="zx-upload__progress-bar">
-									<view 
-										class="zx-upload__progress-fill" 
-										:style="{ width: (item.progress || 0) + '%' }"
-									></view>
+									<view class="zx-upload__progress-fill"
+										:style="{ width: (item.progress || 0) + '%' }"></view>
 								</view>
 								<text class="zx-upload__progress-text">{{ item.progress || 0 }}%</text>
 							</view>
@@ -88,11 +60,8 @@
 					</view>
 
 					<!-- 删除按钮 -->
-					<view 
-						v-if="deletable && item.status !== 'uploading'" 
-						class="zx-upload__delete"
-						@tap.stop="deleteFile(index)"
-					>
+					<view v-if="deletable && item.status !== 'uploading'" class="zx-upload__delete"
+						@tap.stop="deleteFile(index)">
 						<zx-icon name="close" color="#ffffff" size="10"></zx-icon>
 					</view>
 
@@ -102,24 +71,16 @@
 					</view>
 
 					<!-- 重试按钮 -->
-					<view 
-						v-if="item.status === 'error' && showRetry" 
-						class="zx-upload__retry"
-						@tap.stop="retryUpload(index)"
-					>
+					<view v-if="item.status === 'error' && showRetry" class="zx-upload__retry"
+						@tap.stop="retryUpload(index)">
 						<zx-icon name="refresh" color="#ffffff" size="14"></zx-icon>
 					</view>
 				</view>
 			</template>
 
 			<!-- 上传按钮 -->
-			<view 
-				v-if="showUploadButton"
-				class="zx-upload__button"
-				:class="{ 'zx-upload__button--disabled': disabled }"
-				:style="itemStyle"
-				@tap="chooseFile"
-			>
+			<view v-if="showUploadButton" class="zx-upload__button" :class="{ 'zx-upload__button--disabled': disabled }"
+				:style="itemStyle" @tap="chooseFile">
 				<slot>
 					<view class="zx-upload__button-content">
 						<zx-icon :name="uploadIcon" size="24" :color="uploadIconColor"></zx-icon>
@@ -131,25 +92,19 @@
 
 		<!-- 文件列表模式 -->
 		<view v-if="listType === 'text'" class="zx-upload__text-list">
-			<view 
-				v-for="(item, index) in fileList" 
-				:key="item.uid || index" 
-				class="zx-upload__text-item"
-			>
+			<view v-for="(item, index) in fileList" :key="item.uid || index" class="zx-upload__text-item">
 				<zx-icon :name="getFileIcon(item)" size="16" :color="getStatusColor(item.status)"></zx-icon>
 				<text class="zx-upload__text-name" @tap="onPreviewFile(index)">
 					{{ item.name || '未知文件' }}
 				</text>
 				<view class="zx-upload__text-status">
 					<zx-loading-icon v-if="item.status === 'uploading'" size="14" mode="circle"></zx-loading-icon>
-					<zx-icon v-else-if="item.status === 'success'" name="checkmark-circle" size="14" color="#67C23A"></zx-icon>
-					<zx-icon v-else-if="item.status === 'error'" name="close-circle" size="14" color="#F56C6C"></zx-icon>
+					<zx-icon v-else-if="item.status === 'success'" name="checkmark-circle" size="14"
+						color="#67C23A"></zx-icon>
+					<zx-icon v-else-if="item.status === 'error'" name="close-circle" size="14"
+						color="#F56C6C"></zx-icon>
 				</view>
-				<view 
-					v-if="deletable" 
-					class="zx-upload__text-delete" 
-					@tap.stop="deleteFile(index)"
-				>
+				<view v-if="deletable" class="zx-upload__text-delete" @tap.stop="deleteFile(index)">
 					<zx-icon name="trash" size="12" color="#909399"></zx-icon>
 				</view>
 			</view>
@@ -164,6 +119,8 @@
 
 <script setup>
 import { ref, computed, watch, nextTick } from 'vue'
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+import zxLoading from '@tanzhenxing/zx-loading/zx-loading.vue'
 
 // 定义 emits
 const emit = defineEmits([
@@ -354,7 +311,7 @@ const isVideoFile = (file) => {
 const getFileIcon = (file) => {
 	if (isImageFile(file)) return 'image'
 	if (isVideoFile(file)) return 'movie'
-	
+
 	const extension = getFileExtension(file.name || '')
 	const iconMap = {
 		pdf: 'document-text',
@@ -368,7 +325,7 @@ const getFileIcon = (file) => {
 		zip: 'archive',
 		rar: 'archive'
 	}
-	
+
 	return iconMap[extension] || 'folder'
 }
 
@@ -394,11 +351,11 @@ const getStatusColor = (status) => {
 // 选择文件
 const chooseFile = async () => {
 	if (props.disabled) return
-	
+
 	try {
 		let result
 		const maxCount = Math.min(props.maxCount - props.fileList.length, props.multiple ? 9 : 1)
-		
+
 		switch (props.accept) {
 			case 'image':
 				result = await chooseImage(maxCount)
@@ -420,7 +377,7 @@ const chooseFile = async () => {
 			default:
 				result = await chooseImage(maxCount)
 		}
-		
+
 		if (result && result.length > 0) {
 			handleFiles(result)
 		}
@@ -550,7 +507,7 @@ const handleFiles = (files) => {
 		})
 		return
 	}
-	
+
 	// 检查文件大小
 	const oversizeFiles = files.filter(file => file.size > props.maxSize)
 	if (oversizeFiles.length > 0) {
@@ -560,14 +517,14 @@ const handleFiles = (files) => {
 		})
 		return
 	}
-	
+
 	// 检查文件扩展名
 	if (props.extensions.length > 0) {
 		const invalidFiles = files.filter(file => {
 			const extension = getFileExtension(file.name)
 			return !props.extensions.includes(extension)
 		})
-		
+
 		if (invalidFiles.length > 0) {
 			uni.showToast({
 				title: `只支持${props.extensions.join(', ')}格式`,
@@ -576,12 +533,12 @@ const handleFiles = (files) => {
 			return
 		}
 	}
-	
+
 	// 添加到文件列表
 	const newFileList = [...props.fileList, ...files]
 	emit('update:fileList', newFileList)
 	emit('change', { fileList: newFileList, file: files })
-	
+
 	// 自动上传
 	if (props.autoUpload && props.action) {
 		files.forEach(file => {
@@ -593,10 +550,10 @@ const handleFiles = (files) => {
 // 上传文件
 const uploadFile = (file) => {
 	if (!props.action) return
-	
+
 	// 更新文件状态为上传中
 	updateFileStatus(file.uid, 'uploading', { progress: 0 })
-	
+
 	const uploadTask = uni.uploadFile({
 		url: props.action,
 		filePath: file.url,
@@ -610,13 +567,13 @@ const uploadFile = (file) => {
 				if (typeof responseData === 'string') {
 					responseData = JSON.parse(responseData)
 				}
-				
+
 				// 更新文件状态为成功
 				updateFileStatus(file.uid, 'success', {
 					response: responseData,
 					url: responseData.url || file.url
 				})
-				
+
 				emit('success', { file, response: responseData })
 			} catch (error) {
 				updateFileStatus(file.uid, 'error', { message: '响应数据解析失败' })
@@ -628,7 +585,7 @@ const uploadFile = (file) => {
 			emit('error', { file, error })
 		}
 	})
-	
+
 	// 监听上传进度
 	if (uploadTask && uploadTask.onProgressUpdate) {
 		uploadTask.onProgressUpdate((progressEvent) => {
@@ -636,7 +593,7 @@ const uploadFile = (file) => {
 			emit('progress', { file, progressEvent })
 		})
 	}
-	
+
 	// 保存上传任务
 	uploadTasks.value.set(file.uid, uploadTask)
 }
@@ -645,7 +602,7 @@ const uploadFile = (file) => {
 const updateFileStatus = (uid, status, updates = {}) => {
 	const fileList = [...props.fileList]
 	const index = fileList.findIndex(file => file.uid === uid)
-	
+
 	if (index !== -1) {
 		fileList[index] = {
 			...fileList[index],
@@ -660,14 +617,14 @@ const updateFileStatus = (uid, status, updates = {}) => {
 const deleteFile = (index) => {
 	const file = props.fileList[index]
 	if (!file) return
-	
+
 	// 取消上传任务
 	const task = uploadTasks.value.get(file.uid)
 	if (task && task.abort) {
 		task.abort()
 		uploadTasks.value.delete(file.uid)
 	}
-	
+
 	// 从列表中移除
 	const newFileList = props.fileList.filter((_, i) => i !== index)
 	emit('update:fileList', newFileList)
@@ -686,13 +643,13 @@ const retryUpload = (index) => {
 const onPreviewImage = (index) => {
 	const file = props.fileList[index]
 	emit('preview', { file, index })
-	
+
 	if (!isImageFile(file)) return
-	
+
 	const urls = props.fileList
 		.filter(item => isImageFile(item))
 		.map(item => item.url)
-	
+
 	uni.previewImage({
 		urls,
 		current: file.url,
@@ -709,7 +666,7 @@ const onPreviewImage = (index) => {
 const onPreviewVideo = (index) => {
 	const file = props.fileList[index]
 	emit('preview', { file, index })
-	
+
 	// #ifdef MP-WEIXIN
 	if (file.url) {
 		wx.previewMedia({
@@ -726,7 +683,7 @@ const onPreviewVideo = (index) => {
 		})
 	}
 	// #endif
-	
+
 	// #ifndef MP-WEIXIN
 	uni.showToast({
 		title: '当前平台不支持视频预览',
@@ -739,7 +696,7 @@ const onPreviewVideo = (index) => {
 const onPreviewFile = (index) => {
 	const file = props.fileList[index]
 	emit('preview', { file, index })
-	
+
 	// 可以在这里添加文件预览逻辑
 	uni.showToast({
 		title: '文件预览功能待实现',
@@ -1011,4 +968,4 @@ defineExpose({
 		}
 	}
 }
-</style> 
+</style>

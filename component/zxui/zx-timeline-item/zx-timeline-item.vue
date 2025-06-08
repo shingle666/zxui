@@ -1,12 +1,8 @@
 <template>
   <view class="zx-timeline-item">
-    <view
-      class="zx-timeline-item__dot"
-      :class="[type, size, { hollow }]"
-      :style="dotStyle"
-    >
+    <view class="zx-timeline-item__dot" :class="[type, size, { hollow }]" :style="dotStyle">
       <slot name="dot">
-        <text v-if="icon" :class="icon" />
+        <zx-icon v-if="icon" :name="icon" />
       </slot>
     </view>
     <view class="zx-timeline-item__wrapper">
@@ -25,6 +21,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
 
 const props = defineProps({
   timestamp: String,
@@ -63,6 +60,7 @@ const dotStyle = computed(() => {
   width: 100%;
   margin-bottom: 24rpx;
 }
+
 .zx-timeline-item__dot {
   width: 24rpx;
   height: 24rpx;
@@ -75,31 +73,56 @@ const dotStyle = computed(() => {
   justify-content: center;
   font-size: 20rpx;
 }
-.zx-timeline-item__dot.primary { background: #409eff; }
-.zx-timeline-item__dot.success { background: #67c23a; }
-.zx-timeline-item__dot.warning { background: #e6a23c; }
-.zx-timeline-item__dot.danger { background: #f56c6c; }
-.zx-timeline-item__dot.info { background: #909399; }
-.zx-timeline-item__dot.large { width: 32rpx; height: 32rpx; font-size: 28rpx; }
+
+.zx-timeline-item__dot.primary {
+  background: #409eff;
+}
+
+.zx-timeline-item__dot.success {
+  background: #67c23a;
+}
+
+.zx-timeline-item__dot.warning {
+  background: #e6a23c;
+}
+
+.zx-timeline-item__dot.danger {
+  background: #f56c6c;
+}
+
+.zx-timeline-item__dot.info {
+  background: #909399;
+}
+
+.zx-timeline-item__dot.large {
+  width: 32rpx;
+  height: 32rpx;
+  font-size: 28rpx;
+}
+
 .zx-timeline-item__dot.hollow {
   background: transparent;
   border: 2rpx solid #dcdfe6;
 }
+
 .zx-timeline-item__wrapper {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
+
 .zx-timeline-item__timestamp {
   color: #909399;
   font-size: 24rpx;
   margin-bottom: 8rpx;
 }
+
 .zx-timeline-item__timestamp.top {
   margin-bottom: 8rpx;
 }
+
 .zx-timeline-item__content {
   font-size: 28rpx;
   color: #303133;
 }
-</style> 
+</style>

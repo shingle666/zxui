@@ -1,10 +1,5 @@
 <template>
-  <view
-    v-if="!destroyOnClose || display"
-    :class="classes"
-    :style="styles"
-    @click="clickHandler"
-  >
+  <view v-if="!destroyOnClose || display" :class="classes" :style="styles" @click="clickHandler">
     <slot />
   </view>
 </template>
@@ -66,7 +61,7 @@ const props = defineProps({
 // 事件定义
 const emit = defineEmits([
   'beforeEnter',
-  'enter', 
+  'enter',
   'afterEnter',
   'beforeLeave',
   'leave',
@@ -167,20 +162,20 @@ const classNames = computed(() => {
 // 进入动画
 async function enter() {
   if (display.value) return
-  
+
   emit('beforeEnter')
   display.value = true
-  
+
   // 设置进入动画类名
   if (isBuiltInAnimation.value) {
     animationClass.value = defaultAnimations[name.value]?.enter || ''
   } else {
     animationClass.value = `${classNames.value.enter} ${classNames.value.enterActive}`
   }
-  
+
   await nextTick()
   emit('enter')
-  
+
   setTimeout(() => {
     if (!isBuiltInAnimation.value) {
       animationClass.value = classNames.value.enterTo
@@ -192,19 +187,19 @@ async function enter() {
 // 离开动画
 async function leave() {
   if (!display.value) return
-  
+
   emit('beforeLeave')
-  
+
   // 设置离开动画类名
   if (isBuiltInAnimation.value) {
     animationClass.value = defaultAnimations[name.value]?.leave || ''
   } else {
     animationClass.value = `${classNames.value.leave} ${classNames.value.leaveActive}`
   }
-  
+
   await nextTick()
   emit('leave')
-  
+
   setTimeout(() => {
     if (!props.show && display.value) {
       display.value = false
@@ -233,31 +228,31 @@ function clickHandler(evt) {
 // 计算类名
 const classes = computed(() => {
   const classList = ['zx-transition']
-  
+
   if (animationClass.value) {
     classList.push(animationClass.value)
   }
-  
+
   if (!display.value) {
     classList.push('zx-hidden')
   }
-  
+
   if (props.customClass) {
     classList.push(props.customClass)
   }
-  
+
   return classList.join(' ')
 })
 
 // 计算样式
 const styles = computed(() => {
   const styleObj = {}
-  
+
   if (isBuiltInAnimation.value) {
     styleObj['animation-duration'] = `${duration.value}ms`
     styleObj['animation-timing-function'] = props.timingFunction
   }
-  
+
   // 处理自定义样式
   if (props.customStyle) {
     if (typeof props.customStyle === 'string') {
@@ -266,7 +261,7 @@ const styles = computed(() => {
       Object.assign(styleObj, props.customStyle)
     }
   }
-  
+
   return styleObj
 })
 </script>
@@ -296,6 +291,7 @@ const styles = computed(() => {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -305,6 +301,7 @@ const styles = computed(() => {
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
@@ -326,6 +323,7 @@ const styles = computed(() => {
     opacity: 0;
     transform: translateY(100%);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -337,6 +335,7 @@ const styles = computed(() => {
     opacity: 1;
     transform: translateY(0);
   }
+
   to {
     opacity: 0;
     transform: translateY(100%);
@@ -359,6 +358,7 @@ const styles = computed(() => {
     opacity: 0;
     transform: translateY(-100%);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -370,6 +370,7 @@ const styles = computed(() => {
     opacity: 1;
     transform: translateY(0);
   }
+
   to {
     opacity: 0;
     transform: translateY(-100%);
@@ -392,6 +393,7 @@ const styles = computed(() => {
     opacity: 0;
     transform: translateX(-100%);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -403,6 +405,7 @@ const styles = computed(() => {
     opacity: 1;
     transform: translateX(0);
   }
+
   to {
     opacity: 0;
     transform: translateX(-100%);
@@ -425,6 +428,7 @@ const styles = computed(() => {
     opacity: 0;
     transform: translateX(100%);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -436,6 +440,7 @@ const styles = computed(() => {
     opacity: 1;
     transform: translateX(0);
   }
+
   to {
     opacity: 0;
     transform: translateX(100%);
@@ -457,6 +462,7 @@ const styles = computed(() => {
   from {
     transform: translateY(100%);
   }
+
   to {
     transform: translateY(0);
   }
@@ -466,6 +472,7 @@ const styles = computed(() => {
   from {
     transform: translateY(0);
   }
+
   to {
     transform: translateY(100%);
   }
@@ -486,6 +493,7 @@ const styles = computed(() => {
   from {
     transform: translateY(-100%);
   }
+
   to {
     transform: translateY(0);
   }
@@ -495,6 +503,7 @@ const styles = computed(() => {
   from {
     transform: translateY(0);
   }
+
   to {
     transform: translateY(-100%);
   }
@@ -515,6 +524,7 @@ const styles = computed(() => {
   from {
     transform: translateX(-100%);
   }
+
   to {
     transform: translateX(0);
   }
@@ -524,6 +534,7 @@ const styles = computed(() => {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-100%);
   }
@@ -544,6 +555,7 @@ const styles = computed(() => {
   from {
     transform: translateX(100%);
   }
+
   to {
     transform: translateX(0);
   }
@@ -553,6 +565,7 @@ const styles = computed(() => {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(100%);
   }
@@ -574,6 +587,7 @@ const styles = computed(() => {
     opacity: 0;
     transform: scale(0.3);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -585,6 +599,7 @@ const styles = computed(() => {
     opacity: 1;
     transform: scale(1);
   }
+
   to {
     opacity: 0;
     transform: scale(0.3);
@@ -607,6 +622,7 @@ const styles = computed(() => {
     opacity: 0;
     transform: scale(1.2);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -618,6 +634,7 @@ const styles = computed(() => {
     opacity: 1;
     transform: scale(1);
   }
+
   to {
     opacity: 0;
     transform: scale(1.2);

@@ -1,34 +1,14 @@
 <template>
-  <view
-    class="zx-swipe-cell"
-    @touchstart="onTouchStart"
-    @touchmove="onTouchMove"
-    @touchend="onTouchEnd"
-    @touchcancel="onTouchEnd"
-    ref="rootRef"
-  >
-    <view
-      class="zx-swipe-cell__wrapper"
-      :style="wrapperStyle"
-      @click="onClick('cell', $event)"
-    >
-      <view
-        v-if="state.computedLeftWidth > 0"
-        ref="leftRef"
-        class="zx-swipe-cell__left"
-        :style="{ width: state.computedLeftWidth + 'px' }"
-        @click.stop="onClick('left', $event)"
-      >
+  <view class="zx-swipe-cell" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd"
+    @touchcancel="onTouchEnd" ref="rootRef">
+    <view class="zx-swipe-cell__wrapper" :style="wrapperStyle" @click="onClick('cell', $event)">
+      <view v-if="state.computedLeftWidth > 0" ref="leftRef" class="zx-swipe-cell__left"
+        :style="{ width: state.computedLeftWidth + 'px' }" @click.stop="onClick('left', $event)">
         <slot name="left"></slot>
       </view>
       <slot></slot>
-      <view
-        v-if="state.computedRightWidth > 0"
-        ref="rightRef"
-        class="zx-swipe-cell__right"
-        :style="{ width: state.computedRightWidth + 'px' }"
-        @click.stop="onClick('right', $event)"
-      >
+      <view v-if="state.computedRightWidth > 0" ref="rightRef" class="zx-swipe-cell__right"
+        :style="{ width: state.computedRightWidth + 'px' }" @click.stop="onClick('right', $event)">
         <slot name="right"></slot>
       </view>
     </view>
@@ -37,7 +17,7 @@
 
 <script setup>
 import { ref, computed, reactive, watch, nextTick, onMounted } from 'vue';
-// import { getRect } from '../../utils/utils'; // Assuming a utility function for getRect
+
 
 const props = defineProps({
   name: {
@@ -217,7 +197,7 @@ const onTouchMove = (event) => {
     // Prevent default scrolling behavior if horizontal swipe
     // For uni-app, stopping propagation might be enough, or specific platform considerations might be needed.
     if (props.stopPropagation) {
-        event.stopPropagation();
+      event.stopPropagation();
     }
     // In some cases, especially on web, you might want to prevent default browser scroll
     // if (event.cancelable) event.preventDefault(); 
@@ -241,7 +221,7 @@ const onTouchEnd = () => {
       lockClick = false;
     });
   } else {
-      lockClick = false; // Ensure lockClick is reset if no drag occurred
+    lockClick = false; // Ensure lockClick is reset if no drag occurred
   }
 };
 

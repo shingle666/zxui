@@ -1,114 +1,50 @@
 <template>
   <view class="zx-mention-container" :class="[size ? 'zx-mention-' + size : '']">
     <!-- 输入框 -->
-    <textarea
-      v-if="type === 'textarea'"
-      ref="textareaRef"
-      class="zx-mention-textarea"
-      :style="getInputStyle"
-      :value="modelValue"
-      :disabled="disabled"
-      :placeholder="placeholder"
-      :placeholderStyle="placeholderStyle"
-      :placeholderClass="placeholderClass"
-      :maxlength="maxlength"
-      :autoHeight="autoHeight"
-      :fixed="fixed"
-      :cursorSpacing="cursorSpacing"
-      :cursor="cursor"
-      :showConfirmBar="showConfirmBar"
-      :selectionStart="selectionStart"
-      :selectionEnd="selectionEnd"
-      :adjustPosition="adjustPosition"
-      :holdKeyboard="holdKeyboard"
-      :autoFocus="autoFocus"
-      :focus="focus"
-      @input="onInput"
-      @focus="onFocus"
-      @blur="onBlur"
-      @linechange="onLineChange"
-      @keyboardheightchange="onKeyboardHeightChange"
-    />
-    <input
-      v-else
-      ref="inputRef"
-      class="zx-mention-input"
-      :style="getInputStyle"
-      :type="inputType"
-      :value="modelValue"
-      :disabled="disabled"
-      :password="password"
-      :placeholder="placeholder"
-      :placeholderStyle="placeholderStyle"
-      :placeholderClass="placeholderClass"
-      :maxlength="maxlength"
-      :cursorSpacing="cursorSpacing"
-      :cursorColor="cursorColor"
-      :autoFocus="autoFocus"
-      :focus="focus"
-      :cursor="cursor"
-      :confirmType="confirmType"
-      :alwaysEmbed="alwaysEmbed"
-      :confirmHold="confirmHold"
-      :selectionStart="selectionStart"
-      :selectionEnd="selectionEnd"
-      :adjustPosition="adjustPosition"
-      :holdKeyboard="holdKeyboard"
-      @input="onInput"
-      @focus="onFocus"
-      @blur="onBlur"
-      @confirm="onConfirm"
-      @keyboardheightchange="onKeyboardHeightChange"
-    />
+    <zx-textarea v-if="type === 'textarea'" ref="textareaRef" class="zx-mention-textarea" :style="getInputStyle"
+      :value="modelValue" :disabled="disabled" :placeholder="placeholder" :placeholder-style="placeholderStyle"
+      :placeholder-class="placeholderClass" :maxlength="maxlength" :auto-height="autoHeight" :fixed="fixed"
+      :cursor-spacing="cursorSpacing" :cursor="cursor" :show-confirm-bar="showConfirmBar" :selection-start="selectionStart"
+      :selection-end="selectionEnd" :adjust-position="adjustPosition" :hold-keyboard="holdKeyboard" :auto-focus="autoFocus"
+      :focus="focus" @input="onInput" @focus="onFocus" @blur="onBlur" @linechange="onLineChange"
+      @keyboardheightchange="onKeyboardHeightChange" />
+    <zx-input v-else ref="inputRef" class="zx-mention-input" :style="getInputStyle" :type="inputType" :value="modelValue"
+      :disabled="disabled" :password="password" :placeholder="placeholder" :placeholder-style="placeholderStyle"
+      :placeholder-class="placeholderClass" :maxlength="maxlength" :cursor-spacing="cursorSpacing"
+      :cursor-color="cursorColor" :auto-focus="autoFocus" :focus="focus" :cursor="cursor" :confirm-type="confirmType"
+      :always-embed="alwaysEmbed" :confirm-hold="confirmHold" :selection-start="selectionStart"
+      :selection-end="selectionEnd" :adjust-position="adjustPosition" :hold-keyboard="holdKeyboard" @input="onInput"
+      @focus="onFocus" @blur="onBlur" @confirm="onConfirm" @keyboardheightchange="onKeyboardHeightChange" />
 
     <!-- 清除按钮 -->
-    <view
-      class="zx-mention-clear"
-      v-if="clearable && modelValue && !disabled && isFocused"
-      @click="onClear"
-    >
-      <text class="zx-mention-clear-icon">×</text>
+    <view class="zx-mention-clear" v-if="clearable && modelValue && !disabled && isFocused" @click="onClear">
+      <zx-icon name="close"></zx-icon>
     </view>
 
     <!-- 下拉选项面板 -->
-    <view
-      class="zx-mention-dropdown"
-      :class="[
-        'zx-mention-dropdown-' + placement,
-        { 'zx-mention-dropdown-visible': dropdownVisible }
-      ]"
-      :style="getDropdownStyle"
-      v-show="dropdownVisible"
-    >
+    <view class="zx-mention-dropdown" :class="[
+      'zx-mention-dropdown-' + placement,
+      { 'zx-mention-dropdown-visible': dropdownVisible }
+    ]" :style="getDropdownStyle" v-show="dropdownVisible">
       <!-- Loading状态 -->
       <view v-if="loading" class="zx-mention-loading">
         <slot name="loading">
           <text class="zx-mention-loading-text">加载中...</text>
         </slot>
       </view>
-      
+
       <!-- 头部插槽 -->
       <view v-if="$slots.header" class="zx-mention-dropdown-header">
         <slot name="header"></slot>
       </view>
 
       <!-- 选项列表 -->
-      <scroll-view
-        v-if="!loading && filteredOptions.length > 0"
-        class="zx-mention-options"
-        scroll-y
-        :style="{ maxHeight: maxHeight + 'rpx' }"
-      >
-        <view
-          v-for="(option, index) in filteredOptions"
-          :key="option.value || index"
-          class="zx-mention-option"
-          :class="{
-            'zx-mention-option-disabled': option.disabled,
-            'zx-mention-option-active': index === activeIndex
-          }"
-          @click="selectOption(option, index)"
-        >
+      <scroll-view v-if="!loading && filteredOptions.length > 0" class="zx-mention-options" scroll-y
+        :style="{ maxHeight: maxHeight + 'rpx' }">
+        <view v-for="(option, index) in filteredOptions" :key="option.value || index" class="zx-mention-option" :class="{
+          'zx-mention-option-disabled': option.disabled,
+          'zx-mention-option-active': index === activeIndex
+        }" @click="selectOption(option, index)">
           <slot name="label" :item="option" :index="index">
             <text class="zx-mention-option-text">{{ option.label || option.value }}</text>
           </slot>
@@ -130,6 +66,9 @@
 
 <script setup>
 import { ref, computed, watch, nextTick, getCurrentInstance } from 'vue'
+import zxTextarea from '@tanzhenxing/zx-textarea/zx-textarea.vue'
+import zxInput from '@tanzhenxing/zx-input/zx-input.vue'
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
 
 const { proxy } = getCurrentInstance()
 
@@ -364,7 +303,7 @@ const filteredOptions = computed(() => {
   }
 
   if (typeof props.filterOption === 'function') {
-    return props.options.filter(option => 
+    return props.options.filter(option =>
       props.filterOption(currentPattern.value, option)
     )
   }
@@ -422,10 +361,10 @@ const getDropdownStyle = computed(() => {
 function onInput(e) {
   const value = e.detail.value
   cursorPosition.value = e.detail.cursor || 0
-  
+
   emit('update:modelValue', value)
   emit('input', e)
-  
+
   // 检查是否触发提及
   checkMentionTrigger(value, cursorPosition.value)
 }
@@ -433,11 +372,11 @@ function onInput(e) {
 // 检查提及触发
 function checkMentionTrigger(value, cursor) {
   const textBeforeCursor = value.substring(0, cursor)
-  
+
   // 查找最近的前缀
   let lastPrefixIndex = -1
   let matchedPrefix = ''
-  
+
   for (const prefix of prefixArray.value) {
     const index = textBeforeCursor.lastIndexOf(prefix)
     if (index > lastPrefixIndex) {
@@ -445,18 +384,18 @@ function checkMentionTrigger(value, cursor) {
       matchedPrefix = prefix
     }
   }
-  
+
   if (lastPrefixIndex >= 0) {
     // 检查前缀后是否有分隔符
     const textAfterPrefix = textBeforeCursor.substring(lastPrefixIndex + matchedPrefix.length)
     const splitIndex = textAfterPrefix.indexOf(props.split)
-    
+
     if (splitIndex === -1) {
       // 没有分隔符，显示提及面板
       currentPrefix.value = matchedPrefix
       currentPattern.value = textAfterPrefix
       showDropdown()
-      
+
       // 触发搜索事件
       emit('search', currentPattern.value, currentPrefix.value)
     } else {
@@ -486,26 +425,26 @@ function hideDropdown() {
 // 选择选项
 function selectOption(option, index) {
   if (option.disabled) return
-  
+
   const value = props.modelValue
   const cursor = cursorPosition.value
   const textBeforeCursor = value.substring(0, cursor)
   const textAfterCursor = value.substring(cursor)
-  
+
   // 查找前缀位置
   const prefixIndex = textBeforeCursor.lastIndexOf(currentPrefix.value)
-  
+
   if (prefixIndex >= 0) {
     // 替换文本
     const beforePrefix = value.substring(0, prefixIndex)
     const mentionText = currentPrefix.value + option.value + props.split
     const newValue = beforePrefix + mentionText + textAfterCursor
-    
+
     emit('update:modelValue', newValue)
     emit('select', option, currentPrefix.value)
-    
+
     hideDropdown()
-    
+
     // 设置光标位置
     nextTick(() => {
       const newCursor = beforePrefix.length + mentionText.length

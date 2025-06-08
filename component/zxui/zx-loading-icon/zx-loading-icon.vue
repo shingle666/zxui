@@ -1,10 +1,7 @@
 <template>
 	<view v-if="show" class="zx-loading-icon" :class="[vertical && 'zx-loading-icon--vertical']">
-		<view v-if="!webviewHide"
-			class="zx-loading-icon__spinner"
-			:class="[`zx-loading-icon__spinner--${mode}`]"
-			ref="ani"
-			:style="{
+		<view v-if="!webviewHide" class="zx-loading-icon__spinner" :class="[`zx-loading-icon__spinner--${mode}`]"
+			ref="ani" :style="{
 				color: color,
 				width: size,
 				height: size,
@@ -20,7 +17,7 @@
 				<view v-for="(item, index) in array12" :key="index" class="zx-loading-icon__dot"></view>
 			</block>
 		</view>
-		<text v-if="text" class="zx-loading-icon__text" :style="{fontSize: textSize,color: textColor}">
+		<text v-if="text" class="zx-loading-icon__text" :style="{ fontSize: textSize, color: textColor }">
 			{{ text }}
 		</text>
 	</view>
@@ -122,27 +119,27 @@ const colorGradient = (startColor, endColor, step) => {
 		const b = parseInt(hex.substring(4, 6), 16);
 		return [r, g, b];
 	};
-	
+
 	// 将rgb转hex
 	const rgbToHex = (r, g, b) => {
 		const hex = ((r << 16) | (g << 8) | b).toString(16);
 		return "#" + new Array(Math.abs(hex.length - 7)).join("0") + hex;
 	};
-	
+
 	// 当开始颜色和结束颜色相同时，返回相同颜色
 	if (startColor === endColor) {
 		return Array(step).fill(startColor);
 	}
-	
+
 	// 将起始颜色和结束颜色转为rgb
 	const startRgb = hexToRgb(startColor);
 	const endRgb = hexToRgb(endColor);
-	
+
 	// 计算差值
 	const rStep = (endRgb[0] - startRgb[0]) / (step - 1);
 	const gStep = (endRgb[1] - startRgb[1]) / (step - 1);
 	const bStep = (endRgb[2] - startRgb[2]) / (step - 1);
-	
+
 	// 创建结果数组
 	const colorArr = [];
 	for (let i = 0; i < step; i++) {
@@ -271,7 +268,7 @@ function addEventListenerToWebview() {
 	}
 
 	&--vertical &__text {
-		margin: 15rpx 0 0 ;
+		margin: 15rpx 0 0;
 		color: #606266;
 	}
 
@@ -285,7 +282,7 @@ function addEventListenerToWebview() {
 		&:before {
 			display: block;
 			width: 5rpx;
-			height: 25% ;
+			height: 25%;
 			margin: 0 auto;
 			background-color: currentColor;
 			border-radius: 40%;

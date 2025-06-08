@@ -1,64 +1,33 @@
 <template>
   <view class="zx-rate" :id="elId" ref="zx-rate" :style="[customStyle]">
     <view class="zx-rate__content" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
-      <view
-        class="zx-rate__content__item"
-        v-for="(item, index) in Number(max)"
-        :key="index"
-        :class="[elClass]"
-      >
-        <view
-          class="zx-rate__content__item__icon-wrap"
-          ref="zx-rate__content__item__icon-wrap"
-          @tap.stop="clickHandler($event, index + 1)"
-        >
-          <zx-icon
-            :name="getIconName(index)"
-            :color="getIconColor(index)"
-            :style="{
-              'padding-left': parseInt(gutter) / 2 + 'rpx',
-              'padding-right': parseInt(gutter) / 2 + 'rpx',
-            }"
-            :size="actualSize"
-          ></zx-icon>
+      <view class="zx-rate__content__item" v-for="(item, index) in Number(max)" :key="index" :class="[elClass]">
+        <view class="zx-rate__content__item__icon-wrap" ref="zx-rate__content__item__icon-wrap"
+          @tap.stop="clickHandler($event, index + 1)">
+          <zx-icon :name="getIconName(index)" :color="getIconColor(index)" :style="{
+            'padding-left': parseInt(gutter) / 2 + 'rpx',
+            'padding-right': parseInt(gutter) / 2 + 'rpx',
+          }" :size="actualSize"></zx-icon>
         </view>
-        <view
-          v-if="allowHalf"
-          @tap.stop="clickHandler($event, index + 0.5)"
-          class="zx-rate__content__item__icon-wrap zx-rate__content__item__icon-wrap--half"
-          :style="[
+        <view v-if="allowHalf" @tap.stop="clickHandler($event, index + 0.5)"
+          class="zx-rate__content__item__icon-wrap zx-rate__content__item__icon-wrap--half" :style="[
             {
               width: parseInt(rateWidth) / 2 + 'rpx',
             },
-          ]"
-          ref="zx-rate__content__item__icon-wrap"
-        >
-          <zx-icon
-            :name="getIconName(index)"
-            :color="getIconColor(index)"
-            :style="{
-              'padding-left': parseInt(gutter) / 2 + 'rpx',
-              'padding-right': parseInt(gutter) / 2 + 'rpx',
-            }"
-            :size="actualSize"
-          ></zx-icon>
+          ]" ref="zx-rate__content__item__icon-wrap">
+          <zx-icon :name="getIconName(index)" :color="getIconColor(index)" :style="{
+            'padding-left': parseInt(gutter) / 2 + 'rpx',
+            'padding-right': parseInt(gutter) / 2 + 'rpx',
+          }" :size="actualSize"></zx-icon>
         </view>
       </view>
     </view>
     <!-- 辅助文字 -->
-    <view
-      v-if="showText && !showScore"
-      class="zx-rate__text"
-      :style="{ color: textColor }"
-    >
+    <view v-if="showText && !showScore" class="zx-rate__text" :style="{ color: textColor }">
       {{ getCurrentText() }}
     </view>
     <!-- 分数显示 -->
-    <view
-      v-if="showScore && !showText"
-      class="zx-rate__score"
-      :style="{ color: textColor }"
-    >
+    <view v-if="showScore && !showText" class="zx-rate__score" :style="{ color: textColor }">
       {{ getScoreText() }}
     </view>
   </view>
@@ -66,6 +35,8 @@
 
 <script setup>
 import { ref, getCurrentInstance, computed, watch } from "vue";
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+
 
 const { proxy } = getCurrentInstance();
 

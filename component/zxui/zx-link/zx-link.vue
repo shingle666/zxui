@@ -1,64 +1,42 @@
 <template>
 	<!-- #ifdef APP-PLUS -->
-	<text 
-		:data-url="url" 
-		@tap="clickHandler" 
-		:style="[linkStyle, customStyle]" 
-		:class="[
-			`zx-link--${type}`, 
-			disabled && 'zx-link--disabled',
-			underline === 'always' && 'zx-link--underline'
-		]"
-	>
+	<text :data-url="url" @tap="clickHandler" :style="[linkStyle, customStyle]" :class="[
+		`zx-link--${type}`,
+		disabled && 'zx-link--disabled',
+		underline === 'always' && 'zx-link--underline'
+	]">
 		<slot name="icon"></slot>
 		<slot>{{ text }}</slot>
 	</text>
 	<!-- #endif -->
 
 	<!-- #ifdef H5 -->
-	<a 
-		v-if="!disabled"
-		:href="url" 
-		class="zx-link" 
-		target="_blank" 
-		:style="[linkStyle, customStyle]"
-		:class="[
-			`zx-link--${type}`, 
-			underline === 'always' && 'zx-link--underline',
-			underline === 'hover' && 'zx-link--underline-hover'
-		]"
-	>
+	<a v-if="!disabled" :href="url" class="zx-link" target="_blank" :style="[linkStyle, customStyle]" :class="[
+		`zx-link--${type}`,
+		underline === 'always' && 'zx-link--underline',
+		underline === 'hover' && 'zx-link--underline-hover'
+	]">
 		<slot name="icon"></slot>
 		<slot>{{ text }}</slot>
 	</a>
-	<text
-		v-else
-		class="zx-link zx-link--disabled"
-		:class="`zx-link--${type}`"
-		:style="[linkStyle, customStyle]"
-	>
+	<text v-else class="zx-link zx-link--disabled" :class="`zx-link--${type}`" :style="[linkStyle, customStyle]">
 		<slot name="icon"></slot>
 		<slot>{{ text }}</slot>
 	</text>
 	<!-- #endif -->
-	
+
 	<!-- #ifdef MP -->
-	<text 
-		class="zx-link" 
-		:class="[
-			`zx-link--${type}`, 
-			disabled && 'zx-link--disabled',
-			underline === 'always' && 'zx-link--underline',
-			underline === 'hover' && 'zx-link--underline-hover'
-		]"
-		:style="[linkStyle, customStyle]"
-		@tap="clickHandler"
-	>
+	<text class="zx-link" :class="[
+		`zx-link--${type}`,
+		disabled && 'zx-link--disabled',
+		underline === 'always' && 'zx-link--underline',
+		underline === 'hover' && 'zx-link--underline-hover'
+	]" :style="[linkStyle, customStyle]" @tap="clickHandler">
 		<slot name="icon"></slot>
 		<slot>{{ text }}</slot>
 	</text>
 	<!-- #endif -->
-	
+
 </template>
 
 <script setup>
@@ -82,11 +60,6 @@
  * @example <zx-link url="https://example.com" underline="always">总是显示下划线</zx-link>
  */
 import { computed } from 'vue';
-
-// 定义组件名称
-defineOptions({
-	name: 'zx-link'
-});
 
 // 定义props
 const props = defineProps({
@@ -164,26 +137,26 @@ const linkStyle = computed(() => {
 		fontSize: props.fontSize,
 		lineHeight: props.lineHeight
 	};
-	
+
 	// 如果设置了自定义颜色，则使用自定义颜色，否则使用类型对应的颜色
 	if (props.color) {
 		style.color = props.color;
 	} else {
 		style.color = typeColorMap[props.type];
 	}
-	
+
 	return style;
 });
 
 // 点击处理
 const clickHandler = () => {
 	if (props.disabled) return;
-	
+
 	// 针对不同平台的处理
 	// #ifdef APP-PLUS
 	openUrlForApp();
 	// #endif
-	
+
 	// #ifdef MP
 	copyLinkToClipboard();
 	// #endif
@@ -218,32 +191,32 @@ const copyLinkToClipboard = () => {
 	text-decoration: none;
 	display: inline-flex;
 	align-items: center;
-	
+
 	// 类型样式
 	&--default {
 		color: #606266;
 	}
-	
+
 	&--primary {
 		color: #409eff;
 	}
-	
+
 	&--success {
 		color: #67c23a;
 	}
-	
+
 	&--warning {
 		color: #e6a23c;
 	}
-	
+
 	&--danger {
 		color: #f56c6c;
 	}
-	
+
 	&--info {
 		color: #909399;
 	}
-	
+
 	// 禁用样式
 	&--disabled {
 		color: #c0c4cc;
@@ -251,12 +224,12 @@ const copyLinkToClipboard = () => {
 		opacity: 0.7;
 		pointer-events: none;
 	}
-	
+
 	// 下划线样式
 	&--underline {
 		text-decoration: underline;
 	}
-	
+
 	// 悬停下划线
 	/* #ifdef H5 */
 	&--underline-hover {
@@ -264,6 +237,7 @@ const copyLinkToClipboard = () => {
 			text-decoration: underline;
 		}
 	}
+
 	/* #endif */
 }
 </style>

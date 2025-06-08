@@ -1,18 +1,10 @@
 <template>
   <view v-if="modelValue" class="zx-tour">
     <!-- 遮罩层 -->
-    <view
-      v-if="currentStepConf && currentStepConf.mask !== false"
-      class="zx-tour-mask"
-      :style="maskStyle"
-      @tap.stop.prevent
-    ></view>
+    <view v-if="currentStepConf && currentStepConf.mask !== false" class="zx-tour-mask" :style="maskStyle"
+      @tap.stop.prevent></view>
     <!-- 引导内容浮层 -->
-    <view
-      v-if="currentStepConf"
-      class="zx-tour-popup"
-      :style="popupStyle"
-    >
+    <view v-if="currentStepConf" class="zx-tour-popup" :style="popupStyle">
       <view class="zx-tour-header">
         <text class="zx-tour-title">{{ currentStepConf.title }}</text>
         <text v-if="showClose" class="zx-tour-close" @tap="close">×</text>
@@ -35,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, nextTick,getCurrentInstance,onMounted } from 'vue'
+import { ref, watch, computed, nextTick, getCurrentInstance, onMounted } from 'vue'
 
 const { proxy } = getCurrentInstance()
 
@@ -182,46 +174,57 @@ onMounted(() => {
 <style scoped>
 .zx-tour {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 9999;
 }
+
 .zx-tour-mask {
   position: fixed;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   pointer-events: auto;
   transition: all 0.2s;
 }
+
 .zx-tour-popup {
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
   padding: 16px;
   min-width: 200px;
   max-width: 80vw;
 }
+
 .zx-tour-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
 }
+
 .zx-tour-title {
   font-weight: bold;
   font-size: 16px;
 }
+
 .zx-tour-close {
   font-size: 20px;
   cursor: pointer;
 }
+
 .zx-tour-desc {
   margin-bottom: 12px;
   color: #666;
 }
+
 .zx-tour-footer {
   display: flex;
   gap: 8px;
   margin-bottom: 8px;
 }
+
 .zx-tour-indicator {
   text-align: right;
   color: #999;

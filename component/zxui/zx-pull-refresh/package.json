@@ -1,13 +1,16 @@
 {
-  "name": "zx-pull-refresh",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-pull-refresh",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "pull",
+    "refresh"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
   "type": "commonjs"
 }

@@ -1,89 +1,51 @@
 <template>
   <view class="zx-order-cancel-panel">
     <!-- 遮罩层 -->
-    <view 
-      v-if="modelValue" 
-      class="zx-order-cancel-panel__overlay" 
-      :style="{ zIndex: zIndex - 1 }"
-      @click="handleOverlayClick"
-    ></view>
-    
+    <view v-if="modelValue" class="zx-order-cancel-panel__overlay" :style="{ zIndex: zIndex - 1 }"
+      @click="handleOverlayClick"></view>
+
     <!-- 面板内容 -->
-    <view 
-      v-if="modelValue" 
-      class="zx-order-cancel-panel__content"
-      :class="{
-        'zx-order-cancel-panel__content--show': showPanel
-      }"
-      :style="{ zIndex: zIndex }"
-    >
+    <view v-if="modelValue" class="zx-order-cancel-panel__content" :class="{
+      'zx-order-cancel-panel__content--show': showPanel
+    }" :style="{ zIndex: zIndex }">
       <!-- 头部 -->
       <view class="zx-order-cancel-panel__header">
         <view class="zx-order-cancel-panel__title">{{ title }}</view>
-        <view 
-          class="zx-order-cancel-panel__close" 
-          @click="handleClose"
-        >
+        <view class="zx-order-cancel-panel__close" @click="handleClose">
           <zx-icon name="close" size="32rpx" color="#999"></zx-icon>
         </view>
       </view>
-      
+
       <!-- 取消原因列表 -->
       <view class="zx-order-cancel-panel__body">
         <view class="zx-order-cancel-panel__subtitle">{{ subtitle }}</view>
-        
+
         <view class="zx-order-cancel-panel__reasons">
-          <view 
-            v-for="(reason, index) in reasonList" 
-            :key="index"
-            class="zx-order-cancel-panel__reason-item"
-            :class="{
-              'zx-order-cancel-panel__reason-item--active': selectedIndex === index
-            }"
-            @click="handleReasonSelect(index)"
-          >
+          <view v-for="(reason, index) in reasonList" :key="index" class="zx-order-cancel-panel__reason-item" :class="{
+            'zx-order-cancel-panel__reason-item--active': selectedIndex === index
+          }" @click="handleReasonSelect(index)">
             <view class="zx-order-cancel-panel__reason-text">{{ reason.text }}</view>
             <view class="zx-order-cancel-panel__reason-icon">
-              <zx-icon 
-                :name="selectedIndex === index ? 'radio-checked' : 'radio-unchecked'" 
-                size="32rpx" 
-                :color="selectedIndex === index ? primaryColor : '#ddd'"
-              ></zx-icon>
+              <zx-icon :name="selectedIndex === index ? 'radio-checked' : 'radio-unchecked'" size="32rpx"
+                :color="selectedIndex === index ? primaryColor : '#ddd'"></zx-icon>
             </view>
           </view>
         </view>
-        
+
         <!-- 其他原因输入框 -->
-        <view 
-          v-if="showOtherInput" 
-          class="zx-order-cancel-panel__other-input"
-        >
-          <zx-textarea 
-            v-model="otherReason"
-            :placeholder="otherPlaceholder"
-            :maxlength="maxLength"
-            :show-count="showCount"
-            :rows="3"
-            @input="handleOtherInput"
-          ></zx-textarea>
+        <view v-if="showOtherInput" class="zx-order-cancel-panel__other-input">
+          <zx-textarea v-model="otherReason" :placeholder="otherPlaceholder" :maxlength="maxLength"
+            :show-count="showCount" :rows="3" @input="handleOtherInput"></zx-textarea>
         </view>
       </view>
-      
+
       <!-- 底部按钮 -->
       <view class="zx-order-cancel-panel__footer">
-        <zx-button 
-          class="zx-order-cancel-panel__cancel-btn"
-          @click="handleCancel"
-        >
+        <zx-button class="zx-order-cancel-panel__cancel-btn" @click="handleCancel">
           {{ cancelText }}
         </zx-button>
-        <zx-button 
-          class="zx-order-cancel-panel__confirm-btn"
-          type="primary"
-          :disabled="!canConfirm"
-          :loading="loading"
-          @click="handleConfirm"
-        >
+        <zx-button class="zx-order-cancel-panel__confirm-btn" type="primary" :disabled="!canConfirm" :loading="loading"
+          @click="handleConfirm">
           {{ confirmText }}
         </zx-button>
       </view>
@@ -93,6 +55,10 @@
 
 <script setup>
 import { getCurrentInstance, ref, computed, watch, nextTick } from "vue";
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue'
+import zxTextarea from '@tanzhenxing/zx-textarea/zx-textarea.vue'
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+
 
 const { proxy } = getCurrentInstance();
 
@@ -195,12 +161,12 @@ const showOtherInput = computed(() => {
 
 const canConfirm = computed(() => {
   if (selectedIndex.value === -1) return false;
-  
+
   const selectedReason = props.reasonList[selectedIndex.value];
   if (selectedReason && selectedReason.value === 'other') {
     return otherReason.value.trim().length > 0;
   }
-  
+
   return true;
 });
 
@@ -224,7 +190,7 @@ watch(() => props.modelValue, (newVal) => {
 const handleReasonSelect = (index) => {
   selectedIndex.value = index;
   const reason = props.reasonList[index];
-  
+
   emit('reason-change', {
     index,
     reason,
@@ -234,7 +200,7 @@ const handleReasonSelect = (index) => {
 
 const handleOtherInput = (value) => {
   otherReason.value = value;
-  
+
   if (selectedIndex.value !== -1) {
     const reason = props.reasonList[selectedIndex.value];
     emit('reason-change', {
@@ -263,14 +229,14 @@ const handleCancel = () => {
 
 const handleConfirm = () => {
   if (!canConfirm.value) return;
-  
+
   const selectedReason = props.reasonList[selectedIndex.value];
   const result = {
     index: selectedIndex.value,
     reason: selectedReason,
     otherReason: selectedReason.value === 'other' ? otherReason.value : ''
   };
-  
+
   emit('confirm', result);
 };
 </script>
@@ -278,7 +244,7 @@ const handleConfirm = () => {
 <style lang="scss" scoped>
 .zx-order-cancel-panel {
   position: relative;
-  
+
   &__overlay {
     position: fixed;
     top: 0;
@@ -289,7 +255,7 @@ const handleConfirm = () => {
     opacity: 1;
     transition: opacity 0.3s ease;
   }
-  
+
   &__content {
     position: fixed;
     bottom: 0;
@@ -300,12 +266,12 @@ const handleConfirm = () => {
     max-height: 80vh;
     transform: translateY(100%);
     transition: transform 0.3s ease;
-    
+
     &--show {
       transform: translateY(0);
     }
   }
-  
+
   &__header {
     display: flex;
     align-items: center;
@@ -314,34 +280,34 @@ const handleConfirm = () => {
     border-bottom: 1px solid #f5f5f5;
     padding-bottom: 24rpx;
   }
-  
+
   &__title {
     font-size: 32rpx;
     font-weight: 600;
     color: #333;
   }
-  
+
   &__close {
     padding: 8rpx;
     cursor: pointer;
   }
-  
+
   &__body {
     padding: 32rpx;
     max-height: 60vh;
     overflow-y: auto;
   }
-  
+
   &__subtitle {
     font-size: 28rpx;
     color: #666;
     margin-bottom: 32rpx;
   }
-  
+
   &__reasons {
     margin-bottom: 32rpx;
   }
-  
+
   &__reason-item {
     display: flex;
     align-items: center;
@@ -350,37 +316,37 @@ const handleConfirm = () => {
     border-bottom: 1px solid #f5f5f5;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    
+
     &:last-child {
       border-bottom: none;
     }
-    
+
     &:active {
       background-color: #f8f8f8;
     }
-    
+
     &--active {
       .zx-order-cancel-panel__reason-text {
         color: var(--primary-color, #007aff);
       }
     }
   }
-  
+
   &__reason-text {
     font-size: 28rpx;
     color: #333;
     flex: 1;
     transition: color 0.2s ease;
   }
-  
+
   &__reason-icon {
     margin-left: 16rpx;
   }
-  
+
   &__other-input {
     margin-top: 24rpx;
   }
-  
+
   &__footer {
     display: flex;
     gap: 24rpx;
@@ -389,7 +355,7 @@ const handleConfirm = () => {
     border-top: 1px solid #f5f5f5;
     background-color: #fff;
   }
-  
+
   &__cancel-btn {
     flex: 1;
     height: 88rpx;
@@ -397,7 +363,7 @@ const handleConfirm = () => {
     background-color: #fff;
     color: #666;
   }
-  
+
   &__confirm-btn {
     flex: 1;
     height: 88rpx;
@@ -410,36 +376,36 @@ const handleConfirm = () => {
     &__content {
       background-color: #1c1c1e;
     }
-    
+
     &__title {
       color: #fff;
     }
-    
+
     &__subtitle {
       color: #999;
     }
-    
+
     &__reason-text {
       color: #fff;
     }
-    
+
     &__reason-item {
       border-bottom-color: #2c2c2e;
-      
+
       &:active {
         background-color: #2c2c2e;
       }
     }
-    
+
     &__header {
       border-bottom-color: #2c2c2e;
     }
-    
+
     &__footer {
       background-color: #1c1c1e;
       border-top-color: #2c2c2e;
     }
-    
+
     &__cancel-btn {
       background-color: #2c2c2e;
       border-color: #444;

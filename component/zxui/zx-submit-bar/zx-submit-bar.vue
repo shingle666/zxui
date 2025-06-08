@@ -1,33 +1,22 @@
 <template>
-  <view
-    class="zx-submit-bar"
-    :class="{ 'zx-safe-area-bottom': safeAreaInsetBottom }"
-  >
+  <view class="zx-submit-bar" :class="{ 'zx-safe-area-bottom': safeAreaInsetBottom }">
     <!-- 顶部插槽 -->
     <slot name="top"></slot>
-    
+
     <!-- 提示信息 -->
     <view v-if="tip || $slots.tip" class="zx-submit-bar__tip">
-      <zx-icon
-        v-if="tipIcon"
-        :name="tipIcon"
-        class="zx-submit-bar__tip-icon"
-      ></zx-icon>
+      <zx-icon v-if="tipIcon" :name="tipIcon" class="zx-submit-bar__tip-icon"></zx-icon>
       <text v-if="tip" class="zx-submit-bar__tip-text">{{ tip }}</text>
       <slot name="tip"></slot>
     </view>
-    
+
     <!-- 订单栏 -->
     <view class="zx-submit-bar__bar">
       <!-- 默认插槽 -->
       <slot></slot>
-      
+
       <!-- 金额信息 -->
-      <view
-        class="zx-submit-bar__text"
-        :style="{ textAlign: textAlign }"
-        v-if="typeof price === 'number'"
-      >
+      <view class="zx-submit-bar__text" :style="{ textAlign: textAlign }" v-if="typeof price === 'number'">
         <text>{{ label || '合计：' }}</text>
         <text class="zx-submit-bar__price">
           {{ currency }}
@@ -36,19 +25,12 @@
         </text>
         <text v-if="suffixLabel" class="zx-submit-bar__suffix-label">{{ suffixLabel }}</text>
       </view>
-      
+
       <!-- 按钮插槽 -->
       <slot name="button">
-        <zx-button
-          round
-          :type="buttonType"
-          :color="buttonColor"
-          :loading="loading"
-          :disabled="disabled"
-          class="zx-submit-bar__button"
-          :class="[`zx-submit-bar__button--${buttonType}`]"
-          @click="onSubmit"
-        >{{ buttonText }}</zx-button>
+        <zx-button round :type="buttonType" :color="buttonColor" :loading="loading" :disabled="disabled"
+          class="zx-submit-bar__button" :class="[`zx-submit-bar__button--${buttonType}`]" @click="onSubmit">{{
+            buttonText }}</zx-button>
       </slot>
     </view>
   </view>
@@ -77,6 +59,9 @@
  * @event {Function} submit            按钮点击事件回调
  */
 import { computed, ref } from 'vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue';
+
 
 const props = defineProps({
   // 金额（单位分）
@@ -173,25 +158,25 @@ const onSubmit = () => {
   width: 100%;
   background-color: #fff;
   user-select: none;
-  
+
   &__tip {
     padding: 8rpx 24rpx;
     color: #f56723;
     font-size: 24rpx;
     line-height: 1.5;
     background-color: #fff7e8;
-    
+
     &-icon {
       margin-right: 8rpx;
       font-size: 24rpx;
       vertical-align: middle;
     }
-    
+
     &-text {
       vertical-align: middle;
     }
   }
-  
+
   &__bar {
     display: flex;
     align-items: center;
@@ -200,40 +185,40 @@ const onSubmit = () => {
     padding: 0 32rpx;
     font-size: 28rpx;
   }
-  
+
   &__text {
     flex: 1;
     padding-right: 24rpx;
     color: #323233;
-    
+
     span {
       display: inline-block;
     }
   }
-  
+
   &__suffix-label {
     margin-left: 10rpx;
     font-weight: 500;
   }
-  
+
   &__price {
     color: #ee0a24;
     font-weight: 500;
     font-size: 24rpx;
     margin-left: 10rpx;
-    
+
     &-integer {
       font-size: 40rpx;
       font-family: Avenir-Heavy, PingFang SC, Helvetica Neue, Arial, sans-serif;
     }
   }
-  
+
   &__button {
     width: 220rpx;
     height: 80rpx;
     font-weight: 500;
     border: none;
-    
+
     &--danger {
       background: linear-gradient(to right, #ff6034, #ee0a24);
     }

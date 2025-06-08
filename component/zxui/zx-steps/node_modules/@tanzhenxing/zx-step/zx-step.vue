@@ -1,32 +1,28 @@
 <template>
-	<view 
-		class="zx-step" 
-		:class="[
-			isVertical ? 'is-vertical' : '',
-			isSimple ? 'is-simple' : '',
-			isLast ? 'is-last' : '',
-			isCenter ? 'is-center' : '',
-			isActive ? 'is-active' : '',
-			status ? `is-${status}` : ''
-		]"
-		:style="style"
-	>
+	<view class="zx-step" :class="[
+		isVertical ? 'is-vertical' : '',
+		isSimple ? 'is-simple' : '',
+		isLast ? 'is-last' : '',
+		isCenter ? 'is-center' : '',
+		isActive ? 'is-active' : '',
+		status ? `is-${status}` : ''
+	]" :style="style">
 		<!-- 水平连接线 -->
 		<view v-if="!isSimple && !isVertical && !isLast" class="zx-step__line" :style="lineStyle">
 			<view class="zx-step__line-inner" :style="lineInnerStyle"></view>
 		</view>
-		
+
 		<!-- 垂直连接线 -->
 		<view v-if="!isSimple && isVertical && !isLast" class="zx-step__line">
 			<view class="zx-step__line-inner" :style="lineInnerStyle"></view>
 		</view>
-		
+
 		<!-- 图标部分 -->
 		<view class="zx-step__icon" :class="`is-${currentIcon ? 'icon' : 'text'}`">
 			<view v-if="currentIcon" class="zx-step__icon-inner">
 				<!-- 自定义图标 -->
 				<slot name="icon">
-					<text class="zx-step__icon-custom" :style="{ color: isActive ? activeColor : '' }">{{ currentIcon }}</text>
+					<zx-icon :name="currentIcon" class="zx-step__icon-custom" :color="isActive ? activeColor : ''"></zx-icon>
 				</slot>
 			</view>
 			<view v-else class="zx-step__icon-inner">
@@ -35,7 +31,7 @@
 				<text v-else class="zx-step__number-simple">{{ index + 1 }}</text>
 			</view>
 		</view>
-		
+
 		<!-- 主要内容 -->
 		<view class="zx-step__main">
 			<view class="zx-step__title" :style="{ 'max-width': stepsCount > 1 ? 100 / stepsCount + '%' : '' }">
@@ -43,7 +39,7 @@
 					<text :style="{ color: isActive ? activeColor : '' }">{{ title }}</text>
 				</slot>
 			</view>
-			
+
 			<view v-if="!isSimple && description" class="zx-step__description">
 				<slot name="description">
 					<text>{{ description }}</text>
@@ -55,6 +51,7 @@
 
 <script setup>
 import { ref, inject, computed, onBeforeUnmount, getCurrentInstance } from 'vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
 
 /**
  * zx-step 步骤组件
@@ -63,8 +60,8 @@ import { ref, inject, computed, onBeforeUnmount, getCurrentInstance } from 'vue'
  * @property {String} description - 步骤描述文案，简洁模式下不显示
  * @property {String} icon - 自定义图标，如果设置则覆盖默认的数字图标
  * @property {String} status - 设置当前步骤的状态，可选值为wait/process/finish/error/success，优先级高于 zx-steps 设置的状态
- */ 
- 
+ */
+
 
 // Props定义
 const props = defineProps({
@@ -110,10 +107,10 @@ const style = computed(() => {
 	const style = {};
 	if (parent.props.space) {
 		// 如果指定了间距
-		const space = typeof parent.props.space === 'number' 
-			? parent.props.space + 'px' 
+		const space = typeof parent.props.space === 'number'
+			? parent.props.space + 'px'
 			: parent.props.space;
-		
+
 		if (parent.props.direction === 'horizontal') {
 			style.flexBasis = `calc((100% - ${space} * ${stepsCount.value - 1}) / ${stepsCount.value})`;
 			if (index.value < stepsCount.value - 1) {
@@ -137,7 +134,7 @@ const lineStyle = computed(() => {
 const currentStatus = computed(() => {
 	// 优先使用组件自身状态
 	if (props.status) return props.status;
-	
+
 	// 根据激活索引计算状态
 	if (parent.props.active > index.value) {
 		// 已完成步骤
@@ -146,7 +143,7 @@ const currentStatus = computed(() => {
 		// 当前激活步骤
 		return parent.props.processStatus;
 	}
-	
+
 	// 未开始步骤
 	return 'wait';
 });
@@ -155,9 +152,9 @@ const currentStatus = computed(() => {
 const currentIcon = computed(() => props.icon);
 
 // 是否为活动状态
-const isActive = computed(() => 
-	currentStatus.value === 'process' || 
-	currentStatus.value === 'finish' || 
+const isActive = computed(() =>
+	currentStatus.value === 'process' ||
+	currentStatus.value === 'finish' ||
 	currentStatus.value === 'success'
 );
 
@@ -181,13 +178,13 @@ const lineInnerStyle = computed(() => {
 	const style = {
 		transition: 'all 150ms ease-in-out'
 	};
-	
+
 	// 如果步骤已完成，线条也显示完成状态
 	if (currentStatus.value === 'finish' || currentStatus.value === 'success') {
 		style.borderColor = activeColor.value;
 		style.width = '100%';
 	}
-	
+
 	return style;
 });
 </script>
@@ -434,4 +431,4 @@ const lineInnerStyle = computed(() => {
 .zx-step.is-simple.is-success::after {
 	background-color: #67c23a;
 }
-</style> 
+</style>

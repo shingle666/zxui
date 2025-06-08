@@ -1,24 +1,15 @@
 <template>
-	<view 
-		:class="['zx-switch', { 'zx-switch--disabled': disabled, 'zx-switch--loading': loading }]"
-		:style="getSwitchStyle()" 
-		@click="handleClick"
-		:aria-label="ariaLabel"
-		:aria-checked="switchStatus"
-		role="switch"
-		:tabindex="disabled ? -1 : 0"
-	>
+	<view :class="['zx-switch', { 'zx-switch--disabled': disabled, 'zx-switch--loading': loading }]"
+		:style="getSwitchStyle()" @click="handleClick" :aria-label="ariaLabel" :aria-checked="switchStatus"
+		role="switch" :tabindex="disabled ? -1 : 0">
 		<!-- 滑块圆点 -->
-		<view 
-			:class="['zx-switch__core', { 'zx-switch__core--checked': switchStatus }]"
-			:style="getCoreStyle()"
-		>
+		<view :class="['zx-switch__core', { 'zx-switch__core--checked': switchStatus }]" :style="getCoreStyle()">
 			<!-- 加载图标 -->
 			<view v-if="loading" class="zx-switch__loading">
 				<view class="zx-switch__loading-icon"></view>
 			</view>
 		</view>
-		
+
 		<!-- 文本显示 -->
 		<view v-if="showText" class="zx-switch__text" :style="getTextStyle()">
 			<text :style="{ color: textColor }">
@@ -168,13 +159,13 @@ const getSizeConfig = computed(() => {
 			coreSize: props.size - 4
 		};
 	}
-	
+
 	const sizeMap = {
 		large: { width: 80, height: 40, coreSize: 36 },
 		default: { width: 60, height: 30, coreSize: 26 },
 		small: { width: 44, height: 22, coreSize: 18 }
 	};
-	
+
 	return sizeMap[props.size] || sizeMap.default;
 });
 
@@ -197,9 +188,9 @@ const getSwitchStyle = () => {
 // 滑块样式
 const getCoreStyle = () => {
 	const sizeConfig = getSizeConfig.value;
-	const translateX = switchStatus.value ? 
+	const translateX = switchStatus.value ?
 		(sizeConfig.width - sizeConfig.coreSize - 4) : 2;
-	
+
 	return {
 		width: sizeConfig.coreSize + 'rpx',
 		height: sizeConfig.coreSize + 'rpx',
@@ -233,9 +224,9 @@ const getTextStyle = () => {
 // 处理点击事件
 const handleClick = async () => {
 	if (props.disabled || props.loading || isChanging.value) return;
-	
+
 	const newValue = switchStatus.value ? props.inactiveValue : props.activeValue;
-	
+
 	// 执行 beforeChange 钩子
 	if (props.beforeChange) {
 		isChanging.value = true;
@@ -251,10 +242,10 @@ const handleClick = async () => {
 		}
 		isChanging.value = false;
 	}
-	
+
 	// 更新状态
 	switchStatus.value = !switchStatus.value;
-	
+
 	// 触发事件
 	emit('update:modelValue', newValue);
 	emit('change', newValue);
@@ -341,6 +332,7 @@ if (parent && parent.childrens) {
 	0% {
 		transform: rotate(0deg);
 	}
+
 	100% {
 		transform: rotate(360deg);
 	}
@@ -358,4 +350,3 @@ if (parent && parent.childrens) {
 	}
 }
 </style>
-

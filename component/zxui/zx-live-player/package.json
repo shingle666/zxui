@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-live-player",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "`zx-live-player` 是基于uni-app官方 `live-player` 组件的增强版封装，提供了更加易用的接口和更完善的功能。",
   "main": "index.js",
   "scripts": {

@@ -1,19 +1,16 @@
 <template>
 	<block v-if="position === 'top'">
-		<view
-			class="zx-tips-class zx-toptips"
+		<view class="zx-tips-class zx-toptips"
 			:style="{ backgroundColor: backgroundColor, color: color, fontSize: size + 'rpx', ...customStyle }"
-			:class="[show ? 'zx-top-show' : '']"
-		>
+			:class="[show ? 'zx-top-show' : '']">
 			{{ msg }}
 		</view>
 	</block>
 	<block v-else>
-		<view
-			class="zx-tips-class zx-toast"
-			:class="[position === 'center' ? 'zx-centertips' : 'zx-bottomtips', show ? 'zx-toast-show' : '']"
-		>
-			<view class="zx-tips-content" :style="{ backgroundColor: backgroundColor, color: color, fontSize: size + 'rpx', ...customStyle }">
+		<view class="zx-tips-class zx-toast"
+			:class="[position === 'center' ? 'zx-centertips' : 'zx-bottomtips', show ? 'zx-toast-show' : '']">
+			<view class="zx-tips-content"
+				:style="{ backgroundColor: backgroundColor, color: color, fontSize: size + 'rpx', ...customStyle }">
 				{{ msg }}
 			</view>
 		</view>

@@ -1,49 +1,26 @@
 <template>
 	<view class="zx-popover">
 		<!-- 使用zx-overlay作为弹窗背景遮罩 -->
-		<zx-overlay
-			v-if="overlay"
-			:show="showPopover"
-			@click="overlayClick"
-			:opacity="0.1"
-			:zIndex="zIndex - 1"
-		></zx-overlay>
-		
+		<zx-overlay v-if="overlay" :show="showPopover" @click="overlayClick" :opacity="0.1"
+			:zIndex="zIndex - 1"></zx-overlay>
+
 		<!-- 触发元素 -->
-		<view 
-			ref="referenceEl"
-			class="zx-popover__reference"
-			@click="handleClick"
-			@mouseenter="handleMouseEnter"
-			@mouseleave="handleMouseLeave"
-			@focus="handleFocus"
-			@contextmenu="handleContextMenu"
-		>
+		<view ref="referenceEl" class="zx-popover__reference" @click="handleClick" @mouseenter="handleMouseEnter"
+			@mouseleave="handleMouseLeave" @focus="handleFocus" @contextmenu="handleContextMenu">
 			<slot name="reference"></slot>
 		</view>
-		
+
 		<!-- 弹出层内容 -->
-		<zx-transition 
-			:show="showPopover" 
-			:mode="'fade'" 
-			:duration="duration"
-			@afterEnter="onAfterEnter"
-			@afterLeave="onAfterLeave"
-		>
-			<view
-				class="zx-popover__content"
-				:class="[`zx-popover__content--${placement}`]"
-				:style="[contentStyle]"
-				@click.stop="noop"
-				@mouseenter="handleContentEnter"
-				@mouseleave="handleContentLeave"
-			>
+		<zx-transition :show="showPopover" :mode="'fade'" :duration="duration" @afterEnter="onAfterEnter"
+			@afterLeave="onAfterLeave">
+			<view class="zx-popover__content" :class="[`zx-popover__content--${placement}`]" :style="[contentStyle]"
+				@click.stop="noop" @mouseenter="handleContentEnter" @mouseleave="handleContentLeave">
 				<!-- 箭头 -->
 				<view v-if="showArrow" class="zx-popover__arrow" :class="[`zx-popover__arrow--${placement}`]"></view>
-				
+
 				<!-- 标题 -->
 				<view v-if="title" class="zx-popover__title">{{ title }}</view>
-				
+
 				<!-- 内容 -->
 				<view class="zx-popover__body">
 					<slot>{{ content }}</slot>
@@ -82,6 +59,8 @@
  * @example <zx-popover content="提示内容"><button>点击我</button></zx-popover>
  */
 import { ref, computed, watch, onMounted, onBeforeUnmount, getCurrentInstance } from 'vue';
+import zxTransition from '@tanzhenxing/zx-transition/zx-transition.vue'
+import zxOverlay from '@tanzhenxing/zx-overlay/zx-overlay.vue'
 
 const { proxy } = getCurrentInstance();
 
@@ -204,13 +183,13 @@ const contentStyle = computed(() => {
 		width: typeof props.width === 'number' ? `${props.width}rpx` : props.width,
 		zIndex: props.zIndex
 	};
-	
+
 	// 根据主题设置样式
 	if (props.effect === 'dark') {
 		style.backgroundColor = '#303133';
 		style.color = '#fff';
 	}
-	
+
 	return style;
 });
 
@@ -218,7 +197,7 @@ const contentStyle = computed(() => {
 const show = () => {
 	if (props.disabled) return;
 	clearTimeout(hideTimer);
-	
+
 	if (props.showAfter > 0) {
 		showTimer = setTimeout(() => {
 			showPopover.value = true;
@@ -233,7 +212,7 @@ const show = () => {
 // 隐藏弹出框
 const hide = () => {
 	clearTimeout(showTimer);
-	
+
 	if (props.hideAfter > 0) {
 		hideTimer = setTimeout(() => {
 			showPopover.value = false;
@@ -331,9 +310,9 @@ const noop = (e) => {
 // 点击外部
 const handleClickOutside = (e) => {
 	if (
-		showPopover.value && 
-		props.closeOnClickOutside && 
-		referenceEl.value && 
+		showPopover.value &&
+		props.closeOnClickOutside &&
+		referenceEl.value &&
 		!referenceEl.value.contains(e.target)
 	) {
 		hide();
@@ -345,7 +324,7 @@ onMounted(() => {
 	if (props.trigger === 'manual' && props.show) {
 		show();
 	}
-	
+
 	// #ifdef H5
 	// 添加点击外部事件监听
 	document.addEventListener('click', handleClickOutside);
@@ -357,7 +336,7 @@ onBeforeUnmount(() => {
 	// 移除点击外部事件监听
 	document.removeEventListener('click', handleClickOutside);
 	// #endif
-	
+
 	// 清除定时器
 	clearTimeout(showTimer);
 	clearTimeout(hideTimer);
@@ -374,12 +353,12 @@ defineExpose({
 .zx-popover {
 	position: relative;
 	display: inline-block;
-	
+
 	&__reference {
 		display: inline-flex;
 		position: relative;
 	}
-	
+
 	&__content {
 		position: absolute;
 		padding: 20rpx;
@@ -389,174 +368,182 @@ defineExpose({
 		line-height: 1.4;
 		min-width: 200rpx;
 		box-sizing: border-box;
-		
+
 		// 顶部显示
 		&--top {
 			bottom: 100%;
 			left: 50%;
 			transform: translateX(-50%) translateY(-20rpx);
 		}
-		
+
 		&--top-start {
 			bottom: 100%;
 			left: 0;
 			transform: translateY(-20rpx);
 		}
-		
+
 		&--top-end {
 			bottom: 100%;
 			right: 0;
 			transform: translateY(-20rpx);
 		}
-		
+
 		// 底部显示
 		&--bottom {
 			top: 100%;
 			left: 50%;
 			transform: translateX(-50%) translateY(20rpx);
 		}
-		
+
 		&--bottom-start {
 			top: 100%;
 			left: 0;
 			transform: translateY(20rpx);
 		}
-		
+
 		&--bottom-end {
 			top: 100%;
 			right: 0;
 			transform: translateY(20rpx);
 		}
-		
+
 		// 左侧显示
 		&--left {
 			right: 100%;
 			top: 50%;
 			transform: translateY(-50%) translateX(-20rpx);
 		}
-		
+
 		&--left-start {
 			right: 100%;
 			top: 0;
 			transform: translateX(-20rpx);
 		}
-		
+
 		&--left-end {
 			right: 100%;
 			bottom: 0;
 			transform: translateX(-20rpx);
 		}
-		
+
 		// 右侧显示
 		&--right {
 			left: 100%;
 			top: 50%;
 			transform: translateY(-50%) translateX(20rpx);
 		}
-		
+
 		&--right-start {
 			left: 100%;
 			top: 0;
 			transform: translateX(20rpx);
 		}
-		
+
 		&--right-end {
 			left: 100%;
 			bottom: 0;
 			transform: translateX(20rpx);
 		}
 	}
-	
+
 	&__arrow {
 		position: absolute;
 		width: 0;
 		height: 0;
 		border: 12rpx solid transparent;
-		
+
 		// 箭头指向下方（内容在上方）
-		&--top, &--top-start, &--top-end {
+		&--top,
+		&--top-start,
+		&--top-end {
 			bottom: -12rpx;
 			border-top-color: #fff;
 		}
-		
+
 		&--top {
 			left: 50%;
 			transform: translateX(-50%);
 		}
-		
+
 		&--top-start {
 			left: 40rpx;
 		}
-		
+
 		&--top-end {
 			right: 40rpx;
 		}
-		
+
 		// 箭头指向上方（内容在下方）
-		&--bottom, &--bottom-start, &--bottom-end {
+		&--bottom,
+		&--bottom-start,
+		&--bottom-end {
 			top: -12rpx;
 			border-bottom-color: #fff;
 		}
-		
+
 		&--bottom {
 			left: 50%;
 			transform: translateX(-50%);
 		}
-		
+
 		&--bottom-start {
 			left: 40rpx;
 		}
-		
+
 		&--bottom-end {
 			right: 40rpx;
 		}
-		
+
 		// 箭头指向右方（内容在左方）
-		&--left, &--left-start, &--left-end {
+		&--left,
+		&--left-start,
+		&--left-end {
 			right: -12rpx;
 			border-left-color: #fff;
 		}
-		
+
 		&--left {
 			top: 50%;
 			transform: translateY(-50%);
 		}
-		
+
 		&--left-start {
 			top: 40rpx;
 		}
-		
+
 		&--left-end {
 			bottom: 40rpx;
 		}
-		
+
 		// 箭头指向左方（内容在右方）
-		&--right, &--right-start, &--right-end {
+		&--right,
+		&--right-start,
+		&--right-end {
 			left: -12rpx;
 			border-right-color: #fff;
 		}
-		
+
 		&--right {
 			top: 50%;
 			transform: translateY(-50%);
 		}
-		
+
 		&--right-start {
 			top: 40rpx;
 		}
-		
+
 		&--right-end {
 			bottom: 40rpx;
 		}
 	}
-	
+
 	&__title {
 		font-size: 32rpx;
 		line-height: 1;
 		margin-bottom: 12rpx;
 		font-weight: bold;
 	}
-	
+
 	&__body {
 		font-size: 28rpx;
 		color: #606266;
@@ -569,29 +556,38 @@ defineExpose({
 		&__content {
 			background-color: #303133;
 		}
-		
+
 		&__arrow {
-			&--top, &--top-start, &--top-end {
+
+			&--top,
+			&--top-start,
+			&--top-end {
 				border-top-color: #303133;
 			}
-			
-			&--bottom, &--bottom-start, &--bottom-end {
+
+			&--bottom,
+			&--bottom-start,
+			&--bottom-end {
 				border-bottom-color: #303133;
 			}
-			
-			&--left, &--left-start, &--left-end {
+
+			&--left,
+			&--left-start,
+			&--left-end {
 				border-left-color: #303133;
 			}
-			
-			&--right, &--right-start, &--right-end {
+
+			&--right,
+			&--right-start,
+			&--right-end {
 				border-right-color: #303133;
 			}
 		}
-		
+
 		&__title {
 			color: #fff;
 		}
-		
+
 		&__body {
 			color: #e5eaf3;
 		}

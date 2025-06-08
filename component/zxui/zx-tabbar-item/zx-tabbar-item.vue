@@ -1,28 +1,18 @@
 <template>
-	<view
-		class="zx-tabbar-item"
-		:style="customStyle"
-		@click.stop="onClick"
-	>
-		<zx-badge
-			v-if="dot || badge"
-			:isDot="!!dot"
-			:text="badge"
-			:style="badgeStyle"
-			type="primary"
-			max="99"
-			absolute="rightTop"
-			bgColor="#ff0000"
-		>
+	<view class="zx-tabbar-item" :style="customStyle" @click.stop="onClick">
+		<zx-badge v-if="dot || badge" :isDot="!!dot" :text="badge" :style="badgeStyle" type="primary" max="99"
+			absolute="rightTop" bgColor="#ff0000">
 			<view style="display: flex;flex-direction: column;align-items: center;">
 				<zx-icon v-if="icon" :name="icon" :color="active ? activeColor : inactiveColor" size="45rpx"></zx-icon>
-				<zx-text :text="text" :color="active ? activeColor : inactiveColor" lines="1" size="30rpx" lineHeight="40rpx"></zx-text>
+				<zx-text :text="text" :color="active ? activeColor : inactiveColor" lines="1" size="30rpx"
+					lineHeight="40rpx"></zx-text>
 			</view>
 		</zx-badge>
 		<template v-else>
 			<view style="display: flex;flex-direction: column;align-items: center;">
 				<zx-icon v-if="icon" :name="icon" :color="active ? activeColor : inactiveColor" size="45rpx"></zx-icon>
-				<zx-text :text="text" :color="active ? activeColor : inactiveColor" lines="1" size="30rpx" lineHeight="40rpx"></zx-text>
+				<zx-text :text="text" :color="active ? activeColor : inactiveColor" lines="1" size="30rpx"
+					lineHeight="40rpx"></zx-text>
 			</view>
 		</template>
 	</view>
@@ -30,6 +20,9 @@
 
 <script setup>
 import { computed } from 'vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
+import zxText from '@tanzhenxing/zx-text/zx-text.vue';
+import zxBadge from '@tanzhenxing/zx-badge/zx-badge.vue';
 
 const props = defineProps({
 	name: [String, Number, null],
@@ -74,5 +67,6 @@ function onClick() {
 :host {
 	flex: 1;
 }
+
 /* #endif */
 </style>

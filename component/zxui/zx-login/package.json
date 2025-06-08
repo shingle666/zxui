@@ -1,6 +1,6 @@
 {
-  "name": "zx-login",
-  "version": "1.0.0",
+  "name": "@tanzhenxing/zx-login",
+  "version": "1.0.1",
   "description": "一个功能完整的登录组件，支持账号密码登录和手机验证码登录两种方式，兼容 H5、小程序和 App 平台",
   "main": "zx-login.vue",
   "keywords": [
@@ -13,16 +13,9 @@
     "miniprogram",
     "app"
   ],
-  "author": "zxui",
+  "author": "tanzhenxing",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/zxui/zx-login"
-  },
-  "bugs": {
-    "url": "https://github.com/zxui/zx-login/issues"
-  },
-  "homepage": "https://github.com/zxui/zx-login#readme",
+  "homepage": "https://zxui.org",
   "files": [
     "zx-login.vue",
     "README.md"
@@ -47,5 +40,9 @@
       "mp-qq",
       "app-plus"
     ]
+  },
+  "dependencies": {
+    "@tanzhenxing/zx-button": "^1.0.6",
+    "@tanzhenxing/zx-input": "^1.0.10"
   }
 }

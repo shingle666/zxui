@@ -77,7 +77,7 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-import zxIcon from '../zx-icon/zx-icon.vue'
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
 
 // props 定义
 const props = defineProps({

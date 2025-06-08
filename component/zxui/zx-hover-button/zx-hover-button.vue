@@ -1,34 +1,21 @@
 <template>
-  <view 
-    class="zx-hover-button"
-    :class="[
-      `zx-hover-button--${position}`,
-      {
-        'zx-hover-button--shadow': shadow,
-        'zx-hover-button--disabled': disabled
-      }
-    ]"
-    :style="buttonStyle"
-    @click="handleClick"
-  >
+  <view class="zx-hover-button" :class="[
+    `zx-hover-button--${position}`,
+    {
+      'zx-hover-button--shadow': shadow,
+      'zx-hover-button--disabled': disabled
+    }
+  ]" :style="buttonStyle" @click="handleClick">
     <!-- 图标插槽 -->
     <slot name="icon" v-if="!$slots.default">
-      <zx-icon 
-        :name="icon" 
-        :size="iconSize" 
-        :color="iconColor"
-      />
+      <zx-icon :name="icon" :size="iconSize" :color="iconColor" />
     </slot>
-    
+
     <!-- 默认内容插槽 -->
     <slot></slot>
-    
+
     <!-- 文本标签 -->
-    <view 
-      v-if="text && showText" 
-      class="zx-hover-button__text"
-      :style="textStyle"
-    >
+    <view v-if="text && showText" class="zx-hover-button__text" :style="textStyle">
       {{ text }}
     </view>
   </view>
@@ -36,6 +23,8 @@
 
 <script setup>
 import { ref, computed, getCurrentInstance } from 'vue'
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+
 
 const { proxy } = getCurrentInstance()
 
@@ -142,7 +131,7 @@ const buttonStyle = computed(() => {
   const margin = typeof props.margin === 'number' ? `${props.margin}px` : props.margin
   const bottom = typeof props.bottom === 'number' ? `${props.bottom}px` : props.bottom
   const top = typeof props.top === 'number' ? `${props.top}px` : props.top
-  
+
   const baseStyle = {
     width: size,
     height: size,
@@ -150,20 +139,20 @@ const buttonStyle = computed(() => {
     zIndex: props.zIndex,
     ...props.customStyle
   }
-  
+
   // 根据位置设置定位
   if (props.position.includes('left')) {
     baseStyle.left = margin
   } else {
     baseStyle.right = margin
   }
-  
+
   if (props.position.includes('top')) {
     baseStyle.top = top
   } else {
     baseStyle.bottom = bottom
   }
-  
+
   return baseStyle
 })
 
@@ -194,24 +183,24 @@ const handleClick = (event) => {
   cursor: pointer;
   transition: all 0.3s ease;
   user-select: none;
-  
+
   &:active {
     transform: scale(0.95);
   }
-  
+
   &--shadow {
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
   }
-  
+
   &--disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    
+
     &:active {
       transform: none;
     }
   }
-  
+
   &__text {
     position: absolute;
     padding: 4px 8px;
@@ -219,13 +208,13 @@ const handleClick = (event) => {
     font-size: 12px;
     white-space: nowrap;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-    
+
     .zx-hover-button--left-top &,
     .zx-hover-button--left-bottom & {
       right: 100%;
       margin-right: 8px;
     }
-    
+
     .zx-hover-button--right-top &,
     .zx-hover-button--right-bottom & {
       left: 100%;
@@ -243,5 +232,6 @@ const handleClick = (event) => {
 .zx-hover-button--disabled:hover {
   transform: none;
 }
+
 /* #endif */
 </style>
