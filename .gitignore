@@ -20,3 +20,4 @@ dist
 *.sw?
 
 unpackage
+node_modules
