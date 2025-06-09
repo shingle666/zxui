@@ -1,13 +1,18 @@
 {
-  "name": "zx-order-cancel-panel",
+  "name": "@tanzhenxing/zx-order-cancel-panel",
   "version": "1.0.1",
   "description": "`zx-order-cancel-panel` 是一个用于订单取消的底部弹出面板组件，提供了取消原因选择和自定义输入功能。",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "订单取消",
+    "底部弹出面板",
+    "取消原因选择",
+    "自定义输入"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {

@@ -1,13 +1,19 @@
 {
-  "name": "zx-floating-panel",
+  "name": "@tanzhenxing/zx-floating-panel",
   "version": "1.0.1",
   "description": "浮动在页面底部的面板，可以上下拖动来浏览内容，常用于提供额外的功能或信息。",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "浮动面板",
+    "底部面板",
+    "拖动浏览",
+    "额外功能",
+    "信息提供"
+  ],
+  "author": "tanzhenxing",
   "license": "ISC",
   "type": "commonjs"
 }

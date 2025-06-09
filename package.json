@@ -147,6 +147,7 @@
     "@tanzhenxing/zx-search-bar": "^1.0.3",
     "@tanzhenxing/zx-section": "^1.0.3",
     "@tanzhenxing/zx-select": "^1.0.3",
+    "@tanzhenxing/zx-share-sheet": "^1.0.1",
     "@tanzhenxing/zx-sidebar": "^1.0.1",
     "@tanzhenxing/zx-sidebar-item": "^1.0.1",
     "@tanzhenxing/zx-sign": "^1.0.4",
