@@ -3,7 +3,7 @@
  * 基于项目的请求工具封装所有AI相关接口
  */
 
-import requestModule from './request.js'
+import requestModule from '../src/utils/request.js'
 import XRequest from './x-request.js'
 
 // 解构获取request方法
@@ -14,7 +14,7 @@ const { request } = requestModule
  * 直接使用 request.js 中定义的 BASE_URL、TIMEOUT 和 HEADER 函数
  */
 // 从 request.js 导入配置函数
-import { BASE_URL, TIMEOUT, HEADER } from './request.js'
+import { BASE_URL, TIMEOUT, HEADER } from '../src/utils/request.js'
 
 // 使用导入的配置函数
 const API_CONFIG = {

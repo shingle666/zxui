@@ -1,6 +1,5 @@
 <template>
-  <zx-popup v-model="showPopup" position="bottom" :safe-area-inset-bottom="true"
-    :close-on-click-overlay="closeOnClickOverlay" @close="onClose">
+  <zx-popup :show="showPopup" type="bottom" :maskClick="closeOnClickOverlay" @close="onClose">
     <view class="zx-address">
       <!-- 头部 -->
       <view class="zx-address__header">

@@ -1,42 +1,38 @@
 <template>
   <view class="content">
-    <zx-address-edit
-      :area-list="areaList"
-      show-delete
-      show-set-default
-      show-search-result
-      :search-result="searchResult"
-      :area-columns-placeholder="['请选择', '请选择', '请选择']"
-      @save="onSave"
-      @delete="onDelete"
-      @change-detail="onChangeDetail"
-    />
+    <zx-navbar title="address-edit"></zx-navbar>
+    <view>
+      <zx-address-edit :area-list="areaList" show-delete show-set-default show-search-result
+        :search-result="searchResult" :area-columns-placeholder="['请选择', '请选择', '请选择']" @save="onSave"
+        @delete="onDelete" @change-detail="onChangeDetail" />
+    </view>
   </view>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, getCurrentInstance } from 'vue';
+import { onLoad } from '@dcloudio/uni-app';
 import zxAddressEdit from '@tanzhenxing/zx-address-edit/zx-address-edit.vue';
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue';
+//import zxAddressEdit from '../../../component/zxui/zx-address-edit/zx-address-edit.vue';
 
-// 模拟省市区数据，实际项目中应从后端获取或使用静态数据
-const areaList = {
-  province_list: {
-    110000: '北京市',
-    120000: '天津市'
-  },
-  city_list: {
-    110100: '北京市',
-    120100: '天津市'
-  },
-  county_list: {
-    110101: '东城区',
-    110102: '西城区',
-    120101: '和平区',
-    120102: '河东区'
-  }
-};
+const { proxy } = getCurrentInstance();
+
+
+const areaList = ref(null);
 
 const searchResult = ref([]);
+
+onLoad(async () => {
+  await getAreaList();
+})
+
+const getAreaList = async () => {
+  const res = await proxy.$request.get('/json/area.json', {}, {
+    baseUrl: 'https://cdn.mp.ac.cn'
+  });
+  areaList.value = res;
+}
 
 const onSave = (info) => {
   console.log('save', info);
@@ -61,6 +57,8 @@ const onChangeDetail = (val) => {
     searchResult.value = [];
   }
 };
+
+
 </script>
 
 <style lang="scss" scoped>

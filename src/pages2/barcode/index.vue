@@ -3,7 +3,7 @@
 		<view class="header">
 			<text class="title">条形码组件示例</text>
 		</view>
-		
+
 		<view class="section">
 			<text class="section-title">基本用法</text>
 			<view class="demo-box">
@@ -11,55 +11,37 @@
 				<text class="demo-hint">长按条形码可保存到相册</text>
 			</view>
 		</view>
-		
+
 		<view class="section">
 			<text class="section-title">自定义样式</text>
 			<view class="custom-styles">
 				<view class="style-item">
-					<zx-barcode 
-						:text="basicText" 
-						:width="500" 
-						:height="120" 
-						foreground="#0066FF"
-						background="#F5F5F5"
-					></zx-barcode>
+					<zx-barcode :text="basicText" :width="500" :height="120" foreground="#0066FF"
+						background="#F5F5F5"></zx-barcode>
 					<text class="style-desc">自定义颜色</text>
 				</view>
 				<view class="style-item">
-					<zx-barcode 
-						:text="basicText" 
-						:width="500" 
-						:height="120" 
-						foreground="#FF0000"
-						background="#FFFFCC"
-					></zx-barcode>
+					<zx-barcode :text="basicText" :width="500" :height="120" foreground="#FF0000"
+						background="#FFFFCC"></zx-barcode>
 					<text class="style-desc">红色条形码</text>
 				</view>
 				<view class="style-item">
-					<zx-barcode 
-						:text="basicText" 
-						:width="500" 
-						:height="80"
-					></zx-barcode>
+					<zx-barcode :text="basicText" :width="500" :height="80"></zx-barcode>
 					<text class="style-desc">较窄条形码</text>
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="section">
 			<text class="section-title">动态更新内容</text>
 			<view class="dynamic-update">
 				<zx-barcode ref="dynamicBarcode" :text="dynamicText" :width="600" :height="150"></zx-barcode>
 				<view class="input-group">
-					<input 
-						class="barcode-input" 
-						v-model="dynamicText" 
-						placeholder="输入文本生成条形码"
-					/>
+					<input class="barcode-input" v-model="dynamicText" placeholder="输入文本生成条形码" />
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="section">
 			<text class="section-title">操作控制</text>
 			<view class="operation">
@@ -71,11 +53,11 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="section" v-if="barcodePath">
 			<text class="section-title">获取图片路径</text>
 			<view class="result-box">
-				<text class="path-text">{{barcodePath}}</text>
+				<text class="path-text">{{ barcodePath }}</text>
 			</view>
 		</view>
 	</view>
@@ -244,4 +226,4 @@ const changeText = () => {
 	color: #666;
 	word-break: break-all;
 }
-</style> 
+</style>

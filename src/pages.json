@@ -951,13 +951,6 @@
 					}
 				},
 				{
-					"path": "navbar/demo",
-					"style": {
-						"navigationBarTitleText": "zx-navbar 导航栏 demo",
-						"navigationStyle": "custom"
-					}
-				},
-				{
 					"path": "tabs/index",
 					"style": {
 						"navigationBarTitleText": "zx-tabs 标签页",
@@ -1544,37 +1537,16 @@
 					}
 				},
 				{
-					"path": "ai/use-x-agent",
-					"style": {
-						"navigationBarTitleText": "useXAgent 模型调度",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "ai/x-stream",
-					"style": {
-						"navigationBarTitleText": "XStream 流处理",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "ai/x-request",
-					"style": {
-						"navigationBarTitleText": "XRequest AI请求",
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "ai/use-x-chat",
-					"style": {
-						"navigationBarTitleText": "use-x-chat",
-						"navigationStyle": "custom"
-					}
-				},
-				{
 					"path": "ai/index",
 					"style": {
 						"navigationBarTitleText": "ai chat",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "demo/demo",
+					"style": {
+						"navigationBarTitleText": "demo",
 						"navigationStyle": "custom"
 					}
 				}

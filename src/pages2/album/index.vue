@@ -6,81 +6,35 @@
 		</view>
 
 		<!-- 基础用法 -->
-		<view class="section">
-			<view class="section-title">
-				<text>基础用法</text>
-			</view>
-			<view class="section-content">
-				<zx-album :urls="baseUrls"></zx-album>
-			</view>
-		</view>
+		<zx-section title="基础用法" padding>
+			<zx-album :urls="baseUrls"></zx-album>
+		</zx-section>
 
 		<!-- 单图展示 -->
-		<view class="section">
-			<view class="section-title">
-				<text>单图展示</text>
-			</view>
-			<view class="section-content">
-				<zx-album :urls="singleImageUrls" singleSize="400rpx"></zx-album>
-			</view>
-		</view>
+		<zx-section title="单图展示" padding>
+			<zx-album :urls="singleImageUrls" singleSize="400rpx"></zx-album>
+		</zx-section>
 
 		<!-- 自定义配置 -->
-		<view class="section">
-			<view class="section-title">
-				<text>自定义配置</text>
-			</view>
-			<view class="section-content">
-				<zx-album 
-					:urls="baseUrls" 
-					multipleSize="180rpx" 
-					space="20rpx" 
-					:rowCount="2"
-				></zx-album>
-			</view>
-		</view>
+		<zx-section title="自定义配置" padding>
+			<zx-album :urls="baseUrls" multipleSize="180rpx" space="20rpx" :rowCount="2"></zx-album>
+		</zx-section>
 
 		<!-- 可删除模式 -->
-		<view class="section">
-			<view class="section-title">
-				<text>可删除模式</text>
-			</view>
-			<view class="section-content">
-				<zx-album 
-					:urls="editableUrls" 
-					:deletable="true"
-					@delete="onImageDelete"
-				></zx-album>
-			</view>
-		</view>
+		<zx-section title="可删除模式" padding>
+			<zx-album :urls="editableUrls" :deletable="true" @delete="onImageDelete"></zx-album>
+		</zx-section>
 
 		<!-- 加载状态演示 -->
-		<view class="section">
-			<view class="section-title">
-				<text>加载状态</text>
-			</view>
-			<view class="section-content">
-				<zx-album 
-					:urls="baseUrls" 
-					:loading="isLoading"
-				></zx-album>
-				<button class="toggle-btn" @click="toggleLoading">切换加载状态</button>
-			</view>
-		</view>
+		<zx-section title="加载状态演示" padding>
+			<zx-album :urls="baseUrls" :loading="isLoading"></zx-album>
+			<zx-button class="toggle-btn" @click="toggleLoading">切换加载状态</zx-button>
+		</zx-section>
 
 		<!-- 对象数组形式 -->
-		<view class="section">
-			<view class="section-title">
-				<text>对象数组形式</text>
-			</view>
-			<view class="section-content">
-				<zx-album 
-					:urls="objectUrls" 
-					keyName="imageUrl"
-					@error="onImageError"
-				></zx-album>
-			</view>
-		</view>
+		<zx-section title="对象数组形式" padding>
+			<zx-album :urls="objectUrls" keyName="imageUrl" @error="onImageError"></zx-album>
+		</zx-section>
 	</view>
 </template>
 
@@ -88,6 +42,8 @@
 import { ref, reactive } from 'vue';
 // 引入组件
 import ZxAlbum from '@tanzhenxing/zx-album/zx-album.vue';
+import ZxSection from '@tanzhenxing/zx-section/zx-section.vue';
+import ZxButton from '@tanzhenxing/zx-button/zx-button.vue';
 
 // 基础图片列表
 const baseUrls = ref([
@@ -168,22 +124,7 @@ const onImageError = (data) => {
 	text-align: center;
 }
 
-.section {
-	margin-bottom: 50rpx;
-}
 
-.section-title {
-	font-size: 30rpx;
-	font-weight: bold;
-	margin-bottom: 20rpx;
-	color: #333;
-}
-
-.section-content {
-	background-color: #fff;
-	border-radius: 12rpx;
-	padding: 20rpx;
-}
 
 .toggle-btn {
 	margin-top: 20rpx;

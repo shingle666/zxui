@@ -1,111 +1,81 @@
 <template>
   <view>
     <zx-navbar title="动作面板"></zx-navbar>
-    
+
     <view class="container">
-    <!-- 基础用法 -->
-    <zx-section title="基础用法" padding type="line">
-      <zx-button @tap="openBasic">
-        打开基础动作面板
-      </zx-button>
-      <zx-action-sheet 
-        v-model:show="showBasic" 
-        :items="basicItems"
-        tips="这是一个基础动作面板"
-        @change="handleChange"
-        @cancel="handleCancel"
-      />
-    </zx-section>
-    
-    <!-- 暗色主题 -->
-    <zx-section title="暗色主题" padding type="line">
-      <zx-button @tap="openDark">
-        打开暗色主题动作面板
-      </zx-button>
-      <zx-action-sheet 
-        v-model:show="showDark" 
-        :items="darkItems"
-        tips="暗色主题动作面板"
-        theme="dark"
-        @change="handleChange"
-      />
-    </zx-section>
-    
-    <!-- 带图标和徽标 -->
-    <zx-section title="带图标和徽标" padding type="line">
-      <zx-button @tap="openWithIcons">
-        打开带图标的动作面板
-      </zx-button>
-      <zx-action-sheet 
-        v-model:show="showWithIcons" 
-        :items="iconItems"
-        @change="handleChange"
-      />
-    </zx-section>
-    
-    <!-- 禁用项 -->
-    <zx-section title="禁用项" padding type="line">
-      <zx-button @tap="openWithDisabled">
-        打开带禁用项的动作面板
-      </zx-button>
-      <zx-action-sheet 
-        v-model:show="showWithDisabled" 
-        :items="disabledItems"
-        @change="handleChange"
-      />
-    </zx-section>
-    
-    <!-- 不自动关闭 -->
-    <zx-section title="点击项不自动关闭" padding type="line">
-      <zx-button @tap="openNoAutoClose">
-        打开不自动关闭的动作面板
-      </zx-button>
-      <zx-action-sheet 
-        v-model:show="showNoAutoClose" 
-        :items="basicItems"
-        :close-on-item-click="false"
-        @change="handleNoAutoCloseChange"
-      />
-    </zx-section>
-    
-    <!-- 自定义样式 -->
-    <zx-section title="自定义样式" padding type="line">
-      <zx-button @tap="openCustomStyle">
-        打开自定义样式的动作面板
-      </zx-button>
-      <zx-action-sheet 
-        v-model:show="showCustomStyle" 
-        :items="customItems"
-        :custom-style="{ boxShadow: '0 -5rpx 20rpx rgba(0, 0, 0, 0.1)' }"
-        mask-color="rgba(0, 0, 0, 0.3)"
-        :item-font-size="30"
-        @change="handleChange"
-      />
-    </zx-section>
-    
-    <!-- 使用插槽 -->
-    <zx-section title="使用插槽" padding type="line">
-      <zx-button @tap="openWithSlots">
-        打开使用插槽的动作面板
-      </zx-button>
-      <zx-action-sheet 
-        v-model:show="showWithSlots" 
-        :items="basicItems"
-      >
-        <template #tips>
-          <view class="custom-tips">
-            <text class="custom-tips-title">自定义提示</text>
-            <text class="custom-tips-desc">这是一个通过插槽自定义的提示内容</text>
-          </view>
-        </template>
-        <template #cancel-button>
-          <view class="custom-cancel">
-            <text class="custom-cancel-text">关闭面板</text>
-          </view>
-        </template>
-      </zx-action-sheet>
-    </zx-section>
-  </view>
+      <!-- 基础用法 -->
+      <zx-section title="基础用法" padding type="line">
+        <zx-button @tap="openBasic">
+          打开基础动作面板
+        </zx-button>
+        <zx-action-sheet v-model:show="showBasic" :items="basicItems" tips="这是一个基础动作面板" @change="handleChange"
+          @cancel="handleCancel" />
+      </zx-section>
+
+      <!-- 暗色主题 -->
+      <zx-section title="暗色主题" padding type="line">
+        <zx-button @tap="openDark">
+          打开暗色主题动作面板
+        </zx-button>
+        <zx-action-sheet v-model:show="showDark" :items="darkItems" tips="暗色主题动作面板" theme="dark"
+          @change="handleChange" />
+      </zx-section>
+
+      <!-- 带图标和徽标 -->
+      <zx-section title="带图标和徽标" padding type="line">
+        <zx-button @tap="openWithIcons">
+          打开带图标的动作面板
+        </zx-button>
+        <zx-action-sheet v-model:show="showWithIcons" :items="iconItems" @change="handleChange" />
+      </zx-section>
+
+      <!-- 禁用项 -->
+      <zx-section title="禁用项" padding type="line">
+        <zx-button @tap="openWithDisabled">
+          打开带禁用项的动作面板
+        </zx-button>
+        <zx-action-sheet v-model:show="showWithDisabled" :items="disabledItems" @change="handleChange" />
+      </zx-section>
+
+      <!-- 不自动关闭 -->
+      <zx-section title="点击项不自动关闭" padding type="line">
+        <zx-button @tap="openNoAutoClose">
+          打开不自动关闭的动作面板
+        </zx-button>
+        <zx-action-sheet v-model:show="showNoAutoClose" :items="basicItems" :close-on-item-click="false"
+          @change="handleNoAutoCloseChange" />
+      </zx-section>
+
+      <!-- 自定义样式 -->
+      <zx-section title="自定义样式" padding type="line">
+        <zx-button @tap="openCustomStyle">
+          打开自定义样式的动作面板
+        </zx-button>
+        <zx-action-sheet v-model:show="showCustomStyle" :items="customItems"
+          :custom-style="{ boxShadow: '0 -5rpx 20rpx rgba(0, 0, 0, 0.1)' }" mask-color="rgba(0, 0, 0, 0.3)"
+          :item-font-size="30" @change="handleChange" />
+      </zx-section>
+
+      <!-- 使用插槽 -->
+      <zx-section title="使用插槽" padding type="line">
+        <zx-button @tap="openWithSlots">
+          打开使用插槽的动作面板
+        </zx-button>
+        <zx-action-sheet v-model:show="showWithSlots" :items="basicItems">
+          <template #tips>
+            <view class="custom-tips">
+              <text class="custom-tips-title">自定义提示</text>
+              <text class="custom-tips-desc">这是一个通过插槽自定义的提示内容</text>
+            </view>
+          </template>
+          <template #cancel-button>
+            <view class="custom-cancel">
+              <text class="custom-cancel-text">关闭面板</text>
+            </view>
+          </template>
+        </zx-action-sheet>
+      </zx-section>
+    </view>
   </view>
 </template>
 
@@ -212,7 +182,7 @@ const handleNoAutoCloseChange = (item) => {
     title: `点击了: ${item.text}，不会自动关闭`,
     icon: 'none'
   });
-  
+
   // 3秒后手动关闭
   setTimeout(() => {
     showNoAutoClose.value = false;

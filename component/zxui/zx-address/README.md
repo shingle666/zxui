@@ -1,4 +1,4 @@
-# zx-address 地址选择
+# zx-address 四级地址选择
 
 地址选择组件，支持自定义地址选择和已有地址选择两种模式。
 
@@ -11,7 +11,7 @@
 ## 引入
 
 ```javascript
-import ZxAddress from '@/components/zx-address/zx-address.vue';
+import ZxAddress from '@tanzhenxing/zx-address/zx-address.vue';
 ```
 
 ## 代码演示

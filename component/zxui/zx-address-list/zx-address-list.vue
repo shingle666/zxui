@@ -3,16 +3,9 @@
     <slot name="top"></slot>
     <zx-radio-group v-if="singleChoice && list && list.length > 0" @change="onRadioChange">
       <view v-for="(item, index) in list" :key="item.id">
-        <zx-address-list-item
-          :address="item"
-          :single-choice="singleChoice"
-          :switchable="switchable"
-          :default-tag-text="defaultTagText"
-          :right-icon="rightIcon"
-          @edit="onEdit(item, index)"
-          @click="onClickItem(item, index, $event)"
-          @select="onSelect(item, index)"
-        >
+        <zx-address-list-item :address="item" :single-choice="singleChoice" :switchable="switchable"
+          :default-tag-text="defaultTagText" :right-icon="rightIcon" @edit="onEdit(item, index)"
+          @click="onClickItem(item, index, $event)" @select="onSelect(item, index)">
           <template #tag v-if="slots.tag">
             <slot name="tag" :item="item"></slot>
           </template>
@@ -23,17 +16,10 @@
       </view>
     </zx-radio-group>
     <zx-checkbox-group v-else-if="!singleChoice && list && list.length > 0" @change="onCheckboxChange">
-       <view v-for="(item, index) in list" :key="item.id">
-        <zx-address-list-item
-          :address="item"
-          :single-choice="singleChoice"
-          :switchable="switchable"
-          :default-tag-text="defaultTagText"
-          :right-icon="rightIcon"
-          @edit="onEdit(item, index)"
-          @click="onClickItem(item, index, $event)"
-          @select="onSelect(item, index)"
-        >
+      <view v-for="(item, index) in list" :key="item.id">
+        <zx-address-list-item :address="item" :single-choice="singleChoice" :switchable="switchable"
+          :default-tag-text="defaultTagText" :right-icon="rightIcon" @edit="onEdit(item, index)"
+          @click="onClickItem(item, index, $event)" @select="onSelect(item, index)">
           <template #tag v-if="slots.tag">
             <slot name="tag" :item="item"></slot>
           </template>
@@ -49,16 +35,9 @@
     </view>
     <view v-if="disabledList && disabledList.length > 0">
       <view v-for="(item, index) in disabledList" :key="item.id">
-        <zx-address-list-item
-          :address="item"
-          :disabled="true"
-          :switchable="switchable"
-          :default-tag-text="defaultTagText"
-          :right-icon="rightIcon"
-          @edit="onEditDisabled(item, index)"
-          @click="onClickItem(item, index, $event)"
-          @select="onSelectDisabled(item, index)"
-        >
+        <zx-address-list-item :address="item" :disabled="true" :switchable="switchable"
+          :default-tag-text="defaultTagText" :right-icon="rightIcon" @edit="onEditDisabled(item, index)"
+          @click="onClickItem(item, index, $event)" @select="onSelectDisabled(item, index)">
           <template #tag v-if="slots.tag">
             <slot name="tag" :item="item"></slot>
           </template>
@@ -82,9 +61,10 @@
 <script setup>
 import { ref, computed, useSlots } from 'vue';
 import zxButton from '@tanzhenxing/zx-button/zx-button.vue';
-import zxAddressListItem from './zx-address-list-item.vue';
 import zxCheckboxGroup from '@tanzhenxing/zx-checkbox-group/zx-checkbox-group.vue';
 import zxRadioGroup from '@tanzhenxing/zx-radio-group/zx-radio-group.vue';
+import zxAddressListItem from './zx-address-list-item.vue';
+
 
 const props = defineProps({
   modelValue: [String, Number, Array],

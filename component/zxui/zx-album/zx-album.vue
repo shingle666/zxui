@@ -4,12 +4,11 @@
       :key="index">
       <view class="zx-album__row__wrapper" v-for="(item, index1) in arr" :key="index1"
         :style="[imageStyle(index + 1, index1 + 1)]" @tap="previewFullImage ? onPreviewTap(getSrc(item)) : ''">
-        <view v-if="loading" class="zx-album__row__wrapper__loading">
-          <view class="loading-circle"></view>
-        </view>
-        <image :src="getSrc(item)" :mode="urls.length === 1 ? (imageHeight > 0 ? singleMode : 'widthFix') : multipleMode
-          " :style="[{ width: imageWidth, height: imageHeight }]" @error="onImageError(index, index1)"
-          @load="onImageLoad(index, index1)" :lazy-load="lazyLoad"></image>
+        <zx-loading v-if="loading" :show="loading" type="circular" size="30px" color="#c9c9c9"></zx-loading>
+        <zx-image :src="getSrc(item)"
+          :mode="urls.length === 1 ? (imageHeight > 0 ? singleMode : 'widthFix') : multipleMode" :width="imageWidth"
+          :height="imageHeight" @error="onImageError(index, index1)" @load="onImageLoad(index, index1)"
+          :lazy-load="lazyLoad"></zx-image>
         <view v-if="showError && imageLoadStatus[`${index}-${index1}`] === 'error'"
           class="zx-album__row__wrapper__error">
           <zx-text text="加载失败" color="#ffffff" size="24rpx" align="center"
@@ -25,7 +24,7 @@
             customStyle="justify-content: center"></zx-text>
         </view>
         <view v-if="deletable" class="zx-album__row__wrapper__delete" @tap.stop="onDeleteTap(index, index1)">
-          <text class="delete-icon">×</text>
+          <zx-icon name="close" size="24rpx" color="#ffffff"></zx-icon>
         </view>
       </view>
     </view>
@@ -38,6 +37,9 @@
 <script setup>
 import { ref, getCurrentInstance, watch, computed, reactive } from "vue";
 import zxText from '@tanzhenxing/zx-text/zx-text.vue'
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+import zxLoading from '@tanzhenxing/zx-loading/zx-loading.vue'
+import zxImage from '@tanzhenxing/zx-image/zx-image.vue'
 
 const { proxy } = getCurrentInstance();
 
@@ -217,10 +219,12 @@ const showUrls = computed(() => {
 
 const imageWidth = computed(() => {
   return props.urls.length === 1 ? singleWidth.value : props.multipleSize;
+  //return parseInt(image_width)+'rpx';
 });
 
 const imageHeight = computed(() => {
   return props.urls.length === 1 ? singleHeight.value : props.multipleSize;
+  //return parseInt(image_height)+'rpx';
 });
 
 // 此变量无实际用途，仅仅是为了利用computed特性，让其在urls长度等变化时，重新计算图片的宽度
@@ -376,28 +380,6 @@ watch(
       position: relative;
       overflow: hidden;
 
-      &__loading {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.1);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1;
-
-        .loading-circle {
-          width: 30rpx;
-          height: 30rpx;
-          border: 2rpx solid #f5f5f5;
-          border-top-color: #2979ff;
-          border-radius: 50%;
-          animation: loading-rotate 0.8s linear infinite;
-        }
-      }
-
       &__error {
         position: absolute;
         top: 0;
@@ -436,13 +418,6 @@ watch(
         justify-content: center;
         align-items: center;
         z-index: 2;
-
-        .delete-icon {
-          color: #fff;
-          font-size: 24rpx;
-          font-weight: bold;
-          line-height: 1;
-        }
       }
     }
   }
@@ -453,16 +428,6 @@ watch(
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-}
-
-@keyframes loading-rotate {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
   }
 }
 </style>

@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-address-list",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "展示地址信息列表，用于选择或管理收货地址等场景。",
   "main": "index.js",
   "scripts": {

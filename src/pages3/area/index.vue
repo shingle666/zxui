@@ -1,121 +1,80 @@
 <template>
-  <view class="area-demo">
-    <view class="demo-section">
-      <view class="demo-title">基本用法</view>
-      <view class="demo-item" @click="showPicker1 = true">
-        <text>当前选择：{{ selectedArea1 || '未选择' }}</text>
-        <text class="arrow">></text>
+  <view>
+    <zx-navbar title="地区选择"></zx-navbar>
+    <view class="area-demo">
+      <view class="demo-section">
+        <view class="demo-title">基本用法</view>
+        <view class="demo-item" @click="showPicker1 = true">
+          <text>当前选择：{{ selectedArea1 || '未选择' }}</text>
+          <zx-icon name="arrow-right" color="#ccc" size="28rpx"></zx-icon>
+        </view>
+        <zx-area :show="showPicker1" v-model="selectedCode1" :area-list="areaListData" @confirm="handleConfirm1"
+          @cancel="showPicker1 = false" @change="handleChange1" @update:show="s => showPicker1 = s" />
       </view>
-      <zx-area
-        :show="showPicker1"
-        v-model="selectedCode1"
-        :area-list="areaListData"
-        @confirm="handleConfirm1"
-        @cancel="showPicker1 = false"
-        @change="handleChange1"
-        @update:show="s => showPicker1 = s"
-      />
-    </view>
 
-    <view class="demo-section">
-      <view class="demo-title">配置显示列数 (省市)</view>
-      <view class="demo-item" @click="showPicker2 = true">
-        <text>当前选择：{{ selectedArea2 || '未选择' }}</text>
-        <text class="arrow">></text>
+      <view class="demo-section">
+        <view class="demo-title">配置显示列数 (省市)</view>
+        <view class="demo-item" @click="showPicker2 = true">
+          <text>当前选择：{{ selectedArea2 || '未选择' }}</text>
+          <zx-icon name="arrow-right" color="#ccc" size="28"></zx-icon>
+        </view>
+        <zx-area :show="showPicker2" v-model="selectedCode2" :area-list="areaListData" :columns-num="2" title="选择省市"
+          @confirm="handleConfirm2" @cancel="showPicker2 = false" @update:show="s => showPicker2 = s" />
       </view>
-      <zx-area
-        :show="showPicker2"
-        v-model="selectedCode2"
-        :area-list="areaListData"
-        :columns-num="2"
-        title="选择省市"
-        @confirm="handleConfirm2"
-        @cancel="showPicker2 = false"
-        @update:show="s => showPicker2 = s"
-      />
-    </view>
 
-    <view class="demo-section">
-      <view class="demo-title">配置列占位提示文字</view>
-      <view class="demo-item" @click="showPicker3 = true">
-        <text>当前选择：{{ selectedArea3 || '未选择' }}</text>
-        <text class="arrow">></text>
+      <view class="demo-section">
+        <view class="demo-title">配置列占位提示文字</view>
+        <view class="demo-item" @click="showPicker3 = true">
+          <text>当前选择：{{ selectedArea3 || '未选择' }}</text>
+          <zx-icon name="arrow-right" color="#ccc" size="28"></zx-icon>
+        </view>
+        <zx-area :show="showPicker3" v-model="selectedCode3" :area-list="areaListData"
+          :columns-placeholder="['选省份', '选城市', '选区县']" @confirm="handleConfirm3" @cancel="showPicker3 = false"
+          @update:show="s => showPicker3 = s" />
       </view>
-      <zx-area
-        :show="showPicker3"
-        v-model="selectedCode3"
-        :area-list="areaListData"
-        :columns-placeholder="['选省份', '选城市', '选区县']"
-        @confirm="handleConfirm3"
-        @cancel="showPicker3 = false"
-        @update:show="s => showPicker3 = s"
-      />
-    </view>
-    
-    <view class="demo-section">
-      <view class="demo-title">通过方法获取选中项</view>
-      <view class="demo-item" @click="showPicker4 = true">
-        <text>点击打开，确认后查看控制台</text>
-        <text class="arrow">></text>
-      </view>
-       <button @click="getSelectedOptionsManual">手动获取选中项</button>
-      <zx-area
-        ref="areaRef4"
-        :show="showPicker4"
-        v-model="selectedCode4"
-        :area-list="areaListData"
-        @confirm="handleConfirm4"
-        @cancel="showPicker4 = false"
-        @update:show="s => showPicker4 = s"
-      />
-    </view>
 
-     <view class="demo-section">
-      <view class="demo-title">只显示省份</view>
-      <view class="demo-item" @click="showPicker5 = true">
-        <text>当前选择：{{ selectedArea5 || '未选择' }}</text>
-        <text class="arrow">></text>
+      <view class="demo-section">
+        <view class="demo-title">通过方法获取选中项</view>
+        <view class="demo-item" @click="showPicker4 = true">
+          <text>点击打开，确认后查看控制台</text>
+          <zx-icon name="arrow-right" color="#ccc" size="28"></zx-icon>
+        </view>
+        <button @click="getSelectedOptionsManual">手动获取选中项</button>
+        <zx-area ref="areaRef4" :show="showPicker4" v-model="selectedCode4" :area-list="areaListData"
+          @confirm="handleConfirm4" @cancel="showPicker4 = false" @update:show="s => showPicker4 = s" />
       </view>
-      <zx-area
-        :show="showPicker5"
-        v-model="selectedCode5"
-        :area-list="areaListData"
-        :columns-num="1"
-        title="选择省份"
-        @confirm="handleConfirm5"
-        @cancel="showPicker5 = false"
-        @update:show="s => showPicker5 = s"
-      />
-    </view>
 
+      <view class="demo-section">
+        <view class="demo-title">只显示省份</view>
+        <view class="demo-item" @click="showPicker5 = true">
+          <text>当前选择：{{ selectedArea5 || '未选择' }}</text>
+          <zx-icon name="arrow-right" color="#ccc" size="28"></zx-icon>
+        </view>
+        <zx-area :show="showPicker5" v-model="selectedCode5" :area-list="areaListData" :columns-num="1" title="选择省份"
+          @confirm="handleConfirm5" @cancel="showPicker5 = false" @update:show="s => showPicker5 = s" />
+      </view>
+    </view>
   </view>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, getCurrentInstance, onMounted } from 'vue';
+import zxArea from '@tanzhenxing/zx-area/zx-area.vue';
+import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
+
+const { proxy } = getCurrentInstance();
 
 // 从远程JSON加载数据
-const areaListData = ref({}); // Initialize as an empty object, will be populated
+const areaListData = ref({});
 
-// --- Data Loading --- 
+
 const loadAreaData = async () => {
-  try {
-    const response = await fetch('https://cdn.mp.ac.cn/json/area.json');
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    areaListData.value = data;
-    console.log('成功加载远程区域数据');
-  } catch (error) {
-    console.error('加载远程区域数据失败:', error);
-    // 可以在这里设置默认数据或显示错误信息
-    areaListData.value = {
-      province_list: {},
-      city_list: {},
-      county_list: {}
-    };
-  }
+  const res = await proxy.$request.get('/json/area.json',{},{
+    baseUrl: 'https://cdn.mp.ac.cn'
+  });
+  areaListData.value = res;
+
 };
 
 onMounted(() => {
@@ -152,7 +111,7 @@ const formatSelectedArea = (options) => {
 const handleConfirm1 = (data) => {
   console.log('Picker 1 Confirmed:', data);
   selectedArea1.value = formatSelectedArea(data.selectedOptions);
-  selectedCode1.value = data.selectedValues[data.selectedValues.length -1];
+  selectedCode1.value = data.selectedValues[data.selectedValues.length - 1];
   showPicker1.value = false;
 };
 const handleChange1 = (data) => {
@@ -163,7 +122,7 @@ const handleChange1 = (data) => {
 const handleConfirm2 = (data) => {
   console.log('Picker 2 Confirmed:', data);
   selectedArea2.value = formatSelectedArea(data.selectedOptions);
-  selectedCode2.value = data.selectedValues[data.selectedValues.length -1];
+  selectedCode2.value = data.selectedValues[data.selectedValues.length - 1];
   showPicker2.value = false;
 };
 
@@ -171,11 +130,11 @@ const handleConfirm2 = (data) => {
 const handleConfirm3 = (data) => {
   console.log('Picker 3 Confirmed:', data);
   if (data.selectedOptions && data.selectedOptions.length > 0) {
-      selectedArea3.value = formatSelectedArea(data.selectedOptions);
-      selectedCode3.value = data.selectedValues[data.selectedValues.length -1];
+    selectedArea3.value = formatSelectedArea(data.selectedOptions);
+    selectedCode3.value = data.selectedValues[data.selectedValues.length - 1];
   } else {
-      selectedArea3.value = '未选择有效地区';
-      selectedCode3.value = '';
+    selectedArea3.value = '未选择有效地区';
+    selectedCode3.value = '';
   }
   showPicker3.value = false;
 };
@@ -189,52 +148,52 @@ const handleConfirm4 = (data) => {
 };
 
 const getSelectedOptionsManual = () => {
-    if (areaRef4.value) {
-        const currentOptions = areaRef4.value.getSelectedOptions();
-        console.log('Manually triggered getSelectedOptions:', currentOptions);
-        uni.showToast({
-            title: '选中项已打印到控制台',
-            icon: 'none'
-        })
-    } else {
-        console.log('areaRef4 is not available');
-    }
+  if (areaRef4.value) {
+    const currentOptions = areaRef4.value.getSelectedOptions();
+    console.log('Manually triggered getSelectedOptions:', currentOptions);
+    uni.showToast({
+      title: '选中项已打印到控制台',
+      icon: 'none'
+    })
+  } else {
+    console.log('areaRef4 is not available');
+  }
 }
 
 // --- Picker 5 Callbacks ---
 const handleConfirm5 = (data) => {
   console.log('Picker 5 Confirmed:', data);
   selectedArea5.value = formatSelectedArea(data.selectedOptions);
-  selectedCode5.value = data.selectedValues[data.selectedValues.length -1];
+  selectedCode5.value = data.selectedValues[data.selectedValues.length - 1];
   showPicker5.value = false;
 };
 
 // Initialize display values based on initial codes
 const initDisplay = () => {
-    // Helper to find options based on code for initial display
-    const getOptionsByCode = (code, list) => {
-        if (!code || !list || !list.province_list || Object.keys(list.province_list).length === 0) return [];
-        const provinceCode = `${code.slice(0, 2)}0000`;
-        const cityCode = `${code.slice(0, 4)}00`;
-        const countyCode = code;
+  // Helper to find options based on code for initial display
+  const getOptionsByCode = (code, list) => {
+    if (!code || !list || !list.province_list || Object.keys(list.province_list).length === 0) return [];
+    const provinceCode = `${code.slice(0, 2)}0000`;
+    const cityCode = `${code.slice(0, 4)}00`;
+    const countyCode = code;
 
-        const options = [];
-        if (list.province_list[provinceCode]) {
-            options.push({ text: list.province_list[provinceCode], value: provinceCode });
-        }
-        if (list.city_list[cityCode] && code.length >= 4) {
-            options.push({ text: list.city_list[cityCode], value: cityCode });
-        }
-        if (list.county_list[countyCode] && code.length >= 6) {
-            options.push({ text: list.county_list[countyCode], value: countyCode });
-        }
-        return options;
-    };
+    const options = [];
+    if (list.province_list[provinceCode]) {
+      options.push({ text: list.province_list[provinceCode], value: provinceCode });
+    }
+    if (list.city_list[cityCode] && code.length >= 4) {
+      options.push({ text: list.city_list[cityCode], value: cityCode });
+    }
+    if (list.county_list[countyCode] && code.length >= 6) {
+      options.push({ text: list.county_list[countyCode], value: countyCode });
+    }
+    return options;
+  };
 
-    if (selectedCode1.value) selectedArea1.value = formatSelectedArea(getOptionsByCode(selectedCode1.value, areaListData.value));
-    if (selectedCode2.value) selectedArea2.value = formatSelectedArea(getOptionsByCode(selectedCode2.value, areaListData.value).slice(0,2)); // only province and city
-    if (selectedCode3.value) selectedArea3.value = formatSelectedArea(getOptionsByCode(selectedCode3.value, areaListData.value));
-    if (selectedCode5.value) selectedArea5.value = formatSelectedArea(getOptionsByCode(selectedCode5.value, areaListData.value).slice(0,1)); // only province
+  if (selectedCode1.value) selectedArea1.value = formatSelectedArea(getOptionsByCode(selectedCode1.value, areaListData.value));
+  if (selectedCode2.value) selectedArea2.value = formatSelectedArea(getOptionsByCode(selectedCode2.value, areaListData.value).slice(0, 2)); // only province and city
+  if (selectedCode3.value) selectedArea3.value = formatSelectedArea(getOptionsByCode(selectedCode3.value, areaListData.value));
+  if (selectedCode5.value) selectedArea5.value = formatSelectedArea(getOptionsByCode(selectedCode5.value, areaListData.value).slice(0, 1)); // only province
 };
 
 // initDisplay(); // Call initDisplay in onMounted after data is ready
@@ -282,7 +241,7 @@ const initDisplay = () => {
 }
 
 button {
-    margin: 10px 0;
-    font-size: 14px;
+  margin: 10px 0;
+  font-size: 14px;
 }
 </style>

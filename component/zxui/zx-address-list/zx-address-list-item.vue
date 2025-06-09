@@ -1,30 +1,19 @@
 <template>
   <view class="zx-address-list-item" :class="{ 'zx-address-list-item--disabled': disabled }" @click="onClick">
     <view class="zx-address-list-item__wrapper">
-      <view class="zx-address-list-item__content">        
+      <view class="zx-address-list-item__content">
         <view v-if="switchable && !disabled" class="zx-address-list-item__radio-checkbox">
-          <zx-radio 
-            v-if="singleChoice" 
-            :value="address.id.toString()" 
-            v-model:checked="isChecked" 
-            :disabled="disabled"
-            active-color="#1989fa" 
-            size="28"
-          />
-          <zx-checkbox 
-            v-else 
-            :value="address.id.toString()" 
-            v-model="isChecked" 
-            :disabled="disabled"
-            active-color="#1989fa"
-            size="28rpx"
-          />
+          <zx-radio v-if="singleChoice" :value="address.id.toString()" v-model:checked="isChecked" :disabled="disabled"
+            active-color="#1989fa" size="28" />
+          <zx-checkbox v-else :value="address.id.toString()" v-model="isChecked" :disabled="disabled"
+            active-color="#1989fa" size="28rpx" />
         </view>
         <view class="zx-address-list-item__info">
           <view class="zx-address-list-item__title">
             <text class="zx-address-list-item__name">{{ address.name }}</text>
             <text class="zx-address-list-item__tel">{{ address.tel }}</text>
-            <zx-tag v-if="address.isDefault && defaultTagText" type="primary" size="mini" custom-class="zx-address-list-item__tag">{{ defaultTagText }}</zx-tag>
+            <zx-tag v-if="address.isDefault && defaultTagText" type="primary" size="mini"
+              custom-class="zx-address-list-item__tag">{{ defaultTagText }}</zx-tag>
             <slot name="tag" :item="address"></slot>
           </view>
           <view class="zx-address-list-item__address">{{ address.address }}</view>
@@ -40,6 +29,11 @@
 
 <script setup>
 import { computed } from 'vue';
+import zxRadio from '@tanzhenxing/zx-radio/zx-radio.vue';
+import zxCheckbox from '@tanzhenxing/zx-checkbox/zx-checkbox.vue';
+import zxTag from '@tanzhenxing/zx-tag/zx-tag.vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
+
 
 const props = defineProps({
   address: {
@@ -81,7 +75,6 @@ const onEdit = () => {
 </script>
 
 <style lang="scss" scoped>
-
 .zx-address-list-item {
   padding: var(--uni-spacing-col-sm, 8px) var(--uni-spacing-row-sm, 8px);
   background-color: #fff; // Or your theme's background color
@@ -94,6 +87,7 @@ const onEdit = () => {
   }
 
   &--disabled {
+
     .zx-address-list-item__name,
     .zx-address-list-item__tel,
     .zx-address-list-item__address {
@@ -111,7 +105,7 @@ const onEdit = () => {
     display: flex;
     align-items: center;
   }
-  
+
   &__radio-checkbox {
     margin-right: var(--uni-spacing-row-sm, 8px);
     display: flex;

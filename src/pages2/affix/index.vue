@@ -16,7 +16,7 @@
 			<view class="status-item">
 				<text class="status-label">容器固钉:</text>
 				<text :class="['status-value', containerFixed ? 'active' : '']">{{ containerFixed ? '已固定' : '未固定'
-					}}</text>
+				}}</text>
 			</view>
 			<view class="status-item">
 				<text class="status-label">底部固钉:</text>

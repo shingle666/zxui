@@ -1,14 +1,6 @@
 <template>
-  <zx-popup 
-    :show="isShow" 
-    type="bottom" 
-    :mask-click="maskClosable"
-    :mask-background-color="maskColor"
-    :z-index="zIndex"
-    :duration="parseInt(duration)"
-    @change="handlePopupChange"
-    @mask-click="handleClickMask"
-  >
+  <zx-popup :show="isShow" type="bottom" :mask-click="maskClosable" :mask-background-color="maskColor" :z-index="zIndex"
+    :duration="parseInt(duration)" @change="handlePopupChange" @mask-click="handleClickMask">
     <view class="zx-actionsheet" :class="{
       'zx-actionsheet-radius': radius,
       [`zx-actionsheet-theme-${theme}`]: true,

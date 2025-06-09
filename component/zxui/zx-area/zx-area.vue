@@ -1,20 +1,26 @@
 <template>
   <view class="zx-area">
-    <zx-popup :show="show" position="bottom" @close="onCancel">
+    <zx-popup :show="show" type="bottom" @close="onCancel">
       <view class="zx-area__toolbar">
-        <view class="zx-area__toolbar-button zx-area__toolbar-button--cancel" @click="onCancel">{{ cancelButtonText }}</view>
+        <view class="zx-area__toolbar-button zx-area__toolbar-button--cancel" @click="onCancel">{{ cancelButtonText }}
+        </view>
         <view class="zx-area__toolbar-title">{{ title }}</view>
-        <view class="zx-area__toolbar-button zx-area__toolbar-button--confirm" @click="onConfirm">{{ confirmButtonText }}</view>
+        <view class="zx-area__toolbar-button zx-area__toolbar-button--confirm" @click="onConfirm">{{ confirmButtonText
+        }}</view>
       </view>
-      <picker-view v-if="show" :indicator-style="indicatorStyle" :value="pickerValue" @change="onPickerChange" class="zx-area__picker-view">
+      <picker-view v-if="show" :indicator-style="indicatorStyle" :value="pickerValue" @change="onPickerChange"
+        class="zx-area__picker-view">
         <picker-view-column v-if="columnsNum > 0">
-          <view v-for="(item, index) in displayColumns[0]" :key="index" class="zx-area__picker-item">{{ item.text }}</view>
+          <view v-for="(item, index) in displayColumns[0]" :key="index" class="zx-area__picker-item">{{ item.text }}
+          </view>
         </picker-view-column>
         <picker-view-column v-if="columnsNum > 1">
-          <view v-for="(item, index) in displayColumns[1]" :key="index" class="zx-area__picker-item">{{ item.text }}</view>
+          <view v-for="(item, index) in displayColumns[1]" :key="index" class="zx-area__picker-item">{{ item.text }}
+          </view>
         </picker-view-column>
         <picker-view-column v-if="columnsNum > 2">
-          <view v-for="(item, index) in displayColumns[2]" :key="index" class="zx-area__picker-item">{{ item.text }}</view>
+          <view v-for="(item, index) in displayColumns[2]" :key="index" class="zx-area__picker-item">{{ item.text }}
+          </view>
         </picker-view-column>
       </picker-view>
     </zx-popup>
@@ -123,7 +129,7 @@ const getCities = (provinceCode) => {
   }
   const cities = [];
   if (props.columnsPlaceholder.length > 1 && props.columnsPlaceholder[1]) {
-     cities.push(makeOption(props.columnsPlaceholder[1], AREA_EMPTY_CODE));
+    cities.push(makeOption(props.columnsPlaceholder[1], AREA_EMPTY_CODE));
   }
   const prefix = provinceCode.slice(0, 2);
   for (const code in props.areaList.city_list) {
@@ -131,7 +137,7 @@ const getCities = (provinceCode) => {
       cities.push(makeOption(props.areaList.city_list[code], code));
     }
   }
-  return cities.length > (props.columnsPlaceholder.length > 1 && props.columnsPlaceholder[1] ? 1: 0) ? cities : (props.columnsPlaceholder.length > 1 && props.columnsPlaceholder[1] ? [makeOption(props.columnsPlaceholder[1], AREA_EMPTY_CODE)] : []);
+  return cities.length > (props.columnsPlaceholder.length > 1 && props.columnsPlaceholder[1] ? 1 : 0) ? cities : (props.columnsPlaceholder.length > 1 && props.columnsPlaceholder[1] ? [makeOption(props.columnsPlaceholder[1], AREA_EMPTY_CODE)] : []);
 };
 
 const getCounties = (cityCode) => {
@@ -139,8 +145,8 @@ const getCounties = (cityCode) => {
     return props.columnsPlaceholder.length > 2 && props.columnsPlaceholder[2] ? [makeOption(props.columnsPlaceholder[2], AREA_EMPTY_CODE)] : [];
   }
   const counties = [];
-   if (props.columnsPlaceholder.length > 2 && props.columnsPlaceholder[2]) {
-     counties.push(makeOption(props.columnsPlaceholder[2], AREA_EMPTY_CODE));
+  if (props.columnsPlaceholder.length > 2 && props.columnsPlaceholder[2]) {
+    counties.push(makeOption(props.columnsPlaceholder[2], AREA_EMPTY_CODE));
   }
   const prefix = cityCode.slice(0, 4);
   for (const code in props.areaList.county_list) {
@@ -148,7 +154,7 @@ const getCounties = (cityCode) => {
       counties.push(makeOption(props.areaList.county_list[code], code));
     }
   }
-  return counties.length > (props.columnsPlaceholder.length > 2 && props.columnsPlaceholder[2] ? 1: 0) ? counties : (props.columnsPlaceholder.length > 2 && props.columnsPlaceholder[2] ? [makeOption(props.columnsPlaceholder[2], AREA_EMPTY_CODE)] : []);
+  return counties.length > (props.columnsPlaceholder.length > 2 && props.columnsPlaceholder[2] ? 1 : 0) ? counties : (props.columnsPlaceholder.length > 2 && props.columnsPlaceholder[2] ? [makeOption(props.columnsPlaceholder[2], AREA_EMPTY_CODE)] : []);
 };
 
 const updatePickerValue = (code) => {
@@ -228,10 +234,10 @@ const onPickerChange = (e) => {
     displayColumns.value[2] = getCounties(selectedCity.value);
     pickerValue.value[2] = 0; // Reset county
   }
-  
+
   updateSelectedOptions(pickerValue.value);
 
-  const lastSelectedOption = selectedOptions.value[selectedOptions.value.length -1];
+  const lastSelectedOption = selectedOptions.value[selectedOptions.value.length - 1];
   const lastCode = lastSelectedOption ? lastSelectedOption.value : '';
 
   emit('change', {
@@ -240,10 +246,10 @@ const onPickerChange = (e) => {
     selectedIndexes: [...pickerValue.value],
     columnIndex: changedColumn
   });
-  
+
   // Only emit update:modelValue if the actual meaningful code changes
   if (lastCode && lastCode !== AREA_EMPTY_CODE && lastCode !== props.modelValue) {
-      emit('update:modelValue', lastCode);
+    emit('update:modelValue', lastCode);
   }
 };
 
@@ -260,9 +266,9 @@ const onConfirm = () => {
 const onCancel = () => {
   if (props.loading) return;
   emit('cancel', {
-      selectedValues: selectedOptions.value.map(opt => opt.value),
-      selectedOptions: selectedOptions.value,
-      selectedIndexes: [...pickerValue.value]
+    selectedValues: selectedOptions.value.map(opt => opt.value),
+    selectedOptions: selectedOptions.value,
+    selectedIndexes: [...pickerValue.value]
   });
   emit('update:show', false);
 };
@@ -277,35 +283,35 @@ watch(() => props.areaList, (newVal) => {
     displayColumns.value[0] = provinces;
     // Initialize with modelValue or defaults
     nextTick(() => {
-        updatePickerValue(props.modelValue);
+      updatePickerValue(props.modelValue);
     });
   }
 }, { immediate: true, deep: true });
 
 watch(() => props.modelValue, (newCode, oldCode) => {
   if (newCode !== oldCode && props.show) {
-      nextTick(() => {
-        updatePickerValue(newCode);
-      });
+    nextTick(() => {
+      updatePickerValue(newCode);
+    });
   }
 }, { immediate: true });
 
 watch(() => props.show, (newVal) => {
-    if(newVal) {
-        nextTick(() => {
-            updatePickerValue(props.modelValue);
-        });
-    }
+  if (newVal) {
+    nextTick(() => {
+      updatePickerValue(props.modelValue);
+    });
+  }
 });
 
 watch(() => props.columnsNum, () => {
-    const [provinces] = formatDataForCascade(props.areaList, props.columnsNum, props.columnsPlaceholder);
-    displayColumns.value[0] = provinces;
-    displayColumns.value[1] = props.columnsNum > 1 ? (props.columnsPlaceholder.length > 1 && props.columnsPlaceholder[1] ? [makeOption(props.columnsPlaceholder[1], AREA_EMPTY_CODE)] : []) : [];
-    displayColumns.value[2] = props.columnsNum > 2 ? (props.columnsPlaceholder.length > 2 && props.columnsPlaceholder[2] ? [makeOption(props.columnsPlaceholder[2], AREA_EMPTY_CODE)] : []) : [];
-    nextTick(() => {
-        updatePickerValue(props.modelValue);
-    });
+  const [provinces] = formatDataForCascade(props.areaList, props.columnsNum, props.columnsPlaceholder);
+  displayColumns.value[0] = provinces;
+  displayColumns.value[1] = props.columnsNum > 1 ? (props.columnsPlaceholder.length > 1 && props.columnsPlaceholder[1] ? [makeOption(props.columnsPlaceholder[1], AREA_EMPTY_CODE)] : []) : [];
+  displayColumns.value[2] = props.columnsNum > 2 ? (props.columnsPlaceholder.length > 2 && props.columnsPlaceholder[2] ? [makeOption(props.columnsPlaceholder[2], AREA_EMPTY_CODE)] : []) : [];
+  nextTick(() => {
+    updatePickerValue(props.modelValue);
+  });
 });
 
 defineExpose({

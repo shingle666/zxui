@@ -1,7 +1,7 @@
 {
   "name": "@tanzhenxing/zx-address",
-  "version": "1.0.1",
-  "description": "地址选择组件，支持自定义地址选择和已有地址选择两种模式。",
+  "version": "1.0.2",
+  "description": "四级地址选择组件，支持自定义地址选择和已有地址选择两种模式。",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

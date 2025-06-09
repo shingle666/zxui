@@ -3,38 +3,16 @@
     <zx-navbar title="AddressList 地址列表"></zx-navbar>
     <view class="content">
       <zx-title type="line" title="基础用法"></zx-title>
-      <zx-address-list
-        v-model="chosenAddressId"
-        :list="list"
-        :disabled-list="disabledList"
-        disabled-text="以下地址超出配送范围"
-        default-tag-text="默认"
-        @add="onAdd"
-        @edit="onEdit"
-        @select="onSelect"
-        @click-item="onClickItem"
-        @edit-disabled="onEditDisabled"
-        @select-disabled="onSelectDisabled"
-      />
+      <zx-address-list v-model="chosenAddressId" :list="list" :disabled-list="disabledList" disabled-text="以下地址超出配送范围"
+        default-tag-text="默认" @add="onAdd" @edit="onEdit" @select="onSelect" @click-item="onClickItem"
+        @edit-disabled="onEditDisabled" @select-disabled="onSelectDisabled" />
 
       <zx-title type="line" title="多选模式"></zx-title>
-      <zx-address-list
-        v-model="chosenAddressIds"
-        :list="list2"
-        add-button-text="去结算"
-        @add="onAddMulti"
-        @edit="onEditMulti"
-        @select="onSelectMulti"
-      />
+      <zx-address-list v-model="chosenAddressIds" :list="list2" add-button-text="去结算" @add="onAddMulti"
+        @edit="onEditMulti" @select="onSelectMulti" />
 
       <zx-title type="line" title="自定义右侧图标"></zx-title>
-      <zx-address-list
-        v-model="chosenAddressId2"
-        :list="list"
-        right-icon="arrow"
-        @add="onAdd"
-        @edit="onEdit"
-      />
+      <zx-address-list v-model="chosenAddressId2" :list="list" right-icon="arrow" @add="onAdd" @edit="onEdit" />
 
       <zx-title type="line" title="自定义内容"></zx-title>
       <zx-address-list v-model="chosenAddressId3" :list="list">
@@ -143,6 +121,7 @@ const onSelectMulti = (item, index) => showToast(`多选选中: ${item.name} (�
 .container {
   // padding-bottom: calc(50px + env(safe-area-inset-bottom)); // If using a global tabbar or fixed bottom bar
 }
+
 .content {
   padding: 0 15px 15px;
 }

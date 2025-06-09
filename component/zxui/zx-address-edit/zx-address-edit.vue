@@ -3,41 +3,25 @@
     <zx-form ref="formRef" :model="formData" :rules="formRules">
       <view class="zx-address-edit__fields">
         <zx-form-item label="联系人" name="name">
-          <zx-input v-model="formData.name" placeholder="收货人姓名" @focus="onFocus('name')" @input="onInputChange('name', $event)" />
+          <zx-input v-model="formData.name" placeholder="收货人姓名" @focus="onFocus('name')"
+            @input="onInputChange('name', $event)" />
         </zx-form-item>
         <zx-form-item label="手机号" name="tel">
-          <zx-input type="tel" v-model="formData.tel" placeholder="收货人手机号" :maxlength="props.telMaxlength" @focus="onFocus('tel')" @input="onInputChange('tel', $event)" />
+          <zx-input type="tel" v-model="formData.tel" placeholder="收货人手机号" :maxlength="telMaxlength"
+            @focus="onFocus('tel')" @input="onInputChange('tel', $event)" />
         </zx-form-item>
-        <zx-form-item v-if="props.showArea" label="地区" name="areaCode">
-          <zx-area
-            :area-list="props.areaList"
-            :value="formData.areaCode"
-            :columns-num="props.areaColumnsNum"
-            :columns-placeholder="props.areaColumnsPlaceholder"
-            @confirm="onAreaConfirm"
-            @cancel="onAreaCancel"
-            style="width: 100%;" 
-          />
+        <zx-form-item label="地区" name="areaCode">
+          <zx-area :show="true" :area-list="areaList" :value="formData.areaCode" :columns-num="areaColumnsNum"
+            :columns-placeholder="areaColumnsPlaceholder" @confirm="onAreaConfirm" @cancel="onAreaCancel"></zx-area>
         </zx-form-item>
-        <zx-form-item v-if="props.showDetail" label="详细地址" name="addressDetail">
-          <zx-textarea
-            v-model="formData.addressDetail"
-            placeholder="街道门牌、楼层房间号等信息"
-            auto-height
-            :maxlength="props.detailMaxlength"
-            :rows="props.detailRows"
-            @focus="onFocus('addressDetail')"
-            @blur="onDetailBlur"
-            @input="onChangeDetail"
-          />
+        <zx-form-item v-if="showDetail" label="详细地址" name="addressDetail">
+          <zx-textarea v-model="formData.addressDetail" placeholder="街道门牌、楼层房间号等信息" auto-height
+            :maxlength="detailMaxlength" :rows="detailRows" @focus="onFocus('addressDetail')"
+            @blur="onDetailBlur" @input="onChangeDetail" />
         </zx-form-item>
         <view v-if="showSearchResultValue && searchResultComputed.length" class="zx-address-edit-detail__search-result">
-          <view
-            v-for="(item, index) in searchResultComputed"
-            :key="index"
-            class="zx-address-edit-detail__search-item"
-            @click="onSelectSearchResult(item)"
-          >
+          <view v-for="(item, index) in searchResultComputed" :key="index" class="zx-address-edit-detail__search-item"
+            @click="onSelectSearchResult(item)">
             <view class="zx-address-edit-detail__search-item-icon">
               <zx-icon name="location-o" size="16"></zx-icon>
             </view>
@@ -51,7 +35,7 @@
         <slot></slot>
       </view>
 
-      <view v-if="props.showSetDefault && !hideBottomFields" class="zx-address-edit__default">
+      <view v-if="showSetDefault && !hideBottomFields" class="zx-address-edit__default">
         <zx-cell title="设为默认地址" :border="false">
           <template #right-icon>
             <zx-switch :model-value="formData.isDefault" @update:modelValue="onDefaultChange" />
@@ -60,11 +44,12 @@
       </view>
 
       <view v-if="!hideBottomFields" class="zx-address-edit__buttons">
-        <zx-button block round type="primary" :loading="props.isSaving" @click="onSave">
-          {{ props.saveButtonText || '保存' }}
+        <zx-button block round type="primary" :loading="isSaving" @click="onSave">
+          {{ saveButtonText || '保存' }}
         </zx-button>
-        <zx-button v-if="props.showDelete" block round :loading="props.isDeleting" @click="onDelete" custom-style="margin-top: 10px;">
-          {{ props.deleteButtonText || '删除' }}
+        <zx-button v-if="showDelete" block round :loading="isDeleting" @click="onDelete"
+          custom-style="margin-top: 10px;">
+          {{ deleteButtonText || '删除' }}
         </zx-button>
       </view>
     </zx-form>
@@ -167,14 +152,14 @@ const props = defineProps({
 });
 
 const emit = defineEmits([
-  'save', 
-  'focus', 
-  'change', 
-  'delete', 
-  'select-search', 
-  'click-area', 
-  'change-area', 
-  'change-detail', 
+  'save',
+  'focus',
+  'change',
+  'delete',
+  'select-search',
+  'click-area',
+  'change-area',
+  'change-detail',
   'change-default'
 ]);
 
@@ -199,7 +184,7 @@ watch(() => props.addressInfo, (newVal) => {
   Object.assign(formData, DEFAULT_DATA, newVal);
   if (newVal && newVal.areaCode && areaRef.value) {
     nextTick(() => {
-        // 如果zx-area组件支持，可以在这里回显已选地区文字
+      // 如果zx-area组件支持，可以在这里回显已选地区文字
     });
   }
 }, { immediate: true, deep: true });
@@ -210,7 +195,7 @@ const areaText = computed(() => {
     const city = formData.city;
     const county = formData.county;
     if (province === city) {
-        return `${province}/${county}`;
+      return `${province}/${county}`;
     }
     return `${province}/${city}/${county}`;
   }
@@ -242,17 +227,17 @@ const formRules = computed(() => {
     }
   } else {
     const customRule = (key, message) => ({
-        validator: (rule, value, callback) => {
-            const errorMsg = props.validator(key, value);
-            if (typeof errorMsg === 'string') {
-                callback(new Error(errorMsg));
-            } else if (errorMsg === false) {
-                callback(new Error(message));
-            } else {
-                callback();
-            }
-        },
-        trigger: ['blur', 'change']
+      validator: (rule, value, callback) => {
+        const errorMsg = props.validator(key, value);
+        if (typeof errorMsg === 'string') {
+          callback(new Error(errorMsg));
+        } else if (errorMsg === false) {
+          callback(new Error(message));
+        } else {
+          callback();
+        }
+      },
+      trigger: ['blur', 'change']
     });
     rules.name = [customRule('name', '请填写姓名')];
     rules.tel = [customRule('tel', '手机号格式错误')];
@@ -301,7 +286,7 @@ const onAreaConfirm = (selectedOptions) => {
     formData.areaCode = selectedOptions[selectedOptions.length - 1]?.value || '';
     // 强制触发表单校验
     if (formRef.value) {
-        formRef.value.validateField('areaCode');
+      formRef.value.validateField('areaCode');
     }
   } else { // 处理只选择了部分的情况，或者zx-area返回空数组
     formData.province = '';
@@ -357,7 +342,7 @@ defineExpose({
     // areaRef.value?.setCode(code) 然后获取文本
     // 暂时简单处理，不反显文本，只更新areaCode
     if (formRef.value) {
-        formRef.value.validateField('areaCode');
+      formRef.value.validateField('areaCode');
     }
   },
   validate: () => {
@@ -405,18 +390,23 @@ defineExpose({
     font-size: 28rpx;
     margin-right: 20rpx; // 标签和内容的间距
   }
+
   .zx-form-item__content {
+
     .zx-input__inner,
-    .zx-input__input, // 兼容不同input组件的class
+    .zx-input__input,
+    // 兼容不同input组件的class
     .zx-textarea__inner,
-    .zx-textarea__textarea { // 兼容不同textarea组件的class
+    .zx-textarea__textarea {
+      // 兼容不同textarea组件的class
       text-align: left !important; // 输入内容左对齐
       font-size: 28rpx !important;
       color: #303133; // 输入文字颜色
     }
+
     .zx-input__placeholder,
     .zx-textarea__placeholder {
-        color: #c0c4cc; // placeholder颜色
+      color: #c0c4cc; // placeholder颜色
     }
   }
 }
@@ -445,12 +435,14 @@ defineExpose({
   border-radius: 16rpx;
   overflow: hidden;
   background-color: #fff;
+
   // 确保 zx-cell 内部样式符合截图
   :deep(.zx-cell) {
     padding: 24rpx 30rpx !important;
+
     .zx-cell__title {
-        font-size: 28rpx;
-        color: #303133;
+      font-size: 28rpx;
+      color: #303133;
     }
   }
 }
@@ -479,7 +471,8 @@ defineExpose({
   font-size: 32rpx !important;
 }
 
-:deep(.zx-button.zx-button--default) { // 确保选择器正确，删除按钮是默认样式且无type
+:deep(.zx-button.zx-button--default) {
+  // 确保选择器正确，删除按钮是默认样式且无type
   background-color: #fff !important;
   border: 1rpx solid #dddee1 !important; // 截图中的删除按钮有边框
   color: #303133 !important;

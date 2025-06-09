@@ -1,100 +1,67 @@
 <template>
-  <view class="container">
+  <view>
     <zx-navbar title="Address 地址选择" back></zx-navbar>
-    
-    <view class="demo-section">
-      <zx-title title="基础用法" type="line"></zx-title>
-      <zx-cell-group>
-        <zx-cell title="选择自定义地址" :value="selectedAddress1" is-link @click="showAddress1">
-          <template #icon>
-            <zx-icon name="location-o" size="16" color="#1989fa"></zx-icon>
-          </template>
-        </zx-cell>
-      </zx-cell-group>
+    <view class="container">
+      <view class="demo-section">
+        <zx-title title="基础用法" type="line"></zx-title>
+        <zx-cell-group>
+          <zx-cell title="选择自定义地址" :value="selectedAddress1" is-link @click="showAddress1">
+            <template #icon>
+              <zx-icon name="location-o" size="16" color="#1989fa"></zx-icon>
+            </template>
+          </zx-cell>
+        </zx-cell-group>
+      </view>
+
+      <view class="demo-section">
+        <zx-title title="选择已有地址" type="line"></zx-title>
+        <zx-cell-group>
+          <zx-cell title="选择已有地址" :value="selectedAddress2" is-link @click="showAddress2">
+            <template #icon>
+              <zx-icon name="location-o" size="16" color="#1989fa"></zx-icon>
+            </template>
+          </zx-cell>
+        </zx-cell-group>
+      </view>
+
+      <view class="demo-section">
+        <zx-title title="自定义图标" type="line"></zx-title>
+        <zx-cell-group>
+          <zx-cell title="自定义图标" :value="selectedAddress3" is-link @click="showAddress3">
+            <template #icon>
+              <zx-icon name="location-o" size="16" color="#1989fa"></zx-icon>
+            </template>
+          </zx-cell>
+        </zx-cell-group>
+      </view>
+
+      <view class="demo-section">
+        <zx-title title="自定义地址与已有地址切换" type="line"></zx-title>
+        <zx-cell-group>
+          <zx-cell title="地址切换" :value="selectedAddress4" is-link @click="showAddress4">
+            <template #icon>
+              <zx-icon name="location-o" size="16" color="#1989fa"></zx-icon>
+            </template>
+          </zx-cell>
+        </zx-cell-group>
+      </view>
+
+      <!-- 基础用法 -->
+      <zx-address v-model="showPopup1" :province="province" :city="city" :country="country" :town="town"
+        custom-address-title="请选择所在地区" type="custom" @change="onChange1" @close="onClose1" />
+
+      <!-- 选择已有地址 -->
+      <zx-address v-model="showPopup2" type="exist" :exist-address="existAddress" exist-address-title="配送至"
+        :is-show-custom-address="false" @selected="onSelected2" @close="onClose2" />
+
+      <!-- 自定义图标 -->
+      <zx-address v-model="showPopup3" type="exist" :exist-address="existAddress" :default-icon="defaultIcon"
+        :selected-icon="selectedIcon" @selected="onSelected3" @close="onClose3" />
+
+      <!-- 自定义地址与已有地址切换 -->
+      <zx-address v-model="showPopup4" type="all" :province="province" :city="city" :country="country" :town="town"
+        :exist-address="existAddress" :show-tabs="true" @change="onChange4" @selected="onSelected4" @close="onClose4" />
     </view>
-
-    <view class="demo-section">
-      <zx-title title="选择已有地址" type="line"></zx-title>
-      <zx-cell-group>
-        <zx-cell title="选择已有地址" :value="selectedAddress2" is-link @click="showAddress2">
-          <template #icon>
-            <zx-icon name="location-o" size="16" color="#1989fa"></zx-icon>
-          </template>
-        </zx-cell>
-      </zx-cell-group>
-    </view>
-
-    <view class="demo-section">
-      <zx-title title="自定义图标" type="line"></zx-title>
-      <zx-cell-group>
-        <zx-cell title="自定义图标" :value="selectedAddress3" is-link @click="showAddress3">
-          <template #icon>
-            <zx-icon name="location-o" size="16" color="#1989fa"></zx-icon>
-          </template>
-        </zx-cell>
-      </zx-cell-group>
-    </view>
-
-    <view class="demo-section">
-      <zx-title title="自定义地址与已有地址切换" type="line"></zx-title>
-      <zx-cell-group>
-        <zx-cell title="地址切换" :value="selectedAddress4" is-link @click="showAddress4">
-          <template #icon>
-            <zx-icon name="location-o" size="16" color="#1989fa"></zx-icon>
-          </template>
-        </zx-cell>
-      </zx-cell-group>
-    </view>
-
-    <!-- 基础用法 -->
-    <zx-address
-      v-model="showPopup1"
-      :province="province"
-      :city="city"
-      :country="country"
-      :town="town"
-      custom-address-title="请选择所在地区"
-      type="custom"
-      @change="onChange1"
-      @close="onClose1"
-    />
-
-    <!-- 选择已有地址 -->
-    <zx-address
-      v-model="showPopup2"
-      type="exist"
-      :exist-address="existAddress"
-      exist-address-title="配送至"
-      :is-show-custom-address="false"
-      @selected="onSelected2"
-      @close="onClose2"
-    />
-
-    <!-- 自定义图标 -->
-    <zx-address
-      v-model="showPopup3"
-      type="exist"
-      :exist-address="existAddress"
-      :default-icon="defaultIcon"
-      :selected-icon="selectedIcon"
-      @selected="onSelected3"
-      @close="onClose3"
-    />
-
-    <!-- 自定义地址与已有地址切换 -->
-    <zx-address
-      v-model="showPopup4"
-      type="all"
-      :province="province"
-      :city="city"
-      :country="country"
-      :town="town"
-      :exist-address="existAddress"
-      :show-tabs="true"
-      @change="onChange4"
-      @selected="onSelected4"
-      @close="onClose4"
-    />
   </view>
 </template>
 
@@ -293,11 +260,12 @@ const onClose4 = (data) => {
 .container {
   background: #f7f8fa;
   min-height: 100vh;
+  padding: 30rpx;
 }
 
 .demo-section {
   margin-bottom: 32rpx;
-  
+
   &:first-child {
     margin-top: 32rpx;
   }
