@@ -13,42 +13,26 @@
 
 		<!-- 控制按钮 -->
 		<view class="recorder-controls" v-if="show">
-			<button 
-				class="control-btn start-btn"
-				:class="{ active: recordingStatus === 'recording' }"
-				:disabled="recordingStatus === 'recording' || recordingStatus === 'paused'"
-				@tap="startRecord"
-			>
+			<zx-button class="control-btn start-btn" :class="{ active: recordingStatus === 'recording' }"
+				:disabled="recordingStatus === 'recording' || recordingStatus === 'paused'" @click="startRecord">
 				<text class="btn-icon">▶</text>
 				<text>开始录音</text>
-			</button>
-			
-			<button 
-				class="control-btn stop-btn"
-				:disabled="recordingStatus === 'idle'"
-				@tap="stopRecord"
-			>
+			</zx-button>
+
+			<zx-button class="control-btn stop-btn" :disabled="recordingStatus === 'idle'" @click="stopRecord">
 				<text class="btn-icon">⏹</text>
 				<text>停止录音</text>
-			</button>
-			
-			<button 
-				class="control-btn pause-btn"
-				:disabled="recordingStatus !== 'recording'"
-				@tap="pauseRecord"
-			>
+			</zx-button>
+
+			<zx-button class="control-btn pause-btn" :disabled="recordingStatus !== 'recording'" @click="pauseRecord">
 				<text class="btn-icon">⏸</text>
 				<text>暂停录音</text>
-			</button>
-			
-			<button 
-				class="control-btn resume-btn"
-				:disabled="recordingStatus !== 'paused'"
-				@tap="resumeRecord"
-			>
+			</zx-button>
+
+			<zx-button class="control-btn resume-btn" :disabled="recordingStatus !== 'paused'" @click="resumeRecord">
 				<text class="btn-icon">▶</text>
 				<text>继续录音</text>
-			</button>
+			</zx-button>
 		</view>
 
 		<!-- 录音文件播放区域 -->
@@ -58,50 +42,41 @@
 				<text class="duration">{{ formatTime(recordFile.duration) }}</text>
 				<text class="size">{{ formatFileSize(recordFile.fileSize) }}</text>
 			</view>
-			<button class="play-btn" @tap="playAudio">
+			<zx-button class="play-btn" @click="playAudio">
 				<text class="btn-icon">▶</text>
 				<text>播放录音</text>
-			</button>
+			</zx-button>
 		</view>
 
 		<!-- 播放控制 -->
 		<view class="audio-playing" v-if="playing">
 			<view class="playing-info">
 				<text>正在播放...</text>
-				<progress 
-					:percent="playProgress" 
-					:show-info="true"
-					stroke-width="4"
-					activeColor="#007AFF"
-				/>
+				<progress :percent="playProgress" :show-info="true" stroke-width="4" activeColor="#007AFF" />
 			</view>
-			<button class="stop-play-btn" @tap="stopAudio">
+			<zx-button class="stop-play-btn" @click="stopAudio">
 				<text class="btn-icon">⏹</text>
 				<text>停止播放</text>
-			</button>
+			</zx-button>
 		</view>
 
 		<!-- 上传进度 -->
 		<view class="upload-progress" v-if="uploading">
 			<text>正在上传...</text>
-			<progress 
-				:percent="uploadProgress" 
-				:show-info="true"
-				stroke-width="6"
-				activeColor="#4CD964"
-			/>
+			<progress :percent="uploadProgress" :show-info="true" stroke-width="6" activeColor="#4CD964" />
 		</view>
 
 		<!-- 错误信息 -->
 		<view class="error-message" v-if="errorMessage">
 			<text class="error-text">{{ errorMessage }}</text>
-			<button class="clear-error-btn" @tap="clearError">清除</button>
+			<zx-button class="clear-error-btn" @click="clearError">清除</zx-button>
 		</view>
 	</view>
 </template>
 
 <script setup>
 import { ref, getCurrentInstance, computed, onMounted, onUnmounted } from 'vue';
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue';
 const { proxy } = getCurrentInstance();
 
 // 定义事件
@@ -216,19 +191,19 @@ const statusText = computed(() => {
 const initRecorderManager = () => {
 	try {
 		recorder.value = uni.getRecorderManager();
-		
+
 		// 绑定事件监听器
 		recorder.value.onStart(onRecordStart);
 		recorder.value.onStop(onRecordStop);
 		recorder.value.onPause(onRecordPause);
 		recorder.value.onResume(onRecordResume);
 		recorder.value.onError(onRecordError);
-		
+
 		// 监听分贝数变化（如果开启）
 		if (props.detectDecibel) {
 			recorder.value.onFrameRecorded(onFrameRecorded);
 		}
-		
+
 		console.log('录音管理器初始化成功');
 	} catch (error) {
 		console.error('录音管理器初始化失败：', error);
@@ -240,32 +215,32 @@ const initRecorderManager = () => {
 const initAudioContext = () => {
 	try {
 		innerAudioContext.value = uni.createInnerAudioContext();
-		
+
 		// 绑定播放事件
 		innerAudioContext.value.onPlay(() => {
 			playing.value = true;
 			emit('play');
 		});
-		
+
 		innerAudioContext.value.onTimeUpdate(() => {
 			if (innerAudioContext.value.duration > 0) {
 				playProgress.value = (innerAudioContext.value.currentTime / innerAudioContext.value.duration) * 100;
 			}
 		});
-		
+
 		innerAudioContext.value.onEnded(() => {
 			playing.value = false;
 			playProgress.value = 0;
 			emit('playEnd');
 		});
-		
+
 		innerAudioContext.value.onError((error) => {
 			console.error('音频播放出错：', error);
 			playing.value = false;
 			playProgress.value = 0;
 			setError('音频播放失败');
 		});
-		
+
 		console.log('音频播放器初始化成功');
 	} catch (error) {
 		console.error('音频播放器初始化失败：', error);
@@ -279,9 +254,9 @@ const startRecord = () => {
 		if (!recorder.value) {
 			initRecorderManager();
 		}
-		
+
 		clearError();
-		
+
 		const options = {
 			duration: props.duration,
 			sampleRate: props.sampleRate,
@@ -289,7 +264,7 @@ const startRecord = () => {
 			encodeBitRate: props.encodeBitRate,
 			format: props.format
 		};
-		
+
 		// 添加可选参数
 		if (props.frameSize) {
 			options.frameSize = props.frameSize;
@@ -297,10 +272,10 @@ const startRecord = () => {
 		if (props.audioSource) {
 			options.audioSource = props.audioSource;
 		}
-		
+
 		recorder.value.start(options);
 		startTimer();
-		
+
 	} catch (error) {
 		console.error('开始录音失败：', error);
 		setError('开始录音失败');
@@ -352,7 +327,7 @@ const playAudio = () => {
 		if (!innerAudioContext.value) {
 			initAudioContext();
 		}
-		
+
 		if (recordFile.value.tempFilePath) {
 			innerAudioContext.value.src = recordFile.value.tempFilePath;
 			innerAudioContext.value.play();
@@ -386,19 +361,19 @@ const onRecordStart = (res) => {
 const onRecordStop = async (res) => {
 	recordingStatus.value = 'stopped';
 	recordingTime.value = 0;
-	
+
 	// 更新录音文件信息
 	recordFile.value.duration = res.duration;
 	recordFile.value.tempFilePath = res.tempFilePath;
 	recordFile.value.fileSize = res.fileSize;
-	
+
 	console.log('录音结束', res);
-	
+
 	// 自动上传（如果开启）
 	if (props.autoUpload) {
 		await uploadFile();
 	}
-	
+
 	emit('stop', res);
 	emit('end', recordFile.value);
 };
@@ -419,7 +394,7 @@ const onRecordError = (error) => {
 	recordingStatus.value = 'idle';
 	recordingTime.value = 0;
 	stopTimer();
-	
+
 	let errorMsg = '录音出错';
 	if (error.errCode) {
 		switch (error.errCode) {
@@ -439,7 +414,7 @@ const onRecordError = (error) => {
 				errorMsg = `录音出错：${error.errMsg || '未知错误'}`;
 		}
 	}
-	
+
 	setError(errorMsg);
 	emit('error', error);
 	console.error('录音出错：', error);
@@ -469,13 +444,13 @@ const uploadFile = async () => {
 	if (!recordFile.value.tempFilePath) {
 		return;
 	}
-	
+
 	try {
 		uploading.value = true;
 		uploadProgress.value = 0;
-		
+
 		const cloudPath = `${props.cloudPathPrefix}${Date.now()}.${props.format}`;
-		
+
 		const result = await uniCloud.uploadFile({
 			filePath: recordFile.value.tempFilePath,
 			cloudPath: cloudPath,
@@ -485,14 +460,14 @@ const uploadFile = async () => {
 				);
 			}
 		});
-		
+
 		// 更新文件信息
 		recordFile.value.url = result.fileID;
 		recordFile.value.key = result.fileID;
 		recordFile.value.cloudPath = cloudPath;
-		
+
 		console.log('文件上传成功：', result);
-		
+
 	} catch (error) {
 		console.error('文件上传失败：', error);
 		setError('文件上传失败');
@@ -625,9 +600,17 @@ defineExpose({
 }
 
 @keyframes pulse {
-	0% { transform: scale(1); }
-	50% { transform: scale(1.1); }
-	100% { transform: scale(1); }
+	0% {
+		transform: scale(1);
+	}
+
+	50% {
+		transform: scale(1.1);
+	}
+
+	100% {
+		transform: scale(1);
+	}
 }
 
 .icon {
@@ -704,7 +687,8 @@ defineExpose({
 	font-weight: bold;
 }
 
-.audio-player, .audio-playing {
+.audio-player,
+.audio-playing {
 	padding: 16rpx;
 	background: #f8f9fa;
 	border-radius: 8rpx;
@@ -725,7 +709,8 @@ defineExpose({
 	color: #333;
 }
 
-.play-btn, .stop-play-btn {
+.play-btn,
+.stop-play-btn {
 	width: 100%;
 	padding: 12rpx;
 	border: none;

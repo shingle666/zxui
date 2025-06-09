@@ -1,8 +1,5 @@
 <template>
-  <view
-    :class="spaceClass"
-    :style="spaceStyle"
-  >
+  <view :class="spaceClass" :style="spaceStyle">
     <slot></slot>
   </view>
 </template>
@@ -76,7 +73,7 @@ const computedSize = computed(() => {
     default: 12,
     large: 16
   }
-  
+
   if (typeof props.size === 'string') {
     return [sizeMap[props.size], sizeMap[props.size]]
   } else if (typeof props.size === 'number') {
@@ -84,7 +81,7 @@ const computedSize = computed(() => {
   } else if (Array.isArray(props.size)) {
     return props.size
   }
-  
+
   return [sizeMap.small, sizeMap.small]
 })
 
@@ -107,11 +104,11 @@ const spaceStyle = computed(() => {
   const style = {
     '--zx-space-horizontal-size': `${horizontalSize}px`,
     '--zx-space-vertical-size': `${verticalSize}px`,
-    '--zx-space-alignment': props.alignment === 'start' ? 'flex-start' : 
-                          props.alignment === 'end' ? 'flex-end' : props.alignment,
+    '--zx-space-alignment': props.alignment === 'start' ? 'flex-start' :
+      props.alignment === 'end' ? 'flex-end' : props.alignment,
     '--zx-space-spacer': props.spacer ? `"${props.spacer}"` : '""'
   }
-  
+
   return style
 })
 </script>
@@ -122,22 +119,22 @@ const spaceStyle = computed(() => {
   --zx-space-vertical-size: 8px;
   --zx-space-alignment: center;
   --zx-space-spacer: "";
-  
+
   display: flex;
-  
+
   &--horizontal {
     flex-direction: row;
     align-items: var(--zx-space-alignment);
     gap: var(--zx-space-horizontal-size);
-    
+
     &.zx-space--wrap {
       flex-wrap: wrap;
       row-gap: var(--zx-space-vertical-size);
     }
-    
+
     &.zx-space--fill {
       width: 100%;
-      
+
       :deep(> view),
       :deep(> text),
       :deep(> button),
@@ -150,11 +147,11 @@ const spaceStyle = computed(() => {
         min-width: 0;
       }
     }
-    
+
     // 分隔符支持
     &.zx-space--with-spacer {
       gap: 0;
-      
+
       :deep(> view:not(:last-child)::after),
       :deep(> text:not(:last-child)::after),
       :deep(> button:not(:last-child)::after),
@@ -172,15 +169,15 @@ const spaceStyle = computed(() => {
       }
     }
   }
-  
+
   &--vertical {
     flex-direction: column;
     align-items: var(--zx-space-alignment);
     gap: var(--zx-space-vertical-size);
-    
+
     &.zx-space--fill {
       width: 100%;
-      
+
       :deep(> view),
       :deep(> text),
       :deep(> button),
@@ -192,11 +189,11 @@ const spaceStyle = computed(() => {
         width: 100%;
       }
     }
-    
+
     // 分隔符支持
     &.zx-space--with-spacer {
       gap: 0;
-      
+
       :deep(> view:not(:last-child)::after),
       :deep(> text:not(:last-child)::after),
       :deep(> button:not(:last-child)::after),
@@ -219,6 +216,7 @@ const spaceStyle = computed(() => {
 // 暗色主题支持
 .dark {
   .zx-space {
+
     :deep(> view::after),
     :deep(> text::after),
     :deep(> button::after),

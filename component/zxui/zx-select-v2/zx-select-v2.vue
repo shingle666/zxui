@@ -12,7 +12,7 @@
             <text>{{ placeholder }}</text>
           </view>
         </template>
-        
+
         <!-- 多选模式展示 -->
         <template v-else>
           <scroll-view v-if="selectedValues.length" scroll-x class="zx-select-v2__tags">
@@ -26,7 +26,8 @@
               </view>
             </view>
             <template v-else>
-              <view v-for="(item, index) in selectedValues" :key="index" class="zx-select-v2__tag" :style="{ backgroundColor: tagColor }">
+              <view v-for="(item, index) in selectedValues" :key="index" class="zx-select-v2__tag"
+                :style="{ backgroundColor: tagColor }">
                 <text>{{ getLabel(item) }}</text>
                 <text class="zx-select-v2__tag-close" @click.stop="handleTagClose(item)">×</text>
               </view>
@@ -37,65 +38,50 @@
           </view>
         </template>
       </view>
-      
+
       <!-- 后缀图标 -->
       <view class="zx-select-v2__suffix">
-        <view v-if="clearable && (multiple ? selectedValues.length > 0 : modelValue !== undefined && modelValue !== '')" class="zx-select-v2__clear" @click.stop="handleClear">
-          <text class="zx-select-v2__clear-icon">×</text>
+        <view v-if="clearable && (multiple ? selectedValues.length > 0 : modelValue !== undefined && modelValue !== '')" 
+          class="zx-select-v2__clear" @click.stop="handleClear">
+          <zx-icon name="close" size="32rpx" color="#ccc"></zx-icon>
         </view>
         <view v-else class="zx-select-v2__arrow" :class="{ 'is-reverse': isDropdownVisible }">
-          <text class="zx-select-v2__arrow-icon">▼</text>
+          <zx-icon name="arrow-down" size="32rpx" color="#999"></zx-icon>
         </view>
       </view>
     </view>
-    
+
     <!-- 下拉菜单 -->
-    <view v-if="isDropdownVisible" class="zx-select-v2__dropdown" :class="{ 'zx-select-v2__dropdown--up': dropDirection === 'up' }">
+    <view v-if="isDropdownVisible" class="zx-select-v2__dropdown"
+      :class="{ 'zx-select-v2__dropdown--up': dropDirection === 'up' }">
       <!-- 自定义头部插槽 -->
       <slot name="header"></slot>
-      
+
       <!-- 过滤输入框 -->
       <view v-if="filterable" class="zx-select-v2__filter">
-        <input
-          class="zx-select-v2__filter-input"
-          type="text"
-          v-model="filterText"
-          :placeholder="filterPlaceholder"
-          @input="handleFilterInput"
-          @focus="handleFilterFocus"
-          @blur="handleFilterBlur"
-        />
+        <zx-input class="zx-select-v2__filter-input" type="text" v-model="filterText" :placeholder="filterPlaceholder"
+          @input="handleFilterInput" @focus="handleFilterFocus" @blur="handleFilterBlur" />
       </view>
-      
+
       <!-- 选项列表 -->
-      <scroll-view
-        class="zx-select-v2__list"
-        scroll-y
-        :style="{ height: `${listHeight}px` }"
-        @scroll="handleScroll"
-      >
+      <scroll-view class="zx-select-v2__list" scroll-y :style="{ height: `${listHeight}px` }" @scroll="handleScroll">
         <view v-if="loading" class="zx-select-v2__loading">
           <slot name="loading">
             <view class="zx-select-v2__loading-indicator"></view>
             <text class="zx-select-v2__loading-text">加载中...</text>
           </slot>
         </view>
-        
+
         <template v-else-if="filteredOptions.length > 0">
           <!-- 渲染分组 -->
           <template v-if="groupKey">
             <block v-for="(group, groupIndex) in filteredOptions" :key="groupIndex">
               <view class="zx-select-v2__group-title">{{ group[groupLabelKey] }}</view>
-              <view 
-                v-for="(option, optionIndex) in group[groupOptionsKey]" 
-                :key="getValueKey(option)"
-                class="zx-select-v2__option"
-                :class="{ 
+              <view v-for="(option, optionIndex) in group[groupOptionsKey]" :key="getValueKey(option)+optionIndex"
+                class="zx-select-v2__option" :class="{
                   'zx-select-v2__option--selected': isOptionSelected(option),
                   'zx-select-v2__option--disabled': isOptionDisabled(option)
-                }"
-                @click="!isOptionDisabled(option) && handleOptionSelect(option)"
-              >
+                }" @click="!isOptionDisabled(option) && handleOptionSelect(option)">
                 <slot name="default" :option="option">
                   <!-- 多选复选框 -->
                   <view v-if="multiple" class="zx-select-v2__checkbox">
@@ -107,19 +93,14 @@
               </view>
             </block>
           </template>
-          
+
           <!-- 渲染普通选项 -->
           <template v-else>
-            <view 
-              v-for="(option, index) in filteredOptions" 
-              :key="getValueKey(option)"
-              class="zx-select-v2__option"
-              :class="{ 
+            <view v-for="(option, index) in filteredOptions" :key="getValueKey(option)+index" class="zx-select-v2__option"
+              :class="{
                 'zx-select-v2__option--selected': isOptionSelected(option),
                 'zx-select-v2__option--disabled': isOptionDisabled(option)
-              }"
-              @click="!isOptionDisabled(option) && handleOptionSelect(option)"
-            >
+              }" @click="!isOptionDisabled(option) && handleOptionSelect(option)">
               <slot name="default" :option="option">
                 <!-- 多选复选框 -->
                 <view v-if="multiple" class="zx-select-v2__checkbox">
@@ -131,7 +112,7 @@
             </view>
           </template>
         </template>
-        
+
         <!-- 无数据展示 -->
         <view v-else class="zx-select-v2__empty">
           <slot name="empty">
@@ -139,10 +120,10 @@
           </slot>
         </view>
       </scroll-view>
-      
+
       <!-- 自定义底部插槽 -->
       <slot name="footer"></slot>
-      
+
       <!-- 创建选项按钮 -->
       <view v-if="allowCreate && filterText && !loading" class="zx-select-v2__create" @click="handleCreateOption">
         <text>创建 "{{ filterText }}"</text>
@@ -153,6 +134,8 @@
 
 <script setup>
 import { ref, computed, watch, nextTick, onMounted, toRaw } from 'vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
+import zxInput from '@tanzhenxing/zx-input/zx-input.vue';
 
 // 定义组件属性
 const props = defineProps({
@@ -181,7 +164,7 @@ const props = defineProps({
     type: String,
     default: '请选择'
   },
-  
+
   // 选项相关
   options: {
     type: Array,
@@ -199,7 +182,7 @@ const props = defineProps({
     type: String,
     default: 'disabled'
   },
-  
+
   // 分组相关
   groupKey: {
     type: String,
@@ -213,7 +196,7 @@ const props = defineProps({
     type: String,
     default: 'options'
   },
-  
+
   // 过滤相关
   filterable: {
     type: Boolean,
@@ -227,7 +210,7 @@ const props = defineProps({
     type: String,
     default: '请输入关键词'
   },
-  
+
   // UI相关
   collapseTags: {
     type: Boolean,
@@ -261,11 +244,11 @@ const props = defineProps({
 
 // 定义事件
 const emit = defineEmits([
-  'update:modelValue', 
-  'change', 
-  'visible-change', 
-  'remove-tag', 
-  'clear', 
+  'update:modelValue',
+  'change',
+  'visible-change',
+  'remove-tag',
+  'clear',
   'blur',
   'focus'
 ]);
@@ -283,25 +266,25 @@ const filteredOptions = computed(() => {
   if (!props.options || props.options.length === 0) {
     return [];
   }
-  
+
   // 如果有远程搜索则直接返回
   if (props.remote) {
     return props.options;
   }
-  
+
   // 无过滤直接返回
   if (!props.filterable || !filterText.value) {
     return props.options;
   }
-  
+
   // 使用自定义过滤方法
   if (props.filterMethod && typeof props.filterMethod === 'function') {
     return props.filterMethod(filterText.value, props.options);
   }
-  
+
   // 默认过滤方法
   const query = filterText.value.toLowerCase();
-  
+
   // 处理分组选项
   if (props.groupKey) {
     return props.options.map(group => {
@@ -315,7 +298,7 @@ const filteredOptions = computed(() => {
       return filteredGroup;
     }).filter(group => group[props.groupOptionsKey].length > 0);
   }
-  
+
   // 处理普通选项
   return props.options.filter(option => {
     const label = getOptionLabel(option).toLowerCase();
@@ -328,14 +311,14 @@ const selectedLabel = computed(() => {
   if (props.multiple || props.modelValue === undefined || props.modelValue === '') {
     return '';
   }
-  
+
   const option = props.options.find(opt => {
     if (typeof opt === 'object') {
       return opt[props.valueKey] === props.modelValue;
     }
     return opt === props.modelValue;
   });
-  
+
   return option ? getOptionLabel(option) : '';
 });
 
@@ -371,7 +354,7 @@ const getLabel = (value) => {
     }
     return opt === value;
   });
-  
+
   return option ? getOptionLabel(option) : value;
 };
 
@@ -398,7 +381,7 @@ const handleTriggerClick = () => {
   if (props.disabled) return;
   isDropdownVisible.value = !isDropdownVisible.value;
   emit('visible-change', isDropdownVisible.value);
-  
+
   if (isDropdownVisible.value) {
     nextTick(() => {
       // 这里可以添加获取元素位置的逻辑
@@ -410,7 +393,7 @@ const handleTriggerClick = () => {
 // 处理选项选择
 const handleOptionSelect = (option) => {
   const value = getOptionValue(option);
-  
+
   if (props.multiple) {
     const index = selectedValues.value.indexOf(value);
     if (index > -1) {
@@ -422,16 +405,16 @@ const handleOptionSelect = (option) => {
       selectedValues.value.push(value);
       selectedLabels.value.push(getOptionLabel(option));
     }
-    
+
     emit('update:modelValue', [...selectedValues.value]);
   } else {
     // 单选模式
     emit('update:modelValue', value);
     isDropdownVisible.value = false;
   }
-  
+
   emit('change', props.multiple ? [...selectedValues.value] : value);
-  
+
   // 选择后清空过滤文本
   if (props.filterable && !props.multiple) {
     filterText.value = '';
@@ -441,12 +424,12 @@ const handleOptionSelect = (option) => {
 // 处理标签关闭
 const handleTagClose = (value) => {
   if (props.disabled) return;
-  
+
   const index = selectedValues.value.indexOf(value);
   if (index > -1) {
     selectedValues.value.splice(index, 1);
     selectedLabels.value.splice(index, 1);
-    
+
     emit('update:modelValue', [...selectedValues.value]);
     emit('remove-tag', value);
     emit('change', [...selectedValues.value]);
@@ -456,7 +439,7 @@ const handleTagClose = (value) => {
 // 处理清空
 const handleClear = () => {
   if (props.disabled) return;
-  
+
   if (props.multiple) {
     selectedValues.value = [];
     selectedLabels.value = [];
@@ -464,7 +447,7 @@ const handleClear = () => {
   } else {
     emit('update:modelValue', undefined);
   }
-  
+
   emit('clear');
   emit('change', props.multiple ? [] : undefined);
 };
@@ -494,12 +477,12 @@ const handleScroll = (e) => {
 // 处理创建选项
 const handleCreateOption = () => {
   const value = filterText.value;
-  
+
   // 如果是对象数组，创建新对象
-  const newOption = typeof props.options[0] === 'object' 
-    ? { [props.labelKey]: value, [props.valueKey]: value } 
+  const newOption = typeof props.options[0] === 'object'
+    ? { [props.labelKey]: value, [props.valueKey]: value }
     : value;
-  
+
   // 添加到选项中 (注意：这里仅是示例，实际中可能需要传递事件通知父组件添加)
   if (props.multiple) {
     selectedValues.value.push(getOptionValue(newOption));
@@ -509,7 +492,7 @@ const handleCreateOption = () => {
     emit('update:modelValue', getOptionValue(newOption));
     isDropdownVisible.value = false;
   }
-  
+
   emit('change', props.multiple ? [...selectedValues.value] : getOptionValue(newOption));
   filterText.value = '';
 };
@@ -518,7 +501,7 @@ const handleCreateOption = () => {
 const initSelected = () => {
   if (props.multiple && Array.isArray(props.modelValue)) {
     selectedValues.value = [...props.modelValue];
-    
+
     // 初始化已选标签
     selectedLabels.value = selectedValues.value.map(value => {
       return getLabel(value);
@@ -530,7 +513,7 @@ const initSelected = () => {
 watch(() => props.modelValue, (newVal) => {
   if (props.multiple && Array.isArray(newVal)) {
     selectedValues.value = [...newVal];
-    
+
     // 更新已选标签
     selectedLabels.value = selectedValues.value.map(value => {
       return getLabel(value);
@@ -760,7 +743,7 @@ defineExpose({
   white-space: nowrap;
 }
 
-.zx-select-v2__empty, 
+.zx-select-v2__empty,
 .zx-select-v2__loading {
   display: flex;
   align-items: center;
@@ -797,6 +780,7 @@ defineExpose({
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

@@ -1,42 +1,29 @@
 <template>
-  <view
-    class="zx-settle-bar"
-    :class="{ 'zx-safe-area-bottom': safeAreaInsetBottom }"
-    :style="{ backgroundColor: backgroundColor }"
-  >
+  <view class="zx-settle-bar" :class="{ 'zx-safe-area-bottom': safeAreaInsetBottom }"
+    :style="{ backgroundColor: backgroundColor }">
     <!-- 顶部插槽 -->
     <slot name="top"></slot>
-    
+
     <!-- 提示信息 -->
     <view v-if="tip || $slots.tip" class="zx-settle-bar__tip" :style="{ backgroundColor: tipBackgroundColor }">
-      <zx-icon
-        v-if="tipIcon"
-        :name="tipIcon"
-        :color="tipIconColor"
-        :size="tipIconSize"
-        class="zx-settle-bar__tip-icon"
-      ></zx-icon>
+      <zx-icon v-if="tipIcon" :name="tipIcon" :color="tipIconColor" :size="tipIconSize"
+        class="zx-settle-bar__tip-icon"></zx-icon>
       <text v-if="tip" class="zx-settle-bar__tip-text" :style="{ color: tipTextColor }">{{ tip }}</text>
       <slot name="tip"></slot>
     </view>
-    
+
     <!-- 结算栏主体 -->
     <view class="zx-settle-bar__bar">
       <!-- 全选区域 -->
       <view v-if="showCheckAll" class="zx-settle-bar__check-all" @click="handleCheckAll">
-        <zx-checkbox
-          :modelValue="isAllChecked"
-          :disabled="checkAllDisabled"
-          :color="checkboxColor"
-          :size="checkboxSize"
-          :shape="checkboxShape"
-        ></zx-checkbox>
+        <zx-checkbox :modelValue="isAllChecked" :disabled="checkAllDisabled" :color="checkboxColor" :size="checkboxSize"
+          :shape="checkboxShape"></zx-checkbox>
         <text class="zx-settle-bar__check-all-text" :style="{ color: checkAllTextColor }">{{ checkAllText }}</text>
       </view>
-      
+
       <!-- 默认插槽 -->
       <slot></slot>
-      
+
       <!-- 金额信息 -->
       <view class="zx-settle-bar__price-info" v-if="showPrice">
         <!-- 原价（划线价） -->
@@ -45,7 +32,7 @@
             {{ currency }}{{ formatPrice(originalPrice) }}
           </text>
         </view>
-        
+
         <!-- 当前价格 -->
         <view class="zx-settle-bar__price">
           <text class="zx-settle-bar__price-label" :style="{ color: priceLabelColor }">{{ priceLabel }}</text>
@@ -57,31 +44,23 @@
             {{ decimalStr }}
           </text>
         </view>
-        
+
         <!-- 价格后缀 -->
         <view v-if="priceSuffix" class="zx-settle-bar__price-suffix">
           <text :style="{ color: priceSuffixColor, fontSize: priceSuffixSize + 'rpx' }">{{ priceSuffix }}</text>
         </view>
       </view>
-      
+
       <!-- 按钮区域 -->
       <slot name="button">
-        <zx-button
-          :type="buttonType"
-          :color="buttonColor"
-          :size="buttonSize"
-          :round="buttonRound"
-          :loading="loading"
-          :disabled="disabled || selectedCount === 0"
-          :loadingText="loadingText"
-          class="zx-settle-bar__button"
-          @click="handleSettle"
-        >
+        <zx-button :type="buttonType" :color="buttonColor" :size="buttonSize" :round="buttonRound" :loading="loading"
+          :disabled="disabled || selectedCount === 0" :loadingText="loadingText" class="zx-settle-bar__button"
+          @click="handleSettle">
           {{ buttonText }}{{ selectedCount > 0 ? `(${selectedCount})` : '' }}
         </zx-button>
       </slot>
     </view>
-    
+
     <!-- 底部插槽 -->
     <slot name="bottom"></slot>
   </view>
@@ -135,6 +114,10 @@
  * @event {Function} check-all 全选事件
  */
 import { computed } from 'vue'
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue'
+import zxCheckbox from '@tanzhenxing/zx-checkbox/zx-checkbox.vue'
+
 
 const props = defineProps({
   // 价格相关
@@ -166,7 +149,7 @@ const props = defineProps({
     type: Boolean,
     default: true
   },
-  
+
   // 选择相关
   selectedCount: {
     type: Number,
@@ -188,7 +171,7 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  
+
   // 按钮相关
   buttonText: {
     type: String,
@@ -222,7 +205,7 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  
+
   // 提示相关
   tip: {
     type: String,
@@ -232,7 +215,7 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  
+
   // 样式相关
   safeAreaInsetBottom: {
     type: Boolean,
@@ -337,7 +320,7 @@ const formatPrice = (price) => {
 // 处理全选
 const handleCheckAll = () => {
   if (props.checkAllDisabled) return
-  
+
   const newCheckAll = !props.checkAll
   emit('update:checkAll', newCheckAll)
   emit('check-all', newCheckAll)
@@ -346,7 +329,7 @@ const handleCheckAll = () => {
 // 处理结算
 const handleSettle = () => {
   if (props.disabled || props.loading || props.selectedCount === 0) return
-  
+
   emit('settle', {
     selectedCount: props.selectedCount,
     price: props.price,
@@ -365,24 +348,24 @@ const handleSettle = () => {
   background-color: #ffffff;
   border-top: 1rpx solid #ebedf0;
   user-select: none;
-  
+
   &__tip {
     display: flex;
     align-items: center;
     padding: 16rpx 32rpx;
     background-color: #fff7e8;
-    
+
     &-icon {
       margin-right: 12rpx;
     }
-    
+
     &-text {
       flex: 1;
       font-size: 24rpx;
       line-height: 1.4;
     }
   }
-  
+
   &__bar {
     display: flex;
     align-items: center;
@@ -390,18 +373,18 @@ const handleSettle = () => {
     padding: 16rpx 32rpx;
     gap: 24rpx;
   }
-  
+
   &__check-all {
     display: flex;
     align-items: center;
     gap: 12rpx;
-    
+
     &-text {
       font-size: 28rpx;
       line-height: 1.4;
     }
   }
-  
+
   &__price-info {
     flex: 1;
     display: flex;
@@ -409,46 +392,46 @@ const handleSettle = () => {
     align-items: flex-end;
     gap: 4rpx;
   }
-  
+
   &__original-price {
     text {
       text-decoration: line-through;
       font-size: 24rpx;
     }
   }
-  
+
   &__price {
     display: flex;
     align-items: baseline;
     gap: 4rpx;
-    
+
     &-label {
       font-size: 28rpx;
       line-height: 1.4;
     }
-    
+
     &-symbol {
       font-size: 24rpx;
       font-weight: 500;
     }
-    
+
     &-integer {
       font-weight: 600;
       font-family: Avenir-Heavy, PingFang SC, Helvetica Neue, Arial, sans-serif;
     }
-    
+
     &-decimal {
       font-size: 24rpx;
       font-weight: 500;
     }
   }
-  
+
   &__price-suffix {
     text {
       font-size: 24rpx;
     }
   }
-  
+
   &__button {
     min-width: 200rpx;
     height: 80rpx;

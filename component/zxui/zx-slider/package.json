@@ -1,11 +1,22 @@
 {
   "name": "@tanzhenxing/zx-slider",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["slider", "slider组件", "滑动选择器", "滑块", "滑块组件", "滑块选择器", "滑块选择器组件", "滑块选择器组件", "滑块选择器组件", "滑块选择器组件"],
+  "keywords": [
+    "slider",
+    "slider组件",
+    "滑动选择器",
+    "滑块",
+    "滑块组件",
+    "滑块选择器",
+    "滑块选择器组件",
+    "滑块选择器组件",
+    "滑块选择器组件",
+    "滑块选择器组件"
+  ],
   "author": "tanzhenxing",
   "license": "ISC",
   "description": "基于uni-app的滑动选择器组件，支持自定义样式和功能"

@@ -1,3 +1,24 @@
+<template>
+  <view :class="classes">
+    <!-- 标题区域 -->
+    <view :class="titleClasses" :style="titleStyles" @click.stop="handleTitleClick">
+      <text class="zx-sub-side-navbar__title__text">
+        {{ title }}
+      </text>
+      <view class="zx-sub-side-navbar__title__icon">
+        <text class="zx-sub-side-navbar__title__arrow" :class="{ 'zx-sub-side-navbar__title__arrow--open': isOpen }">
+          >
+        </text>
+      </view>
+    </view>
+
+    <!-- 内容区域 -->
+    <view :class="contentClasses" v-show="isOpen">
+      <slot />
+    </view>
+  </view>
+</template>
+
 <script setup>
 import { computed, ref, inject } from 'vue'
 
@@ -64,31 +85,4 @@ function handleTitleClick() {
 }
 </script>
 
-<template>
-  <view :class="classes">
-    <!-- 标题区域 -->
-    <view 
-      :class="titleClasses" 
-      :style="titleStyles"
-      @click.stop="handleTitleClick"
-    >
-      <text class="zx-sub-side-navbar__title__text">
-        {{ title }}
-      </text>
-      <view class="zx-sub-side-navbar__title__icon">
-        <text class="zx-sub-side-navbar__title__arrow" :class="{ 'zx-sub-side-navbar__title__arrow--open': isOpen }">
-          >
-        </text>
-      </view>
-    </view>
-    
-    <!-- 内容区域 -->
-    <view :class="contentClasses" v-show="isOpen">
-      <slot />
-    </view>
-  </view>
-</template>
-
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

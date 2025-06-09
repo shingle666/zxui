@@ -1,12 +1,8 @@
 <template>
   <view :class="classes">
-    <view
-      v-for="(item, index) in gridList"
-      :key="index"
+    <view v-for="(item, index) in gridList" :key="index"
       :class="['nine-ninegrid__item', { active: activeState || (index !== 4 && index === currIndex) }]"
-      :style="getItemStyle(index)"
-      @click="handleItemClick(index)"
-    >
+      :style="getItemStyle(index)" @click="handleItemClick(index)">
       <template v-if="index === 4">
         <slot name="startBtn">
           <view class="nine-ninegrid__item__center" @click="handleCenterClick">
@@ -96,7 +92,7 @@ const initializeGrid = (list) => {
     while (tempGrid.length < 9) tempGrid.push({});
     if (tempGrid.length > 9) tempGrid = tempGrid.slice(0, 9);
     if (!(tempGrid[4] && Object.keys(tempGrid[4]).length > 0)) {
-        tempGrid[4] = { isCenterPlaceholder: true };
+      tempGrid[4] = { isCenterPlaceholder: true };
     }
   }
 
@@ -159,19 +155,19 @@ const handleItemClick = (index) => {
   setTimeout(() => {
     // Revert to original, but with the clicked card revealed
     gridList.value = oldGridList.value.map((oldItem, i) => {
-        if (gridList.value[index] && oldItem.originalIndex === gridList.value[index].originalIndex) {
-            return oldGridList.value.find(p => p.id === props.prizeId) || oldItem; // Show the actual prize
-        }
-        return oldItem;
+      if (gridList.value[index] && oldItem.originalIndex === gridList.value[index].originalIndex) {
+        return oldGridList.value.find(p => p.id === props.prizeId) || oldItem; // Show the actual prize
+      }
+      return oldItem;
     });
     // Ensure the specific clicked card shows its true prize
     const finalGrid = JSON.parse(JSON.stringify(oldGridList.value));
     const prizeToReveal = oldGridList.value.find(p => p.id === props.prizeId);
-    if(prizeToReveal){
-        const originalPositionOfPrize = finalGrid.findIndex(p => p.originalIndex === gridList.value[index].originalIndex);
-        if(originalPositionOfPrize !== -1) {
-            finalGrid[originalPositionOfPrize] = {...prizeToReveal};
-        }
+    if (prizeToReveal) {
+      const originalPositionOfPrize = finalGrid.findIndex(p => p.originalIndex === gridList.value[index].originalIndex);
+      if (originalPositionOfPrize !== -1) {
+        finalGrid[originalPositionOfPrize] = { ...prizeToReveal };
+      }
     }
     gridList.value = finalGrid;
 
@@ -205,17 +201,17 @@ const shuffleAnimation = async (targetTranslate = 110) => {
     const item = gridList.value[i];
     // Calculate translation relative to center (1,1)
     // Target is to move them 'targetTranslate' amount based on their original position from center
-    const dx = (item.twoArry.x - 1) * (targetTranslate > 0 ? cardWidth : -cardWidth) * (targetTranslate > 0 ? 0.5 : 1) * (targetTranslate / 110) ;
+    const dx = (item.twoArry.x - 1) * (targetTranslate > 0 ? cardWidth : -cardWidth) * (targetTranslate > 0 ? 0.5 : 1) * (targetTranslate / 110);
     const dy = (item.twoArry.y - 1) * (targetTranslate > 0 ? cardWidth : -cardWidth) * (targetTranslate > 0 ? 0.5 : 1) * (targetTranslate / 110);
-    
+
     itemPositions.value[i] = {
-        x: dx,
-        y: dy,
-        transition: `transform ${props.shuffleDuration / 2000}s ease-in-out`
+      x: dx,
+      y: dy,
+      transition: `transform ${props.shuffleDuration / 2000}s ease-in-out`
     };
     await new Promise(resolve => setTimeout(resolve, props.shuffleItemDelay / 2));
   }
-  
+
   // Randomize gridList internally (the data model)
   let tempArray = gridList.value.filter((_, i) => i !== 4);
   for (let i = tempArray.length - 1; i > 0; i--) {
@@ -240,9 +236,9 @@ const shuffleAnimation = async (targetTranslate = 110) => {
   for (let i = 0; i < gridList.value.length; i++) {
     if (i === 4) continue;
     itemPositions.value[i] = {
-        x: 0,
-        y: 0,
-        transition: `transform ${props.shuffleDuration / 2000}s ease-in-out ${props.shuffleItemDelay * gridList.value.length / 2000}s`
+      x: 0,
+      y: 0,
+      transition: `transform ${props.shuffleDuration / 2000}s ease-in-out ${props.shuffleItemDelay * gridList.value.length / 2000}s`
     };
     await new Promise(resolve => setTimeout(resolve, props.shuffleItemDelay / 2));
   }
@@ -257,17 +253,17 @@ const handleCenterClick = async () => {
 
   if (isDraw.value) { // Start Draw
     if (!props.prizeId) {
-        console.error("prizeId is not set. Cannot determine winning prize.");
-        // Optionally, trigger a 'return' or show an error to user
-        emit('return');
-        return;
+      console.error("prizeId is not set. Cannot determine winning prize.");
+      // Optionally, trigger a 'return' or show an error to user
+      emit('return');
+      return;
     }
     // Ensure there's a prize to be won
     const winningPrizeExists = oldGridList.value.some(p => p.id === props.prizeId);
     if (!winningPrizeExists) {
-        console.error(`Prize with id '${props.prizeId}' not found in the initial prizeList.`);
-        emit('return');
-        return;
+      console.error(`Prize with id '${props.prizeId}' not found in the initial prizeList.`);
+      emit('return');
+      return;
     }
 
     emit('start');
@@ -276,11 +272,11 @@ const handleCenterClick = async () => {
     currIndex.value = -1; // Reset any revealed card
     drawTitle.value = '返回';
     drawDesc.value = '';
-    
+
     // Restore to original visual state before shuffle if cards were already shuffled and one revealed
-    if(activeState.value === true && oldGridList.value.length > 0){
-        gridList.value = JSON.parse(JSON.stringify(oldGridList.value));
-        itemPositions.value = gridList.value.map(() => ({ x: 0, y: 0, transition: 'none' }));
+    if (activeState.value === true && oldGridList.value.length > 0) {
+      gridList.value = JSON.parse(JSON.stringify(oldGridList.value));
+      itemPositions.value = gridList.value.map(() => ({ x: 0, y: 0, transition: 'none' }));
     }
     activeState.value = false; // Flip to show card backs
 
@@ -342,18 +338,21 @@ onMounted(() => {
   justify-content: center;
   background-color: #fff; // Default item background
   border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   &.active .front {
     transform: rotateY(0deg);
   }
+
   &.active .back {
     transform: rotateY(180deg);
   }
+
   // When not active (shuffling or initial back shown)
   &:not(.active) .front {
     transform: rotateY(-180deg);
   }
+
   &:not(.active) .back {
     transform: rotateY(0deg);
   }
@@ -379,6 +378,7 @@ onMounted(() => {
 .front {
   background-color: #e0e0e0; // Card back color or image placeholder
   z-index: 2;
+
   .card-img {
     width: 100%;
     height: 100%;
@@ -389,11 +389,13 @@ onMounted(() => {
   background-color: #ffffff; // Card front color
   transform: rotateY(180deg);
   z-index: 1;
+
   .prize-img {
     max-width: 80%;
     max-height: 60%;
     margin-top: 5px;
   }
+
   text {
     font-size: 12px;
     color: #333;
@@ -410,11 +412,13 @@ onMounted(() => {
   background-color: #ffcc00; // Center button color
   color: #333;
   border-radius: 6px;
+
   text {
     &:first-child {
       font-weight: bold;
       font-size: 16px;
     }
+
     &:last-child {
       font-size: 12px;
       margin-top: 4px;

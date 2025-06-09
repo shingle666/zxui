@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-scrollbar",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "zx-scrollbar 滚动条组件，支持垂直和水平滚动，自定义滚动条样式",
   "main": "zx-scrollbar.vue",
   "keywords": [

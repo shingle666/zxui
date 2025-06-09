@@ -1,15 +1,17 @@
 <template>
 	<view @touchmove.stop.prevent="stop">
-		<view class="zx-select--mask" :class="{ 'zx-select--mask-show': show }" :style="getStyles" @tap.stop="maskClose">
+		<view class="zx-select--mask" :class="{ 'zx-select--mask-show': show }" :style="getStyles"
+			@tap.stop="maskClose">
 		</view>
 		<view class="zx-select--wrap" :class="{ 'zx-select--wrap-show': show }"
 			:style="{ borderTopLeftRadius: radius + 'rpx', borderTopRightRadius: radius + 'rpx', background: background, zIndex: zIndex }">
 			<view class="zx-select--header"
 				:style="{ background: background, borderTopLeftRadius: radius + 'rpx', borderTopRightRadius: radius + 'rpx' }">
 				<text class="zx-select--header-text"
-					:style="{ fontSize: titleSize + 'rpx', color: titleColor, fontWeight: fontWeight }">{{ title }}</text>
+					:style="{ fontSize: titleSize + 'rpx', color: titleColor, fontWeight: fontWeight }">{{ title
+					}}</text>
 				<view class="zx-select--header-close" @tap.stop="handleClose">
-					<icon type="clear" color="#ccc" :size="16"></icon>
+					<zx-icon name="close" color="#ccc" size="32rpx"></zx-icon>
 				</view>
 				<view class="zx-select--header-line" :style="{ background: dividerColor }"></view>
 			</view>
@@ -53,6 +55,7 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
 
 // 定义 props
 const props = defineProps({

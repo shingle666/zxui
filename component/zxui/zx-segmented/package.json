@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-segmented",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "分段控制器组件，用于在多个选项中进行单选",
   "main": "zx-segmented.vue",
   "scripts": {

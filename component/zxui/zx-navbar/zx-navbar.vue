@@ -2,7 +2,7 @@
 	<view class="zx-navbar" :class="[themeClass]" :style="{ borderBottom: border ? '1rpx solid ' + borderColor : '' }">
 		<!-- 固定在顶部时的占位 -->
 		<view v-if="fixed && placeholder" class="zx-navbar__placeholder"
-			:style="{ height: barHeight + 'px', backgroundColor: bgColor }"></view>
+			:style="{ height: barHeight + 'rpx', backgroundColor: bgColor }"></view>
 
 		<view :class="[
 			fixed && 'zx-navbar--fixed',
@@ -24,19 +24,16 @@
 					<slot name="left">
 						<zx-icon v-if="leftIcon" :name="leftIcon" :size="leftIconSize" :color="leftIconColor"
 							:class="leftIconClass"></zx-icon>
-						<text v-if="leftText" :style="{ color: leftIconColor }"
-							class="zx-navbar__content__left__text">{{ leftText }}</text>
+						<zx-text v-if="leftText" :color="leftIconColor" :text="leftText"></zx-text>
 					</slot>
 				</view>
 
 				<!-- 中央标题区域 -->
 				<view class="zx-navbar__content__center" :style="centerStyle">
 					<slot name="center">
-						<text v-if="title" class="zx-line-1 zx-navbar__content__title"
-							:style="[{ width: titleWidth }, titleStyle]">{{ title
-							}}</text>
+						<zx-text v-if="title" :text="title"></zx-text>
 						<view v-if="subtitle" class="zx-navbar__content__subtitle">
-							<text :style="subtitleStyle">{{ subtitle }}</text>
+							<zx-text :style="subtitleStyle" :text="subtitle"></zx-text>
 						</view>
 					</slot>
 				</view>
@@ -49,8 +46,7 @@
 					<slot name="right">
 						<zx-icon v-if="rightIcon" :name="rightIcon" :size="rightIconSize" :color="rightIconColor"
 							:class="rightIconClass"></zx-icon>
-						<text v-if="rightText" class="zx-navbar__content__right__text"
-							:style="{ color: rightIconColor }">{{ rightText }}</text>
+						<zx-text v-if="rightText" :text="rightText" :color="rightIconColor"></zx-text>
 					</slot>
 				</view>
 
@@ -105,6 +101,7 @@ import { ref, computed, getCurrentInstance, onMounted, watch } from 'vue';
 import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
 import zxStatusBar from '@tanzhenxing/zx-status-bar/zx-status-bar.vue';
 import zxLoading from '@tanzhenxing/zx-loading/zx-loading.vue';
+import zxText from '@tanzhenxing/zx-text/zx-text.vue';
 
 const { proxy } = getCurrentInstance();
 
@@ -319,7 +316,7 @@ const centerStyle = computed(() => {
 				styles.position = props.titlePosition;
 				styles.textAlign = 'center';
 				break;
-				case 'left':
+			case 'left':
 				styles.marginLeft = '100rpx';
 				break;
 			default:
@@ -462,7 +459,7 @@ watch(() => props.theme, (newTheme) => {
 
 	// 阴影效果
 	&--shadow {
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
 	}
 
 	&__placeholder {
@@ -473,14 +470,14 @@ watch(() => props.theme, (newTheme) => {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		min-height: 44px;
+		min-height: 44rpx;
 		position: relative;
 		transition: all 0.3s ease;
 
 		// 沉浸式模式
 		&--immersive {
-			backdrop-filter: blur(10px);
-			-webkit-backdrop-filter: blur(10px);
+			backdrop-filter: blur(10rpx);
+			-webkit-backdrop-filter: blur(10rpx);
 		}
 
 		&__left,
@@ -521,7 +518,7 @@ watch(() => props.theme, (newTheme) => {
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
-			min-height: 44px;
+			min-height: 44rpx;
 		}
 
 		&__title {
@@ -535,7 +532,7 @@ watch(() => props.theme, (newTheme) => {
 		&__subtitle {
 			margin-top: 4rpx;
 
-			text {
+			:deep(.zx-text) {
 				font-size: 24rpx;
 				color: #909399;
 				line-height: 1;
@@ -583,7 +580,7 @@ watch(() => props.theme, (newTheme) => {
 }
 
 // 响应式设计
-@media (max-width: 375px) {
+@media (max-width: 375rpx) {
 	.zx-navbar__content {
 
 		&__left,
@@ -614,7 +611,7 @@ watch(() => props.theme, (newTheme) => {
 			background-color: #2c2c2c;
 		}
 
-		.zx-navbar__content__subtitle text {
+		.zx-navbar__content__subtitle :deep(.zx-text) {
 			color: #a0a0a0;
 		}
 	}

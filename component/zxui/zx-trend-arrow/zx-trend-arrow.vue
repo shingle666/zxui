@@ -3,10 +3,10 @@
     <!-- 箭头在左侧 -->
     <view v-if="arrowLeft" class="zx-trend-arrow__icon" :style="iconStyle">
       <slot v-if="rate > 0" name="upIcon">
-        <text class="zx-trend-arrow__triangle zx-trend-arrow__triangle--up">▲</text>
+        <zx-icon name="arrow-up" :color="riseColor" :size="fontSize" />
       </slot>
       <slot v-else-if="rate < 0" name="downIcon">
-        <text class="zx-trend-arrow__triangle zx-trend-arrow__triangle--down">▼</text>
+        <zx-icon name="arrow-down" :color="dropColor" :size="fontSize" />
       </slot>
     </view>
     
@@ -22,10 +22,10 @@
     <!-- 箭头在右侧（默认） -->
     <view v-if="!arrowLeft" class="zx-trend-arrow__icon" :style="iconStyle">
       <slot v-if="rate > 0" name="upIcon">
-        <text class="zx-trend-arrow__triangle zx-trend-arrow__triangle--up">▲</text>
+        <zx-icon name="arrow-up" :color="riseColor" :size="fontSize" />
       </slot>
       <slot v-else-if="rate < 0" name="downIcon">
-        <text class="zx-trend-arrow__triangle zx-trend-arrow__triangle--down">▼</text>
+        <zx-icon name="arrow-down" :color="dropColor" :size="fontSize" />
       </slot>
     </view>
   </view>
@@ -51,6 +51,7 @@
  * @example <zx-trend-arrow :rate="10.2365" />
  */
 import { computed, getCurrentInstance } from 'vue'
+import zxIcon from '../zx-icon/zx-icon.vue'
 
 const { proxy } = getCurrentInstance()
 

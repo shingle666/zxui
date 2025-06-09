@@ -1,3 +1,13 @@
+<template>
+  <view :class="classes" :style="styles">
+    <view class="zx-side-navbar__content">
+      <view class="zx-side-navbar__content__list">
+        <slot />
+      </view>
+    </view>
+  </view>
+</template>
+
 <script setup>
 import { computed, provide } from 'vue'
 
@@ -31,16 +41,6 @@ const styles = computed(() => {
   return {}
 })
 </script>
-
-<template>
-  <view :class="classes" :style="styles">
-    <view class="zx-side-navbar__content">
-      <view class="zx-side-navbar__content__list">
-        <slot />
-      </view>
-    </view>
-  </view>
-</template>
 
 <style lang="scss">
 

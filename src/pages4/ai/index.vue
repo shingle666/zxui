@@ -22,16 +22,16 @@
     <scroll-view class="chat-container" scroll-y :scroll-top="scrollTop" scroll-with-animation @scroll="onScroll"
       :refresher-enabled="true" :refresher-triggered="isRefreshing" @refresherrefresh="onRefresh">
       <view class="message-list">
-        <!-- 加载更多历史消息 -->
+       
         <zx-loading v-if="hasMoreHistory && isLoadingHistory" text="加载中..." />
         <view v-else-if="hasMoreHistory" class="load-more-history" @click="loadMoreHistory">
           <text class="load-more-text">加载更多历史消息</text>
         </view>
 
-        <!-- 欢迎消息 -->
+       
         <zx-ai-welcome v-if="messages.length === 0 && !isLoadingHistory" />
 
-        <!-- 聊天消息 -->
+       
         <view v-for="(message, index) in messages" :key="message.id || index" class="message-item" :class="{
           'user-message': message.role === 'user',
           'assistant-message': message.role === 'assistant',
@@ -45,17 +45,16 @@
 
           <view class="message-content">
             <view class="message-bubble" :class="{ 'has-image': message.images && message.images.length }">
-              <!-- 图片消息 -->
+            
               <view v-if="message.images && message.images.length" class="message-images">
                 <image v-for="(img, imgIndex) in message.images" :key="imgIndex" class="message-image" :src="img"
                   mode="aspectFill" @click="previewImage(img, message.images)" />
               </view>
 
-              <!-- 文本消息 -->
               <view v-if="message.content" class="message-text-wrapper">
                 <text class="message-text" :selectable="true">{{ message.content }}</text>
 
-                <!-- 消息操作按钮 -->
+              
                 <view v-if="message.role === 'assistant' && message.status === 'sent'" class="message-actions">
                   <view class="action-btn" @click="copyMessage(message.content)">
                     <zx-icon name="copy" size="14" color="#6b7280" />
@@ -70,12 +69,10 @@
                 </view>
               </view>
 
-              <!-- 加载状态 -->
               <view v-if="message.status === 'loading'" class="loading-indicator">
                 <zx-loading size="16" color="#999" text="加载中" />
               </view>
 
-              <!-- 错误状态 -->
               <view v-if="message.status === 'error'" class="error-indicator">
                 <zx-icon name="warning" size="16" color="#ef4444" />
                 <text class="error-text">{{ message.error || '发送失败' }}</text>
@@ -96,7 +93,6 @@
           </view>
         </view>
 
-        <!-- 正在输入指示器 -->
         <view v-if="isTyping" class="typing-indicator">
           <view class="message-avatar">
             <image class="avatar" src="https://zxui.org/logo.png" mode="aspectFill" />
@@ -115,7 +111,7 @@
 
     <!-- 输入区域 -->
     <view class="input-container" :class="{ 'expanded': showInputExtensions }">
-      <!-- 快捷操作按钮 -->
+ 
       <view v-if="showQuickActions" class="quick-actions">
         <scroll-view class="quick-actions-scroll" scroll-x>
           <view class="quick-actions-list">
@@ -128,7 +124,7 @@
         </scroll-view>
       </view>
 
-      <!-- 图片预览 -->
+   
       <view v-if="selectedImages.length" class="image-preview">
         <scroll-view class="image-preview-scroll" scroll-x>
           <view class="image-preview-list">
@@ -142,12 +138,12 @@
         </scroll-view>
       </view>
 
-      <!-- AI发送器组件 -->
+    
       <zx-ai-sender :modelValue="inputText" :placeholder="inputPlaceholder" :maxlength="maxInputLength" :loading="isLoading"
         @submit="sendMessage" @change="onInputChange" @focus="onInputFocus"
         @blur="onInputBlur"></zx-ai-sender>
 
-      <!-- 扩展功能面板 -->
+     
       <view v-if="showInputExtensions" class="input-extensions">
         <view class="extension-grid">
           <view class="extension-item" @click="chooseImage">
@@ -189,7 +185,7 @@
         </view>
       </view>
 
-      <!-- 语音录制提示 -->
+      
       <view v-if="isRecording" class="recording-overlay">
         <view class="recording-content">
           <view class="recording-animation">
@@ -214,25 +210,18 @@
         </view>
 
         <view class="settings-content">
-          <!-- 模型选择 -->
           <view class="setting-item">
             <text class="setting-label">AI模型</text>
             <zx-select v-model="currentModel" :options="modelOptions" @change="onModelChange" />
           </view>
-
-          <!-- 温度设置 -->
           <view class="setting-item">
             <text class="setting-label">创造性 ({{ temperature }})</text>
             <zx-slider v-model="temperature" :min="0" :max="2" :step="0.1" @change="onTemperatureChange" />
           </view>
-
-          <!-- 最大令牌数 -->
           <view class="setting-item">
             <text class="setting-label">最大回复长度</text>
             <zx-input-number v-model="maxTokens" :min="100" :max="4000" :step="100" @change="onMaxTokensChange" />
           </view>
-
-          <!-- 流式输出 -->
           <view class="setting-item">
             <text class="setting-label">流式输出</text>
             <zx-switch v-model="streamMode" @change="onStreamModeChange" />
@@ -247,9 +236,8 @@
 </template>
 
 <script setup>
-import { ref, computed, nextTick, onMounted, watch } from 'vue'
-import { onLoad, onShow, onHide } from '@dcloudio/uni-app'
-import aiAPI from '@/utils/ai-api.js'
+import { ref, computed, nextTick } from 'vue'
+import { onLoad } from '@dcloudio/uni-app'
 import zxNavbar from '@tanzhenxing/zx-navbar/zx-navbar.vue'
 import zxNoNetwork from '@tanzhenxing/zx-no-network/zx-no-network.vue'
 import zxLoading from '@tanzhenxing/zx-loading/zx-loading.vue'
@@ -846,5 +834,582 @@ onLoad(async (options) => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/styles/index.scss";
+.ai-chat-app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.chat-container {
+  flex: 1;
+  padding: 20rpx;
+  background: #f8fafc;
+}
+
+.message-list {
+  padding-bottom: 20rpx;
+}
+
+.welcome-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400rpx;
+
+  .welcome-content {
+    text-align: center;
+
+    .welcome-icon {
+      width: 120rpx;
+      height: 120rpx;
+      margin-bottom: 20rpx;
+    }
+
+    .welcome-title {
+      display: block;
+      font-size: 32rpx;
+      font-weight: bold;
+      color: #1f2937;
+      margin-bottom: 10rpx;
+    }
+
+    .welcome-desc {
+      display: block;
+      font-size: 28rpx;
+      color: #6b7280;
+    }
+  }
+}
+
+.message-item {
+  display: flex;
+  margin-bottom: 30rpx;
+
+  &.user-message {
+    flex-direction: row-reverse;
+
+    .message-content {
+      align-items: flex-end;
+    }
+
+    .message-bubble {
+      background: #6366f1;
+      color: white;
+    }
+  }
+
+  &.assistant-message {
+    .message-bubble {
+      background: white;
+      color: #1f2937;
+      border: 1px solid #e5e7eb;
+    }
+  }
+
+  &.system-message {
+    justify-content: center;
+
+    .message-bubble {
+      background: #f3f4f6;
+      color: #6b7280;
+      font-size: 24rpx;
+    }
+  }
+}
+
+.message-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  margin: 0 20rpx;
+
+  .avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #e5e7eb;
+  }
+}
+
+.message-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100% - 160rpx);
+}
+
+.message-bubble {
+  padding: 20rpx 24rpx;
+  border-radius: 20rpx;
+  max-width: 100%;
+  word-wrap: break-word;
+  position: relative;
+
+  .message-text {
+    font-size: 28rpx;
+    line-height: 1.5;
+  }
+}
+
+.message-time {
+  margin-top: 10rpx;
+
+  text {
+    font-size: 22rpx;
+    color: #9ca3af;
+  }
+}
+
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  margin-top: 10rpx;
+
+  .loading-text {
+    margin-left: 10rpx;
+    font-size: 24rpx;
+    color: #6b7280;
+  }
+}
+
+.error-indicator {
+  display: flex;
+  align-items: center;
+  margin-top: 10rpx;
+
+  .error-text {
+    font-size: 24rpx;
+    color: #ef4444;
+    margin-right: 20rpx;
+  }
+
+  .retry-btn {
+    font-size: 24rpx;
+    color: #6366f1;
+    text-decoration: underline;
+  }
+}
+
+.typing-indicator {
+  display: flex;
+  margin-bottom: 30rpx;
+
+  .typing-content {
+    margin-left: 20rpx;
+
+    .typing-dots {
+      display: flex;
+      align-items: center;
+      padding: 20rpx 24rpx;
+      background: white;
+      border-radius: 20rpx;
+      border: 1px solid #e5e7eb;
+
+      .dot {
+        width: 8rpx;
+        height: 8rpx;
+        border-radius: 50%;
+        background: #9ca3af;
+        margin-right: 8rpx;
+        animation: typing 1.4s infinite ease-in-out;
+
+        &:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+
+        &:nth-child(3) {
+          animation-delay: 0.4s;
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
+@keyframes typing {
+
+  0%,
+  60%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+
+  30% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+.input-container {
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  padding: 20rpx;
+  transition: all 0.3s ease;
+}
+
+.input-container.expanded {
+  background: #f8f9fa;
+}
+
+.quick-actions {
+  padding: 20rpx 0;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.quick-actions-scroll {
+  width: 100%;
+}
+
+.quick-actions-list {
+  display: flex;
+  padding: 0 30rpx;
+  white-space: nowrap;
+}
+
+.quick-action-item {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  margin-right: 20rpx;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  color: #495057;
+  flex-shrink: 0;
+}
+
+.quick-action-item:active {
+  background: #e9ecef;
+}
+
+.action-text {
+  margin-left: 12rpx;
+  font-size: 24rpx;
+  color: #6b7280;
+}
+
+/* 图片预览 */
+.image-preview {
+  padding: 20rpx 0;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.image-preview-scroll {
+  width: 100%;
+}
+
+.image-preview-list {
+  display: flex;
+  padding: 0 30rpx;
+}
+
+.preview-item {
+  position: relative;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.preview-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 16rpx;
+  background: #f0f0f0;
+}
+
+.remove-image {
+  position: absolute;
+  top: -10rpx;
+  right: -10rpx;
+  width: 40rpx;
+  height: 40rpx;
+  background: #ff4757;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 20rpx;
+}
+
+.input-box {
+  flex: 1;
+  position: relative;
+  background: #f9fafb;
+  border-radius: 24rpx;
+  border: 1px solid #e5e7eb;
+
+  .message-input {
+    width: 100%;
+    min-height: 80rpx;
+    max-height: 200rpx;
+    padding: 20rpx 120rpx 20rpx 24rpx;
+    font-size: 28rpx;
+    line-height: 1.5;
+    background: transparent;
+    border: none;
+    outline: none;
+  }
+
+  .char-count {
+    position: absolute;
+    bottom: 10rpx;
+    right: 80rpx;
+    font-size: 20rpx;
+    color: #9ca3af;
+  }
+
+  .char-count .warning {
+    color: #ef4444;
+  }
+
+  .input-actions {
+    position: absolute;
+    right: 20rpx;
+    bottom: 20rpx;
+    display: flex;
+    gap: 10rpx;
+
+    .action-btn {
+      width: 60rpx;
+      height: 60rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #f3f4f6;
+    }
+  }
+}
+
+.voice-button {
+  width: 80rpx;
+  height: 80rpx;
+  background: #10b981;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+
+  &.recording {
+    background: #ef4444;
+    transform: scale(1.1);
+    animation: pulse 1s infinite;
+  }
+}
+
+.send-button {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: #d1d5db;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+
+  &.active {
+    background: #6366f1;
+    transform: scale(1.05);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1.1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+/* 扩展功能面板 */
+.input-extensions {
+  padding: 20rpx;
+  background: #fff;
+  border-top: 1px solid #e9ecef;
+}
+
+.extension-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+}
+
+.extension-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  transition: all 0.3s ease;
+}
+
+.extension-item:active {
+  background: #f3f4f6;
+  transform: scale(0.95);
+}
+
+.extension-icon {
+  width: 60rpx;
+  height: 60rpx;
+  background: #f8f9fa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10rpx;
+}
+
+.extension-text {
+  font-size: 22rpx;
+  color: #6b7280;
+  text-align: center;
+}
+
+/* 语音录制覆盖层 */
+.recording-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.recording-content {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 60rpx 40rpx;
+  text-align: center;
+  min-width: 300rpx;
+}
+
+.recording-animation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.wave {
+  width: 8rpx;
+  height: 40rpx;
+  background: #ef4444;
+  margin: 0 4rpx;
+  border-radius: 4rpx;
+  animation: wave 1.2s infinite ease-in-out;
+}
+
+.wave:nth-child(2) {
+  animation-delay: -1.1s;
+}
+
+.wave:nth-child(3) {
+  animation-delay: -1.0s;
+}
+
+@keyframes wave {
+
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+  }
+
+  20% {
+    transform: scaleY(1.0);
+  }
+}
+
+.recording-text {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 10rpx;
+}
+
+.recording-tip {
+  font-size: 24rpx;
+  color: #6b7280;
+}
+
+.settings-panel {
+  background: white;
+  border-radius: 20rpx 20rpx 0 0;
+  max-height: 80vh;
+  width: 80vw;
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1px solid #e5e7eb;
+
+  .settings-title {
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #1f2937;
+  }
+
+  .close-btn {
+    width: 60rpx;
+    height: 60rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f3f4f6;
+  }
+}
+
+.settings-content {
+  padding: 30rpx;
+}
+
+.setting-item {
+  margin-bottom: 40rpx;
+
+  .setting-label {
+    display: block;
+    font-size: 28rpx;
+    color: #374151;
+    margin-bottom: 20rpx;
+  }
+}
+
+.navbar-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.action-item {
+  margin-left: 20rpx;
+}
 </style>

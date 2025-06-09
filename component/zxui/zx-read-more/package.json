@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-read-more",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "一个基于 uni-app、Vue3 <script setup> 语法开发的高兼容性阅读更多组件，适配 H5、小程序、App。",
   "main": "index.js",
   "scripts": {
@@ -13,5 +13,9 @@
     "阅读更多组件"
   ],
   "author": "tanzhenxing",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@tanzhenxing/zx-icon": "^1.0.13",
+    "@tanzhenxing/zx-text": "^1.0.18"
+  }
 }

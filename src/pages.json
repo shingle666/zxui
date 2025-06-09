@@ -951,6 +951,13 @@
 					}
 				},
 				{
+					"path": "navbar/demo",
+					"style": {
+						"navigationBarTitleText": "zx-navbar 导航栏 demo",
+						"navigationStyle": "custom"
+					}
+				},
+				{
 					"path": "tabs/index",
 					"style": {
 						"navigationBarTitleText": "zx-tabs 标签页",

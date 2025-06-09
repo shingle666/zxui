@@ -50,6 +50,9 @@
 
 <script setup>
 import { computed } from 'vue';
+import zxPopup from '@tanzhenxing/zx-popup/zx-popup.vue'
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+
 
 const props = defineProps({
   show: {

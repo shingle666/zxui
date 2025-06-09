@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-select-picker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,5 +14,8 @@
   ],
   "author": "tanzhenxing",
   "license": "ISC",
-  "description": "zx-select-picker 选择器组件，用于在多个选项中进行单选"
+  "description": "zx-select-picker 选择器组件，用于在多个选项中进行单选",
+  "dependencies": {
+    "@tanzhenxing/zx-icon": "^1.0.13"
+  }
 }

@@ -1,10 +1,7 @@
 <template>
 	<view class="zx-scroll-outer">
-		<scroll-view
-			ref="scrollViewRef"
-			:scroll-into-view="scrollViewProps['scroll-into-view']"
-			:upper-threshold="scrollViewProps['upper-threshold']"
-			:lower-threshold="scrollViewProps['lower-threshold']"
+		<scroll-view ref="scrollViewRef" :scroll-into-view="scrollViewProps['scroll-into-view']"
+			:upper-threshold="scrollViewProps['upper-threshold']" :lower-threshold="scrollViewProps['lower-threshold']"
 			:scroll-with-animation="scrollViewProps['scroll-with-animation']"
 			:enable-back-to-top="scrollViewProps['enable-back-to-top']"
 			:show-scrollbar="scrollViewProps['show-scrollbar']"
@@ -12,64 +9,39 @@
 			:refresher-threshold="scrollViewProps['refresher-threshold']"
 			:refresher-default-style="scrollViewProps['refresher-default-style']"
 			:refresher-background="scrollViewProps['refresher-background']"
-			:refresher-triggered="scrollViewProps['refresher-triggered']"
-			:enable-flex="scrollViewProps['enable-flex']"
-			:scroll-anchoring="scrollViewProps['scroll-anchoring']"
-			:enhanced="scrollViewProps['enhanced']"
-			:bounce="scrollViewProps['bounce']"
-			:paging-enabled="scrollViewProps['paging-enabled']"
-			:fast-deceleration="scrollViewProps['fast-deceleration']"
-			:scroll-y="props.direction === 'y'"
-			:scroll-x="props.direction === 'x'"
-			:scroll-top="props.direction === 'y' ? props.position : undefined"
-			:scroll-left="props.direction === 'x' ? props.position : undefined"
-			:style="scrollViewStyle"
-			:class="['zx-scroll-view', customClass]"
-			@scroll="handleScroll"
-			@scrolltoupper="handleScrollToUpper"
-			@scrolltolower="handleScrollToLower"
-			@refresherpulling="handleRefresherPulling"
-			@refresherrefresh="handleRefresherRefresh"
-			@refresherrestore="handleRefresherRestore"
-			@refresherabort="handleRefresherAbort"
-			@touchstart="handleTouchStart"
-			@touchmove="handleTouchMove"
-			@touchend="handleTouchEnd"
-		>
+			:refresher-triggered="scrollViewProps['refresher-triggered']" :enable-flex="scrollViewProps['enable-flex']"
+			:scroll-anchoring="scrollViewProps['scroll-anchoring']" :enhanced="scrollViewProps['enhanced']"
+			:bounce="scrollViewProps['bounce']" :paging-enabled="scrollViewProps['paging-enabled']"
+			:fast-deceleration="scrollViewProps['fast-deceleration']" :scroll-y="props.direction === 'y'"
+			:scroll-x="props.direction === 'x'" :scroll-top="props.direction === 'y' ? props.position : undefined"
+			:scroll-left="props.direction === 'x' ? props.position : undefined" :style="scrollViewStyle"
+			:class="['zx-scroll-view', customClass]" @scroll="handleScroll" @scrolltoupper="handleScrollToUpper"
+			@scrolltolower="handleScrollToLower" @refresherpulling="handleRefresherPulling"
+			@refresherrefresh="handleRefresherRefresh" @refresherrestore="handleRefresherRestore"
+			@refresherabort="handleRefresherAbort" @touchstart="handleTouchStart" @touchmove="handleTouchMove"
+			@touchend="handleTouchEnd">
 			<!-- 自定义下拉刷新器 -->
 			<template v-if="refresherEnabled && customRefresher">
 				<slot name="refresher" :triggered="refresherTriggered"></slot>
 			</template>
-			
+
 			<!-- 主内容 -->
 			<view class="zx-scroll-container" :class="containerClass">
 				<!-- 虚拟列表 -->
 				<template v-if="enableVirtualList">
-					<view 
-						class="zx-scroll-virtual-list"
-						:class="virtualListClass"
-						:style="virtualListStyle"
-					>
-						<view 
-							v-for="vItem in visibleItems" 
-							:key="`virtual-${vItem.index}`"
-							class="zx-scroll-virtual-item"
-							:style="getVirtualItemStyle(vItem.index)"
-						>
-							<slot 
-								:name="direction === 'y' ? 'virtual-item' : 'virtual-item-horizontal'" 
-								:item="vItem.item" 
-								:index="vItem.index"
-								:isVisible="true"
-							></slot>
+					<view class="zx-scroll-virtual-list" :class="virtualListClass" :style="virtualListStyle">
+						<view v-for="vItem in visibleItems" :key="`virtual-${vItem.index}`"
+							class="zx-scroll-virtual-item" :style="getVirtualItemStyle(vItem.index)">
+							<slot :name="direction === 'y' ? 'virtual-item' : 'virtual-item-horizontal'"
+								:item="vItem.item" :index="vItem.index" :isVisible="true"></slot>
 						</view>
 					</view>
 				</template>
-				
+
 				<!-- 普通内容插槽 -->
 				<slot></slot>
 			</view>
-			
+
 			<!-- 加载更多区域 -->
 			<view v-if="showLoadMore" class="zx-scroll-load-more">
 				<slot name="loadMore" :loading="isLoading" :noMore="noMore">
@@ -82,48 +54,48 @@
 					</view>
 				</slot>
 			</view>
-			
+
 			<!-- 空内容提示 -->
-			<view v-if="isEmpty" class="zx-scroll-empty">
-				<slot name="empty">
-					<view class="zx-scroll-empty-default">
-						<text class="zx-scroll-empty-text">{{ emptyText }}</text>
-					</view>
-				</slot>
-			</view>
+			<zx-empty v-if="isEmpty" :show="isEmpty" :text="emptyText">
+				<template #image>
+					<slot name="empty-image"></slot>
+				</template>
+				<template #description>
+					<slot name="empty-description"></slot>
+				</template>
+				<slot name="empty"></slot>
+			</zx-empty>
 		</scroll-view>
-		
+
 		<!-- 返回顶部按钮 -->
-		<transition name="zx-scroll-fade">
-			<view 
-				v-if="showBackTop && showBackTopButton" 
-				class="zx-scroll-back-top" 
-				:style="backTopButtonStyle" 
-				@tap="scrollToTop"
-			>
-				<slot name="backTop" :scrollTop="currentScrollPosition">
-					<view class="zx-scroll-back-top-default">
-						<text class="zx-scroll-back-top-icon">↑</text>
-					</view>
-				</slot>
-			</view>
-		</transition>
+		<zx-backtop v-if="showBackTop && showBackTopButton" :scrollTop="currentScrollPosition" 
+			:right="backTopButtonStyle.right" :bottom="backTopButtonStyle.bottom" 
+			@click="scrollToTop">
+			<slot name="backTop" :scrollTop="currentScrollPosition">
+				<view class="zx-scroll-back-top-default">
+					<zx-icon name="arrow-up" color="#666666" size="32rpx"></zx-icon>
+				</view>
+			</slot>
+		</zx-backtop>
 	</view>
 </template>
 
 <script setup>
-import { 
-	onMounted, 
-	ref, 
-	computed, 
-	nextTick, 
-	watch, 
-	getCurrentInstance, 
+import {
+	onMounted,
+	ref,
+	computed,
+	nextTick,
+	watch,
+	getCurrentInstance,
 	onBeforeUnmount,
 	reactive,
 	toRefs,
 	shallowRef
 } from 'vue';
+import zxBacktop from '@tanzhenxing/zx-backtop/zx-backtop.vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
+import zxEmpty from '@tanzhenxing/zx-empty/zx-empty.vue';
 
 /**
  * zx-scroll 增强滚动组件
@@ -498,7 +470,7 @@ const virtualListClass = computed(() => ({
 
 const virtualListStyle = computed(() => {
 	if (!props.enableVirtualList || !props.virtualListSource.length) return {};
-	
+
 	if (props.direction === 'y') {
 		return {
 			height: props.virtualListSource.length * props.virtualItemHeight + 'px'
@@ -527,12 +499,12 @@ const backTopButtonStyle = computed(() => ({
 // 虚拟列表可见项计算
 const visibleItems = computed(() => {
 	if (!props.enableVirtualList || !props.virtualListSource.length) return [];
-	
+
 	const { scrollSize } = state;
 	const isVertical = props.direction === 'y';
 	const itemSize = isVertical ? props.virtualItemHeight : props.virtualItemWidth;
 	const containerSize = isVertical ? scrollSize.height : scrollSize.width;
-	
+
 	// 计算可见范围
 	const startIndex = Math.max(0, Math.floor(currentScrollPosition.value / itemSize) - props.virtualBuffer);
 	const visibleCount = Math.ceil(containerSize / itemSize);
@@ -540,7 +512,7 @@ const visibleItems = computed(() => {
 		props.virtualListSource.length - 1,
 		startIndex + visibleCount + props.virtualBuffer * 2
 	);
-	
+
 	// 触发虚拟滚动事件
 	if (isInitialized.value) {
 		emit('virtualScroll', {
@@ -548,7 +520,7 @@ const visibleItems = computed(() => {
 			scrollPosition: currentScrollPosition.value
 		});
 	}
-	
+
 	return props.virtualListSource.slice(startIndex, endIndex + 1).map((item, i) => ({
 		item,
 		index: startIndex + i
@@ -561,7 +533,7 @@ const throttle = (func, delay) => {
 	let lastExecTime = 0;
 	return function (...args) {
 		const currentTime = Date.now();
-		
+
 		if (currentTime - lastExecTime > delay) {
 			func.apply(this, args);
 			lastExecTime = currentTime;
@@ -627,21 +599,21 @@ const debouncedScroll = (e) => {
 
 const processScrollEvent = (e) => {
 	if (!e?.detail) return;
-	
+
 	currentScrollPosition.value = props.direction === 'y' ? e.detail.scrollTop : e.detail.scrollLeft;
-	
+
 	// 检查是否显示返回顶部按钮
 	if (props.showBackTop && props.direction === 'y') {
 		showBackTopButton.value = currentScrollPosition.value > props.backTopThreshold;
 	}
-	
+
 	// 虚拟列表尺寸检查
 	if (props.enableVirtualList && props.virtualListSource.length > 0) {
 		if (state.scrollSize.width === 0 || state.scrollSize.height === 0) {
 			refreshSize();
 		}
 	}
-	
+
 	// 触发滚动事件
 	emit('scroll', {
 		scrollTop: e.detail.scrollTop || 0,
@@ -657,7 +629,7 @@ const processScrollEvent = (e) => {
 const initScrollSize = () => {
 	nextTick(() => {
 		if (!scrollViewRef.value || !instance) return;
-		
+
 		try {
 			const query = uni.createSelectorQuery().in(instance);
 			query.select('.zx-scroll-container').boundingClientRect(data => {
@@ -683,7 +655,7 @@ const startAutoScroll = () => {
 	if (autoScrollTimer) {
 		clearInterval(autoScrollTimer);
 	}
-	
+
 	if (props.autoScrollInterval > 0) {
 		autoScrollTimer = setInterval(() => {
 			scrollToNextPosition(props.direction);
@@ -694,11 +666,11 @@ const startAutoScroll = () => {
 // 滚动到下一个位置
 const scrollToNextPosition = (direction) => {
 	if (!scrollViewRef.value) return;
-	
+
 	const currentPos = currentScrollPosition.value;
 	const maxSize = direction === 'y' ? state.contentSize.height : state.contentSize.width;
 	const viewportSize = direction === 'y' ? state.scrollSize.height : state.scrollSize.width;
-	
+
 	// 如果已滚动到底部，则回到顶部
 	if (currentPos + viewportSize >= maxSize) {
 		scrollTo(0);
@@ -719,12 +691,12 @@ const stopAutoScroll = () => {
 // 触摸事件处理
 const handleTouchStart = (e) => {
 	if (!props.enableDrag) return;
-	
+
 	// 如果正在自动滚动，触摸时暂停
 	if (props.autoScrollInterval > 0) {
 		stopAutoScroll();
 	}
-	
+
 	const touch = e.touches[0];
 	state.dragState = {
 		isDragging: true,
@@ -735,7 +707,7 @@ const handleTouchStart = (e) => {
 		deltaX: 0,
 		deltaY: 0
 	};
-	
+
 	emit('dragStart', {
 		x: touch.clientX,
 		y: touch.clientY
@@ -744,20 +716,20 @@ const handleTouchStart = (e) => {
 
 const handleTouchMove = (e) => {
 	if (!props.enableDrag || !state.dragState.isDragging) return;
-	
+
 	const touch = e.touches[0];
 	state.dragState.deltaX = touch.clientX - state.dragState.lastX;
 	state.dragState.deltaY = touch.clientY - state.dragState.lastY;
 	state.dragState.lastX = touch.clientX;
 	state.dragState.lastY = touch.clientY;
-	
+
 	// 根据方向更新滚动位置
 	if (props.direction === 'x') {
 		scrollTo(currentScrollPosition.value - state.dragState.deltaX);
 	} else {
 		scrollTo(currentScrollPosition.value - state.dragState.deltaY);
 	}
-	
+
 	emit('dragMove', {
 		x: touch.clientX,
 		y: touch.clientY,
@@ -768,18 +740,18 @@ const handleTouchMove = (e) => {
 
 const handleTouchEnd = (e) => {
 	if (!props.enableDrag || !state.dragState.isDragging) return;
-	
+
 	state.dragState.isDragging = false;
-	
+
 	// 计算滑动的总距离
 	const totalDeltaX = state.dragState.lastX - state.dragState.startX;
 	const totalDeltaY = state.dragState.lastY - state.dragState.startY;
-	
+
 	emit('dragEnd', {
 		totalDeltaX,
 		totalDeltaY
 	});
-	
+
 	// 如果有自动滚动功能，触摸结束后恢复
 	if (props.autoScrollInterval > 0) {
 		startAutoScroll();
@@ -795,7 +767,7 @@ const scrollToBottom = () => {
 	nextTick(() => {
 		if (!instance) return;
 		const query = uni.createSelectorQuery().in(instance);
-		
+
 		query.select('.zx-scroll-container').boundingRect(data => {
 			if (data) {
 				const scrollHeight = props.direction === 'y' ? data.scrollHeight : data.scrollWidth;
@@ -807,16 +779,16 @@ const scrollToBottom = () => {
 
 const scrollTo = (position, duration) => {
 	if (!scrollViewRef.value) return;
-	
+
 	const scrollParam = {};
 	if (props.direction === 'y') {
 		scrollParam.scrollTop = position;
 	} else {
 		scrollParam.scrollLeft = position;
 	}
-	
+
 	scrollParam.duration = duration !== undefined ? duration : (props.scrollWithAnimation ? 300 : 0);
-	
+
 	// 使用uni-app scroll-view的scrollTo方法
 	if (scrollViewRef.value.scrollTo) {
 		scrollViewRef.value.scrollTo(scrollParam);
@@ -828,7 +800,7 @@ const scrollTo = (position, duration) => {
 
 const scrollIntoViewById = (elementId) => {
 	if (!elementId || typeof elementId !== 'string') return;
-	
+
 	nextTick(() => {
 		if (scrollViewRef.value && scrollViewRef.value.scrollIntoView) {
 			scrollViewRef.value.scrollIntoView({
@@ -841,7 +813,7 @@ const scrollIntoViewById = (elementId) => {
 			const selector = `#${elementId}`;
 			uni.createSelectorQuery().in(instance).select(selector).boundingClientRect().exec(rects => {
 				if (!rects || !rects[0]) return;
-				
+
 				const rect = rects[0];
 				if (props.direction === 'y') {
 					scrollTo(rect.top);
@@ -860,15 +832,15 @@ const refreshSize = () => {
 const scrollToPercent = (percent) => {
 	if (percent < 0) percent = 0;
 	if (percent > 100) percent = 100;
-	
+
 	nextTick(() => {
 		if (!instance) return;
 		const query = uni.createSelectorQuery().in(instance);
-		
+
 		query.select('.zx-scroll-container').boundingRect(data => {
 			if (data) {
-				const max = props.direction === 'y' ? 
-					data.scrollHeight - data.height : 
+				const max = props.direction === 'y' ?
+					data.scrollHeight - data.height :
 					data.scrollWidth - data.width;
 				const position = max * (percent / 100);
 				scrollTo(position);
@@ -881,10 +853,10 @@ const scrollToPage = (pageIndex) => {
 	nextTick(() => {
 		if (!instance) return;
 		const query = uni.createSelectorQuery().in(instance);
-		
+
 		query.select('.zx-scroll-container').boundingRect(data => {
 			if (!data) return;
-			
+
 			const size = props.direction === 'y' ? data.height : data.width;
 			const position = pageIndex * size;
 			scrollTo(position);
@@ -899,16 +871,16 @@ const getTotalPages = () => {
 			return;
 		}
 		const query = uni.createSelectorQuery().in(instance);
-		
+
 		query.select('.zx-scroll-container').boundingRect(data => {
 			if (!data) {
 				resolve(0);
 				return;
 			}
-			
+
 			const viewportSize = props.direction === 'y' ? data.height : data.width;
 			const contentSize = props.direction === 'y' ? data.scrollHeight : data.scrollWidth;
-			
+
 			const pages = Math.ceil(contentSize / viewportSize);
 			resolve(pages);
 		}).exec();
@@ -922,13 +894,13 @@ const getScrollableHeight = () => {
 			return;
 		}
 		const query = uni.createSelectorQuery().in(instance);
-		
+
 		query.select('.zx-scroll-container').boundingRect(data => {
 			if (!data) {
 				resolve(0);
 				return;
 			}
-			
+
 			const scrollHeight = props.direction === 'y' ? data.scrollHeight : data.scrollWidth;
 			resolve(scrollHeight);
 		}).exec();
@@ -942,13 +914,13 @@ const getViewportHeight = () => {
 			return;
 		}
 		const query = uni.createSelectorQuery().in(instance);
-		
+
 		query.select('.zx-scroll-container').boundingRect(data => {
 			if (!data) {
 				resolve(0);
 				return;
 			}
-			
+
 			const viewportHeight = props.direction === 'y' ? data.height : data.width;
 			resolve(viewportHeight);
 		}).exec();
@@ -964,7 +936,7 @@ const scrollToPosition = (position) => {
 			return;
 		}
 	}
-	
+
 	// 数字位置
 	if (typeof position === 'number' || !isNaN(parseFloat(position))) {
 		scrollTo(parseFloat(position));
@@ -980,7 +952,7 @@ const scrollToIndex = (index) => {
 		console.warn('scrollToIndex 仅在虚拟列表模式下可用');
 		return;
 	}
-	
+
 	// 根据滚动方向计算要滚动到的位置
 	if (props.direction === 'y') {
 		const position = index * props.virtualItemHeight;
@@ -1020,7 +992,7 @@ watch(() => props.autoScrollInterval, (newVal, oldVal) => {
 		clearInterval(autoScrollTimer);
 		autoScrollTimer = null;
 	}
-	
+
 	if (newVal > 0) {
 		startAutoScroll();
 	}
@@ -1031,11 +1003,11 @@ watch(() => props.virtualListSource, (newVal) => {
 		nextTick(() => {
 			refreshSize();
 			// 触发一次滚动事件来更新可见项
-			const event = { 
-				detail: { 
-					scrollTop: currentScrollPosition.value, 
-					scrollLeft: currentScrollPosition.value 
-				} 
+			const event = {
+				detail: {
+					scrollTop: currentScrollPosition.value,
+					scrollLeft: currentScrollPosition.value
+				}
 			};
 			processScrollEvent(event);
 		});
@@ -1046,11 +1018,11 @@ watch(() => props.virtualListSource, (newVal) => {
 onMounted(() => {
 	nextTick(() => {
 		initScrollSize();
-		
+
 		if (props.autoScrollInterval > 0) {
 			startAutoScroll();
 		}
-		
+
 		// 如果启用了虚拟列表，初始化后强制更新一次可见区域
 		if (props.enableVirtualList && props.virtualListSource.length > 0) {
 			setTimeout(() => {
@@ -1059,7 +1031,7 @@ onMounted(() => {
 				refreshSize(); // 刷新尺寸以确保计算正确
 			}, 100);
 		}
-		
+
 		// 标记为初始化完成
 		isInitialized.value = true;
 		emit('inited');
@@ -1071,12 +1043,12 @@ onBeforeUnmount(() => {
 		clearInterval(autoScrollTimer);
 		autoScrollTimer = null;
 	}
-	
+
 	if (debounceTimer) {
 		clearTimeout(debounceTimer);
 		debounceTimer = null;
 	}
-	
+
 	if (throttleTimer) {
 		clearTimeout(throttleTimer);
 		throttleTimer = null;
@@ -1190,8 +1162,13 @@ defineExpose({
 }
 
 @keyframes zx-scroll-spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
 }
 
 .zx-scroll-loading-text {
@@ -1356,20 +1333,20 @@ defineExpose({
 		right: 20rpx;
 		bottom: 100rpx;
 	}
-	
+
 	.zx-scroll-back-top-default {
 		width: 80rpx;
 		height: 80rpx;
 	}
-	
+
 	.zx-scroll-back-top-icon {
 		font-size: 40rpx;
 	}
-	
+
 	.zx-scroll-loading-text {
 		font-size: 26rpx;
 	}
-	
+
 	.zx-scroll-empty-text {
 		font-size: 30rpx;
 	}
@@ -1380,20 +1357,20 @@ defineExpose({
 	.zx-scroll-loading-text {
 		color: #999;
 	}
-	
+
 	.zx-scroll-no-more {
 		color: #666;
 	}
-	
+
 	.zx-scroll-empty-text {
 		color: #666;
 	}
-	
+
 	.zx-scroll-back-top-default {
 		background: rgba(255, 255, 255, 0.1);
 		backdrop-filter: blur(20rpx);
 	}
-	
+
 	.zx-scroll-back-top-default:hover {
 		background: rgba(255, 255, 255, 0.2);
 	}
@@ -1404,12 +1381,12 @@ defineExpose({
 	.zx-scroll-loading-icon {
 		animation: none;
 	}
-	
+
 	.zx-scroll-fade-enter-active,
 	.zx-scroll-fade-leave-active {
 		transition: none;
 	}
-	
+
 	.zx-scroll-back-top-default {
 		transition: none;
 	}
@@ -1421,17 +1398,17 @@ defineExpose({
 		color: #000;
 		font-weight: bold;
 	}
-	
+
 	.zx-scroll-no-more {
 		color: #000;
 		font-weight: bold;
 	}
-	
+
 	.zx-scroll-empty-text {
 		color: #000;
 		font-weight: bold;
 	}
-	
+
 	.zx-scroll-back-top-default {
 		background: #000;
 		border: 2px solid #fff;

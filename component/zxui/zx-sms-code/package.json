@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-sms-code",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,5 +12,8 @@
   ],
   "author": "tanzhenxing",
   "license": "ISC",
-  "description": "验证码倒计时组件"
+  "description": "验证码倒计时组件",
+  "dependencies": {
+    "@tanzhenxing/zx-button": "^1.0.6"
+  }
 }

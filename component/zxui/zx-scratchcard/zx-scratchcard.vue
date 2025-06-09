@@ -2,29 +2,19 @@
   <view class="zx-scratchcard" :style="containerStyle">
     <!-- 内容层 -->
     <view class="zx-scratchcard__content" :style="contentStyle">
-      <view class="zx-scratchcard__text" :style="textStyle" v-html="content"></view>
+      <zx-html :style="textStyle" :content="content"></zx-html>
     </view>
-    
+
     <!-- 刮刮层 -->
-    <canvas 
-      v-if="!isScratched"
-      class="zx-scratchcard__canvas"
-      :canvas-id="canvasId"
-      :id="canvasId"
-      :style="canvasStyle"
-      @touchstart="handleTouchStart"
-      @touchmove="handleTouchMove"
-      @touchend="handleTouchEnd"
-      @mousedown="handleMouseDown"
-      @mousemove="handleMouseMove"
-      @mouseup="handleMouseUp"
-      disable-scroll
-    ></canvas>
+    <canvas v-if="!isScratched" class="zx-scratchcard__canvas" :canvas-id="canvasId" :id="canvasId" :style="canvasStyle"
+      @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd"
+      @mousedown="handleMouseDown" @mousemove="handleMouseMove" @mouseup="handleMouseUp" disable-scroll></canvas>
   </view>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, nextTick, getCurrentInstance } from 'vue'
+import zxHtml from '@tanzhenxing/zx-html/zx-html.vue'
 
 // 组件名称
 defineOptions({
@@ -152,13 +142,13 @@ const initCanvas = () => {
     }, 50)
     return
   }
-  
+
   // 确保canvas元素是HTMLCanvasElement
   if (!(canvas instanceof HTMLCanvasElement)) {
     console.error('Element is not a canvas element')
     return
   }
-  
+
   const rect = canvas.getBoundingClientRect()
   if (rect.width === 0 || rect.height === 0) {
     console.warn('Canvas size is 0, retrying...')
@@ -167,13 +157,13 @@ const initCanvas = () => {
     }, 50)
     return
   }
-  
+
   canvasWidth.value = rect.width
   canvasHeight.value = rect.height
-  
+
   canvas.width = canvasWidth.value * 2 // 高清适配
   canvas.height = canvasHeight.value * 2
-  
+
   ctx.value = canvas.getContext('2d')
   if (!ctx.value) {
     console.error('Failed to get 2d context')
@@ -182,15 +172,15 @@ const initCanvas = () => {
   ctx.value.scale(2, 2)
   drawCover()
   // #endif
-  
+
   // #ifndef H5
   const query = uni.createSelectorQuery().in(instance)
   query.select(`#${canvasId.value}`).boundingClientRect(rect => {
     if (!rect) return
-    
+
     canvasWidth.value = rect.width
     canvasHeight.value = rect.height
-    
+
     ctx.value = uni.createCanvasContext(canvasId.value, instance)
     drawCover()
   }).exec()
@@ -200,7 +190,7 @@ const initCanvas = () => {
 // 绘制刮刮层
 const drawCover = () => {
   if (!ctx.value) return
-  
+
   // 绘制背景
   if (props.coverImg) {
     // 如果有图片，绘制图片
@@ -212,7 +202,7 @@ const drawCover = () => {
     }
     img.src = props.coverImg
     // #endif
-    
+
     // #ifndef H5
     ctx.value.drawImage(props.coverImg, 0, 0, canvasWidth.value, canvasHeight.value)
     drawCoverText()
@@ -228,21 +218,21 @@ const drawCover = () => {
 // 绘制刮刮层文字
 const drawCoverText = () => {
   if (!ctx.value || !props.coverText) return
-  
+
   ctx.value.fillStyle = props.coverTextColor
   ctx.value.font = `${parseInt(props.coverTextSize)}px Arial`
   ctx.value.textAlign = 'center'
   ctx.value.textBaseline = 'middle'
   ctx.value.fillText(
-    props.coverText, 
-    canvasWidth.value / 2, 
+    props.coverText,
+    canvasWidth.value / 2,
     canvasHeight.value / 2
   )
-  
+
   // #ifndef H5
   ctx.value.draw()
   // #endif
-  
+
   // 计算总像素数
   totalPixels.value = canvasWidth.value * canvasHeight.value
 }
@@ -250,16 +240,16 @@ const drawCoverText = () => {
 // 刮除指定区域
 const scratch = (x, y) => {
   if (!ctx.value) return
-  
+
   const radius = 20 // 刮除半径
-  
+
   // #ifdef H5
   ctx.value.globalCompositeOperation = 'destination-out'
   ctx.value.beginPath()
   ctx.value.arc(x, y, radius, 0, 2 * Math.PI)
   ctx.value.fill()
   // #endif
-  
+
   // #ifndef H5
   ctx.value.globalCompositeOperation = 'destination-out'
   ctx.value.beginPath()
@@ -267,10 +257,10 @@ const scratch = (x, y) => {
   ctx.value.fill()
   ctx.value.draw(true)
   // #endif
-  
+
   // 计算刮除面积
   scratchedPixels.value += Math.PI * radius * radius
-  
+
   // 检查是否达到刮开比例
   if (scratchedPixels.value / totalPixels.value >= props.ratio) {
     handleScratchComplete()
@@ -296,7 +286,7 @@ const handleTouchStart = (e) => {
 const handleTouchMove = (e) => {
   if (!isDrawing.value) return
   e.preventDefault()
-  
+
   const touch = e.touches[0]
   const rect = e.currentTarget.getBoundingClientRect()
   const x = touch.clientX - rect.left
@@ -323,7 +313,7 @@ const handleMouseMove = (e) => {
   // #ifdef H5
   if (!isDrawing.value) return
   e.preventDefault()
-  
+
   const rect = e.currentTarget.getBoundingClientRect()
   const x = e.clientX - rect.left
   const y = e.clientY - rect.top
@@ -368,17 +358,17 @@ onMounted(() => {
   position: relative;
   overflow: hidden;
   border-radius: 8px;
-  
+
   &__content {
     background: #fff;
     border-radius: 8px;
   }
-  
+
   &__text {
     padding: 10px;
     word-break: break-all;
   }
-  
+
   &__canvas {
     border-radius: 8px;
     cursor: pointer;

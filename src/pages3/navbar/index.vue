@@ -1,30 +1,17 @@
 <template>
 	<view class="navbar-demo">
 		<!-- 页面导航栏 -->
-		<zx-navbar
-			title="Navbar 组件示例"
-			bg-color="#007AFF"
-			:title-style="{ color: '#ffffff' }"
-			left-icon="arrow-left"
-			left-icon-color="#ffffff"
-			right-text="源码"
-			right-icon-color="#ffffff"
-			@left-click="goBack"
-			@right-click="viewSource"
-		/>
+		<zx-navbar title="Navbar 组件示例" bg-color="#007AFF" :title-style="{ color: '#ffffff' }" left-icon="arrow-left"
+			left-icon-color="#ffffff" right-text="源码" right-icon-color="#ffffff" @left-click="goBack"
+			@right-click="viewSource" />
 
 		<scroll-view scroll-y class="demo-scroll">
 			<!-- 基础用法 -->
 			<view class="demo-section">
 				<view class="demo-section-title">基础用法</view>
 				<view class="demo-section-content">
-					<zx-navbar 
-						title="基础导航栏"
-						left-text="返回"
-						right-text="更多"
-						@left-click="showToast('点击了返回')"
-						@right-click="showToast('点击了更多')"
-					/>
+					<zx-navbar title="基础导航栏" left-text="返回" right-text="更多" @left-click="showToast('点击了返回')"
+						@right-click="showToast('点击了更多')" />
 				</view>
 			</view>
 
@@ -32,13 +19,8 @@
 			<view class="demo-section">
 				<view class="demo-section-title">副标题</view>
 				<view class="demo-section-content">
-					<zx-navbar 
-						title="主标题"
-						subtitle="这是副标题说明"
-						:auto-back="false"
-						right-icon="help-circle"
-						@right-click="showToast('查看帮助')"
-					/>
+					<zx-navbar title="主标题" subtitle="这是副标题说明" :auto-back="false" right-icon="help-circle"
+						@right-click="showToast('查看帮助')" />
 				</view>
 			</view>
 
@@ -46,17 +28,10 @@
 			<view class="demo-section bg-image">
 				<view class="demo-section-title">透明背景</view>
 				<view class="demo-section-content">
-					<zx-navbar 
-						title="透明导航栏"
-						:transparent="true"
-						left-icon="arrow-left"
-						right-icon="more-horizontal"
-						left-icon-color="#ffffff"
-						right-icon-color="#ffffff"
+					<zx-navbar title="透明导航栏" :transparent="true" left-icon="arrow-left" right-icon="more-horizontal"
+						left-icon-color="#ffffff" right-icon-color="#ffffff"
 						:title-style="{ color: '#ffffff', textShadow: '0 1px 2px rgba(0,0,0,0.5)' }"
-						@left-click="showToast('透明背景返回')"
-						@right-click="showToast('透明背景更多')"
-					/>
+						@left-click="showToast('透明背景返回')" @right-click="showToast('透明背景更多')" />
 				</view>
 			</view>
 
@@ -64,15 +39,8 @@
 			<view class="demo-section">
 				<view class="demo-section-title">沉浸式模式</view>
 				<view class="demo-section-content">
-					<zx-navbar 
-						title="沉浸式导航栏"
-						:immersive="true"
-						:shadow="true"
-						left-icon="arrow-left"
-						right-icon="search"
-						@left-click="showToast('沉浸式返回')"
-						@right-click="showToast('沉浸式搜索')"
-					/>
+					<zx-navbar title="沉浸式导航栏" :immersive="true" :shadow="true" left-icon="arrow-left"
+						right-icon="search" @left-click="showToast('沉浸式返回')" @right-click="showToast('沉浸式搜索')" />
 				</view>
 			</view>
 
@@ -84,29 +52,16 @@
 						<!-- 亮色主题 -->
 						<view class="theme-item">
 							<text class="theme-label">亮色主题</text>
-							<zx-navbar 
-								title="Light Theme"
-								theme="light"
-								bg-color="#ffffff"
-								left-icon="sun"
-								right-icon="settings"
-								@left-click="showToast('亮色主题')"
-							/>
+							<zx-navbar title="Light Theme" theme="light" bg-color="#ffffff" left-icon="sun"
+								right-icon="settings" @left-click="showToast('亮色主题')" />
 						</view>
-						
+
 						<!-- 暗色主题 -->
 						<view class="theme-item">
 							<text class="theme-label">暗色主题</text>
-							<zx-navbar 
-								title="Dark Theme"
-								theme="dark"
-								bg-color="#1f1f1f"
-								left-icon="moon"
-								right-icon="settings"
-								left-icon-color="#ffffff"
-								right-icon-color="#ffffff"
-								@left-click="showToast('暗色主题')"
-							/>
+							<zx-navbar title="Dark Theme" theme="dark" bg-color="#1f1f1f" left-icon="moon"
+								right-icon="settings" left-icon-color="#ffffff" right-icon-color="#ffffff"
+								@left-click="showToast('暗色主题')" />
 						</view>
 					</view>
 				</view>
@@ -116,16 +71,9 @@
 			<view class="demo-section">
 				<view class="demo-section-title">加载状态</view>
 				<view class="demo-section-content">
-					<zx-navbar 
-						title="正在加载..."
-						:loading="isLoading"
-						left-icon="arrow-left"
-						:left-disabled="isLoading"
-						right-text="刷新"
-						:right-disabled="isLoading"
-						@left-click="showToast('返回被禁用')"
-						@right-click="toggleLoading"
-					/>
+					<zx-navbar title="正在加载..." :loading="isLoading" left-icon="arrow-left" :left-disabled="isLoading"
+						right-text="刷新" :right-disabled="isLoading" @left-click="showToast('返回被禁用')"
+						@right-click="toggleLoading" />
 					<view class="demo-actions">
 						<button @click="toggleLoading" :disabled="isLoading">
 							{{ isLoading ? '加载中...' : '切换加载状态' }}
@@ -139,30 +87,14 @@
 				<view class="demo-section-title">自定义颜色</view>
 				<view class="demo-section-content">
 					<view class="color-demo">
-						<zx-navbar 
-							title="蓝色主题"
-							bg-color="#007AFF"
-							left-icon="arrow-left"
-							right-text="完成"
-							left-icon-color="#ffffff"
-							right-icon-color="#ffffff"
-							:title-style="{ color: '#ffffff' }"
-							@left-click="showToast('蓝色主题返回')"
-							@right-click="showToast('蓝色主题完成')"
-						/>
+						<zx-navbar title="蓝色主题" bg-color="#007AFF" left-icon="arrow-left" right-text="完成"
+							left-icon-color="#ffffff" right-icon-color="#ffffff" :title-style="{ color: '#ffffff' }"
+							@left-click="showToast('蓝色主题返回')" @right-click="showToast('蓝色主题完成')" />
 					</view>
 					<view class="color-demo">
-						<zx-navbar 
-							title="绿色主题"
-							bg-color="#34C759"
-							left-icon="arrow-left"
-							right-icon="check"
-							left-icon-color="#ffffff"
-							right-icon-color="#ffffff"
-							:title-style="{ color: '#ffffff' }"
-							@left-click="showToast('绿色主题返回')"
-							@right-click="showToast('绿色主题确认')"
-						/>
+						<zx-navbar title="绿色主题" bg-color="#34C759" left-icon="arrow-left" right-icon="check"
+							left-icon-color="#ffffff" right-icon-color="#ffffff" :title-style="{ color: '#ffffff' }"
+							@left-click="showToast('绿色主题返回')" @right-click="showToast('绿色主题确认')" />
 					</view>
 				</view>
 			</view>
@@ -172,16 +104,9 @@
 				<view class="demo-section-title">渐变背景</view>
 				<view class="demo-section-content">
 					<view class="gradient-navbar">
-						<zx-navbar 
-							title="渐变导航栏"
-							left-icon="arrow-left"
-							right-icon="heart"
-							left-icon-color="#ffffff"
-							right-icon-color="#ffffff"
-							:title-style="{ color: '#ffffff' }"
-							@left-click="showToast('渐变返回')"
-							@right-click="showToast('渐变喜欢')"
-						/>
+						<zx-navbar title="渐变导航栏" left-icon="arrow-left" right-icon="heart" left-icon-color="#ffffff"
+							right-icon-color="#ffffff" :title-style="{ color: '#ffffff' }"
+							@left-click="showToast('渐变返回')" @right-click="showToast('渐变喜欢')" />
 					</view>
 				</view>
 			</view>
@@ -190,11 +115,7 @@
 			<view class="demo-section">
 				<view class="demo-section-title">自定义插槽</view>
 				<view class="demo-section-content">
-					<zx-navbar 
-						:auto-back="false"
-						@left-click="showToast('自定义左侧')"
-						@right-click="showToast('自定义右侧')"
-					>
+					<zx-navbar :auto-back="false" @left-click="showToast('自定义左侧')" @right-click="showToast('自定义右侧')">
 						<template #left>
 							<view class="custom-left">
 								<zx-icon name="home" size="20" color="#007AFF"></zx-icon>
@@ -230,20 +151,10 @@
 							{{ isFixed ? '取消固定' : '固定在顶部' }}
 						</button>
 					</view>
-					<zx-navbar 
-						v-if="isFixed"
-						title="固定导航栏"
-						:fixed="true"
-						:shadow="true"
-						bg-color="#FF3B30"
-						left-icon="arrow-left"
-						right-icon="share"
-						left-icon-color="#ffffff"
-						right-icon-color="#ffffff"
-						:title-style="{ color: '#ffffff' }"
-						@left-click="showToast('固定导航栏返回')"
-						@right-click="showToast('固定导航栏分享')"
-					/>
+					<zx-navbar v-if="isFixed" title="固定导航栏" :fixed="true" :shadow="true" bg-color="#FF3B30"
+						left-icon="arrow-left" right-icon="share" left-icon-color="#ffffff" right-icon-color="#ffffff"
+						:title-style="{ color: '#ffffff' }" @left-click="showToast('固定导航栏返回')"
+						@right-click="showToast('固定导航栏分享')" />
 				</view>
 			</view>
 
@@ -251,15 +162,8 @@
 			<view class="demo-section">
 				<view class="demo-section-title">底部边框</view>
 				<view class="demo-section-content">
-					<zx-navbar 
-						title="带边框导航栏"
-						:border="true"
-						border-color="#e0e0e0"
-						left-icon="arrow-left"
-						right-text="编辑"
-						@left-click="showToast('边框返回')"
-						@right-click="showToast('边框编辑')"
-					/>
+					<zx-navbar title="带边框导航栏" :border="true" border-color="#e0e0e0" left-icon="arrow-left"
+						right-text="编辑" @left-click="showToast('边框返回')" @right-click="showToast('边框编辑')" />
 				</view>
 			</view>
 
@@ -269,23 +173,12 @@
 				<view class="demo-section-content">
 					<view class="height-demo">
 						<text class="demo-label">标准高度 (44px)</text>
-						<zx-navbar 
-							title="标准高度"
-							height="44px"
-							left-icon="arrow-left"
-							@left-click="showToast('标准高度')"
-						/>
+						<zx-navbar title="标准高度" height="44px" left-icon="arrow-left" @left-click="showToast('标准高度')" />
 					</view>
 					<view class="height-demo">
 						<text class="demo-label">较高 (60px)</text>
-						<zx-navbar 
-							title="较高导航栏"
-							subtitle="60px 高度"
-							height="60px"
-							bg-color="#f8f8f8"
-							left-icon="arrow-left"
-							@left-click="showToast('较高导航栏')"
-						/>
+						<zx-navbar title="较高导航栏" subtitle="60px 高度" height="60px" bg-color="#f8f8f8"
+							left-icon="arrow-left" @left-click="showToast('较高导航栏')" />
 					</view>
 				</view>
 			</view>
@@ -295,17 +188,10 @@
 				<view class="demo-section-title">交互演示</view>
 				<view class="demo-section-content">
 					<view class="interaction-demo">
-						<zx-navbar 
-							:title="dynamicTitle"
-							:subtitle="dynamicSubtitle"
-							:bg-color="dynamicBgColor"
-							:loading="interactionLoading"
-							left-icon="arrow-left"
-							right-text="操作"
-							:left-disabled="interactionLoading"
-							@left-click="showToast('交互返回')"
-							@right-click="performAction"
-						/>
+						<zx-navbar :title="dynamicTitle" :subtitle="dynamicSubtitle" :bg-color="dynamicBgColor"
+							:loading="interactionLoading" left-icon="arrow-left" right-text="操作"
+							:left-disabled="interactionLoading" @left-click="showToast('交互返回')"
+							@right-click="performAction" />
 						<view class="demo-controls">
 							<button @click="changeTitle">更改标题</button>
 							<button @click="changeColor">更改颜色</button>
@@ -477,19 +363,19 @@ const performAction = () => {
 	border-radius: 16rpx;
 	overflow: hidden;
 	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-	
+
 	&.last {
 		margin-bottom: 60rpx;
 	}
-	
+
 	// 透明背景演示区域
 	&.bg-image {
 		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-		
+
 		.demo-section-title {
 			background-color: rgba(255, 255, 255, 0.9);
 		}
-		
+
 		.demo-section-content {
 			background: transparent;
 		}
@@ -513,12 +399,12 @@ const performAction = () => {
 .theme-demo {
 	.theme-item {
 		margin-bottom: 30rpx;
-		
+
 		&:last-child {
 			margin-bottom: 0;
 		}
 	}
-	
+
 	.theme-label {
 		display: block;
 		font-size: 26rpx;
@@ -530,7 +416,7 @@ const performAction = () => {
 // 颜色演示
 .color-demo {
 	margin-bottom: 30rpx;
-	
+
 	&:last-child {
 		margin-bottom: 0;
 	}
@@ -593,7 +479,7 @@ const performAction = () => {
 // 简单的徽章实现
 .badge-container {
 	position: relative;
-	
+
 	.badge {
 		position: absolute;
 		top: -8rpx;
@@ -613,7 +499,7 @@ const performAction = () => {
 .demo-actions {
 	padding: 30rpx;
 	text-align: center;
-	
+
 	button {
 		padding: 20rpx 40rpx;
 		font-size: 28rpx;
@@ -621,12 +507,12 @@ const performAction = () => {
 		border: 1px solid #007AFF;
 		color: #007AFF;
 		background-color: transparent;
-		
+
 		&:active {
 			background-color: #007AFF;
 			color: #ffffff;
 		}
-		
+
 		&:disabled {
 			opacity: 0.5;
 			pointer-events: none;
@@ -638,14 +524,14 @@ const performAction = () => {
 .fixed-demo {
 	padding: 30rpx;
 	text-align: center;
-	
+
 	.demo-tip {
 		display: block;
 		font-size: 26rpx;
 		color: #666666;
 		margin-bottom: 20rpx;
 	}
-	
+
 	button {
 		padding: 16rpx 32rpx;
 		font-size: 26rpx;
@@ -653,7 +539,7 @@ const performAction = () => {
 		border: 1px solid #FF3B30;
 		color: #FF3B30;
 		background-color: transparent;
-		
+
 		&:active {
 			background-color: #FF3B30;
 			color: #ffffff;
@@ -664,11 +550,11 @@ const performAction = () => {
 // 高度演示
 .height-demo {
 	margin-bottom: 30rpx;
-	
+
 	&:last-child {
 		margin-bottom: 0;
 	}
-	
+
 	.demo-label {
 		display: block;
 		font-size: 26rpx;
@@ -684,7 +570,7 @@ const performAction = () => {
 		display: flex;
 		justify-content: space-around;
 		gap: 20rpx;
-		
+
 		button {
 			flex: 1;
 			padding: 16rpx 20rpx;
@@ -693,7 +579,7 @@ const performAction = () => {
 			border: 1px solid #007AFF;
 			color: #007AFF;
 			background-color: transparent;
-			
+
 			&:active {
 				background-color: #007AFF;
 				color: #ffffff;
@@ -711,7 +597,7 @@ const performAction = () => {
 	display: flex;
 	align-items: flex-start;
 	margin-bottom: 30rpx;
-	
+
 	&:last-child {
 		margin-bottom: 0;
 	}

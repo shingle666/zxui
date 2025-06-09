@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-tree-select",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "用于从一组相关联的数据集合中进行选择。",
   "main": "index.js",
   "scripts": {
@@ -14,5 +14,8 @@
   ],
   "author": "tanzhenxing",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "@tanzhenxing/zx-icon": "^1.0.13"
+  }
 }

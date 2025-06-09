@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-scroll",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "基于uni-app scroll-view的增强滚动组件",
   "main": "zx-scroll.vue",
   "keywords": [
@@ -32,5 +32,10 @@
       "app-plus",
       "app-nvue"
     ]
+  },
+  "dependencies": {
+    "@tanzhenxing/zx-backtop": "^1.0.2",
+    "@tanzhenxing/zx-empty": "^1.0.3",
+    "@tanzhenxing/zx-icon": "^1.0.13"
   }
 }

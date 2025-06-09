@@ -15,6 +15,7 @@
 
 <script setup>
 import { ref, computed, watch, nextTick,onMounted,onUnmounted } from 'vue';
+import zxHtml from '@tanzhenxing/zx-html/zx-html.vue';
 
 const props = defineProps({
   content: { type: String, default: '' },

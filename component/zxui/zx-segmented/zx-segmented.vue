@@ -1,26 +1,17 @@
 <template>
-  <view 
-    class="zx-segmented" 
-    :class="[
-      `zx-segmented--${size}`, 
-      {
-        'zx-segmented--block': block,
-        'zx-segmented--disabled': disabled,
-        'zx-segmented--vertical': direction === 'vertical'
-      }
-    ]"
-  >
+  <view class="zx-segmented" :class="[
+    `zx-segmented--${size}`,
+    {
+      'zx-segmented--block': block,
+      'zx-segmented--disabled': disabled,
+      'zx-segmented--vertical': direction === 'vertical'
+    }
+  ]">
     <view class="zx-segmented__inner">
-      <view 
-        v-for="(item, index) in normalizedOptions" 
-        :key="index"
-        class="zx-segmented__item"
-        :class="{
-          'zx-segmented__item--selected': isSelected(item),
-          'zx-segmented__item--disabled': disabled || item.disabled
-        }"
-        @click="handleSelect(item)"
-      >
+      <view v-for="(item, index) in normalizedOptions" :key="index" class="zx-segmented__item" :class="{
+        'zx-segmented__item--selected': isSelected(item),
+        'zx-segmented__item--disabled': disabled || item.disabled
+      }" @click="handleSelect(item)">
         <slot :item="item">
           <text class="zx-segmented__item-label">{{ item.label }}</text>
         </slot>
@@ -102,7 +93,7 @@ const isSelected = (item) => {
 // 处理选择
 const handleSelect = (item) => {
   if (props.disabled || item.disabled) return;
-  
+
   emit('update:modelValue', item.value);
   emit('change', item.value);
 };
@@ -120,23 +111,23 @@ const handleSelect = (item) => {
   --segmented-item-disabled-color: #c0c4cc;
   --segmented-item-disabled-bg-color: #f7f7f7;
   --segmented-border-color: #dcdfe6;
-  
+
   display: inline-flex;
   box-sizing: border-box;
   border-radius: var(--segmented-item-radius);
   background-color: var(--segmented-item-bg-color);
   padding: 2px;
-  
+
   &__inner {
     display: flex;
     flex-direction: row;
     width: 100%;
   }
-  
+
   &--vertical &__inner {
     flex-direction: column;
   }
-  
+
   &__item {
     position: relative;
     display: flex;
@@ -150,54 +141,54 @@ const handleSelect = (item) => {
     cursor: pointer;
     transition: all 0.2s;
     white-space: nowrap;
-    
+
     &:hover:not(&--selected):not(&--disabled) {
       background-color: var(--segmented-item-hover-bg-color);
     }
-    
+
     &--selected {
       color: var(--segmented-item-selected-color);
       background-color: var(--segmented-item-selected-bg-color);
     }
-    
+
     &--disabled {
       color: var(--segmented-item-disabled-color);
       background-color: var(--segmented-item-disabled-bg-color);
       cursor: not-allowed;
     }
-    
+
     &-label {
       line-height: 1;
     }
   }
-  
+
   &--large {
     --segmented-item-height: 40px;
-    
+
     .zx-segmented__item {
       font-size: 16px;
       padding: 0 16px;
     }
   }
-  
+
   &--small {
     --segmented-item-height: 24px;
-    
+
     .zx-segmented__item {
       font-size: 12px;
       padding: 0 8px;
     }
   }
-  
+
   &--block {
     display: flex;
     width: 100%;
   }
-  
+
   &--disabled {
     cursor: not-allowed;
   }
-  
+
   &--vertical {
     .zx-segmented__item {
       width: 100%;

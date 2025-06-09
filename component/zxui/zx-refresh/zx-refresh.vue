@@ -5,15 +5,8 @@
     </refresh>
     <!-- #endif -->
     <!-- #ifndef APP-NVUE -->
-    <view
-        ref="refreshRef"
-        class="zx-refresh"
-        v-show="isShow"
-        :style="{ height: refreshHeight + 'px' }"
-        @touchstart="touchstart"
-        @touchmove="touchmove"
-        @touchend="touchend"
-    >
+    <view ref="refreshRef" class="zx-refresh" v-show="isShow" :style="{ height: refreshHeight + 'px' }"
+        @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend">
         <view class="zx-refresh-content">
             <text v-if="refreshStatus === 0 || refreshStatus === 1" class="zx-refresh-icon">↓</text>
             <text v-if="refreshStatus === 2" class="zx-refresh-icon zx-refresh-loading">⟳</text>
@@ -93,30 +86,35 @@ function onchange(value) {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .zx-refresh {
     height: 0;
     overflow: hidden;
     transition: height 0.3s;
 }
+
 .zx-refresh-content {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 50px;
 }
+
 .zx-refresh-icon {
     font-size: 24px;
     margin-right: 8px;
 }
+
 .zx-refresh-loading {
     animation: zx-spin 1s linear infinite;
 }
+
 @keyframes zx-spin {
     100% {
         transform: rotate(360deg);
     }
 }
+
 .zx-refresh-text {
     font-size: 14px;
     color: #888;

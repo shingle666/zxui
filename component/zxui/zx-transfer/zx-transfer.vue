@@ -6,12 +6,12 @@
         <text class="zx-transfer__count">{{ leftChecked.length }}/{{ leftData.length }}</text>
       </view>
       <view v-if="filterable" class="zx-transfer__filter">
-        <input
-          class="zx-transfer__input"
-          type="text"
+        <zx-input
           v-model="leftQuery"
+          type="text"
           :placeholder="filterPlaceholder"
           @input="onLeftFilter"
+          clearable
         />
       </view>
       <scroll-view scroll-y class="zx-transfer__list">
@@ -44,12 +44,12 @@
         <text class="zx-transfer__count">{{ rightChecked.length }}/{{ rightData.length }}</text>
       </view>
       <view v-if="filterable" class="zx-transfer__filter">
-        <input
-          class="zx-transfer__input"
-          type="text"
+        <zx-input
           v-model="rightQuery"
+          type="text"
           :placeholder="filterPlaceholder"
           @input="onRightFilter"
+          clearable
         />
       </view>
       <scroll-view scroll-y class="zx-transfer__list">
@@ -78,6 +78,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+import zxInput from '@tanzhenxing/zx-input/zx-input.vue'
 
 // props 定义
 const props = defineProps({

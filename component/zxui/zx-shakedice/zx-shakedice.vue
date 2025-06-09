@@ -1,24 +1,17 @@
 <template>
-  <view 
-    class="zx-shakedice" 
-    :style="{
-      width: width,
-      height: height
-    }"
-  >
+  <view class="zx-shakedice" :style="{
+    width: width,
+    height: height
+  }">
     <!-- 骰子容器 -->
     <view class="dice-container">
       <!-- 骰子 -->
-      <view 
-        class="dice" 
-        :class="{
-          'dice-shaking': isShaking,
-          'dice-rolling': isRolling
-        }"
-        :style="{
+      <view class="dice" :class="{
+        'dice-shaking': isShaking,
+        'dice-rolling': isRolling
+      }" :style="{
           transform: diceTransform
-        }"
-      >
+        }">
         <!-- 骰子六个面 -->
         <view class="dice-face dice-face-1">
           <view class="dot"></view>
@@ -55,19 +48,14 @@
         </view>
       </view>
     </view>
-    
+
     <!-- 结果显示 -->
     <view v-if="showResult && result > 0" class="result-display">
       <text class="result-text">{{ result }}</text>
     </view>
-    
+
     <!-- 摇动按钮 -->
-    <view 
-      v-if="showButton"
-      class="shake-button"
-      :class="{ 'button-disabled': isShaking || isRolling }"
-      @click="shake"
-    >
+    <view v-if="showButton" class="shake-button" :class="{ 'button-disabled': isShaking || isRolling }" @click="shake">
       <text class="button-text">{{ buttonText }}</text>
     </view>
   </view>
@@ -152,7 +140,7 @@ const diceTransform = computed(() => {
   if (isShaking.value) {
     return `rotateX(${currentRotateX.value}deg) rotateY(${currentRotateY.value}deg)`
   }
-  
+
   if (result.value > 0) {
     // 根据结果显示对应的面
     const transforms = {
@@ -165,7 +153,7 @@ const diceTransform = computed(() => {
     }
     return transforms[result.value] || 'rotateX(0deg) rotateY(0deg)'
   }
-  
+
   return 'rotateX(0deg) rotateY(0deg)'
 })
 
@@ -178,13 +166,13 @@ const getRandomAngle = () => {
 const startShakeAnimation = () => {
   const animate = () => {
     if (!isShaking.value) return
-    
+
     currentRotateX.value = getRandomAngle()
     currentRotateY.value = getRandomAngle()
-    
+
     shakeTimer.value = setTimeout(animate, 50)
   }
-  
+
   animate()
 }
 
@@ -199,7 +187,7 @@ const stopShakeAnimation = () => {
 // 滚动到指定面
 const rollToResult = (targetResult) => {
   isRolling.value = true
-  
+
   // 计算需要的旋转角度
   const finalTransforms = {
     1: { x: 0, y: 0 },
@@ -209,18 +197,18 @@ const rollToResult = (targetResult) => {
     5: { x: 0, y: 90 },
     6: { x: 180, y: 0 }
   }
-  
+
   const target = finalTransforms[targetResult]
   if (!target) return
-  
+
   // 添加额外的旋转圈数使动画更自然
   const extraRotations = 3
   currentRotateX.value = target.x + (extraRotations * 360)
   currentRotateY.value = target.y + (extraRotations * 360)
-  
+
   // 设置结果
   result.value = targetResult
-  
+
   // 动画结束后重置状态
   rollTimer.value = setTimeout(() => {
     isRolling.value = false
@@ -231,28 +219,28 @@ const rollToResult = (targetResult) => {
 // 摇动骰子
 const shake = () => {
   if (isShaking.value || isRolling.value) return
-  
+
   // 重置结果
   result.value = 0
-  
+
   // 开始摇动
   isShaking.value = true
   emit('shake')
-  
+
   // 开始摇动动画
   startShakeAnimation()
-  
+
   // 摇动指定时间后停止
   const shakeTime = typeof props.time === 'string' ? parseInt(props.time) : props.time
-  
+
   setTimeout(() => {
     // 停止摇动
     isShaking.value = false
     stopShakeAnimation()
-    
+
     // 确定结果
     const finalResult = props.id > 0 && props.id <= 6 ? props.id : Math.floor(Math.random() * 6) + 1
-    
+
     // 滚动到结果
     setTimeout(() => {
       rollToResult(finalResult)
@@ -291,28 +279,28 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  
+
   .dice-container {
     perspective: 1000px;
     margin-bottom: 40px;
   }
-  
+
   .dice {
     position: relative;
     width: v-bind(diceSize);
     height: v-bind(diceSize);
     transform-style: preserve-3d;
     transition: transform 0.1s ease-out;
-    
+
     &.dice-shaking {
       animation: shake 0.1s infinite;
     }
-    
+
     &.dice-rolling {
       transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
   }
-  
+
   .dice-face {
     position: absolute;
     width: 100%;
@@ -326,7 +314,7 @@ onBeforeUnmount(() => {
     flex-wrap: wrap;
     padding: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    
+
     .dot {
       width: 12px;
       height: 12px;
@@ -335,94 +323,94 @@ onBeforeUnmount(() => {
       margin: 2px;
     }
   }
-  
+
   // 骰子六个面的位置
   .dice-face-1 {
     transform: rotateY(0deg) translateZ(calc(v-bind(diceSize) / 2));
   }
-  
+
   .dice-face-2 {
     transform: rotateY(90deg) translateZ(calc(v-bind(diceSize) / 2));
-    
+
     .dot:nth-child(1) {
       align-self: flex-start;
     }
-    
+
     .dot:nth-child(2) {
       align-self: flex-end;
     }
   }
-  
+
   .dice-face-3 {
     transform: rotateX(90deg) translateZ(calc(v-bind(diceSize) / 2));
-    
+
     .dot:nth-child(1) {
       align-self: flex-start;
     }
-    
+
     .dot:nth-child(2) {
       align-self: center;
     }
-    
+
     .dot:nth-child(3) {
       align-self: flex-end;
     }
   }
-  
+
   .dice-face-4 {
     transform: rotateX(-90deg) translateZ(calc(v-bind(diceSize) / 2));
-    
+
     .dot:nth-child(1),
     .dot:nth-child(2) {
       align-self: flex-start;
     }
-    
+
     .dot:nth-child(3),
     .dot:nth-child(4) {
       align-self: flex-end;
     }
   }
-  
+
   .dice-face-5 {
     transform: rotateY(-90deg) translateZ(calc(v-bind(diceSize) / 2));
-    
+
     .dot:nth-child(1),
     .dot:nth-child(2) {
       align-self: flex-start;
     }
-    
+
     .dot:nth-child(3) {
       align-self: center;
     }
-    
+
     .dot:nth-child(4),
     .dot:nth-child(5) {
       align-self: flex-end;
     }
   }
-  
+
   .dice-face-6 {
     transform: rotateY(180deg) translateZ(calc(v-bind(diceSize) / 2));
-    
+
     .dot:nth-child(1),
     .dot:nth-child(2) {
       align-self: flex-start;
     }
-    
+
     .dot:nth-child(3),
     .dot:nth-child(4) {
       align-self: center;
     }
-    
+
     .dot:nth-child(5),
     .dot:nth-child(6) {
       align-self: flex-end;
     }
   }
-  
+
   .result-display {
     margin-bottom: 20px;
-    
+
     .result-text {
       font-size: 32px;
       font-weight: bold;
@@ -430,41 +418,46 @@ onBeforeUnmount(() => {
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
   }
-  
+
   .shake-button {
     padding: 12px 24px;
     background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
     border-radius: 25px;
     box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
     transition: all 0.3s ease;
-    
+
     &:active {
       transform: translateY(2px);
       box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
     }
-    
+
     &.button-disabled {
       opacity: 0.6;
       pointer-events: none;
     }
-    
+
     .button-text {
       color: white;
       font-size: 16px;
       font-weight: bold;
     }
   }
-  
+
   @keyframes shake {
-    0%, 100% {
+
+    0%,
+    100% {
       transform: translateX(0) translateY(0) rotateZ(0deg);
     }
+
     25% {
       transform: translateX(-2px) translateY(-2px) rotateZ(-1deg);
     }
+
     50% {
       transform: translateX(2px) translateY(-2px) rotateZ(1deg);
     }
+
     75% {
       transform: translateX(-2px) translateY(2px) rotateZ(-1deg);
     }

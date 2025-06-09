@@ -2,13 +2,9 @@
 	<view class="zx-code">
 		<!-- 提供默认的UI界面，用户也可以通过插槽自定义 -->
 		<slot :text="currentText" :canGetCode="canGetCode" :start="start" :reset="reset">
-			<button 
-				:disabled="!canGetCode" 
-				@click="start"
-				:class="['zx-code-btn', { 'zx-code-btn--disabled': !canGetCode }]"
-			>
+			<zx-button :disabled="!canGetCode" @click="start">
 				{{ currentText }}
-			</button>
+			</zx-button>
 		</slot>
 	</view>
 </template>
@@ -17,7 +13,7 @@
 /**
  * Code 验证码倒计时组件
  * @description 验证码倒计时组件，支持自定义UI、页面刷新继续倒计时等功能
- * @tutorial https://zxui.org/components/code
+ * @tutorial https://zxui.org/components/sms-code
  * @property {String | Number}	seconds			倒计时所需的秒数（默认 60）
  * @property {String}			startText		开始前的提示语（默认 '获取验证码'）
  * @property {String}			changeText		倒计时期间的提示语，用X占位秒数（默认 'X秒后重试'）
@@ -34,6 +30,7 @@
  * @example <zx-code ref="codeRef" @start="handleStart" @end="handleEnd" />
  */
 import { ref, getCurrentInstance, onMounted, onBeforeUnmount, computed, watch } from 'vue';
+import zxButton from '@tanzhenxing/zx-button/zx-button.vue';
 
 const { proxy } = getCurrentInstance();
 
@@ -118,13 +115,13 @@ onBeforeUnmount(() => {
 // 初始化
 const init = () => {
 	secNum.value = totalSeconds.value;
-	
+
 	if (props.keepRunning) {
 		checkKeepRunning();
 	} else {
 		updateText(props.startText);
 	}
-	
+
 	if (props.autoStart && canGetCode.value && !props.disabled) {
 		start();
 	}
@@ -134,14 +131,14 @@ const init = () => {
 const checkKeepRunning = () => {
 	try {
 		const lastTimestamp = Number(uni.getStorageSync(storageKey.value));
-		
+
 		if (!lastTimestamp) {
 			updateText(props.startText);
 			return;
 		}
-		
+
 		const nowTimestamp = Math.floor(Date.now() / 1000);
-		
+
 		// 如果保存的时间戳大于当前时间，说明倒计时还未结束
 		if (lastTimestamp > nowTimestamp) {
 			secNum.value = lastTimestamp - nowTimestamp;
@@ -165,7 +162,7 @@ const start = () => {
 	if (props.disabled || !canGetCode.value) {
 		return false;
 	}
-	
+
 	try {
 		secNum.value = totalSeconds.value;
 		startCountdown();
@@ -181,16 +178,16 @@ const start = () => {
 const startCountdown = () => {
 	// 清除现有定时器
 	clearTimer();
-	
+
 	canGetCode.value = false;
-	
+
 	// 立即更新显示
 	updateCountdownText();
-	
+
 	// 设置定时器
 	timer.value = setInterval(() => {
 		secNum.value--;
-		
+
 		if (secNum.value > 0) {
 			updateCountdownText();
 			proxy.$emit('tick', secNum.value);
@@ -198,7 +195,7 @@ const startCountdown = () => {
 			end();
 		}
 	}, 1000);
-	
+
 	// 保存时间戳
 	saveTimestamp();
 };
@@ -215,7 +212,7 @@ const end = () => {
 	canGetCode.value = true;
 	secNum.value = totalSeconds.value;
 	updateText(props.endText);
-	
+
 	// 清除本地存储
 	if (props.keepRunning) {
 		try {
@@ -224,7 +221,7 @@ const end = () => {
 			console.warn('zx-code: 清除本地存储失败', error);
 		}
 	}
-	
+
 	proxy.$emit('end');
 };
 
@@ -234,7 +231,7 @@ const reset = () => {
 	canGetCode.value = true;
 	secNum.value = totalSeconds.value;
 	updateText(props.startText);
-	
+
 	// 清除本地存储
 	if (props.keepRunning) {
 		try {
@@ -280,11 +277,11 @@ const saveTimestamp = () => {
 	if (!props.keepRunning || !timer.value || secNum.value <= 0) {
 		return;
 	}
-	
+
 	try {
 		const nowTimestamp = Math.floor(Date.now() / 1000);
 		const endTimestamp = nowTimestamp + secNum.value;
-		
+
 		uni.setStorageSync(storageKey.value, endTimestamp);
 	} catch (error) {
 		console.warn('zx-code: 保存时间戳失败', error);
@@ -335,11 +332,11 @@ defineExpose({
 	font-size: 14px;
 	cursor: pointer;
 	transition: all 0.3s ease;
-	
+
 	&:hover:not(.zx-code-btn--disabled) {
 		background-color: #0056cc;
 	}
-	
+
 	&--disabled {
 		background-color: #cccccc;
 		color: #999999;

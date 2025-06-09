@@ -1,86 +1,41 @@
 <template>
-  <view 
-    ref="scrollbarRef" 
-    :class="scrollbarClass"
-    :style="scrollbarStyle"
-  >
-    <scroll-view 
-      v-if="!native"
-      ref="wrapRef"
-      :class="wrapClass"
-      :style="wrapStyle"
-      :scroll-top="currentScrollTop"
-      :scroll-left="currentScrollLeft"
-      :scroll-y="enableScrollY"
-      :scroll-x="enableScrollX"
-      :enable-flex="true"
-      :enhanced="true"
-      :bounces="false"
-      :show-scrollbar="false"
-      @scroll="handleScroll"
-    >
-      <view 
-        ref="viewRef"
-        :class="viewClass"
-        :style="viewStyle"
-      >
+  <view ref="scrollbarRef" :class="scrollbarClass" :style="scrollbarStyle">
+    <scroll-view v-if="!native" ref="wrapRef" :class="wrapClass" :style="wrapStyle" :scroll-top="currentScrollTop"
+      :scroll-left="currentScrollLeft" :scroll-y="enableScrollY" :scroll-x="enableScrollX" :enable-flex="true"
+      :enhanced="true" :bounces="false" :show-scrollbar="false" @scroll="handleScroll">
+      <view ref="viewRef" :class="viewClass" :style="viewStyle">
         <slot />
       </view>
     </scroll-view>
-    
-    <view 
-      v-else
-      ref="wrapRef"
-      :class="wrapClass"
-      :style="wrapStyle"
-    >
-      <view 
-        ref="viewRef"
-        :class="viewClass"
-        :style="viewStyle"
-      >
+
+    <view v-else ref="wrapRef" :class="wrapClass" :style="wrapStyle">
+      <view ref="viewRef" :class="viewClass" :style="viewStyle">
         <slot />
       </view>
     </view>
-    
+
     <!-- 垂直滚动条 -->
-    <view 
-      v-show="!native && (always || showVerticalScrollbar)"
-      ref="verticalRef"
-      :class="['zx-scrollbar__bar', 'is-vertical']"
-      @touchstart="onVerticalTouchStart"
-      @touchmove="onVerticalTouchMove"
-      @touchend="onTouchEnd"
-    >
-      <view 
-        :class="['zx-scrollbar__thumb']"
-        :style="verticalThumbStyle"
-      />
+    <view v-show="!native && (always || showVerticalScrollbar)" ref="verticalRef"
+      :class="['zx-scrollbar__bar', 'is-vertical']" @touchstart="onVerticalTouchStart" @touchmove="onVerticalTouchMove"
+      @touchend="onTouchEnd">
+      <view :class="['zx-scrollbar__thumb']" :style="verticalThumbStyle" />
     </view>
-    
+
     <!-- 水平滚动条 -->
-    <view 
-      v-show="!native && (always || showHorizontalScrollbar)"
-      ref="horizontalRef"
-      :class="['zx-scrollbar__bar', 'is-horizontal']"
-      @touchstart="onHorizontalTouchStart"
-      @touchmove="onHorizontalTouchMove"
-      @touchend="onTouchEnd"
-    >
-      <view 
-        :class="['zx-scrollbar__thumb']"
-        :style="horizontalThumbStyle"
-      />
+    <view v-show="!native && (always || showHorizontalScrollbar)" ref="horizontalRef"
+      :class="['zx-scrollbar__bar', 'is-horizontal']" @touchstart="onHorizontalTouchStart"
+      @touchmove="onHorizontalTouchMove" @touchend="onTouchEnd">
+      <view :class="['zx-scrollbar__thumb']" :style="horizontalThumbStyle" />
     </view>
   </view>
 </template>
 
 <script setup>
-import { 
-  ref, 
-  computed, 
-  onMounted, 
-  onBeforeUnmount, 
+import {
+  ref,
+  computed,
+  onMounted,
+  onBeforeUnmount,
   nextTick,
   watch,
   defineEmits,
@@ -199,14 +154,14 @@ const wrapStyle = computed(() => {
   if (props.height || props.maxHeight) {
     style.height = '100%'
   }
-  
+
   // 合并用户自定义样式
   if (typeof props.wrapStyle === 'string') {
     Object.assign(style, parseStyleString(props.wrapStyle))
   } else if (typeof props.wrapStyle === 'object') {
     Object.assign(style, props.wrapStyle)
   }
-  
+
   return style
 })
 
@@ -217,13 +172,13 @@ const viewClass = computed(() => [
 
 const viewStyle = computed(() => {
   let style = {}
-  
+
   if (typeof props.viewStyle === 'string') {
     style = parseStyleString(props.viewStyle)
   } else if (typeof props.viewStyle === 'object') {
     style = { ...props.viewStyle }
   }
-  
+
   return style
 })
 
@@ -243,13 +198,13 @@ const showHorizontalScrollbar = computed(() => {
 // 垂直滚动条样式
 const verticalThumbStyle = computed(() => {
   if (!showVerticalScrollbar.value) return {}
-  
+
   const heightPercentage = (clientHeight.value * 100) / scrollHeight.value
   const thumbHeight = Math.max(heightPercentage, props.minSize)
   const trackHeight = clientHeight.value - thumbHeight
-  const thumbTop = scrollHeight.value > clientHeight.value ? 
+  const thumbTop = scrollHeight.value > clientHeight.value ?
     (scrollTop.value / (scrollHeight.value - clientHeight.value)) * trackHeight : 0
-  
+
   return {
     height: `${thumbHeight}px`,
     transform: `translateY(${thumbTop}px)`
@@ -259,13 +214,13 @@ const verticalThumbStyle = computed(() => {
 // 水平滚动条样式
 const horizontalThumbStyle = computed(() => {
   if (!showHorizontalScrollbar.value) return {}
-  
+
   const widthPercentage = (clientWidth.value * 100) / scrollWidth.value
   const thumbWidth = Math.max(widthPercentage, props.minSize)
   const trackWidth = clientWidth.value - thumbWidth
   const thumbLeft = scrollWidth.value > clientWidth.value ?
     (scrollLeft.value / (scrollWidth.value - clientWidth.value)) * trackWidth : 0
-  
+
   return {
     width: `${thumbWidth}px`,
     transform: `translateX(${thumbLeft}px)`
@@ -289,12 +244,12 @@ const parseStyleString = (styleStr) => {
 
 const updateScrollInfo = () => {
   if (!wrapRef.value) return
-  
+
   // 使用 uni.createSelectorQuery 获取节点信息
   nextTick(() => {
     const query = uni.createSelectorQuery().in(wrapRef.value)
     query.select('.zx-scrollbar__wrap').boundingClientRect()
-    query.select('.zx-scrollbar__view').boundingClientRect() 
+    query.select('.zx-scrollbar__view').boundingClientRect()
     query.exec((res) => {
       if (res && res[0] && res[1]) {
         clientHeight.value = res[0].height || 0
@@ -308,23 +263,23 @@ const updateScrollInfo = () => {
 
 const handleScroll = (e) => {
   const { scrollTop: st, scrollLeft: sl, scrollHeight: sh, scrollWidth: sw } = e.detail
-  
+
   scrollTop.value = st
   scrollLeft.value = sl
-  
+
   if (sh) scrollHeight.value = sh
   if (sw) scrollWidth.value = sw
-  
+
   // 显示滚动条
   scrollbarVisible.value = true
-  
+
   emit('scroll', {
     scrollTop: scrollTop.value,
     scrollLeft: scrollLeft.value,
     scrollHeight: scrollHeight.value,
     scrollWidth: scrollWidth.value
   })
-  
+
   // 隐藏滚动条
   setTimeout(() => {
     if (!isDragging.value) {
@@ -386,7 +341,7 @@ const startDrag = (direction, startPosition) => {
   isDragging.value = true
   dragDirection.value = direction
   scrollbarVisible.value = true
-  
+
   if (direction === 'vertical') {
     dragStartY.value = startPosition
     dragStartScrollTop.value = scrollTop.value
@@ -398,7 +353,7 @@ const startDrag = (direction, startPosition) => {
 
 const onTouchMove = (e) => {
   if (!isDragging.value) return
-  
+
   if (dragDirection.value === 'vertical') {
     const deltaY = e.touches[0].clientY - dragStartY.value
     const thumbHeight = parseFloat(verticalThumbStyle.value.height) || 20
@@ -417,7 +372,7 @@ const onTouchMove = (e) => {
 const onTouchEnd = () => {
   isDragging.value = false
   dragDirection.value = ''
-  
+
   setTimeout(() => {
     if (!isDragging.value) {
       scrollbarVisible.value = false
@@ -527,6 +482,7 @@ defineExpose({
 .zx-scrollbar__bar {
   pointer-events: auto;
 }
+
 /* #endif */
 
 /* H5 兼容 */
@@ -534,5 +490,6 @@ defineExpose({
 .zx-scrollbar__bar:hover {
   opacity: 1;
 }
+
 /* #endif */
 </style>

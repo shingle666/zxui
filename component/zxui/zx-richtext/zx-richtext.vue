@@ -1,14 +1,7 @@
 <template>
 	<view :style="containerStyle">
-		<rich-text 
-			ref="richTextRef"
-			:nodes="processedNodes"
-			:space="space"
-			:selectable="selectable"
-			:image-menu-prevent="imageMenuPrevent"
-			:preview="preview"
-			@itemclick="handleItemClick"
-		></rich-text>
+		<rich-text ref="richTextRef" :nodes="processedNodes" :space="space" :selectable="selectable"
+			:image-menu-prevent="imageMenuPrevent" :preview="preview" @itemclick="handleItemClick"></rich-text>
 	</view>
 </template>
 
@@ -41,7 +34,7 @@ const props = defineProps({
 		type: Boolean,
 		default: true
 	},
-	
+
 	// 样式相关属性
 	fontFamily: {
 		type: String,
@@ -68,7 +61,7 @@ const props = defineProps({
 		type: [Boolean, String],
 		default: false
 	},
-	
+
 	// 图片处理相关
 	imgMaxWidth: {
 		type: String,
@@ -82,7 +75,7 @@ const props = defineProps({
 		type: String,
 		default: '0'
 	},
-	
+
 	// 内容处理选项
 	autoProcess: {
 		type: Boolean,
@@ -100,13 +93,13 @@ const props = defineProps({
 		type: Boolean,
 		default: false
 	},
-	
+
 	// 外部图片代理
 	externalImageProxy: {
 		type: String,
 		default: ''
 	},
-	
+
 	// 自定义样式
 	customStyle: {
 		type: Object,
@@ -128,7 +121,7 @@ const containerStyle = computed(() => {
 		wordWrap: 'break-word',
 		wordBreak: 'break-all'
 	};
-	
+
 	// 处理首行缩进
 	if (props.textIndent) {
 		if (typeof props.textIndent === 'boolean') {
@@ -137,7 +130,7 @@ const containerStyle = computed(() => {
 			baseStyle.textIndent = props.textIndent;
 		}
 	}
-	
+
 	// 合并自定义样式
 	return { ...baseStyle, ...props.customStyle };
 });
@@ -145,35 +138,35 @@ const containerStyle = computed(() => {
 // HTML 内容处理函数
 const processHtmlContent = (htmlString) => {
 	if (!htmlString || typeof htmlString !== 'string') return '';
-	
+
 	let content = htmlString;
-	
+
 	if (props.autoProcess) {
 		// 移除脚本标签（安全考虑）
 		if (props.removeScript) {
 			content = content.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');
 		}
-		
+
 		// 移除style标签（如果需要）
 		if (props.removeStyle) {
 			content = content.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
 		}
-		
+
 		// HTTP 转 HTTPS
 		if (props.httpToHttps) {
 			content = content.replace(/http:/g, 'https:');
 		}
-		
+
 		// 处理图片
 		content = processImages(content);
-		
+
 		// 处理视频（rich-text 不支持video标签，转换为图片或移除）
 		content = processVideo(content);
-		
+
 		// 移除不受信任的标签和属性
 		content = sanitizeHtml(content);
 	}
-	
+
 	return content;
 };
 
@@ -184,13 +177,13 @@ const processImages = (content) => {
 		const srcMatch = attrs.match(/src\s*=\s*["']([^"']*)["']/i);
 		const altMatch = attrs.match(/alt\s*=\s*["']([^"']*)["']/i);
 		const classMatch = attrs.match(/class\s*=\s*["']([^"']*)["']/i);
-		
+
 		if (!srcMatch) return match; // 没有src属性的图片忽略
-		
+
 		let src = srcMatch[1];
 		const alt = altMatch ? altMatch[1] : '';
 		const className = classMatch ? classMatch[1] : '';
-		
+
 		// 外部图片代理处理
 		if (props.externalImageProxy) {
 			// 检查是否为外部图片（简单判断）
@@ -199,10 +192,10 @@ const processImages = (content) => {
 				src = props.externalImageProxy + encodeURIComponent(src);
 			}
 		}
-		
+
 		// 构建新的图片标签
 		const imgStyle = `max-width:${props.imgMaxWidth};width:${props.imgWidth};height:auto;border-radius:${props.imgBorderRadius};`;
-		
+
 		return `<img src="${src}" alt="${alt}" class="${className}" style="${imgStyle}">`;
 	});
 };
@@ -210,7 +203,7 @@ const processImages = (content) => {
 // 视频处理（rich-text不支持video，转换处理）
 const processVideo = (content) => {
 	// rich-text 不支持 video 标签，这里可以转换为图片或移除
-	return content.replace(/<video[^>]*>[\s\S]*?<\/video>/gi, 
+	return content.replace(/<video[^>]*>[\s\S]*?<\/video>/gi,
 		'<p style="color:#999;text-align:center;padding:20px;background:#f5f5f5;border-radius:4px;">视频内容无法在富文本中显示</p>'
 	);
 };
@@ -219,19 +212,19 @@ const processVideo = (content) => {
 const sanitizeHtml = (content) => {
 	// 受信任的标签列表（基于官方文档）
 	const allowedTags = [
-		'a', 'abbr', 'b', 'br',  'col', 'colgroup', 
-		'dd', 'del', 'div', 'dl', 'dt', 'em', 'fieldset', 'h1', 'h2', 'h3', 
-		'h4', 'h5', 'h6', 'hr', 'i',  'ins', 'label', 'legend', 'li', 
-		'ol', 'p', 'q', 'span', 'strong', 'sub', 'sup', 'table', 'tbody', 
+		'a', 'abbr', 'b', 'br', 'col', 'colgroup',
+		'dd', 'del', 'div', 'dl', 'dt', 'em', 'fieldset', 'h1', 'h2', 'h3',
+		'h4', 'h5', 'h6', 'hr', 'i', 'ins', 'label', 'legend', 'li',
+		'ol', 'p', 'q', 'span', 'strong', 'sub', 'sup', 'table', 'tbody',
 		'td', 'tfoot', 'th', 'thead', 'tr', 'ul'
 	];
-	
+
 	// 移除id属性（rich-text不支持）
 	content = content.replace(/\s+id\s*=\s*["'][^"']*["']/gi, '');
-	
+
 	// 这里可以添加更复杂的HTML清理逻辑
 	// 为了简化，暂时保持基本的处理
-	
+
 	return content;
 };
 
@@ -246,12 +239,12 @@ const convertToNodes = (htmlString) => {
 // 处理后的内容
 const processedNodes = computed(() => {
 	if (!props.content) return [];
-	
+
 	// 如果传入的是数组，直接使用
 	if (Array.isArray(props.content)) {
 		return props.content;
 	}
-	
+
 	// 如果是字符串，处理后返回
 	const processedHtml = processHtmlContent(props.content);
 	return processedHtml;
@@ -260,7 +253,7 @@ const processedNodes = computed(() => {
 // 事件处理
 const handleItemClick = (e) => {
 	emits('itemclick', e);
-	
+
 	// 处理链接点击
 	if (e.detail && e.detail.node) {
 		const node = e.detail.node;

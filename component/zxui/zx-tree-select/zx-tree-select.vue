@@ -1,17 +1,12 @@
 <template>
   <view :class="bem()" :style="{ height: addUnit(height) }">
     <scroll-view :class="bem('nav')" :scroll-y="true">
-      <view
-        v-for="(item, index) in items"
-        :key="index"
-        :class="[
-          bem('nav-item'),
-          item.className,
-          { [bem('nav-item', 'active')]: mainActiveIndex === index },
-          { [bem('nav-item', 'disabled')]: item.disabled }
-        ]"
-        @click="onClickNav(index, item)"
-      >
+      <view v-for="(item, index) in items" :key="index" :class="[
+        bem('nav-item'),
+        item.className,
+        { [bem('nav-item', 'active')]: mainActiveIndex === index },
+        { [bem('nav-item', 'disabled')]: item.disabled }
+      ]" @click="onClickNav(index, item)">
         <view class="van-ellipsis">
           {{ item.text }}
           <view v-if="item.dot" :class="bem('nav-dot')"></view>
@@ -21,22 +16,12 @@
     </scroll-view>
     <scroll-view :class="bem('content')" :scroll-y="true">
       <slot name="content">
-        <view
-          v-for="item in subItems"
-          :key="item.id"
-          :class="[
-            'van-ellipsis',
-            bem('item', { active: isActiveItem(item.id), disabled: item.disabled })
-          ]"
-          @click="onClickItem(item)"
-        >
+        <view v-for="item in subItems" :key="item.id" :class="[
+          'van-ellipsis',
+          bem('item', { active: isActiveItem(item.id), disabled: item.disabled })
+        ]" @click="onClickItem(item)">
           {{ item.text }}
-          <zx-icon
-            v-if="isActiveItem(item.id)"
-            :name="selectedIcon"
-            :class="bem('selected')"
-            size="16px"
-          />
+          <zx-icon v-if="isActiveItem(item.id)" :name="selectedIcon" :class="bem('selected')" size="16px" />
         </view>
       </slot>
     </scroll-view>
@@ -45,8 +30,41 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue';
-import { addUnit, createNamespace } from '../../utils/index.js';
-import zxIcon from '../zx-icon/zx-icon.vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
+
+// 在组件内实现 addUnit 函数
+const addUnit = (value, unit = 'px') => {
+  if (value == null) {
+    return undefined;
+  }
+  return /^-?\d+(\.\d+)?$/.test(String(value)) ? `${value}${unit}` : String(value);
+};
+
+// 在组件内实现 createNamespace 函数
+const createNamespace = (name) => {
+  const prefixedName = `zx-${name}`;
+  const bem = (modifier, subModifier) => {
+    if (modifier && typeof modifier === 'string') {
+      const base = `${prefixedName}__${modifier}`;
+      if (subModifier && typeof subModifier === 'string') {
+        return `${base}_${subModifier}`;
+      }
+      return base;
+    }
+    if (modifier && typeof modifier === 'object') {
+      // bem('block', { mod1: true, mod2: false }) => 'zx-block zx-block--mod1'
+      let result = prefixedName;
+      for (const key in modifier) {
+        if (Object.prototype.hasOwnProperty.call(modifier, key) && modifier[key]) {
+          result += ` ${prefixedName}--${key}`;
+        }
+      }
+      return result;
+    }
+    return prefixedName;
+  };
+  return [prefixedName, bem];
+};
 
 const [name, bem] = createNamespace('tree-select');
 
@@ -196,7 +214,8 @@ $van-active-color: var(--zx-active-color, #e8f2ff);
       color: $van-tree-select-item-disabled-color;
       cursor: not-allowed;
       background-color: transparent; // Ensure disabled items don't get active background
-       &:active {
+
+      &:active {
         background-color: transparent;
       }
     }

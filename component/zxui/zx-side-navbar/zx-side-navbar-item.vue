@@ -1,3 +1,11 @@
+<template>
+  <view :class="classes" :style="styles" :ikey="ikey" @click.stop="handleClick">
+    <text class="zx-side-navbar-item__title">
+      {{ title }}
+    </text>
+  </view>
+</template>
+
 <script setup>
 import { computed, inject } from 'vue'
 
@@ -38,19 +46,4 @@ function handleClick() {
 }
 </script>
 
-<template>
-  <view
-    :class="classes"
-    :style="styles"
-    :ikey="ikey"
-    @click.stop="handleClick"
-  >
-    <text class="zx-side-navbar-item__title">
-      {{ title }}
-    </text>
-  </view>
-</template>
-
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

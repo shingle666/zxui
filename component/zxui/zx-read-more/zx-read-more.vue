@@ -1,39 +1,24 @@
 <template>
   <view class="zx-read-more">
-    <view
-      class="zx-read-more__content"
-      :style="{
-        height:
-          isLongContent.value && status.value === 'close'
-            ? addUnit(props.showHeight)
-            : addUnit(contentHeight.value),
-        textIndent: props.textIndent,
-      }"
-    >
-      <view
-        class="zx-read-more__content__inner"
-        :ref="contentInnerRef"
-        :class="[elId]"
-      >
+    <view class="zx-read-more__content" :style="{
+      height:
+        isLongContent.value && status.value === 'close'
+          ? addUnit(props.showHeight)
+          : addUnit(contentHeight.value),
+      textIndent: props.textIndent,
+    }">
+      <view class="zx-read-more__content__inner" :ref="contentInnerRef" :class="[elId]">
         <slot></slot>
       </view>
     </view>
     <view class="zx-read-more__toggle" :style="[innerShadowStyle.value]" v-if="isLongContent.value">
       <slot name="toggle">
         <view class="zx-read-more__toggle__text" @tap="toggleReadMore">
-          <zx-text
-            :text="status.value === 'close' ? props.closeText : props.openText"
-            :color="props.color"
-            :size="props.fontSize"
-            :lineHeight="props.fontSize"
-            margin="0 5px 0 0"
-          ></zx-text>
+          <zx-text :text="status.value === 'close' ? props.closeText : props.openText" :color="props.color"
+            :size="props.fontSize" :lineHeight="props.fontSize" margin="0 5px 0 0"></zx-text>
           <view class="zx-read-more__toggle__icon">
-            <zx-icon
-              :color="props.color"
-              :size="Number(props.fontSize) + 2"
-              :name="status.value === 'close' ? 'arrow-down' : 'arrow-up'"
-            ></zx-icon>
+            <zx-icon :color="props.color" :size="Number(props.fontSize) + 2"
+              :name="status.value === 'close' ? 'arrow-down' : 'arrow-up'"></zx-icon>
           </view>
         </view>
       </slot>
@@ -43,6 +28,8 @@
 
 <script setup>
 import { ref, computed, onMounted, nextTick } from 'vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue';
+import zxText from '@tanzhenxing/zx-text/zx-text.vue';
 
 // 工具函数
 function addUnit(val) {

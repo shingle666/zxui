@@ -69,6 +69,8 @@
  */
 
 import { computed } from 'vue';
+import zxIcon from '@tanzhenxing/zx-icon/zx-icon.vue'
+
 
 const props = defineProps({
   // 是否显示组件
@@ -248,19 +250,19 @@ const resultStyle = computed(() => {
       width: 200rpx;
       height: 200rpx;
       border-radius: 50%;
-      
+
       &.zx-result__icon--success {
         background-color: rgba(103, 194, 58, 0.1);
       }
-      
+
       &.zx-result__icon--error {
         background-color: rgba(245, 108, 108, 0.1);
       }
-      
+
       &.zx-result__icon--warning {
         background-color: rgba(230, 162, 60, 0.1);
       }
-      
+
       &.zx-result__icon--info {
         background-color: rgba(144, 147, 153, 0.1);
       }
