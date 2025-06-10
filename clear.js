@@ -42,12 +42,12 @@ function findAndRemoveNestedNodeModules(dirPath, depth = 0) {
         const stat = fs.statSync(filePath);
         
         if (stat.isDirectory()) {
-          // 如果是node_modules目录且不在项目根目录
-          if (file === 'node_modules' && depth > 0) {
-            console.log(`发现嵌套的node_modules: ${filePath}`);
+          // 如果是node_modules或node-modules目录且不在项目根目录
+          if ((file === 'node_modules' || file === 'node-modules') && depth > 0) {
+            console.log(`发现嵌套的${file}: ${filePath}`);
             removeDir(filePath);
-          } else if (file !== 'node_modules') {
-            // 递归搜索其他目录，但跳过根目录的node_modules
+          } else if (file !== 'node_modules' && file !== 'node-modules') {
+            // 递归搜索其他目录，但跳过根目录的node_modules和node-modules
             findAndRemoveNestedNodeModules(filePath, depth + 1);
           }
         }
@@ -67,20 +67,19 @@ function main() {
   const projectRoot = process.cwd();
   console.log(`项目根目录: ${projectRoot}`);
   
-  // 主要清理dist目录下的嵌套node_modules
-  const distPath = path.join(projectRoot, 'dist');
-  if (fs.existsSync(distPath)) {
-    console.log('清理dist目录下的嵌套node_modules...');
-    findAndRemoveNestedNodeModules(distPath);
-  }
+  // 专门清理dist/dev/mp-weixin和dist/build/mp-weixin目录下的嵌套node_modules
+  const targetDirs = [
+    'dist/dev/mp-weixin',
+    'dist/build/mp-weixin'
+  ];
   
-  // 也可以清理其他可能的目录
-  const otherDirs = ['build', 'output'];
-  otherDirs.forEach(dir => {
+  targetDirs.forEach(dir => {
     const dirPath = path.join(projectRoot, dir);
     if (fs.existsSync(dirPath)) {
       console.log(`清理${dir}目录下的嵌套node_modules...`);
       findAndRemoveNestedNodeModules(dirPath);
+    } else {
+      console.log(`目录不存在: ${dirPath}`);
     }
   });
   

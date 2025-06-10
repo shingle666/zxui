@@ -1,0 +1,18 @@
+{
+  "name": "@tanzhenxing/zx-menu-item",
+  "version": "1.0.2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-menu-item",
+    "uni-app",
+    "菜单项",
+    "菜单项组件",
+    "菜单项功能"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "zx-menu-item 菜单项组件"
+}
