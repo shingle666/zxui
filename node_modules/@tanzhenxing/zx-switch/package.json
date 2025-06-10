@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-switch",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,5 +13,8 @@
   ],
   "author": "tanzhenxing",
   "license": "ISC",
-  "description": "一个基于uniapp的开关组件"
+  "description": "一个基于uniapp的开关组件",
+  "dependencies": {
+    "@tanzhenxing/zx-loading": "^1.0.2"
+  }
 }

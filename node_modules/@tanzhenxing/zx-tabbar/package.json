@@ -1,6 +1,6 @@
 {
   "name": "@tanzhenxing/zx-tabbar",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "zx-tabbar 底部导航栏",
   "main": "index.js",
   "scripts": {

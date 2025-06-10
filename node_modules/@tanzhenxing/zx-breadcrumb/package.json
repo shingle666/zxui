@@ -1,0 +1,18 @@
+{
+  "name": "@tanzhenxing/zx-breadcrumb",
+  "version": "1.0.2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Breadcrumb",
+    "面包屑组件"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "ZX-Breadcrumb 面包屑组件",
+  "dependencies": {
+    "@tanzhenxing/zx-breadcrumb-item": "^1.0.1"
+  }
+}

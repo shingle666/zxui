@@ -1,19 +1,11 @@
 <template>
-  <view
-    class="zx-contact-card"
-    :class="[`zx-contact-card--${type}`, !editable && 'zx-contact-card--disabled']"
-    :style="[customStyle]"
-    :hover-class="editable ? 'zx-contact-card--clickable' : ''"
-    :hover-stay-time="250"
-    @tap="clickHandler"
-  >
+  <view class="zx-contact-card" :class="[`zx-contact-card--${type}`, !editable && 'zx-contact-card--disabled']"
+    :style="[customStyle]" :hover-class="editable ? 'zx-contact-card--clickable' : ''" :hover-stay-time="250"
+    @tap="clickHandler">
     <view class="zx-contact-card__body">
       <view class="zx-contact-card__left-icon">
-        <zx-icon
-          :name="type === 'add' ? 'plus-circle' : 'user'"
-          :size="iconSize"
-          :color="type === 'add' ? addIconColor : iconColor"
-        ></zx-icon>
+        <zx-icon :name="type === 'add' ? 'plus-circle' : 'user'" :size="iconSize"
+          :color="type === 'add' ? addIconColor : iconColor"></zx-icon>
       </view>
       <view class="zx-contact-card__content">
         <view class="zx-contact-card__title" v-if="type === 'add'">
@@ -29,11 +21,7 @@
         </view>
       </view>
       <view class="zx-contact-card__right-icon" v-if="editable">
-        <zx-icon
-          name="arrow-right"
-          :size="arrowSize"
-          :color="arrowColor"
-        ></zx-icon>
+        <zx-icon name="arrow-right" :size="arrowSize" :color="arrowColor"></zx-icon>
       </view>
     </view>
     <view class="zx-contact-card__border" v-if="type === 'add'"></view>

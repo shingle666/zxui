@@ -1,0 +1,25 @@
+{
+  "name": "@tanzhenxing/zx-shakedice",
+  "version": "1.0.1",
+  "description": "一个支持 H5、小程序、App 的 3D 摇骰子组件，提供真实的骰子摇动和滚动效果。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "3D",
+    "骰子",
+    "摇骰子",
+    "骰子动画",
+    "骰子滚动",
+    "骰子滚动动画",
+    "骰子滚动效果",
+    "骰子滚动动画效果",
+    "骰子滚动动画效果组件",
+    "骰子滚动动画效果组件库",
+    "骰子滚动动画效果组件库小程序"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "type": "commonjs"
+}

@@ -2,29 +2,22 @@
 	<view>
 		<view class="zx-tabbar" :style="[tabbarStyle, customStyle]">
 			<template v-for="(item, index) in items" :key="item.name ?? index">
-				<view
-					class="zx-tabbar-item"
-					:style="customStyle"
-					@click.stop="clickItem(item, index)"
-				>
-					<zx-badge
-						v-if="item.dot || item.badge"
-						:isDot="!!item.dot"
-						:text="item.badge"
-						type="primary"
-						max="99"
-						absolute="rightTop"
-						bgColor="#ff0000"
-					>
+				<view class="zx-tabbar-item" :style="customStyle" @click.stop="clickItem(item, index)">
+					<zx-badge v-if="item.dot || item.badge" :isDot="!!item.dot" :text="item.badge" type="primary"
+						max="99" absolute="rightTop" bgColor="#ff0000">
 						<view style="display: flex;flex-direction: column;align-items: center;">
-							<zx-icon v-if="item.icon" :name="item.icon" :color="isActive(item, index) ? activeColor : inactiveColor" size="45rpx"></zx-icon>
-							<zx-text :text="item.title" :color="isActive(item, index) ? activeColor : inactiveColor" lines="1" size="26rpx" lineHeight="40rpx"></zx-text>
+							<zx-icon v-if="item.icon" :name="item.icon"
+								:color="isActive(item, index) ? activeColor : inactiveColor" size="45rpx"></zx-icon>
+							<zx-text :text="item.title" :color="isActive(item, index) ? activeColor : inactiveColor"
+								lines="1" size="26rpx" lineHeight="40rpx"></zx-text>
 						</view>
 					</zx-badge>
 					<template v-else>
 						<view style="display: flex;flex-direction: column;align-items: center;">
-							<zx-icon v-if="item.icon" :name="item.icon" :color="isActive(item, index) ? activeColor : inactiveColor" size="45rpx"></zx-icon>
-							<zx-text :text="item.title" :color="isActive(item, index) ? activeColor : inactiveColor" lines="1" size="26rpx" lineHeight="40rpx"></zx-text>
+							<zx-icon v-if="item.icon" :name="item.icon"
+								:color="isActive(item, index) ? activeColor : inactiveColor" size="45rpx"></zx-icon>
+							<zx-text :text="item.title" :color="isActive(item, index) ? activeColor : inactiveColor"
+								lines="1" size="26rpx" lineHeight="40rpx"></zx-text>
 						</view>
 					</template>
 				</view>
@@ -176,6 +169,7 @@ function clickItem(item, index) {
 	width: 100%;
 	background-color: #ffffff;
 }
+
 .zx-tabbar-item {
 	display: flex;
 	flex-direction: row;
@@ -189,5 +183,6 @@ function clickItem(item, index) {
 :host {
 	flex: 1;
 }
+
 /* #endif */
 </style>

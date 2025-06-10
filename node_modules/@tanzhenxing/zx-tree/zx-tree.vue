@@ -1,21 +1,9 @@
 <template>
   <view class="zx-tree">
     <template v-for="(node, index) in treeData" :key="getNodeKey(node, index)">
-      <zx-tree-node
-        :node="node"
-        :props="props"
-        :level="1"
-        :show-checkbox="showCheckbox"
-        :checked-keys="checkedKeys"
-        :lazy="lazy"
-        :load="load"
-        :is-leaf="isLeaf"
-        :render-content="renderContent"
-        @node-click="onNodeClick"
-        @check-change="onCheckChange"
-        @check="onCheck"
-        @toggle-check="toggleCheck"
-      />
+      <zx-tree-node :node="node" :props="props" :level="1" :show-checkbox="showCheckbox" :checked-keys="checkedKeys"
+        :lazy="lazy" :load="load" :is-leaf="isLeaf" :render-content="renderContent" @node-click="onNodeClick"
+        @check-change="onCheckChange" @check="onCheck" @toggle-check="toggleCheck" />
     </template>
   </view>
 </template>
@@ -103,28 +91,35 @@ function toggleCheck(key) {
 .zx-tree {
   font-size: 14px;
 }
+
 .zx-tree-node {
   margin-left: 8px;
 }
+
 .zx-tree-node-content {
   display: flex;
   align-items: center;
   padding: 4px 0;
 }
+
 .zx-tree-node-expand {
   margin-right: 4px;
   cursor: pointer;
 }
+
 .zx-tree-node-checkbox {
   margin-right: 4px;
 }
+
 .zx-tree-node-label {
   margin-right: 4px;
 }
+
 .zx-tree-node-loading {
   color: #999;
   margin-left: 8px;
 }
+
 .zx-tree-node-children {
   margin-left: 16px;
 }

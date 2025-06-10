@@ -1,0 +1,15 @@
+{
+  "name": "@tanzhenxing/zx-side-navbar",
+  "version": "1.0.1",
+  "description": "侧边导航栏组件，适用于展示多级导航菜单，支持 H5、小程序和 App 平台。参考 NutUI 设计规范重构。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "侧边导航栏组件"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "type": "commonjs"
+}

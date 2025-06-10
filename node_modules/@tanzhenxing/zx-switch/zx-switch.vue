@@ -5,9 +5,7 @@
 		<!-- 滑块圆点 -->
 		<view :class="['zx-switch__core', { 'zx-switch__core--checked': switchStatus }]" :style="getCoreStyle()">
 			<!-- 加载图标 -->
-			<view v-if="loading" class="zx-switch__loading">
-				<view class="zx-switch__loading-icon"></view>
-			</view>
+			<zx-loading v-if="loading" :show="loading" type="spinner" size="16px" color="#ffffff" />
 		</view>
 
 		<!-- 文本显示 -->
@@ -44,6 +42,7 @@
  */
 
 import { ref, computed, getCurrentInstance, watch } from 'vue';
+import zxLoading from '@tanzhenxing/zx-loading/zx-loading.vue';
 
 const { proxy } = getCurrentInstance();
 
