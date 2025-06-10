@@ -14,13 +14,8 @@
         <text>{{ category.title }}</text>
       </view>
       <view class="component-list">
-        <view 
-          class="component-item" 
-          v-for="(item, index) in category.lists" 
-          :key="index"
-          @click="handleClick(item.path)"
-          :class="{ 'no-border': index === category.lists.length - 1 }"
-        >
+        <view class="component-item" v-for="(item, index) in category.lists" :key="index"
+          @click="handleClick(item.path)" :class="{ 'no-border': index === category.lists.length - 1 }">
           <text class="item-title">{{ item.title }}</text>
           <text class="item-arrow">›</text>
         </view>
@@ -30,14 +25,8 @@
     <zx-backtop :scrollTop="scrollTop"></zx-backtop>
 
     <!-- 底部导航 -->
-    <zx-tabbar
-      :value="tabbarValue"
-      :items="tabbarList"
-      @change="onTabbarChange"
-      fixed
-      placeholder
-      safeAreaInsetBottom
-    />
+    <zx-tabbar :value="tabbarValue" :items="tabbarList" @change="onTabbarChange" fixed placeholder
+      safeAreaInsetBottom />
   </view>
 </template>
 
@@ -59,10 +48,10 @@ const loadData = async () => {
   try {
     loading.value = true;
     const response = await uni.request({
-      url: 'https://cdn.mp.ac.cn/json/home.json?t='+Date.now(),
+      url: 'https://cdn.mp.ac.cn/json/home.json?t=' + Date.now(),
       method: 'GET'
     });
-    
+
     if (response.statusCode === 200 && response.data) {
       datalist.value = response.data;
     } else {
@@ -248,12 +237,14 @@ function handleSearch() {
   background: #fff;
   padding: 16rpx 20rpx;
   border-radius: 12rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
   margin: 24rpx 30rpx 20rpx 30rpx;
 }
+
 .search-bar-container .zx-searchbar {
   flex: 1;
 }
+
 .search-bar-container .zx-button {
   margin-left: 16rpx;
   height: 72rpx;
