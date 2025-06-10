@@ -1,0 +1,147 @@
+const fs = require('fs');
+const path = require('path');
+
+// 配置路径
+const TANZHENXING_DIR = path.join(__dirname, 'node_modules', '@tanzhenxing');
+const PACKAGE_JSON_PATH = path.join(TANZHENXING_DIR, 'package.json');
+
+/**
+ * 读取指定目录下所有组件的 package.json 文件
+ * @param {string} dir - 目录路径
+ * @returns {Object} 组件名称和版本的映射对象
+ */
+function getComponentVersions(dir) {
+    const components = {};
+    
+    try {
+        const items = fs.readdirSync(dir, { withFileTypes: true });
+        
+        for (const item of items) {
+            if (item.isDirectory() && item.name.startsWith('zx-')) {
+                const componentDir = path.join(dir, item.name);
+                const packageJsonPath = path.join(componentDir, 'package.json');
+                
+                if (fs.existsSync(packageJsonPath)) {
+                    try {
+                        const packageContent = fs.readFileSync(packageJsonPath, 'utf8');
+                        const packageData = JSON.parse(packageContent);
+                        
+                        if (packageData.name && packageData.version) {
+                            components[packageData.name] = `^${packageData.version}`;
+                            console.log(`找到组件: ${packageData.name}@${packageData.version}`);
+                        }
+                    } catch (error) {
+                        console.warn(`读取 ${packageJsonPath} 失败:`, error.message);
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        console.error(`读取目录 ${dir} 失败:`, error.message);
+    }
+    
+    return components;
+}
+
+/**
+ * 更新主 package.json 文件的依赖项
+ * @param {string} packageJsonPath - package.json 文件路径
+ * @param {Object} newDependencies - 新的依赖项对象
+ */
+function updatePackageJson(packageJsonPath, newDependencies) {
+    try {
+        // 读取现有的 package.json
+        const packageContent = fs.readFileSync(packageJsonPath, 'utf8');
+        const packageData = JSON.parse(packageContent);
+        
+        // 确保 dependencies 字段存在
+        if (!packageData.dependencies) {
+            packageData.dependencies = {};
+        }
+        
+        // 更新依赖项
+        let updatedCount = 0;
+        let addedCount = 0;
+        
+        for (const [name, version] of Object.entries(newDependencies)) {
+            if (packageData.dependencies[name]) {
+                if (packageData.dependencies[name] !== version) {
+                    console.log(`更新: ${name} ${packageData.dependencies[name]} -> ${version}`);
+                    packageData.dependencies[name] = version;
+                    updatedCount++;
+                }
+            } else {
+                console.log(`添加: ${name}@${version}`);
+                packageData.dependencies[name] = version;
+                addedCount++;
+            }
+        }
+        
+        // 按字母顺序排序依赖项
+        const sortedDependencies = {};
+        Object.keys(packageData.dependencies)
+            .sort()
+            .forEach(key => {
+                sortedDependencies[key] = packageData.dependencies[key];
+            });
+        packageData.dependencies = sortedDependencies;
+        
+        // 写回文件
+        fs.writeFileSync(packageJsonPath, JSON.stringify(packageData, null, 2) + '\n');
+        
+        console.log(`\n更新完成!`);
+        console.log(`- 新增依赖: ${addedCount} 个`);
+        console.log(`- 更新依赖: ${updatedCount} 个`);
+        console.log(`- 总依赖数: ${Object.keys(packageData.dependencies).length} 个`);
+        
+    } catch (error) {
+        console.error(`更新 package.json 失败:`, error.message);
+        process.exit(1);
+    }
+}
+
+/**
+ * 主函数
+ */
+function main() {
+    console.log('开始更新 @tanzhenxing 组件依赖...');
+    console.log(`扫描目录: ${TANZHENXING_DIR}`);
+    console.log(`目标文件: ${PACKAGE_JSON_PATH}`);
+    console.log('\n');
+    
+    // 检查目录是否存在
+    if (!fs.existsSync(TANZHENXING_DIR)) {
+        console.error(`错误: 目录不存在 ${TANZHENXING_DIR}`);
+        process.exit(1);
+    }
+    
+    // 检查 package.json 是否存在
+    if (!fs.existsSync(PACKAGE_JSON_PATH)) {
+        console.error(`错误: 文件不存在 ${PACKAGE_JSON_PATH}`);
+        process.exit(1);
+    }
+    
+    // 获取所有组件版本
+    const componentVersions = getComponentVersions(TANZHENXING_DIR);
+    
+    if (Object.keys(componentVersions).length === 0) {
+        console.log('未找到任何组件，退出。');
+        return;
+    }
+    
+    console.log(`\n找到 ${Object.keys(componentVersions).length} 个组件\n`);
+    
+    // 更新 package.json
+    updatePackageJson(PACKAGE_JSON_PATH, componentVersions);
+}
+
+// 运行脚本
+if (require.main === module) {
+    main();
+}
+
+module.exports = {
+    getComponentVersions,
+    updatePackageJson,
+    main
+};
