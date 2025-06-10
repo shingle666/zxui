@@ -1,0 +1,23 @@
+{
+  "name": "@tanzhenxing/zx-waterfall",
+  "version": "1.0.2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-waterfall",
+    "waterfall",
+    "uniapp",
+    "瀑布流",
+    "vue3",
+    "setup"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC",
+  "description": "一个支持H5、小程序和App的跨平台瀑布流组件，使用Vue3 setup语法开发",
+  "repository": {
+    "type": "git",
+    "url": "https://zxui.org/components/zx-waterfall"
+  }
+}

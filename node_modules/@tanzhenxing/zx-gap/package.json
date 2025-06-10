@@ -1,0 +1,18 @@
+{
+  "name": "@tanzhenxing/zx-gap",
+  "version": "1.0.5",
+  "description": "该组件一般用于内容块之间的用一个灰色块隔开的场景，方便用户风格统一，减少工作量。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zx-gap",
+    "uni-app",
+    "间隔",
+    "间隔组件",
+    "间隔功能"
+  ],
+  "author": "tanzhenxing",
+  "license": "ISC"
+}
