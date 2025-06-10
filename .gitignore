@@ -20,9 +20,12 @@ dist
 *.sw?
 
 unpackage
-# 忽略 node_modules 文件夹, 但是保留 @tanzhenxing
+# 忽略 node_modules 文件夹
+
+但是不忽略 @tanzhenxing
+
 node_modules
 !node_modules/@tanzhenxing
-
 # 忽略 @tanzhenxing 包内的嵌套 node_modules
-node_modules/@tanzhenxing/*/node_modules/
+# node_modules/@tanzhenxing/*/node_modules/
+
